@@ -61,7 +61,7 @@ namespace OpenGL.Constructs
                 new Vector3(max.x, min.y, max.z),
                 new Vector3(max.x, max.y, min.z),
                 new Vector3(max.x, max.y, max.z) };
-            int[] element = new int[] { 0, 2, 3, 1, 0, 4, 6, 7, 5, 4, 5, 1, 3, 7, 5, 2 };
+            int[] element = new int[] { 0, 1, 2, 1, 3, 2, 1, 5, 3, 5, 7, 3, 4, 0, 2, 4, 2, 6, 5, 4, 6, 5, 6, 7, 2, 3, 6, 6, 3, 7, 0, 1, 5, 5, 4, 0 };
 
             return new VAO(program, new VBO<Vector3>(vertex), new VBO<int>(element));
         }
