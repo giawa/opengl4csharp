@@ -53,15 +53,24 @@ namespace OpenGL.Constructs
         public static VAO CreateCube(ShaderProgram program, Vector3 min, Vector3 max)
         {
             Vector3[] vertex = new Vector3[] {
-                new Vector3(min.x, min.y, min.z),
                 new Vector3(min.x, min.y, max.z),
-                new Vector3(min.x, max.y, min.z),
-                new Vector3(min.x, max.y, max.z),
-                new Vector3(max.x, min.y, min.z),
                 new Vector3(max.x, min.y, max.z),
+                new Vector3(min.x, max.y, max.z),
+                new Vector3(max.x, max.y, max.z),
+                new Vector3(max.x, min.y, min.z),
                 new Vector3(max.x, max.y, min.z),
-                new Vector3(max.x, max.y, max.z) };
-            int[] element = new int[] { 0, 1, 2, 1, 3, 2, 1, 5, 3, 5, 7, 3, 4, 0, 2, 4, 2, 6, 5, 4, 6, 5, 6, 7, 2, 3, 6, 6, 3, 7, 0, 1, 5, 5, 4, 0 };
+                new Vector3(min.x, max.y, min.z),
+                new Vector3(min.x, min.y, min.z)
+            };
+
+            int[] element = new int[] {
+                0, 1, 2, 1, 3, 2,
+                1, 4, 3, 4, 5, 3,
+                4, 7, 5, 7, 6, 5,
+                7, 0, 6, 0, 2, 6,
+                7, 4, 0, 4, 1, 0,
+                2, 3, 6, 3, 5, 6
+            };
 
             return new VAO(program, new VBO<Vector3>(vertex), new VBO<int>(element));
         }

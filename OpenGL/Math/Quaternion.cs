@@ -29,7 +29,7 @@ namespace OpenGL
 
         public Quaternion(Vector4 vec)
         {
-            this.w = vec.x; this.x = vec.y; this.y = vec.z; this.z = vec.w;
+            this.x = vec.x; this.y = vec.y; this.z = vec.z; this.w = vec.w;
         }
         #endregion
 
@@ -330,7 +330,7 @@ namespace OpenGL
         /// </summary>
         public static Quaternion FromAngleAxis(float Angle, Vector3 Axis)
         {
-            if (Axis.SquaredLength== 0.0f)
+            if (Axis.SquaredLength == 0.0f)
                 return Identity;
 
             return new Quaternion(new Vector4(Axis.Normalize() * (float)Math.Sin(Angle * 0.5f), (float)Math.Cos(Angle * 0.5f)));

@@ -7,13 +7,13 @@ This library also includes some common Math libraries, taken from my own graphic
 
 Random History:  This code was written to help my friend with his Masters thesis, as he was wanting to do work with GLSL and OpenGL.  I wrote up these OpenGL 4 bindings over the course of two weeks in 2011 and they were never used.  It is about time someone got to play with them!  I'm also working on a [Voxel Engine](http://www.giawa.com) using this library, which is largely open source.
 
-Note:  To use this library you will need a valid OpenGL context.  You can do this using FreeGLUT, or some equivalent.
+Note:  To use this library you will need a valid OpenGL context.  You can get this using FreeGLUT, or some equivalent.
 
 ## License
 Check the included [LICENSE.md](https://github.com/giawa/opengl4csharp/blob/master/LICENSE.md) file for the license associated with this code.
 
 ## Building the Project
-This project includes a .sln and .csproj file which will create an OpenGL class library.  This library includes a dll.config which will load the correct OpenGL.dll on Windows, Mac OS X and Windows.  So, you need only compile this project once and it will work across platforms.
+This project includes a .sln and .csproj file which will create an OpenGL class library.  This library includes a dll.config which will load the correct OpenGL on Windows, Mac OS X and Windows.  So, you need only compile this project once and it will work across platforms.
 
 ## Examples
 
