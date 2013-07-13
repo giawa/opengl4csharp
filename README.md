@@ -7,6 +7,8 @@ Similar to the Open Toolkit bindings, these bindings work on Windows, Mac OS X a
 
 This library also includes some common Math libraries, taken from my own graphics engine that I was developing.  These include bounding boxes, frustum, matrix4, plane, quaternion, ray, vector2, vector3 and vector4.  The class library also supports some common OpenGL constructs such as frame buffer objects (FBO), shader programs (both vertex and fragment), textures, vertex array objects (VAO) and vertex buffer objects (VBO).
 
+Random History:  This code was written to help my friend with his Masters thesis, as he was wanting to do work with GLSL and OpenGL.  I wrote up these OpenGL 4 bindings over the course of two weeks in 2011 and they were never used.  It is about time someone got to play with them!  I'm also working on a [Voxel Engine](http://www.giawa.com) using this library, which is largely open source.
+
 Note:  To use this library you will need a valid OpenGL context.  You can do this using FreeGLUT, or some equivalent.
 
 ## License
@@ -14,7 +16,7 @@ Check the included LICENSE.md file for the license associated with this code.
 
 ## Examples
 
-### Getting start with [FreeGLUT](http://sourceforge.net/projects/opentk/)
+### Getting started with [FreeGLUT](http://sourceforge.net/projects/opentk/)
 
 The purpose of these examples is to walk through most of the functionality of this OpenGL library.  To do so, we need an OpenGL context.  So, I'm going to use [FreeGLUT](http://sourceforge.net/projects/opentk/) and show an example of how to use it.  If you already have an OpenGL context, you can skip this example.  In this case I am using Tao.FreeGlut, but OpenTK also has an implementation.
 
@@ -114,3 +116,6 @@ Note:  Make sure to dispose of your textures, VAOs, VBOs and Shader Programs bef
             Texture newTexture = new Texture("file_path.jpg");
             Gl.BindTexture(newTexture);
 ```
+
+## Further Reading
+I quickly pushed this project to GitHub, so there isn't much documentation at this time.  The math objects are quite well documented, and some of the constructs also have decent documentation.  Check my website, [http://www.giawa.com](http://www.giawa.com) for some examples as I develope with this code.
