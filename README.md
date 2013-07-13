@@ -1,5 +1,4 @@
-opengl4csharp
-=============
+# OpenGL 4 for C#
 ## About
 This code provides a limited subset of the Open Toolkit bindings to OpenGL.  I have kept only the methods that are OpenGL 4 compatible, meaning that any legacy fixed function pipeline methods have been removed.  I've also removed several enums and other code that dealt with supporting the fixed function pipeline.
 
