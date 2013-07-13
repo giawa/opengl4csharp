@@ -12,6 +12,9 @@ Note:  To use this library you will need a valid OpenGL context.  You can do thi
 ## License
 Check the included [LICENSE.md](https://github.com/giawa/opengl4csharp/blob/master/LICENSE.md) file for the license associated with this code.
 
+## Building the Project
+This project includes a .sln and .csproj file which will create an OpenGL class library.  This library includes a dll.config which will load the correct OpenGL.dll on Windows, Mac OS X and Windows.  So, you need only compile this project once and it will work across platforms.
+
 ## Examples
 
 ### Getting started with [FreeGLUT](http://sourceforge.net/projects/opentk/)
@@ -115,7 +118,7 @@ Texture newTexture = new Texture("file_path.jpg");
 Gl.BindTexture(newTexture);
 ```
 
-### Creating Vertex Buffer Objects (VBOs) and Vertex Array Objects (VAOs)
+### Vertex Buffer Objects (VBOs) and Vertex Array Objects (VAOs)
 
 This is an example of creating a quad using a VBO for vertices (Vector3 data), a VBO for UV coordinates (Vector2 data) and a VBO of indices (int data).  This VBO can then be rendered in a similar fashion to the cube method above.
 
