@@ -1,5 +1,4 @@
 # OpenGL 4 for C#/.NET
-## About
 This code provides a limited subset of the Open Toolkit bindings to OpenGL.  I have kept only the methods that are OpenGL 4 compatible, meaning that any legacy fixed function pipeline methods have been removed.  I've also removed several enums and other code that dealt with supporting the fixed function pipeline.
 
 Similar to the Open Toolkit bindings, these bindings work on Windows, Mac OS X and Linux (under the Mono framework).
@@ -11,7 +10,7 @@ Random History:  This code was written to help my friend with his Masters thesis
 Note:  To use this library you will need a valid OpenGL context.  You can do this using FreeGLUT, or some equivalent.
 
 ## License
-Check the included LICENSE.md file for the license associated with this code.
+Check the included [LICENSE.md](https://github.com/giawa/opengl4csharp/blob/master/LICENSE.md) file for the license associated with this code.
 
 ## Examples
 
@@ -20,14 +19,14 @@ Check the included LICENSE.md file for the license associated with this code.
 The purpose of these examples is to walk through most of the functionality of this OpenGL library.  To do so, we need an OpenGL context.  So, I'm going to use [FreeGLUT](http://sourceforge.net/projects/opentk/) and show an example of how to use it.  If you already have an OpenGL context, you can skip this example.  In this case I am using Tao.FreeGlut, but OpenTK also has an implementation.
 
 ```csharp
-            Glut.glutInit();
-            Glut.glutInitDisplayMode(Glut.GLUT_DOUBLE | Glut.GLUT_DEPTH);
-            Glut.glutInitWindowSize(width, height);
-            Glut.glutCreateWindow("OpenGL");
+   Glut.glutInit();
+   Glut.glutInitDisplayMode(Glut.GLUT_DOUBLE | Glut.GLUT_DEPTH);
+   Glut.glutInitWindowSize(width, height);
+   Glut.glutCreateWindow("OpenGL");
             
-            Glut.glutIdleFunc(OnRenderFrame);
+   Glut.glutIdleFunc(OnRenderFrame);
             
-            Glut.glutMainLoop();
+   Glut.glutMainLoop();
 ```
 
 Note:  OnRenderFrame will be the method we will be drawing something.  For now, you can leave it empty.
@@ -66,11 +65,11 @@ void main(void)
 Here is how we load the vertex and fragment programs, and then link them together to create a shader program.  We can also set the 'color' uniform value to blue (0, 0, 1).
 
 ```csharp
-            // create the shader program
-            ShaderProgram program = new ShaderProgram(vertexShader2Source, fragmentShader2Source);
+   // create the shader program
+   ShaderProgram program = new ShaderProgram(vertexShader2Source, fragmentShader2Source);
             
-            // set the color to blue
-            program["color"].SetValue(new Vector3(0, 0, 1));
+   // set the color to blue
+   program["color"].SetValue(new Vector3(0, 0, 1));
 ```
 
 Note:  Make sure that you dispose of your new shader once your program closes!  The class library will alert you if the destructor of the object is called by the .NET framework before you call the Dispose method.
@@ -82,27 +81,27 @@ I'm assuming that you have your shader program loaded (use the example one above
 First, create the cube during initialization (just after setting up FreeGLUT, but just before Glut.glutMainLoop()).  We also need to set up the shader with some defaults for the modelview and projection matrices.
 
 ```csharp
-            // set up some defaults for the shader program project and modelview matrices
-            program["projection_matrix"].SetValue(Matrix4.CreatePerspectiveFieldOfView(0.45f, (float)width / height, 0.1f, 1000f));
-            program["modelview_matrix"].SetValue(Matrix4.CreateTranslation(new Vector3(2, 2, -10)) * Matrix4.CreateRotation(new Vector3(1, -1, 0), 0.2f));
+   // set up some defaults for the shader program project and modelview matrices
+   program["projection_matrix"].SetValue(Matrix4.CreatePerspectiveFieldOfView(0.45f, (float)width / height, 0.1f, 1000f));
+   program["modelview_matrix"].SetValue(Matrix4.CreateTranslation(new Vector3(2, 2, -10)) * Matrix4.CreateRotation(new Vector3(1, -1, 0), 0.2f));
 
-            // create a cube
-            quad = OpenGL.Constructs.Geometry.CreateCube(program, new Vector3(-1, -1, -1), new Vector3(1, 1, 1));
+   // create a cube
+   quad = OpenGL.Constructs.Geometry.CreateCube(program, new Vector3(-1, -1, -1), new Vector3(1, 1, 1));
 ```
 
 Now draw the cube by using the shader program, drawing the cube and then swapping the Glut buffers.
 
 ```csharp
-        private static void OnRenderFrame()
-        {
-            Gl.Viewport(0, 0, width, height);
-            Gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+private static void OnRenderFrame()
+{
+   Gl.Viewport(0, 0, width, height);
+   Gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            quad.Program.Use();
-            quad.Draw();
+   quad.Program.Use();
+   quad.Draw();
 
-            Glut.glutSwapBuffers();
-        }
+   Glut.glutSwapBuffers();
+}
 ```
 
 ### Loading a Texture
@@ -112,8 +111,29 @@ You can load a texture that is any format that the .NET framework can parse (.pn
 Note:  Make sure to dispose of your textures, VAOs, VBOs and Shader Programs before exiting your program!
 
 ```csharp
-            Texture newTexture = new Texture("file_path.jpg");
-            Gl.BindTexture(newTexture);
+Texture newTexture = new Texture("file_path.jpg");
+Gl.BindTexture(newTexture);
+```
+
+### Creating Vertex Buffer Objects (VBOs) and Vertex Array Objects (VAOs)
+
+This is an example of creating a quad using a VBO for vertices (Vector3 data), a VBO for UV coordinates (Vector2 data) and a VBO of indices (int data).  This VBO can then be rendered in a similar fashion to the cube method above.
+
+```csharp
+   // create the vertex data
+   Vector3[] vertices = new Vector3[] { new Vector3(0, 0, 0), new Vector3(1, 0, 0), new Vector3(1, 1, 0), new Vector3(0, 1, 0) };
+   VBO<Vector3> vertexVBO = new VBO<Vector3>(vertices);
+
+   // create the UV data
+   Vector2[] uvs = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(0, 1) };
+   VBO<Vector2> uvVBO = new VBO<Vector2>(uvs);
+
+   // create the index data (the order in which the vertices should be drawn in groups of 3 to form triangles)
+   int[] indices = new int[] { 0, 1, 2, 2, 3, 0 };
+   VBO<int> indexVBO = new VBO<int>(indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticRead);
+
+   // create a vertex array object (VAO) from the vertex, UV and index data
+   VAO quad = new VAO(program, vertexVBO, uvVBO, indexVBO);
 ```
 
 ## Further Reading
