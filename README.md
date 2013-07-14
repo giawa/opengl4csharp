@@ -32,7 +32,7 @@ The purpose of these examples is to walk through most of the functionality of th
    Glut.glutMainLoop();
 ```
 
-Note:  OnRenderFrame will be the method we will be drawing something.  For now, you can leave it empty.
+Note:  OnRenderFrame will be the method where we will be drawing something.  For now, you can leave it empty.
 
 ### Creating a Shader Program
 
@@ -89,7 +89,7 @@ First, create the cube during initialization (just after setting up FreeGLUT, bu
    program["modelview_matrix"].SetValue(Matrix4.CreateTranslation(new Vector3(2, 2, -10)) * Matrix4.CreateRotation(new Vector3(1, -1, 0), 0.2f));
 
    // create a cube
-   quad = OpenGL.Constructs.Geometry.CreateCube(program, new Vector3(-1, -1, -1), new Vector3(1, 1, 1));
+   cube = OpenGL.Constructs.Geometry.CreateCube(program, new Vector3(-1, -1, -1), new Vector3(1, 1, 1));
 ```
 
 Now draw the cube by using the shader program, drawing the cube and then swapping the Glut buffers.
@@ -100,8 +100,8 @@ private static void OnRenderFrame()
    Gl.Viewport(0, 0, width, height);
    Gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-   quad.Program.Use();
-   quad.Draw();
+   cube.Program.Use();
+   cube.Draw();
 
    Glut.glutSwapBuffers();
 }
