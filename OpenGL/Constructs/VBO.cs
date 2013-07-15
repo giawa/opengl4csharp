@@ -84,8 +84,6 @@ namespace OpenGL
     public class VAO : IDisposable
     {
         #region Variables
-        private uint vaoID;
-        
         private VBO<Vector3> vertex, normal, tangent;
         
         private VBO<Vector2> uv;
@@ -115,6 +113,11 @@ namespace OpenGL
         /// The drawing mode to use when drawing the arrays.
         /// </summary>
         public BeginMode DrawMode { get; set; }
+
+        /// <summary>
+        /// The ID of this Vertex Array Object for use in calls to OpenGL.
+        /// </summary>
+        public uint vaoID { get; private set; }
         #endregion
 
         #region Constructors and Destructor
