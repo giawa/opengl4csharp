@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenGL.Constructs
+namespace OpenGL
 {
     public class Geometry
     {
