@@ -75,6 +75,24 @@ namespace OpenGL
         }
 
         /// <summary>
+        /// Create a basic quad by storing two triangles into a VAO.
+        /// This quad includes normals, and does not include UV co-ordinates.
+        /// </summary>
+        /// <param name="program">The ShaderProgram assigned to this quad.</param>
+        /// <param name="location">The location of the VAO (assigned to the vertices).</param>
+        /// <param name="size">The size of the VAO (assigned to the vertices).</param>
+        /// <returns>The VAO object representing this quad.</returns>
+        public static VAO CreateQuadWithNormals(ShaderProgram program, Vector2 location, Vector2 size)
+        {
+            Vector3[] vertex = new Vector3[] { new Vector3(location.x, location.y, 0), new Vector3(location.x + size.x, location.y, 0), 
+                new Vector3(location.x + size.x, location.y + size.y, 0), new Vector3(location.x, location.y + size.y, 0) };
+            int[] element = new int[] { 0, 1, 2, 2, 3, 0 };
+            Vector3[] normal = CalculateNormals(vertex, element);
+
+            return new VAO(program, new VBO<Vector3>(vertex), new VBO<Vector3>(normal), new VBO<int>(element, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticRead));
+        }
+
+        /// <summary>
         /// Create a basic cube and store into a VAO.
         /// This cube consists of 12 triangles and 6 faces.
         /// </summary>
