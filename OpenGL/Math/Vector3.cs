@@ -382,6 +382,41 @@ namespace OpenGL
             v1 = v2;
             v2 = t;
         }
+
+        /// <summary>
+        /// Create a quaternion that represents the rotation vector between this
+        /// Vector3 and a destination Vector3.
+        /// </summary>
+        /// <param name="destination">The vector we would like to rotate to.</param>
+        /// <returns>A quaternion representing the axis of rotation between this vector 
+        /// and the destination vector.</returns>
+        public Quaternion GetRotationTo(Vector3 destination)
+        {
+            // Based on Stan Melax's algorithm in "Game Programming Gems"
+            Vector3 t_source = this.Normalize();
+            Vector3 t_dest = destination.Normalize();
+
+            float d = t_source.Dot(t_dest);
+
+            // if dot == 1 then the vectors are the same
+            if (d >= 1.0f) return Quaternion.Identity;
+            else if (d < (1e-6f - 1.0f))
+            {
+                Vector3 t_axis = Vector3.UnitX.Cross(this);
+                if (t_axis.SquaredLength < (1e-12)) // pick another if colinear
+                    t_axis = Vector3.UnitY.Cross(this);
+                t_axis.Normalize();
+                return Quaternion.FromAngleAxis((float)Math.PI, t_axis);
+            }
+            else
+            {
+                float t_sqrt = (float)Math.Sqrt((1 + d) * 2.0f);
+                float t_invs = 1.0f / t_sqrt;
+
+                Vector3 t_cross = t_source.Cross(t_dest);
+                return new Quaternion(t_cross.x * t_invs, t_cross.y * t_invs, t_cross.z * t_invs, t_sqrt * 0.5f).Normalize();
+            }
+        }
         #endregion
     }
 }

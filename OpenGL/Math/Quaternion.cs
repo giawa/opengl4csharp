@@ -337,6 +337,18 @@ namespace OpenGL
         }
 
         /// <summary>
+        /// Converts this quaternion to an axis representation.
+        /// </summary>
+        /// <returns>Three Vector3 structs in an array, representing this quaternion.</returns>
+        public Vector3[] ToAxis()
+        {
+            Matrix4 rotationMatrix = this.Matrix4;
+            return new Vector3[] { new Vector3(rotationMatrix[0].x, rotationMatrix[1].x, rotationMatrix[2].x),
+                new Vector3(rotationMatrix[0].y, rotationMatrix[1].y, rotationMatrix[2].y),
+                new Vector3(rotationMatrix[0].z, rotationMatrix[1].z, rotationMatrix[2].z) };
+        }
+
+        /// <summary>
         /// Convert this instance to an axis-angle representation.
         /// </summary>
         /// <returns>A Vector4 that is the axis-angle representation of this quaternion.</returns>
