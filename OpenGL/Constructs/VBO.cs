@@ -188,7 +188,7 @@ namespace OpenGL
         ///     uv: vec2 in_uv
         ///     tangent: vec3 in_tangent
         /// </summary>
-        private void BindAttributes(ShaderProgram program)
+        public void BindAttributes(ShaderProgram program)
         {
             if (vertex == null) throw new Exception("Error binding attributes.  No vertices were supplied.");
             if (element == null) throw new Exception("Error binding attributes.  No element array was supplied.");
