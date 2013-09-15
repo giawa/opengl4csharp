@@ -1343,7 +1343,6 @@ namespace OpenGL
 
         public static void UseProgram(UInt32 program)
         {
-            currentProgram = program;
             Delegates.glUseProgram(program);
         }
 
@@ -1645,6 +1644,221 @@ namespace OpenGL
         public static void WaitSync(IntPtr sync, UInt32 flags, UInt64 timeout)
         {
             Delegates.glWaitSync(sync, flags, timeout);
+        }
+
+        public static void ActiveShaderProgram(UInt32 pipeline, UInt32 program)
+        {
+            Delegates.glActiveShaderProgram(pipeline, program);
+        }
+
+        public static void BeginQueryIndexed(UInt32 target, UInt32 index, UInt32 id)
+        {
+            Delegates.glBeginQueryIndexed(target, index, id);
+        }
+
+        public static void BindFragDataLocationIndexed(UInt32 program, UInt32 colorNumber, UInt32 index, char[] name)
+        {
+            Delegates.glBindFragDataLocationIndexed(program, colorNumber, index, name);
+        }
+
+        public static void BindSampler(UInt32 unit, UInt32 sampler)
+        {
+            Delegates.glBindSampler(unit, sampler);
+        }
+
+        public static Int32 CreateShaderProgram(OpenGL.ShaderType type, UInt32 count, string[] strings)
+        {
+            return Delegates.glCreateShaderProgram(type, count, strings);
+        }
+
+        public static void DeleteProgramPipelines(Int32 n, UInt32[] ids)
+        {
+            Delegates.glDeleteProgramPipelines(n, ids);
+        }
+
+        public static void DepthRangeArrayv(UInt32 index, Double near, Double far)
+        {
+            Delegates.glDepthRangeArrayv(index, near, far);
+        }
+
+        public static void DrawArraysIndirect(OpenGL.BeginMode mode, IntPtr indirect)
+        {
+            Delegates.glDrawArraysIndirect(mode, indirect);
+        }
+
+        public static void DrawTransformFeedbackStream(OpenGL.NvTransformFeedback2 mode, UInt32 id, UInt32 stream)
+        {
+            Delegates.glDrawTransformFeedbackStream(mode, id, stream);
+        }
+
+        public static void EndQueryIndexed(OpenGL.QueryTarget target, UInt32 index, UInt32 id)
+        {
+            Delegates.glEndQueryIndexed(target, index, id);
+        }
+
+        public static void GenProgramPipelines(Int32 n, [OutAttribute] UInt32[] pipelines)
+        {
+            Delegates.glGenProgramPipelines(n, pipelines);
+        }
+
+        public static void GenSamplers(Int32 n, [OutAttribute] UInt32[] samplers)
+        {
+            Delegates.glGenSamplers(n, samplers);
+        }
+
+        public static void GetFragDataIndex(UInt32 program, String name)
+        {
+            Delegates.glGetFragDataIndex(program, name);
+        }
+
+        public static void GetProgramBinary(UInt32 program, Int32 size, Int32[] length, Int32[] binaryFormat, IntPtr binary)
+        {
+            Delegates.glGetProgramBinary(program, size, length, binaryFormat, binary);
+        }
+
+        public static void GetProgramPipelineiv(UInt32 pipeline, Int32 pname, [OutAttribute] Int32[] @params)
+        {
+            Delegates.glGetProgramPipelineiv(pipeline, pname, @params);
+        }
+
+        public static void GetProgramPipelineInfoLog(UInt32 pipeline, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder infoLog)
+        {
+            Delegates.glGetProgramPipelineInfoLog(pipeline, bufSize, length, infoLog);
+        }
+
+        public static void GetProgramStage(UInt32 program, OpenGL.ShaderType shadertype, Int32 pname, [OutAttribute] Int32[] @values)
+        {
+            Delegates.glGetProgramStage(program, shadertype, pname, @values);
+        }
+
+        public static void GetQueryObjecti64v(UInt32 id, OpenGL.GetQueryObjectParam pname, [OutAttribute] UInt64[] @params)
+        {
+            Delegates.glGetQueryObjecti64v(id, pname, @params);
+        }
+
+        public static void GetQueryObjectui64v(UInt32 id, OpenGL.GetQueryObjectParam pname, [OutAttribute] UInt64[] @params)
+        {
+            Delegates.glGetQueryObjectui64v(id, pname, @params);
+        }
+
+        public static void GetSamplerParameterfv(UInt32 sampler, Int32 pname, [OutAttribute] Single[] @params)
+        {
+            Delegates.glGetSamplerParameterfv(sampler, pname, @params);
+        }
+
+        public static void GetSamplerParameteriv(UInt32 sampler, Int32 pname, [OutAttribute] Int32[] @params)
+        {
+            Delegates.glGetSamplerParameteriv(sampler, pname, @params);
+        }
+
+        public static void GetShaderPrecisionFormat(OpenGL.ShaderType shaderType, Int32 precisionType, Int32[] range, [OutAttribute] Int32[] precision)
+        {
+            Delegates.glGetShaderPrecisionFormat(shaderType, precisionType, range, precision);
+        }
+
+        public static Int32 GetUniformBlockIndex(UInt32 program, String uniformBlockName)
+        {
+            return Delegates.glGetUniformBlockIndex(program, uniformBlockName);
+        }
+
+        public static Int32 GetUniformIndices(UInt32 program, Int32 uniformCount, String[] uniformNames, Int32[] uniformIndices)
+        {
+            return Delegates.glGetUniformIndices(program, uniformCount, uniformNames, uniformIndices);
+        }
+
+        public static void GetUniformSubroutineuiv(OpenGL.ShaderType shaderType, Int32 location, [OutAttribute] UInt32[] values)
+        {
+            Delegates.glGetUniformSubroutineuiv(shaderType, location, values);
+        }
+
+        public static bool IsProgramPipeline(UInt32 pipeline)
+        {
+            return Delegates.glIsProgramPipeline(pipeline);
+        }
+
+        public static bool IsSampler(UInt32 id)
+        {
+            return Delegates.glIsSampler(id);
+        }
+
+        public static void PatchParameteri(Int32 pname, Int32 value)
+        {
+            Delegates.glPatchParameteri(pname, value);
+        }
+
+        public static void PatchParameterfv(Int32 pname, Single value)
+        {
+            Delegates.glPatchParameterfv(pname, value);
+        }
+
+        public static void ProgramBinary(UInt32 program, Int32 binaryFormat, IntPtr binary, Int32 length)
+        {
+            Delegates.glProgramBinary(program, binaryFormat, binary, length);
+        }
+
+        public static void QueryCounter(UInt32 id, Int32 target)
+        {
+            Delegates.glQueryCounter(id, target);
+        }
+
+        public static void ReleaseShaderCompiler()
+        {
+            Delegates.glReleaseShaderCompiler();
+        }
+
+        public static void SamplerParameterf(UInt32 sampler, Int32 pname, Single param)
+        {
+            Delegates.glSamplerParameterf(sampler, pname, param);
+        }
+
+        public static void SamplerParameteri(UInt32 sampler, Int32 pname, Int32 param)
+        {
+            Delegates.glSamplerParameteri(sampler, pname, param);
+        }
+
+        public static void ScissorArrayv(UInt32 first, Int32 count, Int32[] v)
+        {
+            Delegates.glScissorArrayv(first, count, v);
+        }
+
+        public static void ShaderBinary(Int32 count, UInt32[] shaders, Int32 binaryFormat, IntPtr binary, Int32 length)
+        {
+            Delegates.glShaderBinary(count, shaders, binaryFormat, binary, length);
+        }
+
+        public static void UniformSubroutinesuiv(ShaderType shaderType, Int32 count, UInt32[] indices)
+        {
+            Delegates.glUniformSubroutinesuiv(shaderType, count, indices);
+        }
+
+        public static void UseProgramStages(UInt32 pipeline, Int32 bitField, UInt32 program)
+        {
+            Delegates.glUseProgramStages(pipeline, bitField, program);
+        }
+
+        public static void ValidateProgram(UInt32 program)
+        {
+            Delegates.glValidateProgram(program);
+        }
+
+        public static void ValidateProgramPipeline(UInt32 pipeline)
+        {
+            Delegates.glValidateProgramPipeline(pipeline);
+        }
+
+        public static void ViewportArray(UInt32 first, Int32 count, Single[] v)
+        {
+            Delegates.glViewportArray(first, count, v);
+        }
+
+        public static void ViewportIndexedf(UInt32 index, Single x, Single y, Single w, Single h)
+        {
+            Delegates.glViewportIndexedf(index, x, y, w, h);
+        }
+
+        public static void ViewportIndexedfv(UInt32 index, Single[] v)
+        {
+            Delegates.glViewportIndexedfv(index, v);
         }
 
     }

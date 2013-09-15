@@ -259,24 +259,24 @@ namespace OpenGL
 
             return vaoHandle;
         }
-		
-		private static int _version = 0;
-		
-		public static int Version()
-		{
-			if (_version != 0) return _version;	// cache the version information
-			
-			try
-			{
-				string version = System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Gl.GetString(StringName.Version));
-				return (_version = int.Parse(version.Substring(0, version.IndexOf('.'))));
-			}
-			catch (Exception)
-			{
-				Console.WriteLine("Error while retrieving the OpenGL version.");
-				return 0;
-			}
-		}
+        
+        private static int _version = 0;
+        
+        public static int Version()
+        {
+            if (_version != 0) return _version;	// cache the version information
+            
+            try
+            {
+                string version = System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Gl.GetString(StringName.Version));
+                return (_version = int.Parse(version.Substring(0, version.IndexOf('.'))));
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Error while retrieving the OpenGL version.");
+                return 0;
+            }
+        }
 
         /// <summary>
         /// Installs a program object as part of current rendering state.

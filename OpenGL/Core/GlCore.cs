@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define OPENGL4
+
+using System;
 using System.Runtime.InteropServices;
 
 namespace OpenGL
@@ -737,7 +739,7 @@ namespace OpenGL
             [System.Runtime.InteropServices.DllImport(Gl.Library, EntryPoint = "glGetUniformBlockIndex", ExactSpelling = true)]
             internal extern static Int32 GetUniformBlockIndex(UInt32 program, String uniformBlockName);
             [System.Runtime.InteropServices.DllImport(Gl.Library, EntryPoint = "glGetUniformIndices", ExactSpelling = true)]
-            internal extern static Int32 glGetUniformIndices(UInt32 program, Int32 uniformCount, String[] uniformNames, Int32[] uniformIndices);
+            internal extern static Int32 GetUniformIndices(UInt32 program, Int32 uniformCount, String[] uniformNames, Int32[] uniformIndices);
             [System.Runtime.InteropServices.DllImport(Gl.Library, EntryPoint = "glGetUniformSubroutineuiv", ExactSpelling = true)]
             internal extern static void GetUniformSubroutineuiv(OpenGL.ShaderType shaderType, Int32 location, [OutAttribute] UInt32[] values);
 
