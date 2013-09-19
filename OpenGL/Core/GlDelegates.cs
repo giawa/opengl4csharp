@@ -708,9 +708,9 @@ namespace OpenGL
             internal static GetSamplerParameteriv glGetSamplerParameteriv;
             internal delegate void GetShaderPrecisionFormat(OpenGL.ShaderType shaderType, Int32 precisionType, Int32[] range, [OutAttribute] Int32[] precision);
             internal static GetShaderPrecisionFormat glGetShaderPrecisionFormat;
-            internal delegate Int32 GetUniformBlockIndex(UInt32 program, String uniformBlockName);
+            internal delegate UInt32 GetUniformBlockIndex(UInt32 program, String uniformBlockName);
             internal static GetUniformBlockIndex glGetUniformBlockIndex;
-            internal delegate Int32 GetUniformIndices(UInt32 program, Int32 uniformCount, String[] uniformNames, Int32[] uniformIndices);
+            internal delegate UInt32 GetUniformIndices(UInt32 program, Int32 uniformCount, String[] uniformNames, UInt32[] uniformIndices);
             internal static GetUniformIndices glGetUniformIndices;
             internal delegate void GetUniformSubroutineuiv(OpenGL.ShaderType shaderType, Int32 location, [OutAttribute] UInt32[] values);
             internal static GetUniformSubroutineuiv glGetUniformSubroutineuiv;

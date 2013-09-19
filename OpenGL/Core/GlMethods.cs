@@ -316,5 +316,19 @@ namespace OpenGL
         private static uint currentProgram = 0;
 
         public static uint CurrentProgram { get { return currentProgram; } }
+
+        /// <summary>
+        /// Get the index of a uniform block in the provided shader program.
+        /// Note:  This method will use the provided shader program, so make sure to
+        /// store which program is currently active and reload it if required.
+        /// </summary>
+        /// <param name="program">The shader program that contains the uniform block.</param>
+        /// <param name="uniformBlockName">The uniform block name.</param>
+        /// <returns>The index of the uniform block.</returns>
+        public static uint GetUniformBlockIndex(ShaderProgram program, string uniformBlockName)
+        {
+            program.Use();  // take care of a crash that can occur on NVIDIA drivers by using the program first
+            return GetUniformBlockIndex(program.ProgramID, uniformBlockName);
+        }
     }
 }

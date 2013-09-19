@@ -1756,12 +1756,12 @@ namespace OpenGL
             Delegates.glGetShaderPrecisionFormat(shaderType, precisionType, range, precision);
         }
 
-        public static Int32 GetUniformBlockIndex(UInt32 program, String uniformBlockName)
+        public static UInt32 GetUniformBlockIndex(UInt32 program, String uniformBlockName)
         {
             return Delegates.glGetUniformBlockIndex(program, uniformBlockName);
         }
 
-        public static Int32 GetUniformIndices(UInt32 program, Int32 uniformCount, String[] uniformNames, Int32[] uniformIndices)
+        public static UInt32 GetUniformIndices(UInt32 program, Int32 uniformCount, String[] uniformNames, UInt32[] uniformIndices)
         {
             return Delegates.glGetUniformIndices(program, uniformCount, uniformNames, uniformIndices);
         }
