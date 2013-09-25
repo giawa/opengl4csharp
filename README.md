@@ -140,4 +140,4 @@ This is an example of creating a quad using a VBO for vertices (Vector3 data), a
 ```
 
 ## Further Reading
-I quickly pushed this project to GitHub, so there isn't much documentation at this time.  The math objects are quite well documented, and some of the constructs also have decent documentation.  Check my website, [http://www.giawa.com](http://www.giawa.com) for some examples as I develope with this code.
+I quickly pushed this project to GitHub, so there isn't much documentation at this time.  The math objects are quite well documented, and some of the constructs also have decent documentation.  Check my website, [http://www.giawa.com](http://www.giawa.com) for some examples as I develop with this code.

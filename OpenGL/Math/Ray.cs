@@ -93,8 +93,7 @@ namespace OpenGL
          * Breaks the 3 dimensions into 3 planes (xy, yz, xz) to perform
          * trivial calculations to determine if an intersect has occured.
          * 
-         * Conversion and Tweaking for the Giawa Studio Engine
-         * Montana Reid                                                         */
+         * Conversion and Tweaking for Orchard Sun by Giawa */
         /// <summary>
         /// Precalculates the slopes and 2D projections for intersection tests.
         /// </summary>

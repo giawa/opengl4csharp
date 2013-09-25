@@ -94,7 +94,7 @@ namespace OpenGL
             BitmapData bitmapData = BitmapImage.LockBits(new Rectangle(0, 0, BitmapImage.Width, BitmapImage.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
             // set the texture target and then generate the texture ID
-            this.TextureTarget = (BitmapImage.Height == 1 || BitmapImage.Width == 1) ? TextureTarget.Texture1D : TextureTarget.Texture2D;
+            this.TextureTarget = TextureTarget.Texture2D;
             this.TextureID = Gl.GenTexture();
 
             Gl.PixelStorei(PixelStoreParameter.UnpackAlignment, 1); // set pixel alignment

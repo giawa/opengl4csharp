@@ -14,7 +14,7 @@ namespace OpenGL
         #region Fields
 
         //internal const string Library = "libGL.so.1";	// linux
-		internal const string Library = "opengl32.dll";	// mac os x and windows
+        internal const string Library = "opengl32.dll";	// mac os x and windows
 
         private static Type glClass;
         private static Type delegatesClass;
