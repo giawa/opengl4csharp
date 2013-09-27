@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace OpenGL
 {
@@ -33,6 +34,26 @@ namespace OpenGL
         #endregion
 
         #region Constructor and Destructor
+        /// <summary>
+        /// Creates a buffer object of type T with a specified length.
+        /// This allows the array T[] to be larger than the actual size necessary to buffer.
+        /// Useful for reusing resources and avoiding unnecessary GC action.
+        /// </summary>
+        /// <param name="Data">An array of data of type T (which must be a struct) that will be buffered to the GPU.</param>
+        /// <param name="Length">The length of the valid data in the data array.</param>
+        /// <param name="Target">Specifies the target buffer object.</param>
+        /// <param name="Hint">Specifies the expected usage of the data store.</param>
+        public VBO(T[] Data, int Length, BufferTarget Target = OpenGL.BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticRead)
+        {
+            Length = Math.Max(0, Math.Min(Length, Data.Length));
+
+            vboID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint, Length);
+
+            this.Size = (Data is int[] ? 1 : (Data is Vector2[] ? 2 : (Data is Vector3[] ? 3 : (Data is Vector4[] ? 4 : 0))));
+            this.PointerType = (Data is int[] ? VertexAttribPointerType.Int : VertexAttribPointerType.Float);
+            this.Count = Length;
+        }
+
         /// <summary>
         /// Creates a buffer object of type T.
         /// </summary>
@@ -159,8 +180,11 @@ namespace OpenGL
             if (Gl.Version() >= 3)
             {
                 vaoID = Gl.GenVertexArray();
-                Gl.BindVertexArray(vaoID);
-                BindAttributes(this.Program);
+                if (vaoID != 0)
+                {
+                    Gl.BindVertexArray(vaoID);
+                    BindAttributes(this.Program);
+                }
                 Gl.BindVertexArray(0);
                 
                 Draw = DrawOGL3;
@@ -190,8 +214,8 @@ namespace OpenGL
         /// </summary>
         public void BindAttributes(ShaderProgram program)
         {
-            if (vertex == null) throw new Exception("Error binding attributes.  No vertices were supplied.");
-            if (element == null) throw new Exception("Error binding attributes.  No element array was supplied.");
+            if (vertex == null || vertex.vboID == 0) throw new Exception("Error binding attributes.  No vertices were supplied.");
+            if (element == null || element.vboID == 0) throw new Exception("Error binding attributes.  No element array was supplied.");
 
             // Note:  Since the shader is already compiled, we cannot set the attribute locations.
             //  Instead we must query the shader for the locations that the linker chose and use them.
@@ -200,7 +224,7 @@ namespace OpenGL
             Gl.BindBuffer(vertex.BufferTarget, vertex.vboID);
             Gl.VertexAttribPointer(loc, vertex.Size, vertex.PointerType, true, 12, new IntPtr(0));
 
-            if (normal != null)
+            if (normal != null && normal.vboID != 0)
             {
                 loc = (uint)Gl.GetAttribLocation(program.ProgramID, "in_normal");
                 Gl.EnableVertexAttribArray(loc);
@@ -208,15 +232,15 @@ namespace OpenGL
                 Gl.VertexAttribPointer(loc, normal.Size, normal.PointerType, true, 12, new IntPtr(0));
             }
 
-            if (uv != null)
+            if (uv != null && uv.vboID != 0)
             {
                 loc = (uint)Gl.GetAttribLocation(program.ProgramID, "in_uv");
                 Gl.EnableVertexAttribArray(loc);
                 Gl.BindBuffer(uv.BufferTarget, uv.vboID);
                 Gl.VertexAttribPointer(loc, uv.Size, uv.PointerType, true, 8, new IntPtr(0));
             }
-            
-            if (tangent != null)
+
+            if (tangent != null && tangent.vboID != 0)
             {
                 loc = (uint)Gl.GetAttribLocation(program.ProgramID, "in_tangent");
                 Gl.EnableVertexAttribArray(loc);
@@ -236,6 +260,7 @@ namespace OpenGL
         /// </summary>
         private void DrawOGL3()
         {
+            if (vaoID == 0) return;
             Gl.BindVertexArray(vaoID);
             Gl.DrawElements(DrawMode, VertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero);
             Gl.BindVertexArray(0);

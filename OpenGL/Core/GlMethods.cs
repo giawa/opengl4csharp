@@ -137,8 +137,22 @@ namespace OpenGL
             where T : struct
         {
             uint vboHandle = Gl.GenBuffer();
+            if (vboHandle == 0) return 0;
+
             Gl.BindBuffer(target, vboHandle);
             Gl.BufferData<T>(target, data.Length * Marshal.SizeOf(typeof(T)), data, hint);
+            Gl.BindBuffer(target, 0);
+            return vboHandle;
+        }
+
+        public static uint CreateVBO<T>(BufferTarget target, [InAttribute, OutAttribute] T[] data, BufferUsageHint hint, int length)
+            where T : struct
+        {
+            uint vboHandle = Gl.GenBuffer();
+            if (vboHandle == 0) return 0;
+
+            Gl.BindBuffer(target, vboHandle);
+            Gl.BufferData<T>(target, length * Marshal.SizeOf(typeof(T)), data, hint);
             Gl.BindBuffer(target, 0);
             return vboHandle;
         }
