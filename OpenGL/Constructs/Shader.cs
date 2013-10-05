@@ -98,49 +98,56 @@ namespace OpenGL
         #region SetValue Overrides
         public void SetValue(bool param)
         {
-            if (Type != typeof(bool)) throw new Exception(string.Format("SetValue({0} was given a bool.", Type));
+            if (Type != typeof(bool)) throw new Exception(string.Format("SetValue({0}) was given a bool.", Type));
             Gl.Uniform1i(location, (param) ? 1 : 0);
         }
 
         public void SetValue(int param)
         {
-            if (Type != typeof(int) && Type != typeof(Texture)) throw new Exception(string.Format("SetValue({0} was given a int.", Type));
+            if (Type != typeof(int) && Type != typeof(Texture)) throw new Exception(string.Format("SetValue({0}) was given a int.", Type));
             Gl.Uniform1i(location, param);
         }
 
         public void SetValue(float param)
         {
-            if (Type != typeof(float)) throw new Exception(string.Format("SetValue({0} was given a float.", Type));
+            if (Type != typeof(float)) throw new Exception(string.Format("SetValue({0}) was given a float.", Type));
             Gl.Uniform1f(location, param);
         }
 
         public void SetValue(Vector2 param)
         {
-            if (Type != typeof(Vector2)) throw new Exception(string.Format("SetValue({0} was given a Vector2.", Type));
+            if (Type != typeof(Vector2)) throw new Exception(string.Format("SetValue({0}) was given a Vector2.", Type));
             Gl.Uniform2f(location, param.x, param.y);
         }
 
         public void SetValue(Vector3 param)
         {
-            if (Type != typeof(Vector3)) throw new Exception(string.Format("SetValue({0} was given a Vector3.", Type));
+            if (Type != typeof(Vector3)) throw new Exception(string.Format("SetValue({0}) was given a Vector3.", Type));
             Gl.Uniform3f(location, param.x, param.y, param.z);
         }
 
         public void SetValue(Vector4 param)
         {
-            if (Type != typeof(Vector4)) throw new Exception(string.Format("SetValue({0} was given a Vector4.", Type));
+            if (Type != typeof(Vector4)) throw new Exception(string.Format("SetValue({0}) was given a Vector4.", Type));
             Gl.Uniform4f(location, param.x, param.y, param.z, param.w);
         }
 
         public void SetValue(Matrix4 param)
         {
-            if (Type != typeof(Matrix4)) throw new Exception(string.Format("SetValue({0} was given a Matrix4.", Type));
+            if (Type != typeof(Matrix4)) throw new Exception(string.Format("SetValue({0}) was given a Matrix4.", Type));
             Gl.UniformMatrix4fv(location, 1, false, param.ToFloat());
+        }
+
+        public void SetValue(float[] param)
+        {
+            if (Type != typeof(Matrix4)) throw new Exception(string.Format("SetValue({0}) was given a Matrix4.", Type));
+            if (param.Length != 16) throw new Exception(string.Format("Expected a float[] of 16 for a Matrix4, but instead got {0}.", param.Length));
+            Gl.UniformMatrix4fv(location, 1, false, param);
         }
 
         /*public void SetValue(Texture param)
         {
-            if (Type != typeof(Texture)) throw new Exception(string.Format("SetValue({0} was given a Texture.", Type));
+            if (Type != typeof(Texture)) throw new Exception(string.Format("SetValue({0}) was given a Texture.", Type));
             Gl.Uniform1i(location, param.Binding);
         }*/
         #endregion
