@@ -261,10 +261,7 @@ namespace OpenGL
     {
         #region Variables
         private AxisAlignedBoundingBox box;
-        private Vector3 position;
-        private Vector3 scale;
-        private Vector3 rotaxis;
-        private float rotation;
+        private Matrix4 modelMatrix;
         #endregion
 
         #region Properties
@@ -295,39 +292,20 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// The translation of the OrientatedBoundingBox
+        /// The Matrix4 representing the transformation of the underlying AABB.
         /// </summary>
-        public Vector3 Position
+        public Matrix4 Matrix
         {
-            get { return position; }
-            set { position = value; }
+            get { return modelMatrix; }
+            set { modelMatrix = value; }
         }
 
         /// <summary>
-        /// The scaling of the OrientatedBoundingBox
+        /// The underlying AABB structure that is mainpulated by the model matrix.
         /// </summary>
-        public Vector3 Scale
+        public AxisAlignedBoundingBox BoundingBox
         {
-            get { return scale; }
-            set { scale = value; }
-        }
-
-        /// <summary>
-        /// The rotation axis of the OrientatedBoundingBox
-        /// </summary>
-        public Vector3 RotationAxis
-        {
-            get { return rotaxis; }
-            set { rotaxis = value; }
-        }
-
-        /// <summary>
-        /// The rotation (in angles) of the OrientatedBoundingBox
-        /// </summary>
-        public float Rotation
-        {
-            get { return rotation; }
-            set { rotation = value; }
+            get { return box; }
         }
         #endregion
 
@@ -340,6 +318,7 @@ namespace OpenGL
         public OrientatedBoundingBox(Vector3 Min, Vector3 Max)
         {
             box = new AxisAlignedBoundingBox(Min, Max);
+            modelMatrix = Matrix4.Identity;
         }
 
         /// <summary>

@@ -431,9 +431,9 @@ namespace OpenGL
         /// <returns>True if an intersection exists</returns>
         public bool Intersects(OrientatedBoundingBox b)
         {
-            Matrix4 t_mat4 = (Matrix4.CreateTranslation(b.Position) * Matrix4.CreateScaling(b.Scale) * Matrix4.CreateRotation(b.RotationAxis, b.Rotation)).Inverse();
-            Ray t_ray = new Ray(this.Origin * t_mat4, this.Direction * t_mat4);
-            return t_ray.Intersects(new AxisAlignedBoundingBox(b.Min, b.Max));
+            Matrix4 inverse = b.Matrix.Inverse();
+            Ray ray = new Ray(this.Origin * inverse, this.Direction * inverse);
+            return ray.Intersects(new AxisAlignedBoundingBox(b.Min, b.Max));
         }
         #endregion
     }

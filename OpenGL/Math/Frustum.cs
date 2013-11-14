@@ -8,7 +8,17 @@ namespace OpenGL
     public class Frustum
     {
         #region Variables
-        Plane[] planes;
+        private Plane[] planes;
+
+        /// <summary>
+        /// Get the planes that make up the Frustum.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <returns></returns>
+        public Plane this[int a]
+        {
+            get { return (a >= 0 && a < 6) ? planes[a] : null; }
+        }
         #endregion
 
         #region Methods
@@ -25,8 +35,8 @@ namespace OpenGL
         /// </summary>
         public void UpdateFrustum(Matrix4 projectionMatrix, Matrix4 modelviewMatrix)
         {
-            Matrix4 t_proj = projectionMatrix;//Matrix4.FromArray(CameraHandler.Instance.ProjectionMatrix);
-            Matrix4 t_model = modelviewMatrix;//Matrix4.FromArray(CameraHandler.Instance.ModelviewMatrix);
+            Matrix4 t_proj = projectionMatrix;
+            Matrix4 t_model = modelviewMatrix;
             Matrix4 t_clip = t_model * t_proj;
 
             planes[0] = new Plane(t_clip[0].w - t_clip[0].x, t_clip[1].w - t_clip[1].x, t_clip[2].w - t_clip[2].x, t_clip[3].w - t_clip[3].x);
@@ -48,11 +58,18 @@ namespace OpenGL
         /// </summary>
         /// <param name="b">AxixAlignedBoundingBox to check</param>
         /// <returns>True if an intersection exists</returns>
-        public bool Intersects(AxisAlignedBoundingBox b)
+        public bool Intersects(AxisAlignedBoundingBox box)
         {
             for (int i = 0; i < 6; i++)
             {
-                if (Vector3.Dot(b.Center, planes[i].Normal) + planes[i].Scalar <= -b.Radius) return false;
+                Plane p = planes[i];
+
+                float d = box.Center.Dot(p.Normal);
+                float r = box.Size.x * Math.Abs(p.Normal.x) + box.Size.y * Math.Abs(p.Normal.y) + box.Size.z * Math.Abs(p.Normal.z);
+                float dpr = d + r;
+                float dmr = d - r;
+
+                if (dpr < -p.Scalar) return false;
             }
             return true;
         }
