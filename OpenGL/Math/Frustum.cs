@@ -35,16 +35,15 @@ namespace OpenGL
         /// </summary>
         public void UpdateFrustum(Matrix4 projectionMatrix, Matrix4 modelviewMatrix)
         {
-            Matrix4 t_proj = projectionMatrix;
-            Matrix4 t_model = modelviewMatrix;
-            Matrix4 t_clip = t_model * t_proj;
+            Matrix4 clipMatrix = modelviewMatrix * projectionMatrix;
 
-            planes[0] = new Plane(t_clip[0].w - t_clip[0].x, t_clip[1].w - t_clip[1].x, t_clip[2].w - t_clip[2].x, t_clip[3].w - t_clip[3].x);
-            planes[1] = new Plane(t_clip[0].w + t_clip[0].x, t_clip[1].w + t_clip[1].x, t_clip[2].w + t_clip[2].x, t_clip[3].w + t_clip[3].x);
-            planes[2] = new Plane(t_clip[0].w + t_clip[0].y, t_clip[1].w + t_clip[1].y, t_clip[2].w + t_clip[2].y, t_clip[3].w + t_clip[3].y);
-            planes[3] = new Plane(t_clip[0].w - t_clip[0].y, t_clip[1].w - t_clip[1].y, t_clip[2].w - t_clip[2].y, t_clip[3].w - t_clip[3].y);
-            planes[4] = new Plane(t_clip[0].w - t_clip[0].z, t_clip[1].w - t_clip[1].z, t_clip[2].w - t_clip[2].z, t_clip[3].w - t_clip[3].z);
-            planes[5] = new Plane(t_clip[0].w + t_clip[0].z, t_clip[1].w + t_clip[1].z, t_clip[2].w + t_clip[2].z, t_clip[3].w + t_clip[3].z);
+            planes[0] = new Plane(clipMatrix[0].w - clipMatrix[0].x, clipMatrix[1].w - clipMatrix[1].x, clipMatrix[2].w - clipMatrix[2].x, clipMatrix[3].w - clipMatrix[3].x);
+            planes[1] = new Plane(clipMatrix[0].w + clipMatrix[0].x, clipMatrix[1].w + clipMatrix[1].x, clipMatrix[2].w + clipMatrix[2].x, clipMatrix[3].w + clipMatrix[3].x);
+            planes[2] = new Plane(clipMatrix[0].w + clipMatrix[0].y, clipMatrix[1].w + clipMatrix[1].y, clipMatrix[2].w + clipMatrix[2].y, clipMatrix[3].w + clipMatrix[3].y);
+            planes[3] = new Plane(clipMatrix[0].w - clipMatrix[0].y, clipMatrix[1].w - clipMatrix[1].y, clipMatrix[2].w - clipMatrix[2].y, clipMatrix[3].w - clipMatrix[3].y);
+            planes[4] = new Plane(clipMatrix[0].w - clipMatrix[0].z, clipMatrix[1].w - clipMatrix[1].z, clipMatrix[2].w - clipMatrix[2].z, clipMatrix[3].w - clipMatrix[3].z);
+            planes[5] = new Plane(clipMatrix[0].w + clipMatrix[0].z, clipMatrix[1].w + clipMatrix[1].z, clipMatrix[2].w + clipMatrix[2].z, clipMatrix[3].w + clipMatrix[3].z);
+            
             for (int i = 0; i < 6; i++)
             {
                 float t_mag = planes[i].Normal.Length;
