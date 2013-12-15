@@ -60,7 +60,7 @@ namespace OpenGL
         /// <param name="Data">Specifies a pointer to data that will be copied into the data store for initialization.</param>
         /// <param name="Target">Specifies the target buffer object.</param>
         /// <param name="Hint">Specifies the expected usage of the data store.</param>
-        public VBO(T[] Data, BufferTarget Target, BufferUsageHint Hint)
+        public VBO(T[] Data, BufferTarget Target = OpenGL.BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticRead)
         {
             vboID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint);
 

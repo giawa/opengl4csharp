@@ -344,5 +344,21 @@ namespace OpenGL
             program.Use();  // take care of a crash that can occur on NVIDIA drivers by using the program first
             return GetUniformBlockIndex(program.ProgramID, uniformBlockName);
         }
+
+        public static void BindBuffer<T>(VBO<T> buffer) 
+            where T : struct
+        {
+            Gl.BindBuffer(buffer.BufferTarget, buffer.vboID);
+        }
+
+        public static void BindBufferToShaderAttribute<T>(VBO<T> buffer, ShaderProgram program, string attributeName) 
+            where T : struct
+        {
+            uint location = (uint)Gl.GetAttribLocation(program.ProgramID, attributeName);
+
+            Gl.EnableVertexAttribArray(location);
+            Gl.BindBuffer(buffer);
+            Gl.VertexAttribPointer(location, buffer.Size, buffer.PointerType, true, Marshal.SizeOf(typeof(T)), IntPtr.Zero);
+        }
     }
 }
