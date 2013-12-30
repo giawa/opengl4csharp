@@ -841,6 +841,11 @@ namespace OpenGL
             Delegates.glPointParameteri(pname, param);
         }
 
+        public static void PointSize(float size)
+        {
+            Delegates.glPointSize(size);
+        }
+
         public static void PolygonMode(OpenGL.MaterialFace face, OpenGL.PolygonMode mode)
         {
             Delegates.glPolygonMode(face, mode);

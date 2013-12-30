@@ -503,7 +503,7 @@ namespace OpenGL
         //VertexProgramTwoSide = ((int)0x8643),
         DepthClamp = ((int)0x864F),
         TextureCubeMapSeamless = ((int)0x884F),
-        //PointSprite = ((int)0x8861),
+        PointSprite = ((int)0x8861),
         RasterizerDiscard = ((int)0x8C89),
         FramebufferSrgb = ((int)0x8DB9),
         SampleMask = ((int)0x8E51),

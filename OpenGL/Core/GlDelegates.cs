@@ -342,6 +342,8 @@ namespace OpenGL
             internal static PointParameterf glPointParameterf;
             internal delegate void PointParameteri(OpenGL.PointParameterName pname, Int32 param);
             internal static PointParameteri glPointParameteri;
+            internal delegate void PointSize(float size);
+            internal static PointSize glPointSize;
             internal delegate void PolygonMode(OpenGL.MaterialFace face, OpenGL.PolygonMode mode);
             internal static PolygonMode glPolygonMode;
             internal delegate void PolygonOffset(Single factor, Single units);

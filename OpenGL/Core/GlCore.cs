@@ -354,6 +354,8 @@ namespace OpenGL
             internal extern static void PointParameterf(OpenGL.PointParameterName pname, Single param);
             [System.Runtime.InteropServices.DllImport(Gl.Library, EntryPoint = "glPointParameteri", ExactSpelling = true)]
             internal extern static void PointParameteri(OpenGL.PointParameterName pname, Int32 param);
+            [System.Runtime.InteropServices.DllImport(Gl.Library, EntryPoint = "glPointSize", ExactSpelling = true)]
+            internal extern static void PointSize(float size);
             [System.Runtime.InteropServices.DllImport(Gl.Library, EntryPoint = "glPolygonMode", ExactSpelling = true)]
             internal extern static void PolygonMode(OpenGL.MaterialFace face, OpenGL.PolygonMode mode);
             [System.Runtime.InteropServices.DllImport(Gl.Library, EntryPoint = "glPolygonOffset", ExactSpelling = true)]
