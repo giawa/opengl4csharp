@@ -5,6 +5,8 @@ namespace OpenGL
 {
     partial class Gl
     {
+        private static uint[] id = new uint[1];
+
         /// <summary>
         /// Shortcut for quickly generating a single buffer id without creating an array to
         /// pass to the gl function.  Calls Gl.GenBuffers(1, id).
@@ -12,7 +14,7 @@ namespace OpenGL
         /// <returns>The ID of the generated buffer.  0 on failure.</returns>
         public static uint GenBuffer()
         {
-            uint[] id = new uint[1];
+            id[0] = 0;
             Gl.GenBuffers(1, id);
             return id[0];
         }
@@ -24,7 +26,7 @@ namespace OpenGL
         /// <returns>The ID of the generated texture.  0 on failure.</returns>
         public static uint GenTexture()
         {
-            uint[] id = new uint[1];
+            id[0] = 0;
             Gl.GenTextures(1, id);
             return id[0];
         }
@@ -36,7 +38,7 @@ namespace OpenGL
         /// <returns>The ID of the generated vertex array.  0 on failure.</returns>
         public static uint GenVertexArray()
         {
-            uint[] id = new uint[1];
+            id[0] = 0;
             Gl.GenVertexArrays(1, id);
             return id[0];
         }
@@ -60,7 +62,7 @@ namespace OpenGL
         /// <returns>The ID of the generated framebuffer.  0 on failure.</returns>
         public static uint GenRenderbuffer()
         {
-            uint[] id = new uint[1];
+            id[0] = 0;
             Gl.GenRenderbuffers(1, id);
             return id[0];
         }
@@ -359,6 +361,13 @@ namespace OpenGL
             Gl.EnableVertexAttribArray(location);
             Gl.BindBuffer(buffer);
             Gl.VertexAttribPointer(location, buffer.Size, buffer.PointerType, true, Marshal.SizeOf(typeof(T)), IntPtr.Zero);
+        }
+
+        public static void DeleteBuffer(uint buffer)
+        {
+            id[0] = buffer;
+            DeleteBuffers(1, id);
+            id[0] = 0;
         }
     }
 }

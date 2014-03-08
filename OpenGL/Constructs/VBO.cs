@@ -110,8 +110,6 @@ namespace OpenGL
         private VBO<Vector2> uv;
         
         private VBO<int> element;
-        
-        private IDisposable[] vbos;
         #endregion
 
         #region Properties
@@ -145,25 +143,21 @@ namespace OpenGL
         public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<int> element)
             : this(program, vertex, null, null, null, element)
         {
-            vbos = new IDisposable[] { vertex, element };
         }
 
         public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<Vector2> uv, VBO<int> element)
             : this(program, vertex, null, null, uv, element)
         {
-            vbos = new IDisposable[] { vertex, uv, element };
         }
 
         public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<Vector3> normal, VBO<int> element)
             : this(program, vertex, normal, null, null, element)
         {
-            vbos = new IDisposable[] { vertex, normal, element };
         }
 
         public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<Vector3> normal, VBO<Vector2> uv, VBO<int> element)
             : this(program, vertex, normal, null, uv, element)
         {
-            vbos = new IDisposable[] { vertex, normal, uv, element };
         }
         
         public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<Vector3> normal, VBO<Vector3> tangent, VBO<Vector2> uv, VBO<int> element)
@@ -193,8 +187,6 @@ namespace OpenGL
             {
                 Draw = DrawOGL2;
             }
-            
-            vbos = new IDisposable[] { vertex, normal, tangent, uv, element };
         }
 
         ~VAO()
@@ -301,9 +293,13 @@ namespace OpenGL
             }
             
             // children must be disposed of separately since OpenGL 2.1 will not have a vertex array
-            if (DisposeChildren && vbos != null)
+            if (DisposeChildren)
             {
-                foreach (IDisposable pChild in vbos) pChild.Dispose();
+                if (vertex != null) vertex.Dispose();
+                if (normal != null) normal.Dispose();
+                if (tangent != null) tangent.Dispose();
+                if (uv != null) uv.Dispose();
+                if (element != null) element.Dispose();
             }
         }
         #endregion
