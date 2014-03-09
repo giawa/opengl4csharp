@@ -107,6 +107,17 @@ namespace OpenGL
             return "{" + x + ", " + y + ", " + z + ", " + w + "}";
         }
 
+        /// <summary>
+        /// Parses a JSON stream and produces a Quaternion struct.
+        /// </summary>
+        public static Quaternion Parse(string text)
+        {
+            string[] split = text.Trim(new char[] { '{', '}' }).Split(',');
+            if (split.Length != 4) return Quaternion.Identity;
+
+            return new Quaternion(float.Parse(split[0]), float.Parse(split[1]), float.Parse(split[2]), float.Parse(split[3]));
+        }
+
         public override bool Equals(object obj)
         {
             if (!(obj is Quaternion)) return false;

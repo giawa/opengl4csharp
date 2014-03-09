@@ -199,6 +199,17 @@ namespace OpenGL
             return "{" + x + ", " + y + ", " + z + "}";
         }
 
+        /// <summary>
+        /// Parses a JSON stream and produces a Vector3 struct.
+        /// </summary>
+        public static Vector3 Parse(string text)
+        {
+            string[] split = text.Trim(new char[] { '{', '}' }).Split(',');
+            if (split.Length != 3) return Vector3.Zero;
+
+            return new Vector3(float.Parse(split[0]), float.Parse(split[1]), float.Parse(split[2]));
+        }
+
         public float this[int a]
         {
             get { return (a == 0) ? x : (a == 1) ? y : z; }
