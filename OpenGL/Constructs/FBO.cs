@@ -57,31 +57,49 @@ namespace OpenGL
             BufferID = Gl.GenFramebuffer();
             Gl.BindFramebuffer(FramebufferTarget.Framebuffer, BufferID);
 
-            // Create and attach a 24-bit depth buffer to the framebuffer
-            DepthID = Gl.GenRenderbuffer();
-            Gl.BindRenderbuffer(RenderbufferTarget.Renderbuffer, DepthID);
-            Gl.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.DepthComponent24, Size.Width, Size.Height);
-
-            // Create n texture buffers (known by the number of attachments)
-            TextureID = new uint[Attachments.Length];
-            Gl.GenTextures(Attachments.Length, TextureID);
-
-            // Bind the n texture buffers to the framebuffer
-            for (int i = 0; i < Attachments.Length; i++)
+            if (Attachments.Length == 1 && Attachments[0] == FramebufferAttachment.DepthAttachment)
             {
-                Gl.BindTexture(TextureTarget.Texture2D, TextureID[i]);
-                Gl.TexImage2D(TextureTarget.Texture2D, 0, Format, Size.Width, Size.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
-                if (Mipmaps)
-                {
-                    Gl.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, 9729); // public const int GL_LINEAR = 9729;
-                    Gl.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, 9987); // public const int GL_LINEAR_MIPMAP_LINEAR = 9987;
-                    Gl.GenerateMipmap(GenerateMipmapTarget.Texture2D);
-                }
-                Gl.FramebufferTexture(FramebufferTarget.Framebuffer, Attachments[i], TextureID[i], 0);
-            }
+                TextureID = new uint[] { Gl.GenTexture() };
+                Gl.BindTexture(TextureTarget.Texture2D, TextureID[0]);
 
-            // Build the framebuffer and check for errors
-            Gl.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, DepthID);
+                Gl.TexImage2D(TextureTarget.Texture2D, 0, Format, Size.Width, Size.Height, 0, PixelFormat.DepthComponent, PixelType.Float, IntPtr.Zero);
+                Gl.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, TextureParameter.Nearest);
+                Gl.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, TextureParameter.Nearest);
+                Gl.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, TextureParameter.ClampToEdge);
+                Gl.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, TextureParameter.ClampToEdge);
+
+                Gl.FramebufferTexture(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, TextureID[0], 0);
+                Gl.DrawBuffer(DrawBufferMode.None);
+                Gl.ReadBuffer(ReadBufferMode.None);
+            }
+            else
+            {
+                // Create and attach a 24-bit depth buffer to the framebuffer
+                DepthID = Gl.GenRenderbuffer();
+                Gl.BindRenderbuffer(RenderbufferTarget.Renderbuffer, DepthID);
+                Gl.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.DepthComponent24, Size.Width, Size.Height);
+
+                // Create n texture buffers (known by the number of attachments)
+                TextureID = new uint[Attachments.Length];
+                Gl.GenTextures(Attachments.Length, TextureID);
+
+                // Bind the n texture buffers to the framebuffer
+                for (int i = 0; i < Attachments.Length; i++)
+                {
+                    Gl.BindTexture(TextureTarget.Texture2D, TextureID[i]);
+                    Gl.TexImage2D(TextureTarget.Texture2D, 0, Format, Size.Width, Size.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
+                    if (Mipmaps)
+                    {
+                        Gl.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, TextureParameter.Linear);
+                        Gl.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, TextureParameter.LinearMipMapLinear);
+                        Gl.GenerateMipmap(GenerateMipmapTarget.Texture2D);
+                    }
+                    Gl.FramebufferTexture(FramebufferTarget.Framebuffer, Attachments[i], TextureID[i], 0);
+                }
+
+                // Build the framebuffer and check for errors
+                Gl.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, DepthID);
+            }
 
             FramebufferErrorCode status = Gl.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
             if (status != FramebufferErrorCode.FramebufferComplete)
@@ -124,7 +142,7 @@ namespace OpenGL
             if (Attachments.Length > 1) Gl.DrawBuffers(Attachments.Length, buffers);
 
             Gl.Viewport(0, 0, Size.Width, Size.Height);
-            if (mipmaps) Gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            Gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }
 
         /// <summary>

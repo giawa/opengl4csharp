@@ -464,7 +464,7 @@ namespace OpenGL
             internal static TexImage3DMultisample glTexImage3DMultisample;
             internal delegate void TexParameterf(OpenGL.TextureTarget target, OpenGL.TextureParameterName pname, Single param);
             internal static TexParameterf glTexParameterf;
-            internal delegate void TexParameteri(OpenGL.TextureTarget target, OpenGL.TextureParameterName pname, Int32 param);
+            internal delegate void TexParameteri(OpenGL.TextureTarget target, OpenGL.TextureParameterName pname, int param);
             internal static TexParameteri glTexParameteri;
             internal delegate void TexSubImage1D(OpenGL.TextureTarget target, Int32 level, Int32 xoffset, Int32 width, OpenGL.PixelFormat format, OpenGL.PixelType type, IntPtr pixels);
             internal static TexSubImage1D glTexSubImage1D;

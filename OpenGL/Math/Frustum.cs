@@ -31,25 +31,32 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Builds the Planes so that they make up the left, right, up, down, front and back of the Frustum
+        /// Builds the Planes so that they make up the left, right, up, down, front and back of the Frustum.
         /// </summary>
-        public void UpdateFrustum(Matrix4 projectionMatrix, Matrix4 modelviewMatrix)
+        /// <param name="clipMatrix">The combined projection and view matrix (usually from the camera).</param>
+        public void UpdateFrustum(Matrix4 clipMatrix)
         {
-            Matrix4 clipMatrix = modelviewMatrix * projectionMatrix;
-
             planes[0] = new Plane(clipMatrix[0].w - clipMatrix[0].x, clipMatrix[1].w - clipMatrix[1].x, clipMatrix[2].w - clipMatrix[2].x, clipMatrix[3].w - clipMatrix[3].x);
             planes[1] = new Plane(clipMatrix[0].w + clipMatrix[0].x, clipMatrix[1].w + clipMatrix[1].x, clipMatrix[2].w + clipMatrix[2].x, clipMatrix[3].w + clipMatrix[3].x);
             planes[2] = new Plane(clipMatrix[0].w + clipMatrix[0].y, clipMatrix[1].w + clipMatrix[1].y, clipMatrix[2].w + clipMatrix[2].y, clipMatrix[3].w + clipMatrix[3].y);
             planes[3] = new Plane(clipMatrix[0].w - clipMatrix[0].y, clipMatrix[1].w - clipMatrix[1].y, clipMatrix[2].w - clipMatrix[2].y, clipMatrix[3].w - clipMatrix[3].y);
             planes[4] = new Plane(clipMatrix[0].w - clipMatrix[0].z, clipMatrix[1].w - clipMatrix[1].z, clipMatrix[2].w - clipMatrix[2].z, clipMatrix[3].w - clipMatrix[3].z);
             planes[5] = new Plane(clipMatrix[0].w + clipMatrix[0].z, clipMatrix[1].w + clipMatrix[1].z, clipMatrix[2].w + clipMatrix[2].z, clipMatrix[3].w + clipMatrix[3].z);
-            
+
             for (int i = 0; i < 6; i++)
             {
                 float t_mag = planes[i].Normal.Length;
                 planes[i].Scalar /= t_mag;
                 planes[i].Normal /= t_mag;
             }
+        }
+
+        /// <summary>
+        /// Builds the Planes so that they make up the left, right, up, down, front and back of the Frustum.
+        /// </summary>
+        public void UpdateFrustum(Matrix4 projectionMatrix, Matrix4 modelviewMatrix)
+        {
+            UpdateFrustum(modelviewMatrix * projectionMatrix);
         }
 
         /// <summary>

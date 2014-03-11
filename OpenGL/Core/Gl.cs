@@ -1146,7 +1146,12 @@ namespace OpenGL
             Delegates.glTexParameterf(target, pname, param);
         }
 
-        public static void TexParameteri(OpenGL.TextureTarget target, OpenGL.TextureParameterName pname, Int32 param)
+        public static void TexParameteri(OpenGL.TextureTarget target, OpenGL.TextureParameterName pname, TextureParameter param)
+        {
+            Delegates.glTexParameteri(target, pname, (int)param);
+        }
+
+        public static void TexParameteri(OpenGL.TextureTarget target, OpenGL.TextureParameterName pname, int param)
         {
             Delegates.glTexParameteri(target, pname, param);
         }

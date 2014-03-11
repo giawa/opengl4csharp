@@ -6,16 +6,6 @@ using System.Runtime.InteropServices;
 
 namespace OpenGL
 {
-    public enum TextureParam : int
-    {
-        Nearest = 9728,
-        Linear = 9729,
-        LinearMipmapLinear = 9987,
-        LinearMipmapNearest = 9985,
-        NearestMipmapLinear = 9986,
-        NearestMipmapNearest = 9984
-    }
-
     public class Texture : IDisposable
     {
         #region Propreties
@@ -100,10 +90,11 @@ namespace OpenGL
             Gl.PixelStorei(PixelStoreParameter.UnpackAlignment, 1); // set pixel alignment
             Gl.BindTexture(TextureTarget, TextureID);     // bind the texture to memory in OpenGL
 
-            Gl.TexParameteri(TextureTarget, TextureParameterName.GenerateMipmap, 0);
+            //Gl.TexParameteri(TextureTarget, TextureParameterName.GenerateMipmap, 0);
             Gl.TexImage2D(TextureTarget, 0, PixelInternalFormat.Four, BitmapImage.Width, BitmapImage.Height, 0, PixelFormat.Bgra, PixelType.UnsignedByte, bitmapData.Scan0);
-            Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMagFilter, (int)TextureParam.Nearest);
-            Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMinFilter, (int)TextureParam.Nearest);//(int)TextureParam.Linear);   // linear filter
+            Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMagFilter, TextureParameter.Nearest);
+            Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMinFilter, TextureParameter.Nearest);//(int)TextureParam.Linear);   // linear filter
+
             BitmapImage.UnlockBits(bitmapData);
             BitmapImage.Dispose();
         }
@@ -167,8 +158,8 @@ namespace OpenGL
                     this.TextureTarget = (imageData.Height == 1 || imageData.Width == 1) ? TextureTarget.Texture1D : TextureTarget.Texture2D;
                     this.TextureID = Gl.GenTexture();
                     Gl.BindTexture(TextureTarget, TextureID);
-                    Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMinFilter, (int)TextureParam.Linear);
-                    Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMagFilter, (int)TextureParam.Linear);
+                    Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMinFilter, TextureParameter.Linear);
+                    Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMagFilter, TextureParameter.Linear);
 
                     int nOffset = 0, nWidth = (int)imageData.Width, nHeight = (int)imageData.Height;
 

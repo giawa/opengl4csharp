@@ -132,10 +132,20 @@ namespace OpenGL
             Gl.Uniform4f(location, param.x, param.y, param.z, param.w);
         }
 
+        // pre-allocate the float[]
+        private static float[] matrixFloat = new float[16];
+
         public void SetValue(Matrix4 param)
         {
             if (Type != typeof(Matrix4)) throw new Exception(string.Format("SetValue({0}) was given a Matrix4.", Type));
-            Gl.UniformMatrix4fv(location, 1, false, param.ToFloat());
+
+            // use the statically allocated float[] for setting the uniform
+            matrixFloat[0] = param.Matrix[0].x; matrixFloat[1] = param.Matrix[0].y; matrixFloat[2] = param.Matrix[0].z; matrixFloat[3] = param.Matrix[0].w;
+            matrixFloat[4] = param.Matrix[1].x; matrixFloat[5] = param.Matrix[1].y; matrixFloat[6] = param.Matrix[1].z; matrixFloat[7] = param.Matrix[1].w;
+            matrixFloat[8] = param.Matrix[2].x; matrixFloat[9] = param.Matrix[2].y; matrixFloat[10] = param.Matrix[2].z; matrixFloat[11] = param.Matrix[2].w;
+            matrixFloat[12] = param.Matrix[3].x; matrixFloat[13] = param.Matrix[3].y; matrixFloat[14] = param.Matrix[3].z; matrixFloat[15] = param.Matrix[3].w;
+
+            Gl.UniformMatrix4fv(location, 1, false, matrixFloat);
         }
 
         public void SetValue(float[] param)
@@ -234,6 +244,11 @@ namespace OpenGL
                     case "vec4": shaderParams.Add(new ProgramParam(typeof(Vector4), type, name)); break;
                     case "mat4": shaderParams.Add(new ProgramParam(typeof(Matrix4), type, name)); break;
                     case "sampler2d": shaderParams.Add(new ProgramParam(typeof(Texture), type, name)); break;
+                    case "sampler2dshadow": shaderParams.Add(new ProgramParam(typeof(Texture), type, name)); break;
+                    case "sampler1d": shaderParams.Add(new ProgramParam(typeof(Texture), type, name)); break;
+                    case "sampler1dshadow": shaderParams.Add(new ProgramParam(typeof(Texture), type, name)); break;
+                    case "sampler3d": shaderParams.Add(new ProgramParam(typeof(Texture), type, name)); break;
+                    case "sampler2darray": shaderParams.Add(new ProgramParam(typeof(Texture), type, name)); break;
                     default: throw new Exception(string.Format("Unsupported GLSL type {0}", param[1]));
                 }
             }
