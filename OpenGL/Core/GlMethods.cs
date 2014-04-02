@@ -5,7 +5,14 @@ namespace OpenGL
 {
     partial class Gl
     {
+        // pre-allocate the float[] for matrix data
+        private static float[] matrixFloat = new float[16];
         private static uint[] id = new uint[1];
+
+        private static int _version = 0;
+        private static uint currentProgram = 0;
+
+        public static uint CurrentProgram { get { return currentProgram; } }
 
         /// <summary>
         /// Shortcut for quickly generating a single buffer id without creating an array to
@@ -134,7 +141,7 @@ namespace OpenGL
         /// <param name="target">The VBO BufferTarget (usually ArrayBuffer or ElementArrayBuffer).</param>
         /// <param name="data">The data to store in the VBO.</param>
         /// <param name="hint">The buffer usage hint (usually StaticDraw).</param>
-        /// <returns></returns>
+        /// <returns>The buffer ID of the VBO on success, 0 on failure.</returns>
         public static uint CreateVBO<T>(BufferTarget target, [InAttribute, OutAttribute] T[] data, BufferUsageHint hint)
             where T : struct
         {
@@ -147,6 +154,15 @@ namespace OpenGL
             return vboHandle;
         }
 
+        /// <summary>
+        /// Creates a standard VBO of type T where the length of the VBO is less than or equal to the length of the data.
+        /// </summary>
+        /// <typeparam name="T">The type of the data being stored in the VBO (make sure it's byte aligned).</typeparam>
+        /// <param name="target">The VBO BufferTarget (usually ArrayBuffer or ElementArrayBuffer).</param>
+        /// <param name="data">The data to store in the VBO.</param>
+        /// <param name="hint">The buffer usage hint (usually StaticDraw).</param>
+        /// <param name="length">The length of the VBO (will take the first 'length' elements from data).</param>
+        /// <returns>The buffer ID of the VBO on success, 0 on failure.</returns>
         public static uint CreateVBO<T>(BufferTarget target, [InAttribute, OutAttribute] T[] data, BufferUsageHint hint, int length)
             where T : struct
         {
@@ -255,6 +271,18 @@ namespace OpenGL
         }
         #endregion
 
+        /// <summary>
+        /// Creates a vertex array object based on a series of attribute arrays and and attribute names.
+        /// </summary>
+        /// <param name="program">The shader program that contains the attributes to be bound to.</param>
+        /// <param name="vbo">The VBO containing all of the attribute data.</param>
+        /// <param name="sizes">An array of sizes which correspond to the size of each attribute.</param>
+        /// <param name="types">An array of the attribute pointer types.</param>
+        /// <param name="targets">An array of the buffer targets.</param>
+        /// <param name="names">An array of the attribute names.</param>
+        /// <param name="stride">The stride of the VBO.</param>
+        /// <param name="eboHandle">The element buffer handle.</param>
+        /// <returns>The vertex array object (VAO) ID.</returns>
         public static uint CreateVAO(ShaderProgram program, uint vbo, int[] sizes, VertexAttribPointerType[] types, BufferTarget[] targets, string[] names, int stride, uint eboHandle)
         {
             uint vaoHandle = Gl.GenVertexArray();
@@ -276,8 +304,10 @@ namespace OpenGL
             return vaoHandle;
         }
         
-        private static int _version = 0;
-        
+        /// <summary>
+        /// Gets the current OpenGL version (returns a cached result on subsequent calls).
+        /// </summary>
+        /// <returns>The current OpenGL version, or 0 on an error.</returns>
         public static int Version()
         {
             if (_version != 0) return _version;	// cache the version information
@@ -324,15 +354,6 @@ namespace OpenGL
             return temp[0];
         }
 
-        public static void UniformMatrix4fv(int location, Matrix4 matrix)
-        {
-            Gl.UniformMatrix4fv(location, 1, false, matrix.ToFloat());
-        }
-
-        private static uint currentProgram = 0;
-
-        public static uint CurrentProgram { get { return currentProgram; } }
-
         /// <summary>
         /// Get the index of a uniform block in the provided shader program.
         /// Note:  This method will use the provided shader program, so make sure to
@@ -347,12 +368,22 @@ namespace OpenGL
             return GetUniformBlockIndex(program.ProgramID, uniformBlockName);
         }
 
+        /// <summary>
+        /// Binds a VBO based on the buffer target.
+        /// </summary>
+        /// <param name="buffer">The VBO to bind.</param>
         public static void BindBuffer<T>(VBO<T> buffer) 
             where T : struct
         {
             Gl.BindBuffer(buffer.BufferTarget, buffer.vboID);
         }
 
+        /// <summary>
+        /// Binds a VBO to a shader attribute.
+        /// </summary>
+        /// <param name="buffer">The VBO to bind to the shader attribute.</param>
+        /// <param name="program">The shader program whose attribute will be bound to.</param>
+        /// <param name="attributeName">The name of the shader attribute to be bound to.</param>
         public static void BindBufferToShaderAttribute<T>(VBO<T> buffer, ShaderProgram program, string attributeName) 
             where T : struct
         {
@@ -363,11 +394,32 @@ namespace OpenGL
             Gl.VertexAttribPointer(location, buffer.Size, buffer.PointerType, true, Marshal.SizeOf(typeof(T)), IntPtr.Zero);
         }
 
+        /// <summary>
+        /// Delete a single OpenGL buffer.
+        /// </summary>
+        /// <param name="buffer">The OpenGL buffer to delete.</param>
         public static void DeleteBuffer(uint buffer)
         {
             id[0] = buffer;
             DeleteBuffers(1, id);
             id[0] = 0;
+        }
+
+        /// <summary>
+        /// Set a uniform mat4 in the shader.
+        /// Uses a cached float[] to reduce memory usage.
+        /// </summary>
+        /// <param name="location">The location of the uniform in the shader.</param>
+        /// <param name="param">The Matrix4 to load into the shader uniform.</param>
+        public static void UniformMatrix4fv(int location, Matrix4 param)
+        {
+            // use the statically allocated float[] for setting the uniform
+            matrixFloat[0] = param[0].x; matrixFloat[1] = param[0].y; matrixFloat[2] = param[0].z; matrixFloat[3] = param[0].w;
+            matrixFloat[4] = param[1].x; matrixFloat[5] = param[1].y; matrixFloat[6] = param[1].z; matrixFloat[7] = param[1].w;
+            matrixFloat[8] = param[2].x; matrixFloat[9] = param[2].y; matrixFloat[10] = param[2].z; matrixFloat[11] = param[2].w;
+            matrixFloat[12] = param[3].x; matrixFloat[13] = param[3].y; matrixFloat[14] = param[3].z; matrixFloat[15] = param[3].w;
+
+            Gl.UniformMatrix4fv(location, 1, false, matrixFloat);
         }
     }
 }

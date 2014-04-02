@@ -95,7 +95,7 @@ namespace OpenGL
         {
             if (vboID != 0)
             {
-                Gl.DeleteBuffers(1, new uint[] { vboID });
+                Gl.DeleteBuffer(vboID);
                 vboID = 0;
             }
         }
@@ -211,33 +211,44 @@ namespace OpenGL
 
             // Note:  Since the shader is already compiled, we cannot set the attribute locations.
             //  Instead we must query the shader for the locations that the linker chose and use them.
-            uint loc = (uint)Gl.GetAttribLocation(program.ProgramID, "in_position");
-            Gl.EnableVertexAttribArray(loc);
+            int loc = Gl.GetAttribLocation(program.ProgramID, "in_position");
+            if (loc == -1) throw new Exception("Shader did not contain 'in_position'.");
+
+            Gl.EnableVertexAttribArray((uint)loc);
             Gl.BindBuffer(vertex.BufferTarget, vertex.vboID);
-            Gl.VertexAttribPointer(loc, vertex.Size, vertex.PointerType, true, 12, new IntPtr(0));
+            Gl.VertexAttribPointer((uint)loc, vertex.Size, vertex.PointerType, true, 12, IntPtr.Zero);
 
             if (normal != null && normal.vboID != 0)
             {
-                loc = (uint)Gl.GetAttribLocation(program.ProgramID, "in_normal");
-                Gl.EnableVertexAttribArray(loc);
-                Gl.BindBuffer(normal.BufferTarget, normal.vboID);
-                Gl.VertexAttribPointer(loc, normal.Size, normal.PointerType, true, 12, new IntPtr(0));
+                loc = Gl.GetAttribLocation(program.ProgramID, "in_normal");
+                if (loc != -1)
+                {
+                    Gl.EnableVertexAttribArray((uint)loc);
+                    Gl.BindBuffer(normal.BufferTarget, normal.vboID);
+                    Gl.VertexAttribPointer((uint)loc, normal.Size, normal.PointerType, true, 12, IntPtr.Zero);
+                }
             }
 
             if (uv != null && uv.vboID != 0)
             {
-                loc = (uint)Gl.GetAttribLocation(program.ProgramID, "in_uv");
-                Gl.EnableVertexAttribArray(loc);
-                Gl.BindBuffer(uv.BufferTarget, uv.vboID);
-                Gl.VertexAttribPointer(loc, uv.Size, uv.PointerType, true, 8, new IntPtr(0));
+                loc = Gl.GetAttribLocation(program.ProgramID, "in_uv");
+                if (loc != -1)
+                {
+                    Gl.EnableVertexAttribArray((uint)loc);
+                    Gl.BindBuffer(uv.BufferTarget, uv.vboID);
+                    Gl.VertexAttribPointer((uint)loc, uv.Size, uv.PointerType, true, 8, IntPtr.Zero);
+                }
             }
 
             if (tangent != null && tangent.vboID != 0)
             {
-                loc = (uint)Gl.GetAttribLocation(program.ProgramID, "in_tangent");
-                Gl.EnableVertexAttribArray(loc);
-                Gl.BindBuffer(tangent.BufferTarget, tangent.vboID);
-                Gl.VertexAttribPointer(loc, tangent.Size, tangent.PointerType, true, 12, new IntPtr(0));
+                loc = Gl.GetAttribLocation(program.ProgramID, "in_tangent");
+                if (loc != -1)
+                {
+                    Gl.EnableVertexAttribArray((uint)loc);
+                    Gl.BindBuffer(tangent.BufferTarget, tangent.vboID);
+                    Gl.VertexAttribPointer((uint)loc, tangent.Size, tangent.PointerType, true, 12, IntPtr.Zero);
+                }
             }
 
             Gl.BindBuffer(BufferTarget.ElementArrayBuffer, element.vboID);
@@ -300,6 +311,12 @@ namespace OpenGL
                 if (tangent != null) tangent.Dispose();
                 if (uv != null) uv.Dispose();
                 if (element != null) element.Dispose();
+
+                vertex = null;
+                normal = null;
+                tangent = null;
+                uv = null;
+                element = null;
             }
         }
         #endregion

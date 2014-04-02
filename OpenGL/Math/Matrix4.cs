@@ -7,7 +7,13 @@ namespace OpenGL
     [StructLayout(LayoutKind.Sequential)]
     public struct Matrix4 : IEquatable<Matrix4>
     {
-        public Vector4[] Matrix;
+        private Vector4 row1, row2, row3, row4;
+
+        [System.Obsolete("This property no longer has the same functionality, and should be modified to this[].  This property will be removed in a future build.", false)]
+        public Vector4[] Matrix
+        {
+            get { return new Vector4[] { row1, row2, row3, row4 }; }
+        }
 
         #region Static Constructors
         public static Matrix4 Identity
@@ -19,44 +25,44 @@ namespace OpenGL
         #region Operators
         public static Matrix4 operator +(Matrix4 m1, Matrix4 m2)
         {
-            return new Matrix4(m1.Matrix[0] + m2.Matrix[0], m1.Matrix[1] + m2.Matrix[1], m1.Matrix[2] + m2.Matrix[2], m1.Matrix[3] + m2.Matrix[3]);
+            return new Matrix4(m1.row1 + m2.row1, m1.row2 + m2.row2, m1.row3 + m2.row3, m1.row4 + m2.row4);
         }
 
         public static Matrix4 operator -(Matrix4 m1, Matrix4 m2)
         {
-            return new Matrix4(m1.Matrix[0] - m2.Matrix[0], m1.Matrix[1] - m2.Matrix[1], m1.Matrix[2] - m2.Matrix[2], m1.Matrix[3] - m2.Matrix[3]);
+            return new Matrix4(m1.row1 - m2.row1, m1.row2 - m2.row2, m1.row3 - m2.row3, m1.row4 - m2.row4);
         }
 
         public static Matrix4 operator *(Matrix4 m, Matrix4 m2)
         {
             Matrix4 r = new Matrix4(
-            new Vector4(m[0][0] * m2[0][0] + m[0][1] * m2[1][0] + m[0][2] * m2[2][0] + m[0][3] * m2[3][0],
-                m[0][0] * m2[0][1] + m[0][1] * m2[1][1] + m[0][2] * m2[2][1] + m[0][3] * m2[3][1],
-                m[0][0] * m2[0][2] + m[0][1] * m2[1][2] + m[0][2] * m2[2][2] + m[0][3] * m2[3][2],
-                m[0][0] * m2[0][3] + m[0][1] * m2[1][3] + m[0][2] * m2[2][3] + m[0][3] * m2[3][3]),
-            new Vector4(m[1][0] * m2[0][0] + m[1][1] * m2[1][0] + m[1][2] * m2[2][0] + m[1][3] * m2[3][0],
-                m[1][0] * m2[0][1] + m[1][1] * m2[1][1] + m[1][2] * m2[2][1] + m[1][3] * m2[3][1],
-                m[1][0] * m2[0][2] + m[1][1] * m2[1][2] + m[1][2] * m2[2][2] + m[1][3] * m2[3][2],
-                m[1][0] * m2[0][3] + m[1][1] * m2[1][3] + m[1][2] * m2[2][3] + m[1][3] * m2[3][3]),
-            new Vector4(m[2][0] * m2[0][0] + m[2][1] * m2[1][0] + m[2][2] * m2[2][0] + m[2][3] * m2[3][0],
-                m[2][0] * m2[0][1] + m[2][1] * m2[1][1] + m[2][2] * m2[2][1] + m[2][3] * m2[3][1],
-                m[2][0] * m2[0][2] + m[2][1] * m2[1][2] + m[2][2] * m2[2][2] + m[2][3] * m2[3][2],
-                m[2][0] * m2[0][3] + m[2][1] * m2[1][3] + m[2][2] * m2[2][3] + m[2][3] * m2[3][3]),
-            new Vector4(m[3][0] * m2[0][0] + m[3][1] * m2[1][0] + m[3][2] * m2[2][0] + m[3][3] * m2[3][0],
-                m[3][0] * m2[0][1] + m[3][1] * m2[1][1] + m[3][2] * m2[2][1] + m[3][3] * m2[3][1],
-                m[3][0] * m2[0][2] + m[3][1] * m2[1][2] + m[3][2] * m2[2][2] + m[3][3] * m2[3][2],
-                m[3][0] * m2[0][3] + m[3][1] * m2[1][3] + m[3][2] * m2[2][3] + m[3][3] * m2[3][3]));
+            new Vector4(m[0].x * m2[0].x + m[0].y * m2[1].x + m[0].z * m2[2].x + m[0].w * m2[3].x,
+                m[0].x * m2[0].y + m[0].y * m2[1].y + m[0].z * m2[2].y + m[0].w * m2[3].y,
+                m[0].x * m2[0].z + m[0].y * m2[1].z + m[0].z * m2[2].z + m[0].w * m2[3].z,
+                m[0].x * m2[0].w + m[0].y * m2[1].w + m[0].z * m2[2].w + m[0].w * m2[3].w),
+            new Vector4(m[1].x * m2[0].x + m[1].y * m2[1].x + m[1].z * m2[2].x + m[1].w * m2[3].x,
+                m[1].x * m2[0].y + m[1].y * m2[1].y + m[1].z * m2[2].y + m[1].w * m2[3].y,
+                m[1].x * m2[0].z + m[1].y * m2[1].z + m[1].z * m2[2].z + m[1].w * m2[3].z,
+                m[1].x * m2[0].w + m[1].y * m2[1].w + m[1].z * m2[2].w + m[1].w * m2[3].w),
+            new Vector4(m[2].x * m2[0].x + m[2].y * m2[1].x + m[2].z * m2[2].x + m[2].w * m2[3].x,
+                m[2].x * m2[0].y + m[2].y * m2[1].y + m[2].z * m2[2].y + m[2].w * m2[3].y,
+                m[2].x * m2[0].z + m[2].y * m2[1].z + m[2].z * m2[2].z + m[2].w * m2[3].z,
+                m[2].x * m2[0].w + m[2].y * m2[1].w + m[2].z * m2[2].w + m[2].w * m2[3].w),
+            new Vector4(m[3].x * m2[0].x + m[3].y * m2[1].x + m[3].z * m2[2].x + m[3].w * m2[3].x,
+                m[3].x * m2[0].y + m[3].y * m2[1].y + m[3].z * m2[2].y + m[3].w * m2[3].y,
+                m[3].x * m2[0].z + m[3].y * m2[1].z + m[3].z * m2[2].z + m[3].w * m2[3].z,
+                m[3].x * m2[0].w + m[3].y * m2[1].w + m[3].z * m2[2].w + m[3].w * m2[3].w));
             return r;
         }
 
         public static Matrix4 operator *(Matrix4 m1, float d)
         {
-            return new Matrix4(m1.Matrix[0] * d, m1.Matrix[1] * d, m1.Matrix[2] * d, m1.Matrix[3] * d);
+            return new Matrix4(m1.row1 * d, m1.row2 * d, m1.row3 * d, m1.row4 * d);
         }
 
         public static Matrix4 operator /(Matrix4 m1, float d)
         {
-            return new Matrix4(m1.Matrix[0] / d, m1.Matrix[1] / d, m1.Matrix[2] / d, m1.Matrix[3] / d);
+            return new Matrix4(m1.row1 / d, m1.row2 / d, m1.row3 / d, m1.row4 / d);
         }
 
         public static Vector3 operator *(Matrix4 m1, Vector3 v)
@@ -94,23 +100,25 @@ namespace OpenGL
             get
             {
                 if (a > 3 || a < 0) return Vector4.Zero;
-                return Matrix[a];
+                return (a == 0 ? row1 : (a == 1 ? row2 : (a == 2 ? row3 : row4)));
             }
             set
             {
-                if (a > 3 || a < 0) return;
-                Matrix[a] = value;
+                if (a == 0) row1 = value;
+                else if (a == 1) row2 = value;
+                else if (a == 2) row3 = value;
+                else if (a == 3) row4 = value;
             }
         }
 
         public static bool operator ==(Matrix4 m1, Matrix4 m2)
         {
-            return (m1.Matrix[0] == m2.Matrix[0] && m1.Matrix[1] == m2.Matrix[1] && m1.Matrix[2] == m2.Matrix[2] && m1.Matrix[3] == m2.Matrix[3]);
+            return (m1[0] == m2[0] && m1[1] == m2[1] && m1[2] == m2[2] && m1[3] == m2[3]);
         }
 
         public static bool operator !=(Matrix4 m1, Matrix4 m2)
         {
-            return (m1.Matrix[0] != m2.Matrix[0] || m1.Matrix[1] != m2.Matrix[1] || m1.Matrix[2] != m2.Matrix[2] || m1.Matrix[3] != m2.Matrix[3]);
+            return (m1[0] != m2[0] || m1[1] != m2[1] || m1[2] != m2[2] || m1[3] != m2[3]);
         }
 
         public override bool Equals(object obj)
@@ -132,60 +140,49 @@ namespace OpenGL
 
         public override string ToString()
         {
-            return "[ " + Matrix[0].ToString() + " ] [ " + Matrix[1].ToString() + " ] [ " + Matrix[2].ToString() + " ] [ " + Matrix[3].ToString() + " ]";
+            return "[ " + row1.ToString() + " ] [ " + row2.ToString() + " ] [ " + row3.ToString() + " ] [ " + row4.ToString() + " ]";
         }
         #endregion
 
         #region Constructors
-        public Matrix4(Matrix4 ExistingMatrix)
+        public Matrix4(Matrix4 existingMatrix)
         {
-            this.Matrix = new Vector4[] { ExistingMatrix[0], ExistingMatrix[1], ExistingMatrix[2], ExistingMatrix[3] };
+            row1 = existingMatrix[0];
+            row2 = existingMatrix[1];
+            row3 = existingMatrix[2];
+            row4 = existingMatrix[3];
         }
 
         public Matrix4(Vector4 v0, Vector4 v1, Vector4 v2, Vector4 v3)
         {
-            Matrix = new Vector4[4];
-            SetMatrix(v0, v1, v2, v3);
+            row1 = v0;
+            row2 = v1;
+            row3 = v2;
+            row4 = v3;
         }
 
-        public Matrix4(float[] Array)
+        public Matrix4(float[] array)
         {
-            Matrix = new Vector4[4];
-            SetMatrix(new Vector4(Array[0], Array[1], Array[2], Array[3]), new Vector4(Array[4], Array[5], Array[6], Array[7]),
-                new Vector4(Array[8], Array[9], Array[10], Array[11]), new Vector4(Array[12], Array[13], Array[14], Array[15]));
+            row1 = new Vector4(array[0], array[1], array[2], array[3]);
+            row2 = new Vector4(array[4], array[5], array[6], array[7]);
+            row3 = new Vector4(array[8], array[9], array[10], array[11]);
+            row4 = new Vector4(array[12], array[13], array[14], array[15]);
         }
 
-        public Matrix4(double[] Array)
+        public Matrix4(double[] array)
         {
-            Matrix = new Vector4[4];
-            SetMatrix(new Vector4(Array[0], Array[1], Array[2], Array[3]), new Vector4(Array[4], Array[5], Array[6], Array[7]),
-                new Vector4(Array[8], Array[9], Array[10], Array[11]), new Vector4(Array[12], Array[13], Array[14], Array[15]));
+            row1 = new Vector4(array[0], array[1], array[2], array[3]);
+            row2 = new Vector4(array[4], array[5], array[6], array[7]);
+            row3 = new Vector4(array[8], array[9], array[10], array[11]);
+            row4 = new Vector4(array[12], array[13], array[14], array[15]);
         }
-
-        /*public Matrix4(Matrix3 ExistingMatrix, Vector3 Translation)
-        {
-            Matrix = new Vector4[4];
-            SetMatrix(new Vector4(ExistingMatrix[0].x, ExistingMatrix[0].y, ExistingMatrix[0].z, 0.0f),
-                new Vector4(ExistingMatrix[1].x, ExistingMatrix[1].y, ExistingMatrix[1].z, 0.0f),
-                new Vector4(ExistingMatrix[2].x, ExistingMatrix[2].y, ExistingMatrix[2].z, 0.0f),
-                new Vector4(Translation.x, Translation.y, Translation.z, 1.0f));
-        }
-
-        public Matrix4(Matrix3 ExistingMatrix)
-        {
-            Matrix = new Vector4[4];
-            SetMatrix(new Vector4(ExistingMatrix[0].x, ExistingMatrix[0].y, ExistingMatrix[0].z, 0.0f),
-                new Vector4(ExistingMatrix[1].x, ExistingMatrix[1].y, ExistingMatrix[1].z, 0.0f),
-                new Vector4(ExistingMatrix[2].x, ExistingMatrix[2].y, ExistingMatrix[2].z, 0.0f),
-                new Vector4(0.0f, 0.0f, 0.0f, 1.0f));
-        }*/
 
         public void SetMatrix(Vector4 v0, Vector4 v1, Vector4 v2, Vector4 v3)
         {
-            Matrix[0] = v0;
-            Matrix[1] = v1;
-            Matrix[2] = v2;
-            Matrix[3] = v3;
+            row1 = v0;
+            row2 = v1;
+            row3 = v2;
+            row4 = v3;
         }
         #endregion
 
@@ -193,24 +190,24 @@ namespace OpenGL
         /// <summary>
         /// Creates a matrix which contains information on how to translate.
         /// </summary>
-        /// <param name="Translation">Amount to translate by in the x, y and z direction.</param>
+        /// <param name="translation">Amount to translate by in the x, y and z direction.</param>
         /// <returns>A Matrix4 object that contains the translation matrix.</returns>
-        public static Matrix4 CreateTranslation(Vector3 Translation)
+        public static Matrix4 CreateTranslation(Vector3 translation)
         {
             Matrix4 result = Matrix4.Identity;
-            result[3] = new Vector4(Translation, 1.0f);
+            result[3] = new Vector4(translation, 1.0f);
             return result;
         }
 
         /// <summary>
         /// Creates a matrix which contains information on how to rotate about the X axis.
         /// </summary>
-        /// <param name="Angle">Amount to rotate in radians (counter-clockwise).</param>
+        /// <param name="angle">Amount to rotate in radians (counter-clockwise).</param>
         /// <returns>A Matrix4 object that contains the rotation matrix.</returns>
-        public static Matrix4 CreateRotationX(float Angle)
+        public static Matrix4 CreateRotationX(float angle)
         {
-            float cos = (float)Math.Cos(Angle);
-            float sin = (float)Math.Sin(Angle);
+            float cos = (float)Math.Cos(angle);
+            float sin = (float)Math.Sin(angle);
 
             return new Matrix4(Vector4.UnitX, new Vector4(0.0f, cos, sin, 0.0f), new Vector4(0.0f, -sin, cos, 0.0f), Vector4.UnitW);
         }
@@ -218,12 +215,12 @@ namespace OpenGL
         /// <summary>
         /// Creates a matrix which contains information on how to rotate about the Y axis.
         /// </summary>
-        /// <param name="Angle">Amount to rotate in radians (counter-clockwise).</param>
+        /// <param name="angle">Amount to rotate in radians (counter-clockwise).</param>
         /// <returns>A Matrix4 object that contains the rotation matrix.</returns>
-        public static Matrix4 CreateRotationY(float Angle)
+        public static Matrix4 CreateRotationY(float angle)
         {
-            float cos = (float)Math.Cos(Angle);
-            float sin = (float)Math.Sin(Angle);
+            float cos = (float)Math.Cos(angle);
+            float sin = (float)Math.Sin(angle);
 
             return new Matrix4(new Vector4(cos, 0.0f, -sin, 0.0f), Vector4.UnitY, new Vector4(sin, 0.0f, cos, 0.0f), Vector4.UnitW);
         }
@@ -231,12 +228,12 @@ namespace OpenGL
         /// <summary>
         /// Creates a matrix which contains information on how to rotate about the Z axis.
         /// </summary>
-        /// <param name="Angle">Amount to rotate in radians (counter-clockwise).</param>
+        /// <param name="angle">Amount to rotate in radians (counter-clockwise).</param>
         /// <returns>A Matrix4 object that contains the rotation matrix.</returns>
-        public static Matrix4 CreateRotationZ(float Angle)
+        public static Matrix4 CreateRotationZ(float angle)
         {
-            float cos = (float)Math.Cos(Angle);
-            float sin = (float)Math.Sin(Angle);
+            float cos = (float)Math.Cos(angle);
+            float sin = (float)Math.Sin(angle);
 
             return new Matrix4(new Vector4(cos, sin, 0.0f, 0.0f), new Vector4(-sin, cos, 0.0f, 0.0f), Vector4.UnitZ, Vector4.UnitW);
         }
@@ -244,23 +241,23 @@ namespace OpenGL
         /// <summary>
         /// Create a rotation matrix about an arbitrary axis.
         /// </summary>
-        /// <param name="Axis">Arbitrary axis for rotation.</param>
-        /// <param name="Angle">Amount to rotate in radians.</param>
+        /// <param name="axis">Arbitrary axis for rotation.</param>
+        /// <param name="angle">Amount to rotate in radians.</param>
         /// <returns>A Matrix4 object that contains the rotation matrix.</returns>
-        public static Matrix4 CreateRotation(Vector3 Axis, float Angle)
+        public static Matrix4 CreateRotation(Vector3 axis, float angle)
         {
-            float cos = (float)Math.Cos(Angle);
-            float sin = (float)Math.Sin(Angle);
+            float cos = (float)Math.Cos(angle);
+            float sin = (float)Math.Sin(angle);
             float tan = 1.0f - cos;
-            return new Matrix4(new Vector4(tan * Axis.x * Axis.x + cos,
-                    tan * Axis.x * Axis.y - sin * Axis.z,
-                    tan * Axis.x * Axis.z + sin * Axis.y, 0.0f),
-                new Vector4(tan * Axis.y * Axis.x + sin * Axis.z,
-                    tan * Axis.y * Axis.y + cos,
-                    tan * Axis.y * Axis.z - sin * Axis.x, 0.0f),
-                new Vector4(tan * Axis.z * Axis.x - sin * Axis.y,
-                    tan * Axis.z * Axis.y + sin * Axis.x,
-                    tan * Axis.z * Axis.z + cos, 0.0f),
+            return new Matrix4(new Vector4(tan * axis.x * axis.x + cos,
+                    tan * axis.x * axis.y - sin * axis.z,
+                    tan * axis.x * axis.z + sin * axis.y, 0.0f),
+                new Vector4(tan * axis.y * axis.x + sin * axis.z,
+                    tan * axis.y * axis.y + cos,
+                    tan * axis.y * axis.z - sin * axis.x, 0.0f),
+                new Vector4(tan * axis.z * axis.x - sin * axis.y,
+                    tan * axis.z * axis.y + sin * axis.x,
+                    tan * axis.z * axis.z + cos, 0.0f),
                 new Vector4(0.0f, 0.0f, 0.0f, 1.0f));
         }
 
@@ -284,11 +281,11 @@ namespace OpenGL
         }
 
         /// <summary>Creates a matrix which contains information on how to scale</summary>
-        /// <param name="Scale">Amount to scale by in the x, y and z direction</param>
+        /// <param name="scale">Amount to scale by in the x, y and z direction</param>
         /// <returns>A Matrix4 object that contains the scaling matrix</returns>
-        public static Matrix4 CreateScaling(Vector3 Scale)
+        public static Matrix4 CreateScaling(Vector3 scale)
         {
-            return new Matrix4(new Vector4(Scale.x, 0.0f, 0.0f, 0.0f), new Vector4(0.0f, Scale.y, 0.0f, 0.0f), new Vector4(0.0f, 0.0f, Scale.z, 0.0f), new Vector4(0.0f, 0.0f, 0.0f, 1.0f));
+            return new Matrix4(new Vector4(scale.x, 0.0f, 0.0f, 0.0f), new Vector4(0.0f, scale.y, 0.0f, 0.0f), new Vector4(0.0f, 0.0f, scale.z, 0.0f), new Vector4(0.0f, 0.0f, 0.0f, 1.0f));
         }
 
         /// <summary>
@@ -404,14 +401,12 @@ namespace OpenGL
             Vector3 x = Vector3.Cross(up, z).Normalize();
             Vector3 y = Vector3.Cross(z, x).Normalize();
 
-            Matrix4 rot = new Matrix4(new Vector4(x.x, y.x, z.x, 0.0f),
+            Matrix4 matrix = new Matrix4(new Vector4(x.x, y.x, z.x, 0.0f),
                                         new Vector4(x.y, y.y, z.y, 0.0f),
                                         new Vector4(x.z, y.z, z.z, 0.0f),
-                                        Vector4.UnitW);
+                                        new Vector4(-eye, 1));
 
-            Matrix4 trans = Matrix4.CreateTranslation(-eye);
-
-            return trans * rot;
+            return matrix;
         }
 
         /// <summary>
@@ -420,10 +415,10 @@ namespace OpenGL
         /// <returns>A Matrix4 object that contains the transposed matrix</returns>
         public Matrix4 Transpose()
         {
-            return new Matrix4(new Vector4(Matrix[0][0], Matrix[1][0], Matrix[2][0], Matrix[3][0]),
-                new Vector4(Matrix[0][1], Matrix[1][1], Matrix[2][1], Matrix[3][1]),
-                new Vector4(Matrix[0][2], Matrix[1][2], Matrix[2][2], Matrix[3][2]),
-                new Vector4(Matrix[0][3], Matrix[1][3], Matrix[2][3], Matrix[3][3]));
+            return new Matrix4(new Vector4(this[0].x, this[1].x, this[2].x, this[3].x),
+                new Vector4(this[0].y, this[1].y, this[2].y, this[3].y),
+                new Vector4(this[0].z, this[1].z, this[2].z, this[3].z),
+                new Vector4(this[0].w, this[1].w, this[2].w, this[3].w));
         }
 
         /// <summary>
@@ -434,30 +429,32 @@ namespace OpenGL
         {
             Matrix4 original = new Matrix4(this);
             Matrix4 identity = Matrix4.Identity;
-            int t_k;
+            int k;
 
             // loop over columns from left to right climinating above and below diagonal
             for (int j = 0; j < 4; j++)
             {
-                t_k = j;    // row with largest pivot cadence
+                k = j;    // row with largest pivot cadence
                 for (int i = j + 1; i < 4; i++)
-                    if (Math.Abs(original.Matrix[i][j]) > Math.Abs(original.Matrix[t_k][j])) t_k = i;
+                    if (Math.Abs(original[i][j]) > Math.Abs(original[k][j])) k = i;
 
-                Vector4.Swap(ref original.Matrix[t_k], ref original.Matrix[j]);
-                Vector4.Swap(ref identity.Matrix[t_k], ref identity.Matrix[j]);
+                original.SwapRows(k, j);
+                identity.SwapRows(k, j);
+                //Vector4.Swap(ref original[k], ref original[j]);
+                //Vector4.Swap(ref identity[k], ref identity[j]);
 
-                if (original.Matrix[j][j] == 0.0f) throw new Exception("Matrix4 was a singular matrix and cannot be inverted.");
-                //Logger.Instance.WriteLine(WarningLevel.Error, "Matrix4 was a singular matrix.  Cannot invert.");
+                if (original[j][j] == 0.0f) 
+                    throw new Exception("Matrix4 was a singular matrix and cannot be inverted.");
 
-                identity.Matrix[j] /= original.Matrix[j][j];
-                original.Matrix[j] /= original.Matrix[j][j];
+                identity[j] /= original[j][j];
+                original[j] /= original[j][j];
 
                 for (int i = 0; i < 4; i++)
                 {
                     if (i != j)
                     {
-                        identity.Matrix[i] -= original.Matrix[i][j] * identity.Matrix[j];
-                        original.Matrix[i] -= original.Matrix[i][j] * original.Matrix[j];
+                        identity[i] -= original[i][j] * identity[j];
+                        original[i] -= original[i][j] * original[j];
                     }
                 }
             }
@@ -471,9 +468,9 @@ namespace OpenGL
         /// <param name="j">Second row to switch</param>
         public void SwapRows(int i, int j)
         {
-            Vector4 t_vec = Matrix[i];
-            Matrix[i] = Matrix[j];
-            Matrix[j] = t_vec;
+            Vector4 temp = this[i];
+            this[i] = this[j];
+            this[j] = temp;
         }
 
         /// <summary>
@@ -481,16 +478,17 @@ namespace OpenGL
         /// </summary>
         /// <param name="i">First column to switch</param>
         /// <param name="j">Second column to switch</param>
-        public void SwapCols(int i, int j)
+        /*public void SwapCols(int i, int j)
         {
-            float t_float;
+            // TODO: This does not work with the new Matrix4 format
+            float temp;
             for (int k = 0; k < 4; k++)
             {
-                t_float = Matrix[k][i];
+                temp = Matrix[k][i];
                 Matrix[k][i] = Matrix[k][j];
-                Matrix[k][j] = t_float;
+                Matrix[k][j] = temp;
             }
-        }
+        }*/
 
         /// <summary>
         /// Returns a floating array that represents the Matrix4.
@@ -498,19 +496,19 @@ namespace OpenGL
         /// <returns>Floating array that represents that Matrix4</returns>
         public float[] ToFloat()
         {
-            return new float[] { Matrix[0].x, Matrix[0].y, Matrix[0].z, Matrix[0].w, Matrix[1].x, Matrix[1].y, Matrix[1].z, Matrix[1].w,
-                Matrix[2].x, Matrix[2].y, Matrix[2].z, Matrix[2].w, Matrix[3].x, Matrix[3].y, Matrix[3].z, Matrix[3].w };
+            return new float[] { this[0].x, this[0].y, this[0].z, this[0].w, this[1].x, this[1].y, this[1].z, this[1].w,
+                this[2].x, this[2].y, this[2].z, this[2].w, this[3].x, this[3].y, this[3].z, this[3].w };
         }
 
         /// <summary>
         /// Build a rotation matrix from a quaternion
         /// </summary>
-        /// <param name="q">the quaternion</param>
+        /// <param name="rotation">A quaternion representation of the rotation.</param>
         /// <returns>A rotation matrix</returns>
-        public static Matrix4 Rotate(Quaternion q)
+        public static Matrix4 Rotate(Quaternion rotation)
         {
-            Vector4 axisangle = q.ToAxisAngle();
-            return CreateFromAxisAngle(axisangle.Xyz, q.w);
+            Vector4 axisangle = rotation.ToAxisAngle();
+            return CreateFromAxisAngle(axisangle.Xyz, rotation.w);
         }
         #endregion
     }

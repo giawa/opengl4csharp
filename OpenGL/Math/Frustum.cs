@@ -28,6 +28,7 @@ namespace OpenGL
         public Frustum()
         {
             planes = new Plane[6];
+            for (int i = 0; i < 6; i++) planes[i] = new Plane(0, 0, 0, 0);
         }
 
         /// <summary>
@@ -36,12 +37,12 @@ namespace OpenGL
         /// <param name="clipMatrix">The combined projection and view matrix (usually from the camera).</param>
         public void UpdateFrustum(Matrix4 clipMatrix)
         {
-            planes[0] = new Plane(clipMatrix[0].w - clipMatrix[0].x, clipMatrix[1].w - clipMatrix[1].x, clipMatrix[2].w - clipMatrix[2].x, clipMatrix[3].w - clipMatrix[3].x);
-            planes[1] = new Plane(clipMatrix[0].w + clipMatrix[0].x, clipMatrix[1].w + clipMatrix[1].x, clipMatrix[2].w + clipMatrix[2].x, clipMatrix[3].w + clipMatrix[3].x);
-            planes[2] = new Plane(clipMatrix[0].w + clipMatrix[0].y, clipMatrix[1].w + clipMatrix[1].y, clipMatrix[2].w + clipMatrix[2].y, clipMatrix[3].w + clipMatrix[3].y);
-            planes[3] = new Plane(clipMatrix[0].w - clipMatrix[0].y, clipMatrix[1].w - clipMatrix[1].y, clipMatrix[2].w - clipMatrix[2].y, clipMatrix[3].w - clipMatrix[3].y);
-            planes[4] = new Plane(clipMatrix[0].w - clipMatrix[0].z, clipMatrix[1].w - clipMatrix[1].z, clipMatrix[2].w - clipMatrix[2].z, clipMatrix[3].w - clipMatrix[3].z);
-            planes[5] = new Plane(clipMatrix[0].w + clipMatrix[0].z, clipMatrix[1].w + clipMatrix[1].z, clipMatrix[2].w + clipMatrix[2].z, clipMatrix[3].w + clipMatrix[3].z);
+            planes[0].Set(clipMatrix[3].w - clipMatrix[3].x, new Vector3(clipMatrix[0].w - clipMatrix[0].x, clipMatrix[1].w - clipMatrix[1].x, clipMatrix[2].w - clipMatrix[2].x));
+            planes[1].Set(clipMatrix[3].w + clipMatrix[3].x, new Vector3(clipMatrix[0].w + clipMatrix[0].x, clipMatrix[1].w + clipMatrix[1].x, clipMatrix[2].w + clipMatrix[2].x));
+            planes[2].Set(clipMatrix[3].w + clipMatrix[3].y, new Vector3(clipMatrix[0].w + clipMatrix[0].y, clipMatrix[1].w + clipMatrix[1].y, clipMatrix[2].w + clipMatrix[2].y));
+            planes[3].Set(clipMatrix[3].w - clipMatrix[3].y, new Vector3(clipMatrix[0].w - clipMatrix[0].y, clipMatrix[1].w - clipMatrix[1].y, clipMatrix[2].w - clipMatrix[2].y));
+            planes[4].Set(clipMatrix[3].w - clipMatrix[3].z, new Vector3(clipMatrix[0].w - clipMatrix[0].z, clipMatrix[1].w - clipMatrix[1].z, clipMatrix[2].w - clipMatrix[2].z));
+            planes[5].Set(clipMatrix[3].w + clipMatrix[3].z, new Vector3(clipMatrix[0].w + clipMatrix[0].z, clipMatrix[1].w + clipMatrix[1].z, clipMatrix[2].w + clipMatrix[2].z));
 
             for (int i = 0; i < 6; i++)
             {
