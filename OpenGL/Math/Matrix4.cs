@@ -404,9 +404,9 @@ namespace OpenGL
             Matrix4 matrix = new Matrix4(new Vector4(x.x, y.x, z.x, 0.0f),
                                         new Vector4(x.y, y.y, z.y, 0.0f),
                                         new Vector4(x.z, y.z, z.z, 0.0f),
-                                        new Vector4(-eye, 1));
+                                        Vector4.UnitW);
 
-            return matrix;
+            return Matrix4.CreateTranslation(-eye) * matrix;
         }
 
         /// <summary>
@@ -431,7 +431,7 @@ namespace OpenGL
             Matrix4 identity = Matrix4.Identity;
             int k;
 
-            // loop over columns from left to right climinating above and below diagonal
+            // loop over columns from left to right eliminating above and below diagonal
             for (int j = 0; j < 4; j++)
             {
                 k = j;    // row with largest pivot cadence
