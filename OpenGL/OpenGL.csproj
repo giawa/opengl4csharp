@@ -40,6 +40,7 @@
     <Compile Include="Constructs\FBO.cs" />
     <Compile Include="Constructs\Shader.cs" />
     <Compile Include="Constructs\Geometry.cs" />
+    <Compile Include="Constructs\VAO.cs" />
     <Compile Include="Constructs\VBO.cs" />
     <Compile Include="Core\Gl.cs" />
     <Compile Include="Math\BoundingBox.cs" />
