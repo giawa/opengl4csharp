@@ -1353,6 +1353,7 @@ namespace OpenGL
 
         public static void UseProgram(UInt32 program)
         {
+            currentProgram = program;
             Delegates.glUseProgram(program);
         }
 

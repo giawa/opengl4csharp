@@ -472,6 +472,44 @@ namespace OpenGL
         #endregion
 
         #region Draw Methods (OGL2 and OGL3)
+        public void BindCachedAttributes(ShaderProgram program, int vertexAttributeLocation, int normalAttributeLocation = -1, int uvAttributeLocation = -1, int tangentAttributeLocation = -1)
+        {
+            if (normalAttributeLocation != -1 && normal.vboID != 0)
+            {
+                Gl.EnableVertexAttribArray((uint)normalAttributeLocation);
+                Gl.BindBuffer(normal.BufferTarget, normal.vboID);
+                Gl.VertexAttribPointer((uint)normalAttributeLocation, normal.Size, normal.PointerType, true, 12, IntPtr.Zero);
+            }
+
+            if (uvAttributeLocation != -1 && uv.vboID != 0)
+            {
+                Gl.EnableVertexAttribArray((uint)uvAttributeLocation);
+                Gl.BindBuffer(uv.BufferTarget, uv.vboID);
+                Gl.VertexAttribPointer((uint)uvAttributeLocation, uv.Size, uv.PointerType, true, 8, IntPtr.Zero);
+            }
+
+            if (tangentAttributeLocation != -1 && tangent.vboID != 0)
+            {
+                Gl.EnableVertexAttribArray((uint)tangentAttributeLocation);
+                Gl.BindBuffer(tangent.BufferTarget, tangent.vboID);
+                Gl.VertexAttribPointer((uint)tangentAttributeLocation, tangent.Size, tangent.PointerType, true, 12, IntPtr.Zero);
+            }
+
+            BindCachedAttributes(vertexAttributeLocation, program);
+        }
+
+        public void BindCachedAttributes(int vertexAttributeLocation, ShaderProgram program)
+        {
+            if (vertex == null || vertex.vboID == 0) throw new Exception("Error binding attributes.  No vertices were supplied.");
+            if (element == null || element.vboID == 0) throw new Exception("Error binding attributes.  No element array was supplied.");
+
+            Gl.EnableVertexAttribArray((uint)vertexAttributeLocation);
+            Gl.BindBuffer(vertex.BufferTarget, vertex.vboID);
+            Gl.VertexAttribPointer((uint)vertexAttributeLocation, vertex.Size, vertex.PointerType, true, 12, IntPtr.Zero);
+
+            Gl.BindBuffer(BufferTarget.ElementArrayBuffer, element.vboID);
+        }
+
         /// <summary>
         /// Generic method for binding the VBOs to their respective attribute locations.
         /// OpenGL.dll assumes the common naming conventions below:

@@ -40,12 +40,29 @@ namespace OpenGL
         #endregion
 
         #region Constructor and Destructor
+        public FBO(int width, int height, FramebufferAttachment attachment = FramebufferAttachment.ColorAttachment0, PixelInternalFormat format = PixelInternalFormat.Rgba8, bool mipmaps = true)
+            : this(new Size(width, height), new FramebufferAttachment[] { attachment }, format, mipmaps)
+        {
+        }
+
         /// <summary>
         /// Creates a framebuffer object and its associated resources (depth and pbuffers).
         /// </summary>
         /// <param name="Size">Specifies the size (in pixels) of the framebuffer and it's associated buffers.</param>
-        /// <param name="Attachments">Specifies the attachments to use for the pbuffers.</param>
-        /// <param name="Format">Specifies the internal pixel format for the pbuffers.</param>
+        /// <param name="Attachments">Specifies the attachment to use for the pbuffer.</param>
+        /// <param name="Format">Specifies the internal pixel format for the pbuffer.</param>
+        public FBO(Size Size, FramebufferAttachment Attachment = FramebufferAttachment.ColorAttachment0, PixelInternalFormat Format = PixelInternalFormat.Rgba8, bool Mipmaps = true)
+            : this(Size, new FramebufferAttachment[] { Attachment }, Format, Mipmaps)
+        {
+        }
+
+        /// <summary>
+        /// Creates a framebuffer object and its associated resources (depth and pbuffers).
+        /// </summary>
+        /// <param name="Size">Specifies the size (in pixels) of the framebuffer and it's associated buffers.</param>
+        /// <param name="Attachments">Specifies the attachments to use for the frame buffer.</param>
+        /// <param name="Format">Specifies the internal pixel format for the frame buffer.</param>
+        /// <param name="Mipmaps">Specified whether to build mipmaps after the frame buffer is unbound.</param>
         public FBO(Size Size, FramebufferAttachment[] Attachments, PixelInternalFormat Format, bool Mipmaps)
         {
             this.Size = Size;
@@ -130,16 +147,24 @@ namespace OpenGL
         /// </summary>
         public void Enable()
         {
-            DrawBuffersEnum[] buffers = new DrawBuffersEnum[Attachments.Length];
-
             Gl.BindFramebuffer(FramebufferTarget.Framebuffer, BufferID);
-            for (int i = 0; i < Attachments.Length; i++)
+            if (Attachments.Length == 1)
             {
-                Gl.BindTexture(TextureTarget.Texture2D, TextureID[i]);
-                Gl.FramebufferTexture(FramebufferTarget.Framebuffer, Attachments[i], TextureID[i], 0);
-                buffers[i] = (DrawBuffersEnum)Attachments[i];
+                Gl.BindTexture(TextureTarget.Texture2D, TextureID[0]);
+                Gl.FramebufferTexture(FramebufferTarget.Framebuffer, Attachments[0], TextureID[0], 0);
             }
-            if (Attachments.Length > 1) Gl.DrawBuffers(Attachments.Length, buffers);
+            else
+            {
+                DrawBuffersEnum[] buffers = new DrawBuffersEnum[Attachments.Length];
+
+                for (int i = 0; i < Attachments.Length; i++)
+                {
+                    Gl.BindTexture(TextureTarget.Texture2D, TextureID[i]);
+                    Gl.FramebufferTexture(FramebufferTarget.Framebuffer, Attachments[i], TextureID[i], 0);
+                    buffers[i] = (DrawBuffersEnum)Attachments[i];
+                }
+                if (Attachments.Length > 1) Gl.DrawBuffers(Attachments.Length, buffers);
+            }
 
             Gl.Viewport(0, 0, Size.Width, Size.Height);
             Gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
