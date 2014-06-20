@@ -91,7 +91,7 @@ namespace OpenGL
             Gl.BindTexture(TextureTarget, TextureID);     // bind the texture to memory in OpenGL
 
             //Gl.TexParameteri(TextureTarget, TextureParameterName.GenerateMipmap, 0);
-            Gl.TexImage2D(TextureTarget, 0, PixelInternalFormat.Four, BitmapImage.Width, BitmapImage.Height, 0, PixelFormat.Bgra, PixelType.UnsignedByte, bitmapData.Scan0);
+            Gl.TexImage2D(TextureTarget, 0, PixelInternalFormat.Rgba8, BitmapImage.Width, BitmapImage.Height, 0, PixelFormat.Bgra, PixelType.UnsignedByte, bitmapData.Scan0);
             Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMagFilter, TextureParameter.Nearest);
             Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMinFilter, TextureParameter.Nearest);//(int)TextureParam.Linear);   // linear filter
 

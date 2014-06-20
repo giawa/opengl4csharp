@@ -167,7 +167,11 @@ namespace OpenGL
             }
 
             Gl.Viewport(0, 0, Size.Width, Size.Height);
-            Gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            if (Attachments.Length == 1 && Attachments[0] == FramebufferAttachment.DepthAttachment)
+                Gl.Clear(ClearBufferMask.DepthBufferBit);
+            else
+                Gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }
 
         /// <summary>
