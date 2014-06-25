@@ -330,8 +330,7 @@ namespace OpenGL
         /// <param name="Program">Specifies the handle of the program object whose executables are to be used as part of current rendering state.</param>
         public static void UseProgram(ShaderProgram Program)
         {
-            currentProgram = Program.ProgramID;
-            Gl.UseProgram(currentProgram);
+            Gl.UseProgram(Program.ProgramID);
         }
 
         /// <summary>
