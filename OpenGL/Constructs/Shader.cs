@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace OpenGL
 {
@@ -207,6 +206,28 @@ namespace OpenGL
         #endregion
 
         #region GetParams
+        private Type GlslTypeFromString(string type)
+        {
+            switch (type.ToLower())
+            {
+                case "float": return typeof(float);
+                case "bool": return typeof(bool);
+                case "int": return typeof(int);
+                case "vec2": return typeof(Vector2);
+                case "vec3": return typeof(Vector3);
+                case "vec4": return typeof(Vector4);
+                case "mat4": return typeof(Matrix4);
+                case "sampler2d": 
+                case "sampler2dshadow": 
+                case "sampler1d": 
+                case "sampler1dshadow": 
+                case "sampler3d": 
+                case "sampler2darray": 
+                case "sampler2darrayshadow": return typeof(Texture);
+                default: throw new Exception(string.Format("Unsupported GLSL type {0}", type));
+            }
+        }
+
         /// <summary>
         /// Parses the shader source code and finds all attributes and uniforms
         /// to cache their location for speedy lookup.
@@ -215,35 +236,27 @@ namespace OpenGL
         private void GetParams(string source)
         {
             List<ProgramParam> shaderParams = new List<ProgramParam>();
-            Regex searchTerm = new Regex("(uniform\\s\\S+\\s\\S+;|attribute\\s\\S+\\s\\S+;)");
-            MatchCollection Matches = searchTerm.Matches(source);
+            var tokens = GlslLexer.GetTokensFromMemory(source);
 
-            foreach (Match pMatch in Matches)
+            for (int i = 0; i < tokens.Count; i++)
             {
-                // [0] = attibute/uniform, [1] = type, [2] = name
-                string[] param = pMatch.Value.Split(' ');
-                if (param.Length != 3) continue;
-
-                ParamType type = (param[0].ToLower() == "attribute") ? ParamType.Attribute : ParamType.Uniform;
-                string name = param[2].Trim(';');
-
-                switch (param[1].ToLower())
+                if (tokens[i].TokenType == GlslLexer.TokenType.Keyword && (tokens[i].Text == "uniform" || tokens[i].Text == "attribute" || tokens[i].Text == "in"))
                 {
-                    case "float": shaderParams.Add(new ProgramParam(typeof(float), type, name)); break;
-                    case "bool": shaderParams.Add(new ProgramParam(typeof(bool), type, name)); break;
-                    case "int": shaderParams.Add(new ProgramParam(typeof(int), type, name)); break;
-                    case "vec2": shaderParams.Add(new ProgramParam(typeof(Vector2), type, name)); break;
-                    case "vec3": shaderParams.Add(new ProgramParam(typeof(Vector3), type, name)); break;
-                    case "vec4": shaderParams.Add(new ProgramParam(typeof(Vector4), type, name)); break;
-                    case "mat4": shaderParams.Add(new ProgramParam(typeof(Matrix4), type, name)); break;
-                    case "sampler2d": shaderParams.Add(new ProgramParam(typeof(Texture), type, name)); break;
-                    case "sampler2dshadow": shaderParams.Add(new ProgramParam(typeof(Texture), type, name)); break;
-                    case "sampler1d": shaderParams.Add(new ProgramParam(typeof(Texture), type, name)); break;
-                    case "sampler1dshadow": shaderParams.Add(new ProgramParam(typeof(Texture), type, name)); break;
-                    case "sampler3d": shaderParams.Add(new ProgramParam(typeof(Texture), type, name)); break;
-                    case "sampler2darray": shaderParams.Add(new ProgramParam(typeof(Texture), type, name)); break;
-                    case "sampler2darrayshadow": shaderParams.Add(new ProgramParam(typeof(Texture), type, name)); break;
-                    default: throw new Exception(string.Format("Unsupported GLSL type {0}", param[1]));
+                    // get the parameter type (either uniform or attribute/in)
+                    ParamType paramType = (tokens[i].Text == "uniform" ? ParamType.Uniform : ParamType.Attribute);
+                    i++;    // move past the uniform/attribute/in keyword
+
+                    // get the glsl type of the parameter
+                    if (i == tokens.Count) break;
+                    Type type = GlslTypeFromString(tokens[i].Text);
+
+                    // now continue reading parameters until we hit EOF, semi-colon or the glsl programmer assigns a default value
+                    while (i < tokens.Count && tokens[i].Text != ";")
+                    {
+                        if (tokens[i].TokenType == GlslLexer.TokenType.Word) shaderParams.Add(new ProgramParam(type, paramType, tokens[i].Text));
+                        else if (tokens[i].Text == "=") break;  // they've assigned a default value, so continue on
+                        i++;
+                    }
                 }
             }
 
