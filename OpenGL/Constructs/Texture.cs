@@ -111,7 +111,7 @@ namespace OpenGL
                 if (filecode != "DDS ")                                 // first 4 chars should be "DDS "
                     throw new Exception("File was not a DDS file format.");
 
-                DDS.DDSURFACEDESC2 imageData = new DDS.DDSURFACEDESC2(stream);  // read the DirectDraw surface descriptor
+                DDS.DDSURFACEDESC2 imageData = DDS.DDSURFACEDESC2.FromBinaryReader(stream);//new DDS.DDSURFACEDESC2(stream);  // read the DirectDraw surface descriptor
                 this.Size = new Size((int)imageData.Width, (int)imageData.Height);
 
                 if (imageData.LinearSize == 0)
@@ -202,6 +202,7 @@ namespace OpenGL
     {
         #region DirectDraw Surface
         /// <summary>The DirectDraw Surface pixel format.</summary>
+        [StructLayout(LayoutKind.Sequential, Pack=1)]
         public struct DDS_PIXEL_FORMAT
         {
             /// <summary>Size of the DDS_PIXEL_FORMAT structure.</summary>
@@ -209,7 +210,11 @@ namespace OpenGL
             /// <summary>Pixel format flags.</summary>
             public int Flags;
             /// <summary>The FourCC code for compression identification.</summary>
-            public string FourCC;
+            public string FourCC { get { return string.Format("{0}{1}{2}{3}", fourCC0, fourCC1, fourCC2, fourCC3); } }
+            public char fourCC0;
+            public char fourCC1;
+            public char fourCC2;
+            public char fourCC3;
             /// <summary>The number of bits per pixel.</summary>
             public int RGBBitCount;
             /// <summary>Red bit mask.</summary>
@@ -220,23 +225,10 @@ namespace OpenGL
             public int BBitMask;
             /// <summary>Alpha bit mask.</summary>
             public int ABitMask;
-
-            /// <summary>Reads a DirectDraw Surface pixel format from the current stream.</summary>
-            /// <param name="stream">The stream containing the pixel format.</param>
-            public DDS_PIXEL_FORMAT(BinaryReader stream)
-            {
-                Size = stream.ReadInt32();
-                Flags = stream.ReadInt32();
-                FourCC = new string(stream.ReadChars(4));
-                RGBBitCount = stream.ReadInt32();
-                RBitMask = stream.ReadInt32();
-                GBitMask = stream.ReadInt32();
-                BBitMask = stream.ReadInt32();
-                ABitMask = stream.ReadInt32();
-            }
         }
 
         /// <summary>The DirectDraw Surface descriptor.</summary>
+        [StructLayout(LayoutKind.Sequential, Pack=1)]
         public struct DDSURFACEDESC2
         {
             /// <summary>The size of the DDSURFACEDESC2 structure.</summary>
@@ -274,42 +266,13 @@ namespace OpenGL
             private int Reserved12;
             private int Reserved13;
 
-            public bool IsDXT1 { get { return ((PixelFormat.Flags & 0x04) != 0) && (PixelFormat.FourCC == "DXT1"); } }
-
-            public bool IsDXT3 { get { return ((PixelFormat.Flags & 0x04) != 0) && (PixelFormat.FourCC == "DXT3"); } }
-
-            public bool IsDXT5 { get { return ((PixelFormat.Flags & 0x04) != 0) && (PixelFormat.FourCC == "DXT5"); } }
-
-            //public bool IsBGRA8 { get { return 
-
-            /// <summary>Reads a DirectDraw Surface descriptor from the current stream.</summary>
-            /// <param name="stream">The stream containing the descriptor.</param>
-            public DDSURFACEDESC2(BinaryReader stream)
+            public static DDSURFACEDESC2 FromBinaryReader(BinaryReader stream)
             {
-                Size = stream.ReadInt32();
-                Flags = stream.ReadInt32();
-                Height = stream.ReadInt32();
-                Width = stream.ReadInt32();
-                LinearSize = stream.ReadInt32();
-                Depth = stream.ReadInt32();
-                MipmapCount = stream.ReadInt32();
-                Reserved0 = stream.ReadInt32();
-                Reserved1 = stream.ReadInt32();
-                Reserved2 = stream.ReadInt32();
-                Reserved3 = stream.ReadInt32();
-                Reserved4 = stream.ReadInt32();
-                Reserved5 = stream.ReadInt32();
-                Reserved6 = stream.ReadInt32();
-                Reserved7 = stream.ReadInt32();
-                Reserved8 = stream.ReadInt32();
-                Reserved9 = stream.ReadInt32();
-                Reserved10 = stream.ReadInt32();
-                PixelFormat = new DDS_PIXEL_FORMAT(stream);
-                SurfaceFlags = stream.ReadInt32();
-                CubemapFlags = stream.ReadInt32();
-                Reserved11 = stream.ReadInt32();
-                Reserved12 = stream.ReadInt32();
-                Reserved13 = stream.ReadInt32();
+                byte[] data = stream.ReadBytes(124);    // Marshal.SizeOf(typeof(DDSURFACEDESC2)));
+                GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
+                DDSURFACEDESC2 desc = (DDSURFACEDESC2)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(DDSURFACEDESC2));
+                handle.Free();
+                return desc;
             }
         }
         #endregion
