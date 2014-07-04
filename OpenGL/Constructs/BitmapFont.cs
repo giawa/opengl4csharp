@@ -95,13 +95,15 @@ namespace OpenGL
 
         #region Sample Shader
         public static string vertexShader2Source = @"
+#version 400
+
 uniform mat4 projection_matrix;
 uniform mat4 modelview_matrix;
 
-attribute vec3 in_position;
-attribute vec2 in_uv;
+in vec3 in_position;
+in vec2 in_uv;
 
-varying vec2 uv;
+out vec2 uv;
 
 void main(void)
 {
@@ -111,15 +113,19 @@ void main(void)
 }";
 
         public static string fragmentShader2Source = @"
+#version 400
+
 uniform sampler2D active_texture;
 uniform vec3 color;
 
-varying vec2 uv;
+in vec2 uv;
+
+out vec4 fragColor;
 
 void main(void)
 {
   vec4 t = texture2D(active_texture, uv);
-  gl_FragColor = t * vec4(color, t.r);
+  fragColor = t * vec4(color, t.r);
 }";
         #endregion
     }

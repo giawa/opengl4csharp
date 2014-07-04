@@ -38,11 +38,20 @@ namespace OpenGL
         #region Methods
         public void Draw()
         {
+            // set up the shader program
+            Program.Use();
+
+            // bind the active texture
+            Gl.ActiveTexture(TextureUnit.Texture0);
+            Gl.BindTexture(Texture);
+
+            // draw the billboard
             billboard.Draw();
         }
 
         public void Dispose()
         {
+            // dispose of all of the objects
             this.Program.Dispose();
             this.Texture.Dispose();
             this.billboard.Dispose();
@@ -51,7 +60,7 @@ namespace OpenGL
 
         #region Sample Shader Code
         public static string vertexShaderSource = @"
-#version 330
+#version 400
 
 uniform mat4 projection_matrix;
 uniform mat4 modelview_matrix;
@@ -59,22 +68,28 @@ uniform mat4 modelview_matrix;
 in vec3 in_position;
 in vec3 in_normal;
 
+out vec4 color;
+
 void main(void)
 {
   vec4 pos = projection_matrix * modelview_matrix * vec4(in_position, 1);
-  gl_FrontColor = vec4(in_normal, 1);
+  color = vec4(in_normal, 1);
   gl_PointSize = in_normal.y * 10;
   gl_Position = pos;
 }";
 
         public static string fragmentShaderSource = @"
-#version 330
+#version 400
 
 uniform sampler2D tex0;
 
+in vec4 color;
+
+out vec4 fragColor;
+
 void main(void)
 {
-  gl_FragColor = gl_Color * texture2D(tex0, gl_PointCoord.st);
+  fragColor = color * texture2D(tex0, gl_PointCoord.st);
 }";
         #endregion
     }
