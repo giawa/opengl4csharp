@@ -372,7 +372,8 @@ namespace OpenGL
             // children must be disposed of separately since OpenGL 2.1 will not have a vertex array
             if (DisposeChildren)
             {
-                
+                for (int i = 0; i < vbos.Length; i++)
+                    Gl.DeleteBuffer(vbos[i].vboID);
             }
         }
         #endregion
