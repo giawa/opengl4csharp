@@ -249,6 +249,7 @@ namespace OpenGL
                     // get the glsl type of the parameter
                     if (i == tokens.Count) break;
                     Type type = GlslTypeFromString(tokens[i].Text);
+                    i++;    // move past the type
 
                     // now continue reading parameters until we hit EOF, semi-colon or the glsl programmer assigns a default value
                     while (i < tokens.Count && tokens[i].Text != ";")

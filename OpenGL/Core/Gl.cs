@@ -146,6 +146,12 @@ namespace OpenGL
             Delegates.glClearDepth(depth);
         }
 
+        public static void ClearColor(float red, float green, float blue, float alpha)
+        {
+            Delegates.glClearColor(red, green, blue, alpha);
+
+        }
+
         public static void ClearStencil(Int32 s)
         {
             Delegates.glClearStencil(s);

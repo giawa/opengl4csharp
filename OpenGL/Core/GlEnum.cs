@@ -123,13 +123,11 @@ namespace OpenGL
         Triangles = ((int)0x0004),
         TriangleStrip = ((int)0x0005),
         TriangleFan = ((int)0x0006),
-        Quads = ((int)0x0007),
-        QuadStrip = ((int)0x0008),
-        Polygon = ((int)0x0009),
         LinesAdjacency = ((int)0xA),
         LineStripAdjacency = ((int)0xB),
         TrianglesAdjacency = ((int)0xC),
         TriangleStripAdjacency = ((int)0xD),
+        Patches = ((int)0xE)
     }
 
     public enum BlendEquationMode : int

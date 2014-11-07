@@ -67,6 +67,8 @@ namespace OpenGL
             internal extern static void ClearBufferfi(OpenGL.ClearBuffer buffer, Int32 drawbuffer, Single depth, Int32 stencil);
             [System.Runtime.InteropServices.DllImport(Gl.Library, EntryPoint = "glClearDepth", ExactSpelling = true)]
             internal extern static void ClearDepth(Double depth);
+            [System.Runtime.InteropServices.DllImport(Gl.Library, EntryPoint = "glClearColor", ExactSpelling = true)]
+            internal extern static void ClearColor(float red, float green, float blue, float alpha);
             [System.Runtime.InteropServices.DllImport(Gl.Library, EntryPoint = "glClearStencil", ExactSpelling = true)]
             internal extern static void ClearStencil(Int32 s);
             [System.Runtime.InteropServices.DllImport(Gl.Library, EntryPoint = "glClientWaitSync", ExactSpelling = true)]

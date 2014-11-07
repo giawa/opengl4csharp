@@ -64,6 +64,8 @@ namespace OpenGL
             internal static ClearBufferfi glClearBufferfi;
             internal delegate void ClearDepth(Double depth);
             internal static ClearDepth glClearDepth;
+            internal delegate void ClearColor(float red, float green, float blue, float alpha);
+            internal static ClearColor glClearColor;
             internal delegate void ClearStencil(Int32 s);
             internal static ClearStencil glClearStencil;
             internal delegate OpenGL.ArbSync ClientWaitSync(IntPtr sync, UInt32 flags, UInt64 timeout);
