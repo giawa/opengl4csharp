@@ -127,7 +127,11 @@ namespace OpenGL
         LineStripAdjacency = ((int)0xB),
         TrianglesAdjacency = ((int)0xC),
         TriangleStripAdjacency = ((int)0xD),
-        Patches = ((int)0xE)
+        Patches = ((int)0xE),
+        [Obsolete("OpenGL 4 Core does not support quads.")]
+        Quads = ((int)0x0007),
+        [Obsolete("OpenGL 4 Core does not support quads.")]
+        QuadStrip = ((int)0x0008)
     }
 
     public enum BlendEquationMode : int
