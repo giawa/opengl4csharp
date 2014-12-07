@@ -135,6 +135,28 @@ namespace OpenGL
         }
 
         /// <summary>
+        /// Creates and initializes a buffer object's data store.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="target">Specifies the target buffer object.</param>
+        /// <param name="size">Specifies the size in bytes of the buffer object's new data store.</param>
+        /// <param name="data">Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.</param>
+        /// <param name="usage">Specifies expected usage pattern of the data store.</param>
+        public static void BufferData<T>(BufferTarget target, Int32 position, Int32 size, [InAttribute, OutAttribute] T[] data, BufferUsageHint usage)
+            where T : struct
+        {
+            GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
+            try
+            {
+                Delegates.glBufferData(target, new IntPtr(size), (IntPtr)((int)data_ptr.AddrOfPinnedObject() + position), usage);
+            }
+            finally
+            {
+                data_ptr.Free();
+            }
+        }
+
+        /// <summary>
         /// Creates a standard VBO of type T.
         /// </summary>
         /// <typeparam name="T">The type of the data being stored in the VBO (make sure it's byte aligned).</typeparam>
@@ -171,6 +193,27 @@ namespace OpenGL
 
             Gl.BindBuffer(target, vboHandle);
             Gl.BufferData<T>(target, length * Marshal.SizeOf(typeof(T)), data, hint);
+            Gl.BindBuffer(target, 0);
+            return vboHandle;
+        }
+
+        /// <summary>
+        /// Creates a standard VBO of type T where the length of the VBO is less than or equal to the length of the data.
+        /// </summary>
+        /// <typeparam name="T">The type of the data being stored in the VBO (make sure it's byte aligned).</typeparam>
+        /// <param name="target">The VBO BufferTarget (usually ArrayBuffer or ElementArrayBuffer).</param>
+        /// <param name="data">The data to store in the VBO.</param>
+        /// <param name="hint">The buffer usage hint (usually StaticDraw).</param>
+        /// <param name="length">The length of the VBO (will take the first 'length' elements from data).</param>
+        /// <returns>The buffer ID of the VBO on success, 0 on failure.</returns>
+        public static uint CreateVBO<T>(BufferTarget target, [InAttribute, OutAttribute] T[] data, BufferUsageHint hint, int position, int length)
+            where T : struct
+        {
+            uint vboHandle = Gl.GenBuffer();
+            if (vboHandle == 0) return 0;
+
+            Gl.BindBuffer(target, vboHandle);
+            Gl.BufferData<T>(target, position * Marshal.SizeOf(typeof(T)), length * Marshal.SizeOf(typeof(T)), data, hint);
             Gl.BindBuffer(target, 0);
             return vboHandle;
         }
