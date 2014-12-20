@@ -401,6 +401,8 @@ namespace OpenGL
             return FromRotationMatrix(Rotation);
         }
 
+        private static readonly int[] rotationLookup = new int[] { 1, 2, 0 };
+
         /// <summary>
         /// Creates an orientation Quaternion from a target Matrix4 rotational matrix.
         /// </summary>
@@ -426,12 +428,12 @@ namespace OpenGL
             else
             {   // |w| <= 1/2
                 Quaternion t_return = Quaternion.Zero;
-                int[] t_next = new int[] { 1, 2, 0 };
+
                 int i = 0;
                 if (Rotation[1][1] > Rotation[0][0]) i = 1;
                 if (Rotation[2][2] > Rotation[i][i]) i = 2;
-                int j = t_next[i];
-                int k = t_next[j];
+                int j = rotationLookup[i];
+                int k = rotationLookup[j];
 
                 t_root = (float)Math.Sqrt(Rotation[i][i] - Rotation[j][j] - Rotation[k][k] + 1.0f);
                 t_return[i] = 0.5f * t_root;

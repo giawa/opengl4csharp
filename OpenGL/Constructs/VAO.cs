@@ -218,6 +218,7 @@ namespace OpenGL
         public GenericVAO(ShaderProgram program)
         {
             this.Program = program;
+            this.DrawMode = BeginMode.Triangles;
         }
 
         public void Init(GenericVBO[] vbos)
