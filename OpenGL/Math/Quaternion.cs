@@ -291,8 +291,7 @@ namespace OpenGL
                 c1 = t;
             }
 
-            Quaternion q = c0 * q1 + (sign * c1) * q2;
-            return Normalize(q);
+            return c0 * q1 + (sign * c1) * q2;
         }
 
         /// <summary>
