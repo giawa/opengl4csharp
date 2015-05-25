@@ -17,7 +17,7 @@ namespace OpenGL
 
         public static Quaternion Identity
         {
-            get { return new Quaternion(1, 0, 0, 0); }
+            get { return new Quaternion(0, 0, 0, 1); }
         }
         #endregion
 
