@@ -37,7 +37,7 @@ namespace OpenGL
             {
                 case ".dds": LoadDDS(Filename);
                     break;
-                default: LoadBitmap((Bitmap)Bitmap.FromFile(Filename));//Filename);
+                default: LoadBitmap((Bitmap)Bitmap.FromFile(Filename));
                     break;
             }
 

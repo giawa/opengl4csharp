@@ -213,6 +213,7 @@ namespace OpenGL
                 case "float": return typeof(float);
                 case "bool": return typeof(bool);
                 case "int": return typeof(int);
+                case "uint": return typeof(uint);
                 case "vec2": return typeof(Vector2);
                 case "vec3": return typeof(Vector3);
                 case "vec4": return typeof(Vector4);
