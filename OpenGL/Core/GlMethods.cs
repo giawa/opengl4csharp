@@ -14,6 +14,11 @@ namespace OpenGL
 
         public static uint CurrentProgram { get { return currentProgram; } }
 
+        public static void TexParameteri(OpenGL.TextureTarget target, OpenGL.TextureParameterName pname, TextureParameter param)
+        {
+            Delegates.glTexParameteri(target, pname, (int)param);
+        }
+
         /// <summary>
         /// Shortcut for quickly generating a single buffer id without creating an array to
         /// pass to the gl function.  Calls Gl.GenBuffers(1, id).
@@ -385,15 +390,16 @@ namespace OpenGL
             Gl.BindTexture(Texture.TextureTarget, Texture.TextureID);
         }
 
+        private static int[] getInteger = new int[1];
+
         /// <summary>
         /// Return the value of the selected parameter.
         /// </summary>
         /// <param name="name">Specifies the parameter value to be returned.</param>
         public static int GetInteger(GetPName name)
         {
-            int[] temp = new int[1];
-            GetIntegerv(name, temp);
-            return temp[0];
+            GetIntegerv(name, getInteger);
+            return getInteger[0];
         }
 
         /// <summary>

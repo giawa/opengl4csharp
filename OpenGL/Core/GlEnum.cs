@@ -107,6 +107,20 @@ namespace OpenGL
         TimeoutIgnored = unchecked((int)0xFFFFFFFFFFFFFFFF),
     }
 
+    public enum AtomicCounterParameterName : int
+    {
+        AtomicCounterBufferBinding = ((int)0x92C1),
+        AtomicCounterBufferDataSize = ((int)0x92C4),
+        AtomicCounterBufferActiveAtomicCounters = ((int)0x92C5),
+        AtomicCounterBufferActiveAtomicCounterIndices = ((int)0x92C6),
+        AtomicCounterBufferReferencedByVertexShader = ((int)0x92C7),
+        AtomicCounterBufferReferencedByTessControlShader = ((int)0x92C8),
+        AtomicCounterBufferReferencedByTessEvaluationShader = ((int)0x92C9),
+        AtomicCounterBufferReferencedByGeometryShader = ((int)0x92CA),
+        AtomicCounterBufferReferencedByFragmentShader = ((int)0x92CB),
+        AtomicCounterBufferReferencedByComputeShader = ((int)0x90ED)
+    }
+
     public enum BeginFeedbackMode : int
     {
         Points = ((int)0x0000),
@@ -234,6 +248,11 @@ namespace OpenGL
         TransformFeedbackBuffer = ((int)0x8C8E),
         CopyReadBuffer = ((int)0x8F36),
         CopyWriteBuffer = ((int)0x8F37),
+        DrawIndirectBuffer = ((int)0x8F3F),
+        AtomicCounterBuffer = ((int)0x92C0),
+        DispatchIndirectBuffer = ((int)0x90EE),
+        QueryBuffer = ((int)0x9192),
+        ShaderStorageBuffer = ((int)0x90D2),
     }
 
     public enum BufferUsageHint : int
@@ -278,6 +297,18 @@ namespace OpenGL
         AccumBufferBit = ((int)0x00000200),
         StencilBufferBit = ((int)0x00000400),
         ColorBufferBit = ((int)0x00004000),
+    }
+
+    public enum ClipControlOrigin : int
+    {
+        LowerLeft = ((int)0x8CA1),
+        UpperLeft = ((int)0x8CA2)
+    }
+
+    public enum ClipControlDepth : int
+    {
+        NegativeOneToOne = ((int)0x935E),
+        ZeroToOne = ((int)0x935F)
     }
 
     public enum ConditionalRenderType : int
@@ -588,6 +619,15 @@ namespace OpenGL
         FramebufferIncompleteMultisample = ((int)0x8D56),
         FramebufferIncompleteLayerTargets = ((int)0x8DA8),
         FramebufferIncompleteLayerCount = ((int)0x8DA9),
+    }
+
+    public enum FramebufferPName : int
+    {
+        FramebufferDefaultWidth = ((int)0x9310),
+        FramebufferDefaultHeight = ((int)0x9311),
+        FramebufferDefaultLayers = ((int)0x9312),
+        FramebufferDefaultSamples = ((int)0x9313),
+        FramebufferDefaultFixedSampleLocations = ((int)0x9314)
     }
 
     public enum FramebufferParameterName : int
@@ -1180,6 +1220,12 @@ namespace OpenGL
         MaxIntegerSamples = ((int)0x9110),
     }
 
+    public enum GetPointerParameter : int
+    {
+        DebugCallbackFunction = ((int)0x8244),
+        DebugCallbackUserParam = ((int)0x8245)
+    }
+
     public enum GetQueryObjectParam : int
     {
         QueryResult = ((int)0x8866),
@@ -1271,6 +1317,31 @@ namespace OpenGL
         TextureSharedSize = ((int)0x8C3F),
         TextureSamples = ((int)0x9106),
         TextureFixedSampleLocations = ((int)0x9107),
+        TextureBufferOffset = ((int)0x919D)
+    }
+
+    public enum GetTextureLevelParameter : int
+    {
+        TextureWidth = ((int)0x1000),
+        TextureHeight = ((int)0x1001),
+        TextureDepth = ((int)0x8071),
+        TextureInternalFormat = ((int)0x1003),
+        TextureRedSize = ((int)0x805C),
+        TextureGreenSize = ((int)0x805D),
+        TextureBlueSize = ((int)0x805E),
+        TextureAlphaSize = ((int)0x805F),
+        TextureDepthSize = ((int)0x884A),
+        TextureCompressed = ((int)0x86A1),
+        TextureCompressedImageSize = ((int)0x86A0),
+        TextureBufferOffset = ((int)0x919D)
+    }
+
+    public enum GraphicResetStatus : int
+    {
+        NoError = ((int)0),
+        GuiltyContextReset = ((int)0x8253),
+        InnocentContextReset = ((int)0x8254),
+        UnknownContextReset = ((int)0x8255)
     }
 
     public enum HintMode : int
@@ -1331,6 +1402,21 @@ namespace OpenGL
         TransformFeedbackBufferPausedNv = ((int)0x8E23),
         TransformFeedbackBufferActiveNv = ((int)0x8E24),
         TransformFeedbackBindingNv = ((int)0x8E25),
+    }
+
+    public enum ObjectLabel : int
+    {
+        Buffer = ((int)0x82E0),
+        Shader = ((int)0x82E1),
+        Program = ((int)0x82E2),
+        VertexArray = ((int)0x8074),
+        Query = ((int)0x82E3),
+        ProgramPipeline = ((int)0x82E4),
+        TransformFeedback = ((int)0x8E22),
+        Sampler = ((int)0x82E6),
+        Texture = ((int)0x1702),
+        RenderBuffer = ((int)0x8D41),
+        FrameBuffer = ((int)0x8D40)
     }
 
     public enum PixelFormat : int
@@ -1603,6 +1689,39 @@ namespace OpenGL
         Fill = ((int)0x1B02),
     }
 
+    public enum ProgramInterface : int
+    {
+        Uniform = ((int)0x92E1),
+        UniformBlock = ((int)0x92E2),
+        AtomicCounterBuffer = ((int)0x92C0),
+        ProgramInput = ((int)0x92E3),
+        ProgramOutput = ((int)0x92E4),
+        VertexSubroutine = ((int)0x92E8),
+        TessControlSubroutine = ((int)0x92E9),
+        TessEvaluationSubroutine = ((int)0x92EA),
+        GeometrySubroutine = ((int)0x92EB),
+        FragmentSubroutine = ((int)0x92EC),
+        ComputeSubroutine = ((int)0x92ED),
+        VertexSubroutineUniform = ((int)0x92EE),
+        TessControlSubroutineUniform = ((int)0x92EF),
+        TessEvaluationSubroutineUniform = ((int)0x92F0),
+        GeometrySubroutineUniform = ((int)0x92F1),
+        FragmentSubroutineUniform = ((int)0x92F2),
+        ComputeSubroutineUniform = ((int)0x92F3),
+        TransformFeedbackVarying = ((int)0x92F4),
+        BufferVariable = ((int)0x92E5),
+        ShaderStorageBlock = ((int)0x92E6),
+        TransformFeedbackBuffer = ((int)0x8C8E)
+    }
+
+    public enum ProgramInterfaceParameterName : int
+    {
+        ActiveResources = ((int)0x92F5),
+        MaxNameLength = ((int)0x92F6),
+        MaxNumActiveVariables = ((int)0x92F7),
+        MaxNumCompatibleSubroutines = ((int)0x92F8)
+    }
+
     public enum ProgramParameter : int
     {
         ActiveUniformBlockMaxNameLength = ((int)0x8A35),
@@ -1624,6 +1743,49 @@ namespace OpenGL
         GeometryOutputType = ((int)0x8DDC),
     }
 
+    public enum ProgramResourceParameterName : int
+    {
+        NameLength = ((int)0x92F9),
+        Type = ((int)0x92FA),
+        ArraySize = ((int)0x92FB),
+        Offset = ((int)0x92FC),
+        BlockIndex = ((int)0x92FD),
+        ArrayStride = ((int)0x92FE),
+        MatrixStride = ((int)0x92FF),
+        IsRowMajor = ((int)0x9300),
+        AtomicCounterBufferIndex = ((int)0x9301),
+        TextureBuffer = ((int)0x8C2A),
+        BufferBinding = ((int)0x9302),
+        BufferDataSize = ((int)0x9303),
+        NumActiveVariables = ((int)0x9304),
+        ActiveVariables = ((int)0x9305),
+        ReferencedByVertexShader = ((int)0x9306),
+        ReferencedByTessControlShader = ((int)0x9307),
+        ReferencedByTessEvaluationShader = ((int)0x9308),
+        ReferencedByGeometryShader = ((int)0x9309),
+        ReferencedByFragmentShader = ((int)0x930A),
+        ReferencedByComputeShader = ((int)0x930B),
+        NumCompatibleSubroutines = ((int)0x8E4A),
+        CompatibleSubroutines = ((int)0x8E4B),
+        TopLevelArraySize = ((int)0x930C),
+        TopLevelArrayStride = ((int)0x930D),
+        Location = ((int)0x930E),
+        LocationIndex = ((int)0x930F),
+        IsPerPatch = ((int)0x92E7),
+        LocationComponent = ((int)0x934A),
+        TransformFeedbackBufferIndex = ((int)0x934B),
+        TransformFeedbackBufferStride = ((int)0x934C)
+    }
+
+    public enum ProgramStageParameterName : int
+    {
+        ActiveSubroutineUniforms = ((int)0x8DE6),
+        ActiveSubroutineUniformLocations = ((int)0x8E47),
+        ActiveSubroutines = ((int)0x8DE5),
+        ActiveSubroutineUniformMaxLength = ((int)0x8E49),
+        ActiveSubroutineMaxLength = ((int)0x8E48)
+    }
+
     public enum ProvokingVertexMode : int
     {
         FirstVertexConvention = ((int)0x8E4D),
@@ -1635,6 +1797,10 @@ namespace OpenGL
         SamplesPassed = ((int)0x8914),
         PrimitivesGenerated = ((int)0x8C87),
         TransformFeedbackPrimitivesWritten = ((int)0x8C88),
+        AnySamplesPassed = ((int)0x8C2F),
+        AnySamplesPassedConservative = ((int)0x8D6A),
+        TimeElapsed = ((int)0x88BF),
+        TimeStamp = ((int)0x8E28),
     }
 
     public enum ReadBufferMode : int
@@ -1788,7 +1954,9 @@ namespace OpenGL
         FragmentShader = ((int)0x8B30),
         VertexShader = ((int)0x8B31),
         GeometryShader = ((int)0x8DD9),
-        GeometryShaderExt = ((int)0x8DD9),
+        TessControlShader = ((int)0x8E88),
+        TessEvaluationShader = ((int)0x8E87),
+        ComputeShader = ((int)0x91B9)
     }
 
     public enum SizedInternalFormat : int
@@ -1863,6 +2031,14 @@ namespace OpenGL
         Version = ((int)0x1F02),
         Extensions = ((int)0x1F03),
         ShadingLanguageVersion = ((int)0x8B8C),
+    }
+
+    public enum SubroutineParameterName : int
+    {
+        NumCompatibleSubroutines = ((int)0x8E4A),
+        CompatibleSubroutines = ((int)0x8E4B),
+        UniformSize = ((int)0x8A38),
+        UniformNameLength = ((int)0x8A39)
     }
 
     public enum TextureBufferTarget : int
@@ -1981,6 +2157,15 @@ namespace OpenGL
         SeparateAttribs = ((int)0x8C8D),
     }
 
+    public enum TransformFeedbackParameterName : int
+    {
+        TransformFeedbackBufferBinding = ((int)0x8C8F),
+        TransformFeedbackBufferStart = ((int)0x8C84),
+        TransformFeedbackBufferSize = ((int)0x8C85),
+        TransformFeedbackPaused = ((int)0x8E23),
+        TransformFeedbackActive = ((int)0x8E24)
+    }
+
     public enum Version32 : int
     {
         ContextCoreProfileBit = ((int)0x00000001),
@@ -2060,11 +2245,36 @@ namespace OpenGL
         CurrentVertexAttrib = ((int)0x8626),
         ArrayNormalized = ((int)0x886A),
         VertexAttribArrayInteger = ((int)0x88FD),
+        ArrayLong = ((int)0x874E),
+        ArrayDivisor = ((int)0x88FE),
+        RelativeOffset = ((int)0x82D5)
     }
 
     public enum VertexAttribPointerParameter : int
     {
         ArrayPointer = ((int)0x8645),
+    }
+
+    public enum VertexAttribFormat : int
+    {
+        Byte = ((int)0x1400),
+        UnsignedByte = ((int)0x1401),
+        Short = ((int)0x1402),
+        UnsignedShort = ((int)0x1403),
+        Int = ((int)0x1404),
+        UnsignedInt = ((int)0x1405),
+        Float = ((int)0x1406),
+        Double = ((int)0x140A),
+        HalfFloat = ((int)0x140B),
+        UnsignedUInt2101010Reversed = ((int)0x8368),
+        UnsignedInt2101010Reversed = ((int)0x8D9F),
+        UnsignedUInt101111Reversed = ((int)0x8C3B)
+    }
+
+    public enum VertexAttribPType : int
+    {
+        UnsignedUInt2101010Reversed = ((int)0x8368),
+        UnsignedInt2101010Reversed = ((int)0x8D9F)
     }
 
     public enum VertexAttribPointerType : int
@@ -2078,5 +2288,7 @@ namespace OpenGL
         Float = ((int)0x1406),
         Double = ((int)0x140A),
         HalfFloat = ((int)0x140B),
+        UnsignedUInt2101010Reversed = ((int)0x8368),
+        UnsignedInt2101010Reversed = ((int)0x8D9F)
     }
 }
