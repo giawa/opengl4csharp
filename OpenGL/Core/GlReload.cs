@@ -264,7 +264,7 @@ namespace OpenGL
         /// </para>
         /// <see cref="Marshal.GetDelegateForFunctionPointer"/>
         /// </remarks>
-        private static IntPtr GetAddress(string function)
+        public static IntPtr GetAddress(string function)
         {
             if (getProcAddress == null)
             {

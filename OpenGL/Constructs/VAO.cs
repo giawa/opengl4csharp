@@ -7,6 +7,16 @@ namespace OpenGL
     public class VAO<T1> : GenericVAO
         where T1 : struct
     {
+        public VAO(ShaderProgram program, VBO<T1> vbo1, string attribName, VBO<int> elementArray)
+            : base(program)
+        {
+            GenericVAO.GenericVBO[] vbos = new GenericVBO[2];
+            vbos[0] = new GenericVBO(vbo1.vboID, attribName, vbo1.Count, vbo1.Size, vbo1.PointerType, vbo1.BufferTarget);
+            vbos[1] = new GenericVBO(elementArray.vboID, "", elementArray.Count, elementArray.Size, elementArray.PointerType, elementArray.BufferTarget);
+
+            Init(vbos);
+        }
+
         public VAO(ShaderProgram program, VBO<T1> vbo1, string[] attribNames, VBO<int> elementArray)
             : base(program)
         {
@@ -250,6 +260,8 @@ namespace OpenGL
         #endregion
 
         #region Properties
+        private bool disposeChildren = false;
+
         /// <summary>
         /// The number of vertices that make up this VAO.
         /// </summary>
@@ -258,7 +270,20 @@ namespace OpenGL
         /// <summary>
         /// Specifies if the VAO should dispose of the child VBOs when Dispose() is called.
         /// </summary>
-        public bool DisposeChildren { get; set; }
+        public bool DisposeChildren
+        {
+            get { return disposeChildren; }
+            set
+            {
+                disposeChildren = value;
+                DisposeElementArray = value;
+            }
+        }
+
+        /// <summary>
+        /// Specifies if the VAO should dispose of the element array when Dispose() is called.
+        /// </summary>
+        public bool DisposeElementArray { get; set; }
 
         /// <summary>
         /// The ShaderProgram associated with this VAO.
@@ -374,7 +399,10 @@ namespace OpenGL
             if (DisposeChildren)
             {
                 for (int i = 0; i < vbos.Length; i++)
+                {
+                    if (vbos[i].bufferTarget == BufferTarget.ElementArrayBuffer && !DisposeElementArray) continue;
                     Gl.DeleteBuffer(vbos[i].vboID);
+                }
             }
         }
         #endregion
@@ -388,18 +416,38 @@ namespace OpenGL
         private VBO<Vector2> uv;
 
         private VBO<int> element;
+
+        private bool disposeChildren = false;
         #endregion
 
         #region Properties
         /// <summary>
+        /// The offset into the element array buffer that this VAO begins.
+        /// </summary>
+        public int Offset { get; set; }
+
+        /// <summary>
         /// The number of vertices that make up this VAO.
         /// </summary>
-        public int VertexCount { get; private set; }
+        public int VertexCount { get; set; }
 
         /// <summary>
         /// Specifies if the VAO should dispose of the child VBOs when Dispose() is called.
         /// </summary>
-        public bool DisposeChildren { get; set; }
+        public bool DisposeChildren
+        {
+            get { return disposeChildren; }
+            set
+            {
+                disposeChildren = value;
+                DisposeElementArray = value;
+            }
+        }
+
+        /// <summary>
+        /// Specifies if the VAO should dispose of the element array when Dispose() is called.
+        /// </summary>
+        public bool DisposeElementArray { get; set; }
 
         /// <summary>
         /// The ShaderProgram associated with this VAO.
@@ -581,7 +629,10 @@ namespace OpenGL
         {
             if (vaoID == 0) return;
             Gl.BindVertexArray(vaoID);
-            Gl.DrawElements(DrawMode, VertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero);
+
+            IntPtr offset = (IntPtr)(Offset * 4);
+            Gl.DrawElements(DrawMode, VertexCount, DrawElementsType.UnsignedInt, offset);
+
             Gl.BindVertexArray(0);
         }
 
@@ -591,7 +642,9 @@ namespace OpenGL
         private void DrawOGL2()
         {
             BindAttributes(this.Program);
-            Gl.DrawElements(DrawMode, VertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero);
+
+            IntPtr offset = (IntPtr)(Offset * 4);
+            Gl.DrawElements(DrawMode, VertexCount, DrawElementsType.UnsignedInt, offset);
         }
 
         /// <summary>
@@ -601,7 +654,8 @@ namespace OpenGL
         public void DrawProgram(ShaderProgram program)
         {
             BindAttributes(program);
-            Gl.DrawElements(DrawMode, VertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero);
+            if (Offset == 0) Gl.DrawElements(DrawMode, VertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero);
+            else Gl.DrawElementsBaseVertex(DrawMode, VertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero, Offset);
         }
         #endregion
 
@@ -626,7 +680,7 @@ namespace OpenGL
                 if (normal != null) normal.Dispose();
                 if (tangent != null) tangent.Dispose();
                 if (uv != null) uv.Dispose();
-                if (element != null) element.Dispose();
+                if (element != null && DisposeElementArray) element.Dispose();
 
                 vertex = null;
                 normal = null;
