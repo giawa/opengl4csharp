@@ -63,7 +63,7 @@ namespace OpenGL
         /// <param name="Attachments">Specifies the attachments to use for the frame buffer.</param>
         /// <param name="Format">Specifies the internal pixel format for the frame buffer.</param>
         /// <param name="Mipmaps">Specified whether to build mipmaps after the frame buffer is unbound.</param>
-        public FBO(Size Size, FramebufferAttachment[] Attachments, PixelInternalFormat Format, bool Mipmaps)
+        public FBO(Size Size, FramebufferAttachment[] Attachments, PixelInternalFormat Format, bool Mipmaps, TextureParameter filterType = TextureParameter.Linear)
         {
             this.Size = Size;
             this.Attachments = Attachments;
@@ -76,6 +76,7 @@ namespace OpenGL
 
             if (Attachments.Length == 1 && Attachments[0] == FramebufferAttachment.DepthAttachment)
             {
+                // if this is a depth attachment only
                 TextureID = new uint[] { Gl.GenTexture() };
                 Gl.BindTexture(TextureTarget.Texture2D, TextureID[0]);
 
@@ -91,11 +92,6 @@ namespace OpenGL
             }
             else
             {
-                // Create and attach a 24-bit depth buffer to the framebuffer
-                DepthID = Gl.GenRenderbuffer();
-                Gl.BindRenderbuffer(RenderbufferTarget.Renderbuffer, DepthID);
-                Gl.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.DepthComponent24, Size.Width, Size.Height);
-
                 // Create n texture buffers (known by the number of attachments)
                 TextureID = new uint[Attachments.Length];
                 Gl.GenTextures(Attachments.Length, TextureID);
@@ -111,13 +107,29 @@ namespace OpenGL
                         Gl.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, TextureParameter.LinearMipMapLinear);
                         Gl.GenerateMipmap(GenerateMipmapTarget.Texture2D);
                     }
+                    else
+                    {
+                        Gl.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, filterType);
+                        Gl.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, filterType);
+                    }
                     Gl.FramebufferTexture(FramebufferTarget.Framebuffer, Attachments[i], TextureID[i], 0);
                 }
 
-                // Build the framebuffer and check for errors
-                Gl.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, DepthID);
+                // Create and attach a 24-bit depth buffer to the framebuffer
+                DepthID = Gl.GenTexture();
+                Gl.BindTexture(TextureTarget.Texture2D, DepthID);
+
+                Gl.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Depth24Stencil8, Size.Width, Size.Height, 0, PixelFormat.DepthStencil, PixelType.UnsignedInt248, IntPtr.Zero);
+                Gl.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, TextureParameter.Nearest);
+                Gl.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, TextureParameter.Nearest);
+                Gl.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, TextureParameter.ClampToEdge);
+                Gl.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, TextureParameter.ClampToEdge);
+
+                Gl.FramebufferTexture(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, DepthID, 0);
+                Gl.FramebufferTexture(FramebufferTarget.Framebuffer, FramebufferAttachment.StencilAttachment, DepthID, 0);
             }
 
+            // Build the framebuffer and check for errors
             FramebufferErrorCode status = Gl.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
             if (status != FramebufferErrorCode.FramebufferComplete)
             {
@@ -145,7 +157,8 @@ namespace OpenGL
         /// Clears the buffer bits and sets viewport size.
         /// Perform all rendering after this call.
         /// </summary>
-        public void Enable()
+        /// <param name="clear">True to clear both the color and depth buffer bits of the FBO before enabling.</param>
+        public void Enable(bool clear = true)
         {
             Gl.BindFramebuffer(FramebufferTarget.Framebuffer, BufferID);
             if (Attachments.Length == 1)
@@ -163,15 +176,23 @@ namespace OpenGL
                     Gl.FramebufferTexture(FramebufferTarget.Framebuffer, Attachments[i], TextureID[i], 0);
                     buffers[i] = (DrawBuffersEnum)Attachments[i];
                 }
+
+                Gl.BindTexture(TextureTarget.Texture2D, DepthID);
+                Gl.FramebufferTexture(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, DepthID, 0);
+
                 if (Attachments.Length > 1) Gl.DrawBuffers(Attachments.Length, buffers);
             }
 
             Gl.Viewport(0, 0, Size.Width, Size.Height);
 
-            if (Attachments.Length == 1 && Attachments[0] == FramebufferAttachment.DepthAttachment)
-                Gl.Clear(ClearBufferMask.DepthBufferBit);
-            else
-                Gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            // configurably clear the buffer and color bits
+            if (clear)
+            {
+                if (Attachments.Length == 1 && Attachments[0] == FramebufferAttachment.DepthAttachment)
+                    Gl.Clear(ClearBufferMask.DepthBufferBit);
+                else
+                    Gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            }
         }
 
         /// <summary>
@@ -179,6 +200,7 @@ namespace OpenGL
         /// </summary>
         public void Disable()
         {
+            // unbind this framebuffer (does not guarantee the correct framebuffer is bound)
             Gl.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
 
             // have to generate mipmaps here
@@ -197,7 +219,7 @@ namespace OpenGL
             {
                 Gl.DeleteTextures(TextureID.Length, TextureID);
                 Gl.DeleteFramebuffers(1, new uint[] { BufferID });
-                Gl.DeleteRenderbuffers(1, new uint[] { DepthID });
+                Gl.DeleteFramebuffers(1, new uint[] { DepthID });
 
                 BufferID = 0;
                 DepthID = 0;

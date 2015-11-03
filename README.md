@@ -1,5 +1,6 @@
 # OpenGL 4 for C#/.NET
 [![Build Status](https://travis-ci.org/giawa/opengl4csharp.svg?branch=master)](https://travis-ci.org/giawa/opengl4csharp)
+
 This code provides a limited subset of the Open Toolkit bindings to OpenGL.  I have kept only the methods that are OpenGL 4 compatible, meaning that any legacy fixed function pipeline methods have been removed.  I've also removed several enums and other code that dealt with supporting the fixed function pipeline.
 
 Similar to the Open Toolkit bindings, these bindings work on Windows, Mac OS X and Linux (under the Mono framework).
