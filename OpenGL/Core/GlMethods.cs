@@ -5,14 +5,35 @@ namespace OpenGL
 {
     partial class Gl
     {
+        #region Preallocated Memory
         // pre-allocate the float[] for matrix data
         private static float[] matrixFloat = new float[16];
-        private static uint[] id = new uint[1];
+        private static uint[] int1 = new uint[1];
+        private static bool[] bool1 = new bool[1];
+        #endregion
 
+        #region Private Fields
         private static int _version = 0;
         private static uint currentProgram = 0;
+        #endregion
 
-        public static uint CurrentProgram { get { return currentProgram; } }
+        #region Public Properties
+        public static uint CurrentProgram 
+        { 
+            get { return currentProgram; } 
+        }
+        #endregion
+
+        /// <summary>
+        /// Returns the value or values of a selected parameter.
+        /// </summary>
+        /// <param name="pname">Supports Blend, CullFace, DepthTest, DepthWriteMask, </param>
+        /// <returns></returns>
+        public static bool GetBooleanv(GetPName pname)
+        {
+            GetBooleanv(pname, bool1);
+            return bool1[0];
+        }
 
         public static void TexParameteri(OpenGL.TextureTarget target, OpenGL.TextureParameterName pname, TextureParameter param)
         {
@@ -26,9 +47,9 @@ namespace OpenGL
         /// <returns>The ID of the generated buffer.  0 on failure.</returns>
         public static uint GenBuffer()
         {
-            id[0] = 0;
-            Gl.GenBuffers(1, id);
-            return id[0];
+            int1[0] = 0;
+            Gl.GenBuffers(1, int1);
+            return int1[0];
         }
 
         /// <summary>
@@ -38,9 +59,9 @@ namespace OpenGL
         /// <returns>The ID of the generated texture.  0 on failure.</returns>
         public static uint GenTexture()
         {
-            id[0] = 0;
-            Gl.GenTextures(1, id);
-            return id[0];
+            int1[0] = 0;
+            Gl.GenTextures(1, int1);
+            return int1[0];
         }
 
         /// <summary>
@@ -50,9 +71,9 @@ namespace OpenGL
         /// <returns>The ID of the generated vertex array.  0 on failure.</returns>
         public static uint GenVertexArray()
         {
-            id[0] = 0;
-            Gl.GenVertexArrays(1, id);
-            return id[0];
+            int1[0] = 0;
+            Gl.GenVertexArrays(1, int1);
+            return int1[0];
         }
 
         /// <summary>
@@ -74,9 +95,9 @@ namespace OpenGL
         /// <returns>The ID of the generated framebuffer.  0 on failure.</returns>
         public static uint GenRenderbuffer()
         {
-            id[0] = 0;
-            Gl.GenRenderbuffers(1, id);
-            return id[0];
+            int1[0] = 0;
+            Gl.GenRenderbuffers(1, int1);
+            return int1[0];
         }
 
         /// <summary>
@@ -448,9 +469,9 @@ namespace OpenGL
         /// <param name="buffer">The OpenGL buffer to delete.</param>
         public static void DeleteBuffer(uint buffer)
         {
-            id[0] = buffer;
-            DeleteBuffers(1, id);
-            id[0] = 0;
+            int1[0] = buffer;
+            DeleteBuffers(1, int1);
+            int1[0] = 0;
         }
 
         /// <summary>
