@@ -1336,14 +1336,14 @@ namespace OpenGL
             Delegates.glGetShaderSource(shader, bufSize, length, source);
         }
 
-        public static IntPtr GetString(OpenGL.StringName name)
+        public static String GetString(OpenGL.StringName name)
         {
-            return Delegates.glGetString(name);
+            return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Delegates.glGetString(name));
         }
 
-        public static IntPtr GetStringi(OpenGL.StringName name, UInt32 index)
+        public static String GetStringi(OpenGL.StringName name, UInt32 index)
         {
-            return Delegates.glGetStringi(name, index);
+            return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Delegates.glGetStringi(name, index));
         }
 
         public static UInt32 GetSubroutineIndex(UInt32 program, OpenGL.ShaderType shadertype, String name)

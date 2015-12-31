@@ -383,7 +383,7 @@ namespace OpenGL
             
             try
             {
-                string version = System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Gl.GetString(StringName.Version));
+                string version = Gl.GetString(StringName.Version);
                 return (_version = int.Parse(version.Substring(0, version.IndexOf('.'))));
             }
             catch (Exception)

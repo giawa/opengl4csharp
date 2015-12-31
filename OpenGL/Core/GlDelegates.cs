@@ -1,6 +1,8 @@
 using System;
 using System.Runtime.InteropServices;
 
+#pragma warning disable 0649
+
 namespace OpenGL
 {
     // Automatically generated from GlCore.cs using BuildGl
