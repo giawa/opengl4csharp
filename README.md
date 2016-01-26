@@ -1,11 +1,11 @@
 # OpenGL 4 for C#/.NET
 [![Build Status](https://travis-ci.org/giawa/opengl4csharp.svg?branch=master)](https://travis-ci.org/giawa/opengl4csharp)
 
-This code provides a limited subset of the Open Toolkit bindings to OpenGL.  I have kept only the methods that are OpenGL 4 compatible, meaning that any legacy fixed function pipeline methods have been removed.  I've also removed several enums and other code that dealt with supporting the fixed function pipeline.
+This code started as a limited subset of the Open Toolkit bindings to OpenGL, but has evolved to include the latest functionality by parsing the OpenGL man pages directly.  I have kept only the methods that are OpenGL 4+ compatible, meaning that any legacy fixed function pipeline methods have been removed.  I've also removed several enums and other code that dealt with supporting the fixed function pipeline.
 
 Similar to the Open Toolkit bindings, these bindings work on Windows, Mac OS X and Linux (under the Mono framework).
 
-This library also includes some common Math libraries, taken from my own graphics engine that I was developing.  These include bounding boxes, frustum, matrix4, plane, quaternion, ray, vector2, vector3 and vector4.  The class library also supports some common OpenGL constructs such as frame buffer objects (FBO), shader programs (both vertex and fragment), textures, vertex array objects (VAO) and vertex buffer objects (VBO).
+This library also includes some common Math libraries, taken from my own graphics engine that I was developing.  These include Bounding Box (AABB and OBB), Frustum, Matrix4, Plane, Quaternion, Ray, Vector2, Vector3 and Vector4.  The class library also supports some common OpenGL constructs such as Frame Buffer Objects (FBO), Shader Programs (vertex, fragment and geometry), Textures, Vertex Array Objects (VAO) and Vertex Buffer Objects (VBO).
 
 Random History:  This code was written to help my friend with his Masters thesis, as he was wanting to do work with GLSL and OpenGL.  I wrote up these OpenGL 4 bindings over the course of two weeks in 2011 and they were never used.  It is about time someone got to play with them!  I'm also working on a [Voxel Engine](http://www.giawa.com) using this library, which is largely open source.
 
@@ -142,4 +142,4 @@ This is an example of creating a quad using a VBO for vertices (Vector3 data), a
 ```
 
 ## Further Reading
-I quickly pushed this project to GitHub, so there isn't much documentation at this time.  The math objects are quite well documented, and some of the constructs also have decent documentation.  Check my website, [http://www.giawa.com](http://www.giawa.com) for some examples as I develop with this code.
+There isn't much documentation for this project at this time.  The source code for both the math and constructs is quite well documented.  I have also compiled [OpenGL 4 for C#/.NET Tutorials](https://github.com/giawa/opengl4tutorials) which reference this library.
