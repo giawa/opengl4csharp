@@ -82,7 +82,7 @@ namespace OpenGL
         public static Quaternion operator /(Quaternion q, float scalar)
         {
             float invScalar = 1.0f / scalar;
-            return new Quaternion(q.x * invScalar, q.y + invScalar, q.z * invScalar, q.w * invScalar);
+            return new Quaternion(q.x * invScalar, q.y * invScalar, q.z * invScalar, q.w * invScalar);
         }
 
         public static Quaternion operator /(Quaternion q1, Quaternion q2)
