@@ -315,7 +315,7 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Returns Gl.GetShaderInfoLog(ShaderID), which contains any linking errors.
+        /// Returns Gl.GetProgramInfoLog(ProgramID), which contains any linking errors.
         /// </summary>
         public string ProgramLog
         {
