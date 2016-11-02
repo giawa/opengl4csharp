@@ -56,7 +56,7 @@ namespace OpenGL
             get { return new Vector3(0.0f, 0.0f, 0.0f); }
         }
 
-        [Obsolete("Vector3.Up is not compatible with System.Numerics.  Use new Vector3(0, 1, 0) instead.")]
+        [Obsolete("Vector3.Up is not compatible with System.Numerics.  Use Vector3.UnitY instead.")]
         public static Vector3 Up
         {
             get { return new Vector3(0.0f, 1.0f, 0.0f); }
@@ -74,7 +74,7 @@ namespace OpenGL
             get { return new Vector3(0.0f, 0.0f, -1.0f); }
         }
 
-        [Obsolete("Vector3.Backward is not compatible with System.Numerics.  Use new Vector3(0, 0, 1) instead.")]
+        [Obsolete("Vector3.Backward is not compatible with System.Numerics.  Use Vector3.UnitZ instead.")]
         public static Vector3 Backward
         {
             get { return new Vector3(0.0f, 0.0f, 1.0f); }
@@ -86,7 +86,7 @@ namespace OpenGL
             get { return new Vector3(-1.0f, 0.0f, 0.0f); }
         }
 
-        [Obsolete("Vector3.Right is not compatible with System.Numerics.  Use new Vector3(1, 0, 0) instead.")]
+        [Obsolete("Vector3.Right is not compatible with System.Numerics.  Use Vector3.UnitX instead.")]
         public static Vector3 Right
         {
             get { return new Vector3(1.0f, 0.0f, 0.0f); }
