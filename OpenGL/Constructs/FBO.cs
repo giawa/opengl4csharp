@@ -63,7 +63,7 @@ namespace OpenGL
         /// <param name="Attachments">Specifies the attachments to use for the frame buffer.</param>
         /// <param name="Format">Specifies the internal pixel format for the frame buffer.</param>
         /// <param name="Mipmaps">Specified whether to build mipmaps after the frame buffer is unbound.</param>
-        public FBO(Size Size, FramebufferAttachment[] Attachments, PixelInternalFormat Format, bool Mipmaps, TextureParameter filterType = TextureParameter.Linear)
+        public FBO(Size Size, FramebufferAttachment[] Attachments, PixelInternalFormat Format, bool Mipmaps = false, TextureParameter filterType = TextureParameter.Linear, PixelType pixelType = PixelType.UnsignedByte)
         {
             this.Size = Size;
             this.Attachments = Attachments;
@@ -100,7 +100,7 @@ namespace OpenGL
                 for (int i = 0; i < Attachments.Length; i++)
                 {
                     Gl.BindTexture(TextureTarget.Texture2D, TextureID[i]);
-                    Gl.TexImage2D(TextureTarget.Texture2D, 0, Format, Size.Width, Size.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
+                    Gl.TexImage2D(TextureTarget.Texture2D, 0, Format, Size.Width, Size.Height, 0, PixelFormat.Rgba, pixelType, IntPtr.Zero);
                     if (Mipmaps)
                     {
                         Gl.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, TextureParameter.Linear);
