@@ -1,13 +1,58 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
+#if USE_NUMERICS
+using System.Numerics;
+#endif
+
 namespace OpenGL
 {
+#if !USE_NUMERICS
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Quaternion : IEquatable<Quaternion>
     {
-        public float x, y, z, w;
+        public float X, Y, Z, W;
+
+        /// <summary>
+        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
+        /// </summary>
+        [Obsolete("Use X instead, which is compatible with System.Numerics.")]
+        public float x
+        {
+            get { return X; }
+            set { X = value; }
+        }
+
+        /// <summary>
+        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
+        /// </summary>
+        [Obsolete("Use Y instead, which is compatible with System.Numerics.")]
+        public float y
+        {
+            get { return Y; }
+            set { Y = value; }
+        }
+
+        /// <summary>
+        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
+        /// </summary>
+        [Obsolete("Use Z instead, which is compatible with System.Numerics.")]
+        public float z
+        {
+            get { return Z; }
+            set { Z = value; }
+        }
+
+        /// <summary>
+        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
+        /// </summary>
+        [Obsolete("Use W instead, which is compatible with System.Numerics.")]
+        public float w
+        {
+            get { return W; }
+            set { W = value; }
+        }
 
         #region Static Constructors
         public static Quaternion Zero
@@ -24,48 +69,48 @@ namespace OpenGL
         #region Constructor
         public Quaternion(float x, float y, float z, float w)
         {
-            this.x = x; this.y = y; this.z = z; this.w = w;
+            this.X = x; this.Y = y; this.Z = z; this.W = w;
         }
 
         public Quaternion(Vector4 vec)
         {
-            this.x = vec.x; this.y = vec.y; this.z = vec.z; this.w = vec.w;
+            this.X = vec.X; this.Y = vec.Y; this.Z = vec.Z; this.W = vec.W;
         }
         #endregion
 
         #region Operators
         public static Quaternion operator +(Quaternion q1, Quaternion q2)
         {
-            return new Quaternion(q1.x + q2.x, q1.y + q2.y, q1.z + q2.z, q1.w + q2.w);
+            return new Quaternion(q1.X + q2.X, q1.Y + q2.Y, q1.Z + q2.Z, q1.W + q2.W);
         }
 
         public static Quaternion operator -(Quaternion q1, Quaternion q2)
         {
-            return new Quaternion(q1.x - q2.x, q1.y - q2.y, q1.z - q2.z, q1.w - q2.w);
+            return new Quaternion(q1.X - q2.X, q1.Y - q2.Y, q1.Z - q2.Z, q1.W - q2.W);
         }
 
         public static Quaternion operator -(Quaternion q)
         {
-            return new Quaternion(-q.x, -q.y, -q.z, -q.w);
+            return new Quaternion(-q.X, -q.Y, -q.Z, -q.W);
         }
 
         public static Quaternion operator *(Quaternion q, float s)
         {
-            return new Quaternion(s * q.x, s * q.y, s * q.z, s * q.w);
+            return new Quaternion(s * q.X, s * q.Y, s * q.Z, s * q.W);
         }
 
         public static Quaternion operator *(float s, Quaternion q)
         {
-            return new Quaternion(s * q.x, s * q.y, s * q.z, s * q.w);
+            return new Quaternion(s * q.X, s * q.Y, s * q.Z, s * q.W);
         }
 
         public static Vector3 operator *(Quaternion q, Vector3 v)
         {   // From nVidia SDK
             Vector3 t_uv, t_uuv;
-            Vector3 t_qvec = new Vector3(q.x, q.y, q.z);
+            Vector3 t_qvec = new Vector3(q.X, q.Y, q.Z);
             t_uv = Vector3.Cross(t_qvec, v);
             t_uuv = Vector3.Cross(t_qvec, t_uv);
-            t_uv *= 2.0f * q.w;
+            t_uv *= 2.0f * q.W;
             t_uuv *= 2.0f;
             return v + t_uv + t_uuv;
         }
@@ -73,16 +118,16 @@ namespace OpenGL
         public static Quaternion operator *(Quaternion q1, Quaternion q2)
         {
             return new Quaternion(
-               q1.x * q2.w + q1.y * q2.z - q1.z * q2.y + q1.w * q2.x,
-              -q1.x * q2.z + q1.y * q2.w + q1.z * q2.x + q1.w * q2.y,
-               q1.x * q2.y - q1.y * q2.x + q1.z * q2.w + q1.w * q2.z,
-              -q1.x * q2.x - q1.y * q2.y - q1.z * q2.z + q1.w * q2.w);
+               q1.X * q2.W + q1.Y * q2.Z - q1.Z * q2.Y + q1.W * q2.X,
+              -q1.X * q2.Z + q1.Y * q2.W + q1.Z * q2.X + q1.W * q2.Y,
+               q1.X * q2.Y - q1.Y * q2.X + q1.Z * q2.W + q1.W * q2.Z,
+              -q1.X * q2.X - q1.Y * q2.Y - q1.Z * q2.Z + q1.W * q2.W);
         }
 
         public static Quaternion operator /(Quaternion q, float scalar)
         {
             float invScalar = 1.0f / scalar;
-            return new Quaternion(q.x * invScalar, q.y * invScalar, q.z * invScalar, q.w * invScalar);
+            return new Quaternion(q.X * invScalar, q.Y * invScalar, q.Z * invScalar, q.W * invScalar);
         }
 
         public static Quaternion operator /(Quaternion q1, Quaternion q2)
@@ -92,19 +137,19 @@ namespace OpenGL
 
         public static bool operator ==(Quaternion q1, Quaternion q2)
         {
-            return (q1.w == q2.w && q1.x == q2.x && q1.y == q2.y && q1.z == q2.z);
+            return (q1.W == q2.W && q1.X == q2.X && q1.Y == q2.Y && q1.Z == q2.Z);
         }
 
         public static bool operator !=(Quaternion q1, Quaternion q2)
         {
-            return !(q1.w == q2.w && q1.x == q2.x && q1.y == q2.y && q1.z == q2.z);
+            return !(q1.W == q2.W && q1.X == q2.X && q1.Y == q2.Y && q1.Z == q2.Z);
         }
         #endregion
 
         #region Overrides
         public override string ToString()
         {
-            return "{" + x + ", " + y + ", " + z + ", " + w + "}";
+            return "{" + X + ", " + Y + ", " + Z + ", " + W + "}";
         }
 
         /// <summary>
@@ -142,17 +187,17 @@ namespace OpenGL
             get
             {
                 return new Matrix4(
-                    new Vector4(1.0f - 2.0f * (y * y + z * z), 2.0f * (x * y - w * z), 2.0f * (x * z + w * y), 0.0f),
-                    new Vector4(2.0f * (x * y + w * z), 1.0f - 2.0f * (x * x + z * z), 2.0f * (y * z - w * x), 0.0f),
-                    new Vector4(2.0f * (x * z - w * y), 2.0f * (y * z + w * x), 1.0f - 2.0f * (x * x + y * y), 0.0f),
+                    new Vector4(1.0f - 2.0f * (Y * Y + Z * Z), 2.0f * (X * Y - W * Z), 2.0f * (X * Z + W * Y), 0.0f),
+                    new Vector4(2.0f * (X * Y + W * Z), 1.0f - 2.0f * (X * X + Z * Z), 2.0f * (Y * Z - W * X), 0.0f),
+                    new Vector4(2.0f * (X * Z - W * Y), 2.0f * (Y * Z + W * X), 1.0f - 2.0f * (X * X + Y * Y), 0.0f),
                     new Vector4(0.0f, 0.0f, 0.0f, 1.0f));
             }
         }
 
         public float this[int a]
         {
-            get { return (a == 0) ? x : (a == 1) ? y : (a == 3) ? z : w; }
-            set { if (a == 0) x = value; else if (a == 1) y = value; else if (a == 2) z = value; else w = value; }
+            get { return (a == 0) ? X : (a == 1) ? Y : (a == 3) ? Z : W; }
+            set { if (a == 0) X = value; else if (a == 1) Y = value; else if (a == 2) Z = value; else W = value; }
         }
 
         /// <summary>
@@ -160,7 +205,7 @@ namespace OpenGL
         /// </summary>
         public float Length
         {
-            get { return (float)Math.Sqrt(x * x + y * y + z * z + w * w); }
+            get { return (float)Math.Sqrt(X * X + Y * Y + Z * Z + W * W); }
         }
 
         /// <summary>
@@ -168,7 +213,7 @@ namespace OpenGL
         /// </summary>
         public float SquaredLength
         {
-            get { return x * x + y * y + z * z + w * w; }
+            get { return X * X + Y * Y + Z * Z + W * W; }
         }
         #endregion
 
@@ -178,7 +223,7 @@ namespace OpenGL
         /// </summary>
         public float Dot(Quaternion q)
         {
-            return (x * q.x) + (y * q.y) + (z * q.z) + (w * q.w);
+            return (X * q.X) + (Y * q.Y) + (Z * q.Z) + (W * q.W);
         }
 
         /// <summary>
@@ -186,7 +231,7 @@ namespace OpenGL
         /// </summary>
         public Quaternion Conjugate()
         {
-            return new Quaternion(-x, -y, -z, w);
+            return new Quaternion(-X, -Y, -Z, W);
         }
 
         /// <summary>
@@ -194,7 +239,7 @@ namespace OpenGL
         /// </summary>
         public float Norm()
         {
-            return x * x + y * y + z * z + w * w;
+            return X * X + Y * Y + Z * Z + W * W;
         }
 
         /// <summary>
@@ -226,12 +271,12 @@ namespace OpenGL
         /// </summary>
         public static Quaternion Log(Quaternion q)
         {
-            float a = (float)Math.Acos(q.w);
+            float a = (float)Math.Acos(q.W);
             float sina = (float)Math.Sin(a);
 
             if (sina > 0)
-                return new Quaternion(a * q.x / sina, a * q.y / sina, a * q.z / sina, 0.0f);
-            return new Quaternion(q.x, q.y, q.z, 0.0f);
+                return new Quaternion(a * q.X / sina, a * q.Y / sina, a * q.Z / sina, 0.0f);
+            return new Quaternion(q.X, q.Y, q.Z, 0.0f);
         }
 
         /// <summary>
@@ -239,13 +284,13 @@ namespace OpenGL
         /// </summary>
         public static Quaternion Exp(Quaternion q)
         {
-            float a = (float)Math.Sqrt(q.x * q.x + q.y * q.y + q.z * q.z);
+            float a = (float)Math.Sqrt(q.X * q.X + q.Y * q.Y + q.Z * q.Z);
             float sina = (float)Math.Sin(a);
             float cosa = (float)Math.Cos(a);
 
             if (a > 0)
-                return new Quaternion(sina * q.x / a, sina * q.y / a, sina * q.z / a, cosa);
-            return new Quaternion(q.x, q.y, q.z, cosa);
+                return new Quaternion(sina * q.X / a, sina * q.Y / a, sina * q.Z / a, cosa);
+            return new Quaternion(q.X, q.Y, q.Z, cosa);
         }
 
         /// <summary>
@@ -340,7 +385,7 @@ namespace OpenGL
         /// </summary>
         public static Quaternion FromAngleAxis(float Angle, Vector3 Axis)
         {
-            if (Axis.SquaredLength == 0.0f)
+            if (Axis.LengthSquared() == 0.0f)
                 return Identity;
 
             return new Quaternion(new Vector4(Axis.Normalize() * (float)Math.Sin(Angle * 0.5f), (float)Math.Cos(Angle * 0.5f)));
@@ -353,9 +398,9 @@ namespace OpenGL
         public Vector3[] ToAxis()
         {
             Matrix4 rotationMatrix = this.Matrix4;
-            return new Vector3[] { new Vector3(rotationMatrix[0].x, rotationMatrix[1].x, rotationMatrix[2].x),
-                new Vector3(rotationMatrix[0].y, rotationMatrix[1].y, rotationMatrix[2].y),
-                new Vector3(rotationMatrix[0].z, rotationMatrix[1].z, rotationMatrix[2].z) };
+            return new Vector3[] { new Vector3(rotationMatrix[0].X, rotationMatrix[1].X, rotationMatrix[2].X),
+                new Vector3(rotationMatrix[0].Y, rotationMatrix[1].Y, rotationMatrix[2].Y),
+                new Vector3(rotationMatrix[0].Z, rotationMatrix[1].Z, rotationMatrix[2].Z) };
         }
 
         /// <summary>
@@ -365,25 +410,21 @@ namespace OpenGL
         public Vector4 ToAxisAngle()
         {
             Quaternion q = this;
-            if (q.w > 1.0f)
+            if (q.W > 1.0f)
                 q.Normalize();
 
-            Vector4 result = new Vector4();
-
-            result.w = 2.0f * (float)System.Math.Acos(q.w); // angle
-            float den = (float)System.Math.Sqrt(1.0 - q.w * q.w);
+            float w = 2.0f * (float)System.Math.Acos(q.W); // angle
+            float den = (float)System.Math.Sqrt(1.0 - q.W * q.W);
             if (den > 0.0001f)
             {
-                result.Xyz = new Vector3(q.x, q.y, q.z) / den;
+                return new Vector4(new Vector3(q.X, q.Y, q.Z) / den, w);
             }
             else
             {
                 // This occurs when the angle is zero. 
                 // Not a problem: just set an arbitrary normalized axis.
-                result.Xyz = Vector3.UnitX;
+                return new Vector4(Vector3.UnitX, w);
             }
-
-            return result;
         }
 
         /// <summary>
@@ -393,9 +434,9 @@ namespace OpenGL
         public static Quaternion FromAxis(Vector3 xvec, Vector3 yvec, Vector3 zvec)
         {
             Matrix4 Rotation = new Matrix4(
-                new Vector4(xvec.x, yvec.x, zvec.x, 0),
-                new Vector4(xvec.y, yvec.y, zvec.y, 0),
-                new Vector4(xvec.z, yvec.z, zvec.z, 0),
+                new Vector4(xvec.X, yvec.X, zvec.X, 0),
+                new Vector4(xvec.Y, yvec.Y, zvec.Y, 0),
+                new Vector4(xvec.Z, yvec.Z, zvec.Z, 0),
                 Vector4.Zero);
             return FromRotationMatrix(Rotation);
         }
@@ -410,18 +451,18 @@ namespace OpenGL
             // Algorithm from Ken Shoemake's article in 1987 SIGGRAPH course notes
             // "Quaternion Calculus and Fast Animation"
 
-            float t_trace = Rotation[0][0] + Rotation[1][1] + Rotation[2][2];
+            float t_trace = Rotation[0].X + Rotation[1].Y + Rotation[2].Z;
             float t_root = 0.0f;
 
             if (t_trace > 0.0)
             {   // |w| > 1/2
                 Quaternion t_return = Quaternion.Zero;
                 t_root = (float)Math.Sqrt(t_trace + 1.0);
-                t_return.w = 0.5f * t_root;
+                t_return.W = 0.5f * t_root;
                 t_root = 0.5f / t_root;
-                t_return.x = (Rotation[2][1] - Rotation[1][2]) * t_root;
-                t_return.y = (Rotation[0][2] - Rotation[2][0]) * t_root;
-                t_return.z = (Rotation[1][0] - Rotation[0][1]) * t_root;
+                t_return.X = (Rotation[2].Y - Rotation[1].Z) * t_root;
+                t_return.Y = (Rotation[0].Z - Rotation[2].X) * t_root;
+                t_return.Z = (Rotation[1].X - Rotation[0].Y) * t_root;
                 return t_return;
             }
             else
@@ -429,20 +470,47 @@ namespace OpenGL
                 Quaternion t_return = Quaternion.Zero;
 
                 int i = 0;
-                if (Rotation[1][1] > Rotation[0][0]) i = 1;
-                if (Rotation[2][2] > Rotation[i][i]) i = 2;
+                if (Rotation[1].Y > Rotation[0].X) i = 1;
+                if (Rotation[2].Z > Rotation[i].Get(i)) i = 2;
                 int j = rotationLookup[i];
                 int k = rotationLookup[j];
 
-                t_root = (float)Math.Sqrt(Rotation[i][i] - Rotation[j][j] - Rotation[k][k] + 1.0f);
+                t_root = (float)Math.Sqrt(Rotation[i].Get(i) - Rotation[j].Get(j) - Rotation[k].Get(k) + 1.0f);
                 t_return[i] = 0.5f * t_root;
                 t_root = 0.5f / t_root;
-                t_return.w = (Rotation[k][j] - Rotation[j][k]) * t_root;
-                t_return[j] = (Rotation[j][i] + Rotation[i][j]) * t_root;
-                t_return[k] = (Rotation[k][i] + Rotation[i][k]) * t_root;
+                t_return.W = (Rotation[k].Get(j) - Rotation[j].Get(k)) * t_root;
+                t_return[j] = (Rotation[j].Get(i) + Rotation[i].Get(j)) * t_root;
+                t_return[k] = (Rotation[k].Get(i) + Rotation[i].Get(k)) * t_root;
                 return t_return;
             }
         }
         #endregion
     }
+#else
+    public static class QuaternionExtensions
+    {
+        /// <summary>
+        /// Convert this instance to an axis-angle representation.
+        /// </summary>
+        /// <returns>A Vector4 that is the axis-angle representation of this quaternion.</returns>
+        public static Vector4 ToAxisAngle(this Quaternion q)
+        {
+            if (q.W > 1.0f)
+                q = Quaternion.Normalize(q);
+
+            float w = 2.0f * (float)System.Math.Acos(q.W); // angle
+            float den = (float)System.Math.Sqrt(1.0 - q.W * q.W);
+            if (den > 0.0001f)
+            {
+                return new Vector4(new Vector3(q.X, q.Y, q.Z) / den, w);
+            }
+            else
+            {
+                // This occurs when the angle is zero. 
+                // Not a problem: just set an arbitrary normalized axis.
+                return new Vector4(Vector3.UnitX, w);
+            }
+        }
+    }
+#endif
 }

@@ -1,5 +1,9 @@
 ﻿using System;
 
+#if USE_NUMERICS
+using System.Numerics;
+#endif
+
 namespace OpenGL
 {
     public class Geometry
@@ -46,8 +50,8 @@ namespace OpenGL
         /// <returns>The VAO object representing this quad.</returns>
         public static VAO CreateQuad(ShaderProgram program, Vector2 location, Vector2 size)
         {
-            Vector3[] vertices = new Vector3[] { new Vector3(location.x, location.y, 0), new Vector3(location.x + size.x, location.y, 0), 
-                new Vector3(location.x + size.x, location.y + size.y, 0), new Vector3(location.x, location.y + size.y, 0) };
+            Vector3[] vertices = new Vector3[] { new Vector3(location.X, location.Y, 0), new Vector3(location.X + size.X, location.Y, 0), 
+                new Vector3(location.X + size.X, location.Y + size.Y, 0), new Vector3(location.X, location.Y + size.Y, 0) };
             Vector2[] uvs = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(0, 1) };
             int[] indices = new int[] { 0, 1, 2, 2, 3, 0 };
 
@@ -66,9 +70,9 @@ namespace OpenGL
         /// <returns>The VAO object representing this quad.</returns>
         public static VAO CreateQuad(ShaderProgram program, Vector2 location, Vector2 size, Vector2 uvloc, Vector2 uvsize)
         {
-            Vector3[] vertices = new Vector3[] { new Vector3(location.x, location.y, 0), new Vector3(location.x + size.x, location.y, 0), 
-                new Vector3(location.x + size.x, location.y + size.y, 0), new Vector3(location.x, location.y + size.y, 0) };
-            Vector2[] uvs = new Vector2[] { uvloc, new Vector2(uvloc.x + uvsize.x, uvloc.y), new Vector2(uvloc.x + uvsize.x, uvloc.y + uvsize.y), new Vector2(uvloc.x, uvloc.y + uvsize.y) };
+            Vector3[] vertices = new Vector3[] { new Vector3(location.X, location.Y, 0), new Vector3(location.X + size.X, location.Y, 0), 
+                new Vector3(location.X + size.X, location.Y + size.Y, 0), new Vector3(location.X, location.Y + size.Y, 0) };
+            Vector2[] uvs = new Vector2[] { uvloc, new Vector2(uvloc.X + uvsize.X, uvloc.Y), new Vector2(uvloc.X + uvsize.X, uvloc.Y + uvsize.Y), new Vector2(uvloc.X, uvloc.Y + uvsize.Y) };
             int[] indices = new int[] { 0, 1, 2, 2, 3, 0 };
 
             return new VAO(program, new VBO<Vector3>(vertices), new VBO<Vector2>(uvs), new VBO<int>(indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticRead));
@@ -84,8 +88,8 @@ namespace OpenGL
         /// <returns>The VAO object representing this quad.</returns>
         public static VAO CreateQuadWithNormals(ShaderProgram program, Vector2 location, Vector2 size)
         {
-            Vector3[] vertex = new Vector3[] { new Vector3(location.x, location.y, 0), new Vector3(location.x + size.x, location.y, 0), 
-                new Vector3(location.x + size.x, location.y + size.y, 0), new Vector3(location.x, location.y + size.y, 0) };
+            Vector3[] vertex = new Vector3[] { new Vector3(location.X, location.Y, 0), new Vector3(location.X + size.X, location.Y, 0), 
+                new Vector3(location.X + size.X, location.Y + size.Y, 0), new Vector3(location.X, location.Y + size.Y, 0) };
             int[] element = new int[] { 0, 1, 2, 2, 3, 0 };
             Vector3[] normal = CalculateNormals(vertex, element);
 
@@ -103,14 +107,14 @@ namespace OpenGL
         public static VAO CreateCube(ShaderProgram program, Vector3 min, Vector3 max)
         {
             Vector3[] vertex = new Vector3[] {
-                new Vector3(min.x, min.y, max.z),
-                new Vector3(max.x, min.y, max.z),
-                new Vector3(min.x, max.y, max.z),
-                new Vector3(max.x, max.y, max.z),
-                new Vector3(max.x, min.y, min.z),
-                new Vector3(max.x, max.y, min.z),
-                new Vector3(min.x, max.y, min.z),
-                new Vector3(min.x, min.y, min.z)
+                new Vector3(min.X, min.Y, max.Z),
+                new Vector3(max.X, min.Y, max.Z),
+                new Vector3(min.X, max.Y, max.Z),
+                new Vector3(max.X, max.Y, max.Z),
+                new Vector3(max.X, min.Y, min.Z),
+                new Vector3(max.X, max.Y, min.Z),
+                new Vector3(min.X, max.Y, min.Z),
+                new Vector3(min.X, min.Y, min.Z)
             };
 
             int[] element = new int[] {
@@ -136,14 +140,14 @@ namespace OpenGL
         public static VAO CreateCubeWithNormals(ShaderProgram program, Vector3 min, Vector3 max)
         {
             Vector3[] vertex = new Vector3[] {
-                new Vector3(min.x, min.y, max.z),
-                new Vector3(max.x, min.y, max.z),
-                new Vector3(min.x, max.y, max.z),
-                new Vector3(max.x, max.y, max.z),
-                new Vector3(max.x, min.y, min.z),
-                new Vector3(max.x, max.y, min.z),
-                new Vector3(min.x, max.y, min.z),
-                new Vector3(min.x, min.y, min.z)
+                new Vector3(min.X, min.Y, max.Z),
+                new Vector3(max.X, min.Y, max.Z),
+                new Vector3(min.X, max.Y, max.Z),
+                new Vector3(max.X, max.Y, max.Z),
+                new Vector3(max.X, min.Y, min.Z),
+                new Vector3(max.X, max.Y, min.Z),
+                new Vector3(min.X, max.Y, min.Z),
+                new Vector3(min.X, min.Y, min.Z)
             };
 
             int[] element = new int[] {

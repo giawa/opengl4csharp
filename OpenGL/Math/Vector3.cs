@@ -1,15 +1,51 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
+#if USE_NUMERICS
+using System.Numerics;
+#endif
+
 namespace OpenGL
 {
+#if !USE_NUMERICS
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector3 : IEquatable<Vector3>
     {
-        public float x, y, z;
+        public float X, Y, Z;
+
+        /// <summary>
+        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
+        /// </summary>
+        [Obsolete("Use X instead, which is compatible with System.Numerics.")]
+        public float x
+        {
+            get { return X; }
+            set { X = value; }
+        }
+
+        /// <summary>
+        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
+        /// </summary>
+        [Obsolete("Use Y instead, which is compatible with System.Numerics.")]
+        public float y
+        {
+            get { return Y; }
+            set { Y = value; }
+        }
+
+        /// <summary>
+        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
+        /// </summary>
+        [Obsolete("Use Z instead, which is compatible with System.Numerics.")]
+        public float z
+        {
+            get { return Z; }
+            set { Z = value; }
+        }
 
         #region Static Constructors
+        [Obsolete("Vector3.Identity is not compatible with System.Numerics.  Use Vector3.One instead.")]
         public static Vector3 Identity
         {
             get { return new Vector3(1.0f, 1.0f, 1.0f); }
@@ -20,31 +56,37 @@ namespace OpenGL
             get { return new Vector3(0.0f, 0.0f, 0.0f); }
         }
 
+        [Obsolete("Vector3.Up is not compatible with System.Numerics.  Use new Vector3(0, 1, 0) instead.")]
         public static Vector3 Up
         {
             get { return new Vector3(0.0f, 1.0f, 0.0f); }
         }
 
+        [Obsolete("Vector3.Down is not compatible with System.Numerics.  Use new Vector3(0, -1, 0) instead.")]
         public static Vector3 Down
         {
             get { return new Vector3(0.0f, -1.0f, 0.0f); }
         }
 
+        [Obsolete("Vector3.Forward is not compatible with System.Numerics.  Use new Vector3(0, 0, -1) instead.")]
         public static Vector3 Forward
         {
             get { return new Vector3(0.0f, 0.0f, -1.0f); }
         }
 
+        [Obsolete("Vector3.Backward is not compatible with System.Numerics.  Use new Vector3(0, 0, 1) instead.")]
         public static Vector3 Backward
         {
             get { return new Vector3(0.0f, 0.0f, 1.0f); }
         }
 
+        [Obsolete("Vector3.Left is not compatible with System.Numerics.  Use new Vector3(-1, 0, 0) instead.")]
         public static Vector3 Left
         {
             get { return new Vector3(-1.0f, 0.0f, 0.0f); }
         }
 
+        [Obsolete("Vector3.Right is not compatible with System.Numerics.  Use new Vector3(1, 0, 0) instead.")]
         public static Vector3 Right
         {
             get { return new Vector3(1.0f, 0.0f, 0.0f); }
@@ -65,7 +107,13 @@ namespace OpenGL
             get { return new Vector3(0.0f, 0.0f, 1.0f); }
         }
 
+        [Obsolete("Vector3.UnitScale is not compatible with System.Numerics.  Use Vector3.One instead.")]
         public static Vector3 UnitScale
+        {
+            get { return new Vector3(1.0f, 1.0f, 1.0f); }
+        }
+
+        public static Vector3 One
         {
             get { return new Vector3(1.0f, 1.0f, 1.0f); }
         }
@@ -74,105 +122,130 @@ namespace OpenGL
         #region Operators
         public static Vector3 operator +(Vector3 v1, Vector3 v2)
         {
-            return new Vector3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+            return new Vector3(v1.X + v2.X, v1.Y + v2.Y, v1.Z + v2.Z);
         }
 
         public static Vector3 operator +(Vector3 v, float s)
         {
-            return new Vector3(v.x + s, v.y + s, v.z + s);
+            return new Vector3(v.X + s, v.Y + s, v.Z + s);
         }
 
         public static Vector3 operator +(float s, Vector3 v)
         {
-            return new Vector3(v.x + s, v.y + s, v.z + s);
+            return new Vector3(v.X + s, v.Y + s, v.Z + s);
         }
 
         public static Vector3 operator -(Vector3 v1, Vector3 v2)
         {
-            return new Vector3(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
+            return new Vector3(v1.X - v2.X, v1.Y - v2.Y, v1.Z - v2.Z);
         }
 
         public static Vector3 operator -(Vector3 v, float s)
         {
-            return new Vector3(v.x - s, v.y - s, v.z - s);
+            return new Vector3(v.X - s, v.Y - s, v.Z - s);
         }
 
         public static Vector3 operator -(float s, Vector3 v)
         {
-            return new Vector3(s - v.x, s - v.y, s - v.z);
+            return new Vector3(s - v.X, s - v.Y, s - v.Z);
         }
 
         public static Vector3 operator -(Vector3 v)
         {
-            return new Vector3(-v.x, -v.y, -v.z);
+            return new Vector3(-v.X, -v.Y, -v.Z);
         }
 
         public static Vector3 operator *(Vector3 v1, Vector3 v2)
         {
-            return new Vector3(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z);
+            return new Vector3(v1.X * v2.X, v1.Y * v2.Y, v1.Z * v2.Z);
         }
 
         public static Vector3 operator *(float s, Vector3 v)
         {
-            return new Vector3(v.x * s, v.y * s, v.z * s);
+            return new Vector3(v.X * s, v.Y * s, v.Z * s);
         }
 
         public static Vector3 operator *(Vector3 v, float s)
         {
-            return new Vector3(v.x * s, v.y * s, v.z * s);
+            return new Vector3(v.X * s, v.Y * s, v.Z * s);
         }
 
         public static Vector3 operator /(Vector3 v1, Vector3 v2)
         {
-            return new Vector3(v1.x / v2.x, v1.y / v2.y, v1.z / v2.z);
+            return new Vector3(v1.X / v2.X, v1.Y / v2.Y, v1.Z / v2.Z);
         }
 
         public static Vector3 operator /(float s, Vector3 v)
         {
-            return new Vector3(s / v.x, s / v.y, s / v.z);
+            return new Vector3(s / v.X, s / v.Y, s / v.Z);
         }
 
         public static Vector3 operator /(Vector3 v, float s)
         {
-            return new Vector3(v.x / s, v.y / s, v.z / s);
+            return new Vector3(v.X / s, v.Y / s, v.Z / s);
         }
 
         public static bool operator ==(Vector3 v1, Vector3 v2)
         {
-            return (v1.x == v2.x && v1.y == v2.y && v1.z == v2.z);
+            return (v1.X == v2.X && v1.Y == v2.Y && v1.Z == v2.Z);
         }
 
         public static bool operator !=(Vector3 v1, Vector3 v2)
         {
-            return (v1.x != v2.x || v1.y != v2.y || v1.z != v2.z);
+            return (v1.X != v2.X || v1.Y != v2.Y || v1.Z != v2.Z);
         }
         #endregion
 
         #region Constructors
-        /// <summary>Create a Vector3 structure, normally used to store Vertex positions.</summary>
-        /// <param name="x">x value</param>
-        /// <param name="y">y value</param>
-        /// <param name="z">z value</param>
+        /// <summary>Creates a Vector3 structure whose elements have the specified values.</summary>
+        /// <param name="x">The value to assign to the X field.</param>
+        /// <param name="y">The value to assign to the Y field.</param>
+        /// <param name="z">The value to assign to the Z field.</param>
         public Vector3(float x, float y, float z)
         {
-            this.x = x; this.y = y; this.z = z;
+            X = x; 
+            Y = y; 
+            Z = z;
         }
 
-        /// <summary>Creates a Vector3 structure, normally used to store Vertex positions.  Casted to floats for OpenGL.</summary>
-        /// <param name="x">x value</param>
-        /// <param name="y">y value</param>
-        /// <param name="z">z value</param>
+        /// <summary>Creates a Vector3 structure whose elements have the specified values.</summary>
+        /// <param name="x">The value to assign to the X field.</param>
+        /// <param name="y">The value to assign to the Y field.</param>
+        /// <param name="z">The value to assign to the Z field.</param>
+        [Obsolete("Use floats instead, which is compatible with System.Numerics.")]
         public Vector3(double x, double y, double z)
         {
-            this.x = (float)x; this.y = (float)y; this.z = (float)z;
+            X = (float)x; 
+            Y = (float)y; 
+            Z = (float)z;
         }
 
         /// <summary>Creates a Vector3 tructure from a float array (assuming the float array is of length 3).</summary>
         /// <param name="vector">The float array to convert to a Vector3.</param>
+        [Obsolete("Use Vector3(float, float, float) instead, which is compatible with System.Numerics.")]
         public Vector3(float[] vector)
         {
             if (vector.Length != 3) throw new Exception(string.Format("float[] vector was of length {0}.  Was expecting a length of 3.", vector.Length));
-            this.x = vector[0]; this.y = vector[1]; this.z = vector[2];
+            X = vector[0]; 
+            Y = vector[1]; 
+            Z = vector[2];
+        }
+
+        /// <summary>Creates a Vector3 structure whose three elements have the same value.</summary>
+        /// <param name="value">The value to assign to all three elements.</param>
+        public Vector3(float value)
+        {
+            X = Y = Z = value;
+        }
+
+        /// <summary>Creates a Vector3 structure based on a Vector2 and z.</summary>
+        /// <param name="v">The Vector2 to use for the X and Y components.</param>
+        /// <param name="z">The value to assign to the Z field.</param>
+        public Vector3(Vector2 v, float z)
+        {
+            X = v.X;
+            Y = v.Y;
+            Z = z;
         }
         #endregion
 
@@ -196,7 +269,7 @@ namespace OpenGL
 
         public override string ToString()
         {
-            return "{" + x + ", " + y + ", " + z + "}";
+            return "{" + X + ", " + Y + ", " + Z + "}";
         }
 
         /// <summary>
@@ -212,7 +285,7 @@ namespace OpenGL
 
         public float this[int a]
         {
-            get { return (a == 0) ? x : (a == 1) ? y : z; }
+            get { return (a == 0) ? X : (a == 1) ? Y : Z; }
         }
         #endregion
 
@@ -223,7 +296,7 @@ namespace OpenGL
         /// <returns>Float array representation of a Vector3</returns>
         public float[] ToFloat()
         {
-            return new float[] { x, y, z };
+            return new float[] { X, Y, Z };
         }
 
         /// <summary>
@@ -231,7 +304,7 @@ namespace OpenGL
         /// </summary>
         public float Length
         {
-            get { return (float)Math.Sqrt(x * x + y * y + z * z); }
+            get { return (float)Math.Sqrt(X * X + Y * Y + Z * Z); }
         }
 
         /// <summary>
@@ -242,7 +315,7 @@ namespace OpenGL
         /// <returns>Scalar dot product value</returns>
         public static float Dot(Vector3 v1, Vector3 v2)
         {
-            return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+            return v1.X * v2.X + v1.Y * v2.Y + v1.Z * v2.Z;
         }
 
         /// <summary>
@@ -258,9 +331,19 @@ namespace OpenGL
         /// <summary>
         /// Returns the squared length of the Vector3 structure.
         /// </summary>
+        [Obsolete("Use LengthSquared() instead, which is compatible with System.Numerics.")]
         public float SquaredLength
         {
-            get { return x * x + y * y + z * z; }
+            get { return X * X + Y * Y + Z * Z; }
+        }
+
+        /// <summary>
+        /// A System.Numerics compatible version of SquaredLength.
+        /// </summary>
+        /// <returns>Returns the squared length of the Vector3 structure.</returns>
+        public float LengthSquared()
+        {
+            return X * X + Y * Y + Z * Z;
         }
 
         /// <summary>
@@ -271,7 +354,7 @@ namespace OpenGL
         /// <returns>Vector3 cross product value</returns>
         public static Vector3 Cross(Vector3 v1, Vector3 v2)
         {
-            return new Vector3(v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x);
+            return new Vector3(v1.Y * v2.Z - v1.Z * v2.Y, v1.Z * v2.X - v1.X * v2.Z, v1.X * v2.Y - v1.Y * v2.X);
         }
 
         /// <summary>
@@ -291,7 +374,7 @@ namespace OpenGL
         public Vector3 Normalize()
         {
             if (Length == 0) return Zero;
-            else return new Vector3(x, y, z) / Length;
+            else return new Vector3(X, Y, Z) / Length;
         }
 
         /// <summary>
@@ -301,9 +384,9 @@ namespace OpenGL
         /// <returns>A truncated Vector3</returns>
         public Vector3 Truncate()
         {
-            float _x = (Math.Abs(x) - 0.0001 < 0) ? 0 : x;
-            float _y = (Math.Abs(y) - 0.0001 < 0) ? 0 : y;
-            float _z = (Math.Abs(z) - 0.0001 < 0) ? 0 : z;
+            float _x = (Math.Abs(X) - 0.0001 < 0) ? 0 : X;
+            float _y = (Math.Abs(Y) - 0.0001 < 0) ? 0 : Y;
+            float _z = (Math.Abs(Z) - 0.0001 < 0) ? 0 : Z;
             return new Vector3(_x, _y, _z);
         }
 
@@ -313,9 +396,9 @@ namespace OpenGL
         /// <param name="v">Vector to check against</param>
         public void TakeMin(Vector3 v)
         {
-            if (v.x < x) x = v.x;
-            if (v.y < y) y = v.y;
-            if (v.z < z) z = v.z;
+            if (v.X < X) X = v.X;
+            if (v.Y < Y) Y = v.Y;
+            if (v.Z < Z) Z = v.Z;
         }
 
         /// <summary>
@@ -324,9 +407,9 @@ namespace OpenGL
         /// <param name="v">Vector to check against</param>
         public void TakeMax(Vector3 v)
         {
-            if (v.x > x) x = v.x;
-            if (v.y > y) y = v.y;
-            if (v.z > z) z = v.z;
+            if (v.X > X) X = v.X;
+            if (v.Y > Y) Y = v.Y;
+            if (v.Z > Z) Z = v.Z;
         }
 
         /// <summary>
@@ -335,7 +418,7 @@ namespace OpenGL
         /// <returns>The maximum component of the Vector3</returns>
         public float Max()
         {
-            return (x >= y && x >= z) ? x : (y >= z) ? y : z;
+            return (X >= Y && X >= Z) ? X : (Y >= Z) ? Y : Z;
         }
 
         /// <summary>
@@ -344,7 +427,7 @@ namespace OpenGL
         /// <returns>The minimum component of the Vector3</returns>
         public float Min()
         {
-            return (x <= y && x <= z) ? x : (y <= z) ? y : z;
+            return (X <= Y && X <= Z) ? X : (Y <= Z) ? Y : Z;
         }
 
         /// <summary>
@@ -414,7 +497,7 @@ namespace OpenGL
             else if (d < (1e-6f - 1.0f))
             {
                 Vector3 t_axis = Vector3.UnitX.Cross(this);
-                if (t_axis.SquaredLength < (1e-12)) // pick another if colinear
+                if (t_axis.LengthSquared() < (1e-12)) // pick another if colinear
                     t_axis = Vector3.UnitY.Cross(this);
                 t_axis.Normalize();
                 return Quaternion.FromAngleAxis((float)Math.PI, t_axis);
@@ -425,9 +508,55 @@ namespace OpenGL
                 float t_invs = 1.0f / t_sqrt;
 
                 Vector3 t_cross = t_source.Cross(t_dest);
-                return new Quaternion(t_cross.x * t_invs, t_cross.y * t_invs, t_cross.z * t_invs, t_sqrt * 0.5f).Normalize();
+                return new Quaternion(t_cross.X * t_invs, t_cross.Y * t_invs, t_cross.Z * t_invs, t_sqrt * 0.5f).Normalize();
             }
         }
         #endregion
     }
+#else
+    public static class Vector3Extensions
+    {
+        /// <summary>
+        /// Store the minimum values of x, y, and z between the two vectors.
+        /// </summary>
+        /// <param name="v">Vector to check against</param>
+        public static void TakeMin(this Vector3 tv, Vector3 v)
+        {
+            if (v.X < tv.X) tv.X = v.X;
+            if (v.Y < tv.Y) tv.Y = v.Y;
+            if (v.Z < tv.Z) tv.Z = v.Z;
+        }
+
+        /// <summary>
+        /// Store the maximum values of x, y, and z between the two vectors.
+        /// </summary>
+        /// <param name="v">Vector to check against</param>
+        public static void TakeMax(this Vector3 tv, Vector3 v)
+        {
+            if (v.X > tv.X) tv.X = v.X;
+            if (v.Y > tv.Y) tv.Y = v.Y;
+            if (v.Z > tv.Z) tv.Z = v.Z;
+        }
+
+        /// <summary>
+        /// Normalizes the Vector3 structure to have a peak value of one.
+        /// </summary>
+        /// <returns>if (Length = 0) return Zero; else return Vector3(x,y,z)/Length</returns>
+        public static Vector3 Normalize(this Vector3 v)
+        {
+            if (v.Length() == 0) return Vector3.Zero;
+            else return new Vector3(v.X, v.Y, v.Z) / v.Length();
+        }
+
+        /// <summary>
+        /// Performs the Vector3 scalar dot product.
+        /// </summary>
+        /// <param name="v">Second dot product term</param>
+        /// <returns>Vector3.Dot(this, v)</returns>
+        public static float Dot(this Vector3 tv, Vector3 v)
+        {
+            return Vector3.Dot(tv, v);
+        }
+    }
+#endif
 }

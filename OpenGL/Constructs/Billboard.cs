@@ -1,5 +1,9 @@
 ﻿using System;
 
+#if USE_NUMERICS
+using System.Numerics;
+#endif
+
 namespace OpenGL
 {
     public class Billboard : IDisposable

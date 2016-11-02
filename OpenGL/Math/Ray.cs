@@ -1,5 +1,9 @@
 ﻿using System;
 
+#if USE_NUMERICS
+using System.Numerics;
+#endif
+
 namespace OpenGL
 {
     /// <summary>
@@ -99,83 +103,83 @@ namespace OpenGL
         /// </summary>
         private void PreCalculate()
         {
-            inverse = 1.0f / direction;
-            ibyj = direction.x * inverse.y;
-            jbyi = direction.y * inverse.x;
-            jbyk = direction.y * inverse.z;
-            kbyj = direction.z * inverse.y;
-            ibyk = direction.x * inverse.z;
-            kbyi = direction.z * inverse.x;
-            c_xy = origin.y - jbyi * origin.x;
-            c_xz = origin.z - kbyi * origin.x;
-            c_yx = origin.x - ibyj * origin.y;
-            c_yz = origin.z - kbyj * origin.y;
-            c_zx = origin.x - ibyk * origin.z;
-            c_zy = origin.y - jbyk * origin.z;
-            if (direction.x < 0)
+            inverse = new Vector3(1.0f / direction.X, 1.0f / direction.Y, 1.0f / direction.Z);//1.0f / direction;
+            ibyj = direction.X * inverse.Y;
+            jbyi = direction.Y * inverse.X;
+            jbyk = direction.Y * inverse.Z;
+            kbyj = direction.Z * inverse.Y;
+            ibyk = direction.X * inverse.Z;
+            kbyi = direction.Z * inverse.X;
+            c_xy = origin.Y - jbyi * origin.X;
+            c_xz = origin.Z - kbyi * origin.X;
+            c_yx = origin.X - ibyj * origin.Y;
+            c_yz = origin.Z - kbyj * origin.Y;
+            c_zx = origin.X - ibyk * origin.Z;
+            c_zy = origin.Y - jbyk * origin.Z;
+            if (direction.X < 0)
             {
-                if (direction.y < 0)
+                if (direction.Y < 0)
                 {
-                    if (direction.z < 0) classification = RayType.MMM;
-                    else if (direction.z > 0) classification = RayType.MMP;
+                    if (direction.Z < 0) classification = RayType.MMM;
+                    else if (direction.Z > 0) classification = RayType.MMP;
                     else classification = RayType.MMO;
                 }
                 else
                 {
-                    if (direction.z < 0)
+                    if (direction.Z < 0)
                     {
                         classification = RayType.MPM;
-                        if (direction.y == 0)
+                        if (direction.Y == 0)
                             classification = RayType.MOM;
                     }
                     else
                     {
-                        if ((direction.y == 0) && (direction.z == 0)) classification = RayType.MOO;
-                        else if (direction.z == 0) classification = RayType.MPO;
-                        else if (direction.y == 0) classification = RayType.MOP;
+                        if ((direction.Y == 0) && (direction.Z == 0)) classification = RayType.MOO;
+                        else if (direction.Z == 0) classification = RayType.MPO;
+                        else if (direction.Y == 0) classification = RayType.MOP;
                         else classification = RayType.MPP;
                     }
                 }
             }
             else
             {
-                if (direction.y < 0)
+                if (direction.Y < 0)
                 {
-                    if (direction.z < 0)
+                    if (direction.Z < 0)
                     {
                         classification = RayType.PMM;
-                        if (direction.x == 0) classification = RayType.OMM;
+                        if (direction.X == 0) classification = RayType.OMM;
                     }
                     else
                     {
-                        if ((direction.x == 0) && (direction.z == 0)) classification = RayType.OMO;
-                        else if (direction.z == 0) classification = RayType.PMO;
-                        else if (direction.x == 0) classification = RayType.OMP;
+                        if ((direction.X == 0) && (direction.Z == 0)) classification = RayType.OMO;
+                        else if (direction.Z == 0) classification = RayType.PMO;
+                        else if (direction.X == 0) classification = RayType.OMP;
                         else classification = RayType.PMP;
                     }
                 }
                 else
                 {
-                    if (direction.z < 0)
+                    if (direction.Z < 0)
                     {
-                        if ((direction.x == 0) && (direction.y == 0)) classification = RayType.OOM;
-                        else if (direction.x == 0) classification = RayType.OPM;
-                        else if (direction.y == 0) classification = RayType.POM;
+                        if ((direction.X == 0) && (direction.Y == 0)) classification = RayType.OOM;
+                        else if (direction.X == 0) classification = RayType.OPM;
+                        else if (direction.Y == 0) classification = RayType.POM;
                         else classification = RayType.PPM;
                     }
                     else
                     {
-                        if (direction.x == 0)
+                        if (direction.X == 0)
                         {
-                            if (direction.y == 0) classification = RayType.OOP;
-                            else if (direction.z == 0) classification = RayType.OPO;
+                            if (direction.Y == 0) classification = RayType.OOP;
+                            else if (direction.Z == 0) classification = RayType.OPO;
                             else classification = RayType.OPP;
                         }
                         else
                         {
-                            if ((direction.y == 0) && (direction.z == 0)) classification = RayType.POO;
-                            else if (direction.y == 0) classification = RayType.POP;
-                            else if (direction.z == 0) classification = RayType.PPO;
+                            if ((direction.Y == 0) && (direction.Z == 0)) classification = RayType.POO;
+                            else if (direction.Y == 0) classification = RayType.POP;
+                            else if (direction.Z == 0) classification = RayType.PPO;
                             else classification = RayType.PPP;
                         }
                     }
@@ -197,227 +201,227 @@ namespace OpenGL
             switch (classification)
             {
                 case RayType.MMM:
-                    if ((origin.x < b.Min.x) || (origin.y < b.Min.y) || (origin.z < b.Min.z)
-                        || (jbyi * b.Min.x - b.Max.y + c_xy > 0)
-                        || (ibyj * b.Min.y - b.Max.x + c_yx > 0)
-                        || (jbyk * b.Min.z - b.Max.y + c_zy > 0)
-                        || (kbyj * b.Min.y - b.Max.z + c_yz > 0)
-                        || (kbyi * b.Min.x - b.Max.z + c_xz > 0)
-                        || (ibyk * b.Min.z - b.Max.x + c_zx > 0))
+                    if ((origin.X < b.Min.X) || (origin.Y < b.Min.Y) || (origin.Z < b.Min.Z)
+                        || (jbyi * b.Min.X - b.Max.Y + c_xy > 0)
+                        || (ibyj * b.Min.Y - b.Max.X + c_yx > 0)
+                        || (jbyk * b.Min.Z - b.Max.Y + c_zy > 0)
+                        || (kbyj * b.Min.Y - b.Max.Z + c_yz > 0)
+                        || (kbyi * b.Min.X - b.Max.Z + c_xz > 0)
+                        || (ibyk * b.Min.Z - b.Max.X + c_zx > 0))
                         return false;
                     return true;
                 case RayType.MMP:
-                    if ((origin.x < b.Min.x) || (origin.y < b.Min.y) || (origin.z > b.Max.z)
-                        || (jbyi * b.Min.x - b.Max.y + c_xy > 0)
-                        || (ibyj * b.Min.y - b.Max.x + c_yx > 0)
-                        || (jbyk * b.Max.z - b.Max.y + c_zy > 0)
-                        || (kbyj * b.Min.y - b.Min.z + c_yz < 0)
-                        || (kbyi * b.Min.x - b.Min.z + c_xz < 0)
-                        || (ibyk * b.Max.z - b.Max.x + c_zx > 0))
+                    if ((origin.X < b.Min.X) || (origin.Y < b.Min.Y) || (origin.Z > b.Max.Z)
+                        || (jbyi * b.Min.X - b.Max.Y + c_xy > 0)
+                        || (ibyj * b.Min.Y - b.Max.X + c_yx > 0)
+                        || (jbyk * b.Max.Z - b.Max.Y + c_zy > 0)
+                        || (kbyj * b.Min.Y - b.Min.Z + c_yz < 0)
+                        || (kbyi * b.Min.X - b.Min.Z + c_xz < 0)
+                        || (ibyk * b.Max.Z - b.Max.X + c_zx > 0))
                         return false;
                     return true;
                 case RayType.MPM:
-                    if ((origin.x < b.Min.x) || (origin.y > b.Max.y) || (origin.z < b.Min.z)
-                        || (jbyi * b.Min.x - b.Min.y + c_xy < 0)
-                        || (ibyj * b.Max.y - b.Max.x + c_yx > 0)
-                        || (jbyk * b.Min.z - b.Min.y + c_zy < 0)
-                        || (kbyj * b.Max.y - b.Max.z + c_yz > 0)
-                        || (kbyi * b.Min.x - b.Max.z + c_xz > 0)
-                        || (ibyk * b.Min.z - b.Max.x + c_zx > 0))
+                    if ((origin.X < b.Min.X) || (origin.Y > b.Max.Y) || (origin.Z < b.Min.Z)
+                        || (jbyi * b.Min.X - b.Min.Y + c_xy < 0)
+                        || (ibyj * b.Max.Y - b.Max.X + c_yx > 0)
+                        || (jbyk * b.Min.Z - b.Min.Y + c_zy < 0)
+                        || (kbyj * b.Max.Y - b.Max.Z + c_yz > 0)
+                        || (kbyi * b.Min.X - b.Max.Z + c_xz > 0)
+                        || (ibyk * b.Min.Z - b.Max.X + c_zx > 0))
                         return false;
                     return true;
                 case RayType.MPP:
-                    if ((origin.x < b.Min.x) || (origin.y > b.Max.y) || (origin.z > b.Max.z)
-                        || (jbyi * b.Min.x - b.Min.y + c_xy < 0)
-                        || (ibyj * b.Max.y - b.Max.x + c_yx > 0)
-                        || (jbyk * b.Max.z - b.Min.y + c_zy < 0)
-                        || (kbyj * b.Max.y - b.Min.z + c_yz < 0)
-                        || (kbyi * b.Min.x - b.Min.z + c_xz < 0)
-                        || (ibyk * b.Max.z - b.Max.x + c_zx > 0))
+                    if ((origin.X < b.Min.X) || (origin.Y > b.Max.Y) || (origin.Z > b.Max.Z)
+                        || (jbyi * b.Min.X - b.Min.Y + c_xy < 0)
+                        || (ibyj * b.Max.Y - b.Max.X + c_yx > 0)
+                        || (jbyk * b.Max.Z - b.Min.Y + c_zy < 0)
+                        || (kbyj * b.Max.Y - b.Min.Z + c_yz < 0)
+                        || (kbyi * b.Min.X - b.Min.Z + c_xz < 0)
+                        || (ibyk * b.Max.Z - b.Max.X + c_zx > 0))
                         return false;
                     return true;
                 case RayType.PMM:
-                    if ((origin.x > b.Max.x) || (origin.y < b.Min.y) || (origin.z < b.Min.z)
-                        || (jbyi * b.Max.x - b.Max.y + c_xy > 0)
-                        || (ibyj * b.Min.y - b.Min.x + c_yx < 0)
-                        || (jbyk * b.Min.z - b.Max.y + c_zy > 0)
-                        || (kbyj * b.Min.y - b.Max.z + c_yz > 0)
-                        || (kbyi * b.Max.x - b.Max.z + c_xz > 0)
-                        || (ibyk * b.Min.z - b.Min.x + c_zx < 0))
+                    if ((origin.X > b.Max.X) || (origin.Y < b.Min.Y) || (origin.Z < b.Min.Z)
+                        || (jbyi * b.Max.X - b.Max.Y + c_xy > 0)
+                        || (ibyj * b.Min.Y - b.Min.X + c_yx < 0)
+                        || (jbyk * b.Min.Z - b.Max.Y + c_zy > 0)
+                        || (kbyj * b.Min.Y - b.Max.Z + c_yz > 0)
+                        || (kbyi * b.Max.X - b.Max.Z + c_xz > 0)
+                        || (ibyk * b.Min.Z - b.Min.X + c_zx < 0))
                         return false;
                     return true;
                 case RayType.PMP:
-                    if ((origin.x > b.Max.x) || (origin.y < b.Min.y) || (origin.z > b.Max.z)
-                        || (jbyi * b.Max.x - b.Max.y + c_xy > 0)
-                        || (ibyj * b.Min.y - b.Min.x + c_yx < 0)
-                        || (jbyk * b.Max.z - b.Max.y + c_zy > 0)
-                        || (kbyj * b.Min.y - b.Min.z + c_yz < 0)
-                        || (kbyi * b.Max.x - b.Min.z + c_xz < 0)
-                        || (ibyk * b.Max.z - b.Min.x + c_zx < 0))
+                    if ((origin.X > b.Max.X) || (origin.Y < b.Min.Y) || (origin.Z > b.Max.Z)
+                        || (jbyi * b.Max.X - b.Max.Y + c_xy > 0)
+                        || (ibyj * b.Min.Y - b.Min.X + c_yx < 0)
+                        || (jbyk * b.Max.Z - b.Max.Y + c_zy > 0)
+                        || (kbyj * b.Min.Y - b.Min.Z + c_yz < 0)
+                        || (kbyi * b.Max.X - b.Min.Z + c_xz < 0)
+                        || (ibyk * b.Max.Z - b.Min.X + c_zx < 0))
                         return false;
                     return true;
                 case RayType.PPM:
-                    if ((origin.x > b.Max.x) || (origin.y > b.Max.y) || (origin.z < b.Min.z)
-                        || (jbyi * b.Max.x - b.Min.y + c_xy < 0)
-                        || (ibyj * b.Max.y - b.Min.x + c_yx < 0)
-                        || (jbyk * b.Min.z - b.Min.y + c_zy < 0)
-                        || (kbyj * b.Max.y - b.Max.z + c_yz > 0)
-                        || (kbyi * b.Max.x - b.Max.z + c_xz > 0)
-                        || (ibyk * b.Min.z - b.Min.x + c_zx < 0))
+                    if ((origin.X > b.Max.X) || (origin.Y > b.Max.Y) || (origin.Z < b.Min.Z)
+                        || (jbyi * b.Max.X - b.Min.Y + c_xy < 0)
+                        || (ibyj * b.Max.Y - b.Min.X + c_yx < 0)
+                        || (jbyk * b.Min.Z - b.Min.Y + c_zy < 0)
+                        || (kbyj * b.Max.Y - b.Max.Z + c_yz > 0)
+                        || (kbyi * b.Max.X - b.Max.Z + c_xz > 0)
+                        || (ibyk * b.Min.Z - b.Min.X + c_zx < 0))
                         return false;
                     return true;
                 case RayType.PPP:
-                    if ((origin.x > b.Max.x) || (origin.y > b.Max.y) || (origin.z > b.Max.z)
-                        || (jbyi * b.Max.x - b.Min.y + c_xy < 0)
-                        || (ibyj * b.Max.y - b.Min.x + c_yx < 0)
-                        || (jbyk * b.Max.z - b.Min.y + c_zy < 0)
-                        || (kbyj * b.Max.y - b.Min.z + c_yz < 0)
-                        || (kbyi * b.Max.x - b.Min.z + c_xz < 0)
-                        || (ibyk * b.Max.z - b.Min.x + c_zx < 0))
+                    if ((origin.X > b.Max.X) || (origin.Y > b.Max.Y) || (origin.Z > b.Max.Z)
+                        || (jbyi * b.Max.X - b.Min.Y + c_xy < 0)
+                        || (ibyj * b.Max.Y - b.Min.X + c_yx < 0)
+                        || (jbyk * b.Max.Z - b.Min.Y + c_zy < 0)
+                        || (kbyj * b.Max.Y - b.Min.Z + c_yz < 0)
+                        || (kbyi * b.Max.X - b.Min.Z + c_xz < 0)
+                        || (ibyk * b.Max.Z - b.Min.X + c_zx < 0))
                         return false;
                     return true;
                 case RayType.OMM:
-                    if ((origin.x < b.Min.x) || (origin.x > b.Max.x)
-                        || (origin.y < b.Min.y) || (origin.z < b.Min.z)
-                        || (jbyk * b.Min.z - b.Max.y + c_zy > 0)
-                        || (kbyj * b.Min.y - b.Max.z + c_yz > 0))
+                    if ((origin.X < b.Min.X) || (origin.X > b.Max.X)
+                        || (origin.Y < b.Min.Y) || (origin.Z < b.Min.Z)
+                        || (jbyk * b.Min.Z - b.Max.Y + c_zy > 0)
+                        || (kbyj * b.Min.Y - b.Max.Z + c_yz > 0))
                         return false;
                     return true;
                 case RayType.OMP:
-                    if ((origin.x < b.Min.x) || (origin.x > b.Max.x)
-                        || (origin.y < b.Min.y) || (origin.z > b.Max.z)
-                        || (jbyk * b.Max.z - b.Max.y + c_zy > 0)
-                        || (kbyj * b.Min.y - b.Min.z + c_yz < 0))
+                    if ((origin.X < b.Min.X) || (origin.X > b.Max.X)
+                        || (origin.Y < b.Min.Y) || (origin.Z > b.Max.Z)
+                        || (jbyk * b.Max.Z - b.Max.Y + c_zy > 0)
+                        || (kbyj * b.Min.Y - b.Min.Z + c_yz < 0))
                         return false;
                     return true;
                 case RayType.OPM:
-                    if ((origin.x < b.Min.x) || (origin.x > b.Max.x)
-                        || (origin.y > b.Max.y) || (origin.z < b.Min.z)
-                        || (jbyk * b.Min.z - b.Min.y + c_zy < 0)
-                        || (kbyj * b.Max.y - b.Max.z + c_yz > 0))
+                    if ((origin.X < b.Min.X) || (origin.X > b.Max.X)
+                        || (origin.Y > b.Max.Y) || (origin.Z < b.Min.Z)
+                        || (jbyk * b.Min.Z - b.Min.Y + c_zy < 0)
+                        || (kbyj * b.Max.Y - b.Max.Z + c_yz > 0))
                         return false;
                     return true;
                 case RayType.OPP:
-                    if ((origin.x < b.Min.x) || (origin.x > b.Max.x)
-                        || (origin.y > b.Max.y) || (origin.z > b.Max.z)
-                        || (jbyk * b.Max.z - b.Min.y + c_zy < 0)
-                        || (kbyj * b.Max.y - b.Min.z + c_yz < 0))
+                    if ((origin.X < b.Min.X) || (origin.X > b.Max.X)
+                        || (origin.Y > b.Max.Y) || (origin.Z > b.Max.Z)
+                        || (jbyk * b.Max.Z - b.Min.Y + c_zy < 0)
+                        || (kbyj * b.Max.Y - b.Min.Z + c_yz < 0))
                         return false;
                     return true;
                 case RayType.MOM:
-                    if ((origin.y < b.Min.y) || (origin.y > b.Max.y)
-                        || (origin.x < b.Min.x) || (origin.z < b.Min.z)
-                        || (kbyi * b.Min.x - b.Max.z + c_xz > 0)
-                        || (ibyk * b.Min.z - b.Max.x + c_zx > 0))
+                    if ((origin.Y < b.Min.Y) || (origin.Y > b.Max.Y)
+                        || (origin.X < b.Min.X) || (origin.Z < b.Min.Z)
+                        || (kbyi * b.Min.X - b.Max.Z + c_xz > 0)
+                        || (ibyk * b.Min.Z - b.Max.X + c_zx > 0))
                         return false;
                     return true;
                 case RayType.MOP:
-                    if ((origin.y < b.Min.y) || (origin.y > b.Max.y)
-                        || (origin.x < b.Min.x) || (origin.z > b.Max.z)
-                        || (kbyi * b.Min.x - b.Min.z + c_xz < 0)
-                        || (ibyk * b.Max.z - b.Max.x + c_zx > 0))
+                    if ((origin.Y < b.Min.Y) || (origin.Y > b.Max.Y)
+                        || (origin.X < b.Min.X) || (origin.Z > b.Max.Z)
+                        || (kbyi * b.Min.X - b.Min.Z + c_xz < 0)
+                        || (ibyk * b.Max.Z - b.Max.X + c_zx > 0))
                         return false;
                     return true;
                 case RayType.POM:
-                    if ((origin.y < b.Min.y) || (origin.y > b.Max.y)
-                        || (origin.x > b.Max.x) || (origin.z < b.Min.z)
-                        || (kbyi * b.Max.x - b.Max.z + c_xz > 0)
-                        || (ibyk * b.Min.z - b.Min.x + c_zx < 0))
+                    if ((origin.Y < b.Min.Y) || (origin.Y > b.Max.Y)
+                        || (origin.X > b.Max.X) || (origin.Z < b.Min.Z)
+                        || (kbyi * b.Max.X - b.Max.Z + c_xz > 0)
+                        || (ibyk * b.Min.Z - b.Min.X + c_zx < 0))
                         return false;
                     return true;
                 case RayType.POP:
-                    if ((origin.y < b.Min.y) || (origin.y > b.Max.y)
-                        || (origin.x > b.Max.x) || (origin.z > b.Max.z)
-                        || (kbyi * b.Max.x - b.Min.z + c_xz < 0)
-                        || (ibyk * b.Max.z - b.Min.x + c_zx < 0))
+                    if ((origin.Y < b.Min.Y) || (origin.Y > b.Max.Y)
+                        || (origin.X > b.Max.X) || (origin.Z > b.Max.Z)
+                        || (kbyi * b.Max.X - b.Min.Z + c_xz < 0)
+                        || (ibyk * b.Max.Z - b.Min.X + c_zx < 0))
                         return false;
                     return true;
                 case RayType.MMO:
-                    if ((origin.z < b.Min.z) || (origin.z > b.Max.z)
-                        || (origin.x < b.Min.x) || (origin.y < b.Min.y)
-                        || (jbyi * b.Min.x - b.Max.y + c_xy > 0)
-                        || (ibyj * b.Min.y - b.Max.x + c_yx > 0))
+                    if ((origin.Z < b.Min.Z) || (origin.Z > b.Max.Z)
+                        || (origin.X < b.Min.X) || (origin.Y < b.Min.Y)
+                        || (jbyi * b.Min.X - b.Max.Y + c_xy > 0)
+                        || (ibyj * b.Min.Y - b.Max.X + c_yx > 0))
                         return false;
                     return true;
                 case RayType.MPO:
-                    if ((origin.z < b.Min.z) || (origin.z > b.Max.z)
-                        || (origin.x < b.Min.x) || (origin.y > b.Max.y)
-                        || (jbyi * b.Min.x - b.Min.y + c_xy < 0)
-                        || (ibyj * b.Max.y - b.Max.x + c_yx > 0))
+                    if ((origin.Z < b.Min.Z) || (origin.Z > b.Max.Z)
+                        || (origin.X < b.Min.X) || (origin.Y > b.Max.Y)
+                        || (jbyi * b.Min.X - b.Min.Y + c_xy < 0)
+                        || (ibyj * b.Max.Y - b.Max.X + c_yx > 0))
                         return false;
                     return true;
                 case RayType.PMO:
-                    if ((origin.z < b.Min.z) || (origin.z > b.Max.z)
-                        || (origin.x > b.Max.x) || (origin.y < b.Min.y)
-                        || (jbyi * b.Max.x - b.Max.y + c_xy > 0)
-                        || (ibyj * b.Min.y - b.Min.x + c_yx < 0))
+                    if ((origin.Z < b.Min.Z) || (origin.Z > b.Max.Z)
+                        || (origin.X > b.Max.X) || (origin.Y < b.Min.Y)
+                        || (jbyi * b.Max.X - b.Max.Y + c_xy > 0)
+                        || (ibyj * b.Min.Y - b.Min.X + c_yx < 0))
                         return false;
                     return true;
                 case RayType.PPO:
-                    if ((origin.z < b.Min.z) || (origin.z > b.Max.z)
-                        || (origin.x > b.Max.x) || (origin.y > b.Max.y)
-                        || (jbyi * b.Max.x - b.Min.y + c_xy < 0)
-                        || (ibyj * b.Max.y - b.Min.x + c_yx < 0))
+                    if ((origin.Z < b.Min.Z) || (origin.Z > b.Max.Z)
+                        || (origin.X > b.Max.X) || (origin.Y > b.Max.Y)
+                        || (jbyi * b.Max.X - b.Min.Y + c_xy < 0)
+                        || (ibyj * b.Max.Y - b.Min.X + c_yx < 0))
                         return false;
                     return true;
                 case RayType.MOO:
-                    if ((origin.x < b.Min.x)
-                        || (origin.y < b.Min.y) || (origin.y > b.Max.y)
-                        || (origin.z < b.Min.z) || (origin.z > b.Max.z))
+                    if ((origin.X < b.Min.X)
+                        || (origin.Y < b.Min.Y) || (origin.Y > b.Max.Y)
+                        || (origin.Z < b.Min.Z) || (origin.Z > b.Max.Z))
                         return false;
                     return true;
                 case RayType.POO:
-                    if ((origin.x > b.Max.x)
-                        || (origin.y < b.Min.y) || (origin.y > b.Max.y)
-                        || (origin.z < b.Min.z) || (origin.z > b.Max.z))
+                    if ((origin.X > b.Max.X)
+                        || (origin.Y < b.Min.Y) || (origin.Y > b.Max.Y)
+                        || (origin.Z < b.Min.Z) || (origin.Z > b.Max.Z))
                         return false;
                     return true;
                 case RayType.OMO:
-                    if ((origin.y < b.Min.y)
-                        || (origin.x < b.Min.x) || (origin.x > b.Max.x)
-                        || (origin.z < b.Min.z) || (origin.z > b.Max.z))
+                    if ((origin.Y < b.Min.Y)
+                        || (origin.X < b.Min.X) || (origin.X > b.Max.X)
+                        || (origin.Z < b.Min.Z) || (origin.Z > b.Max.Z))
                         return false;
-                    if ((origin.y > b.Max.y)
-                        || (origin.x < b.Min.x) || (origin.x > b.Max.x)
-                        || (origin.z < b.Min.z) || (origin.z > b.Max.z))
+                    if ((origin.Y > b.Max.Y)
+                        || (origin.X < b.Min.X) || (origin.X > b.Max.X)
+                        || (origin.Z < b.Min.Z) || (origin.Z > b.Max.Z))
                         return false;
-                    if ((origin.z < b.Min.z)
-                        || (origin.x < b.Min.x) || (origin.x > b.Max.x)
-                        || (origin.y < b.Min.y) || (origin.y > b.Max.y))
+                    if ((origin.Z < b.Min.Z)
+                        || (origin.X < b.Min.X) || (origin.X > b.Max.X)
+                        || (origin.Y < b.Min.Y) || (origin.Y > b.Max.Y))
                         return false;
-                    if ((origin.z > b.Max.z)
-                        || (origin.x < b.Min.x) || (origin.x > b.Max.x)
-                        || (origin.y < b.Min.y) || (origin.y > b.Max.y))
+                    if ((origin.Z > b.Max.Z)
+                        || (origin.X < b.Min.X) || (origin.X > b.Max.X)
+                        || (origin.Y < b.Min.Y) || (origin.Y > b.Max.Y))
                         return false;
                     return true;
                 case RayType.OPO:
-                    if ((origin.y > b.Max.y)
-                        || (origin.x < b.Min.x) || (origin.x > b.Max.x)
-                        || (origin.z < b.Min.z) || (origin.z > b.Max.z))
+                    if ((origin.Y > b.Max.Y)
+                        || (origin.X < b.Min.X) || (origin.X > b.Max.X)
+                        || (origin.Z < b.Min.Z) || (origin.Z > b.Max.Z))
                         return false;
-                    if ((origin.z < b.Min.z)
-                        || (origin.x < b.Min.x) || (origin.x > b.Max.x)
-                        || (origin.y < b.Min.y) || (origin.y > b.Max.y))
+                    if ((origin.Z < b.Min.Z)
+                        || (origin.X < b.Min.X) || (origin.X > b.Max.X)
+                        || (origin.Y < b.Min.Y) || (origin.Y > b.Max.Y))
                         return false;
-                    if ((origin.z > b.Max.z)
-                        || (origin.x < b.Min.x) || (origin.x > b.Max.x)
-                        || (origin.y < b.Min.y) || (origin.y > b.Max.y))
+                    if ((origin.Z > b.Max.Z)
+                        || (origin.X < b.Min.X) || (origin.X > b.Max.X)
+                        || (origin.Y < b.Min.Y) || (origin.Y > b.Max.Y))
                         return false;
                     return true;
                 case RayType.OOM:
-                    if ((origin.z < b.Min.z)
-                        || (origin.x < b.Min.x) || (origin.x > b.Max.x)
-                        || (origin.y < b.Min.y) || (origin.y > b.Max.y))
+                    if ((origin.Z < b.Min.Z)
+                        || (origin.X < b.Min.X) || (origin.X > b.Max.X)
+                        || (origin.Y < b.Min.Y) || (origin.Y > b.Max.Y))
                         return false;
-                    if ((origin.z > b.Max.z)
-                        || (origin.x < b.Min.x) || (origin.x > b.Max.x)
-                        || (origin.y < b.Min.y) || (origin.y > b.Max.y))
+                    if ((origin.Z > b.Max.Z)
+                        || (origin.X < b.Min.X) || (origin.X > b.Max.X)
+                        || (origin.Y < b.Min.Y) || (origin.Y > b.Max.Y))
                         return false;
                     return true;
                 case RayType.OOP:
-                    if ((origin.z > b.Max.z)
-                        || (origin.x < b.Min.x) || (origin.x > b.Max.x)
-                        || (origin.y < b.Min.y) || (origin.y > b.Max.y))
+                    if ((origin.Z > b.Max.Z)
+                        || (origin.X < b.Min.X) || (origin.X > b.Max.X)
+                        || (origin.Y < b.Min.Y) || (origin.Y > b.Max.Y))
                         return false;
                     return true;
             }

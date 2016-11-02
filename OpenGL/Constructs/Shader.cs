@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#if USE_NUMERICS
+using System.Numerics;
+#endif
+
 namespace OpenGL
 {
     public enum ParamType 
@@ -116,19 +120,19 @@ namespace OpenGL
         public void SetValue(Vector2 param)
         {
             if (Type != typeof(Vector2)) throw new Exception(string.Format("SetValue({0}) was given a Vector2.", Type));
-            Gl.Uniform2f(location, param.x, param.y);
+            Gl.Uniform2f(location, param.X, param.Y);
         }
 
         public void SetValue(Vector3 param)
         {
             if (Type != typeof(Vector3)) throw new Exception(string.Format("SetValue({0}) was given a Vector3.", Type));
-            Gl.Uniform3f(location, param.x, param.y, param.z);
+            Gl.Uniform3f(location, param.X, param.Y, param.Z);
         }
 
         public void SetValue(Vector4 param)
         {
             if (Type != typeof(Vector4)) throw new Exception(string.Format("SetValue({0}) was given a Vector4.", Type));
-            Gl.Uniform4f(location, param.x, param.y, param.z, param.w);
+            Gl.Uniform4f(location, param.X, param.Y, param.Z, param.W);
         }
 
         

@@ -1,5 +1,9 @@
 ﻿using System;
 
+#if USE_NUMERICS
+using System.Numerics;
+#endif
+
 namespace OpenGL
 {
     /// <summary>
@@ -44,7 +48,7 @@ namespace OpenGL
         /// </summary>
         public Vector3 Center
         {
-            get { return new Vector3((max.x + min.x) * 0.5, (max.y + min.y) * 0.5, (max.z + min.z) * 0.5); }
+            get { return new Vector3((max.X + min.X) * 0.5f, (max.Y + min.Y) * 0.5f, (max.Z + min.Z) * 0.5f); }
         }
 
         /// <summary>
@@ -54,7 +58,7 @@ namespace OpenGL
         {
             get
             {
-                float t_length = Size.x;
+                float t_length = Size.X;
                 return (float)Math.Sqrt(t_length * t_length * 3) / 2.0f;
             }
         }
@@ -109,9 +113,9 @@ namespace OpenGL
         /// <returns>The clamped point</returns>
         public Vector3 ClampPoint(Vector3 Point)
         {
-            return new Vector3((Point.x > Max.x) ? Max.x : (Point.x < Min.x) ? Min.x : Point.x,
-                (Point.y > Max.y) ? Max.y : (Point.y < Min.y) ? Min.y : Point.y,
-                (Point.z > Max.z) ? Max.z : (Point.z < Min.z) ? Min.z : Point.z);
+            return new Vector3((Point.X > Max.X) ? Max.X : (Point.X < Min.X) ? Min.X : Point.X,
+                (Point.Y > Max.Y) ? Max.Y : (Point.Y < Min.Y) ? Min.Y : Point.Y,
+                (Point.Z > Max.Z) ? Max.Z : (Point.Z < Min.Z) ? Min.Z : Point.Z);
         }
 
         /// <summary>
@@ -137,19 +141,19 @@ namespace OpenGL
 
             t_corner = t_min;       // min min min
             AddPoint(TranformMatrix * t_corner);
-            t_corner.z = t_max.z;   // min min max
+            t_corner.Z = t_max.Z;   // min min max
             AddPoint(TranformMatrix * t_corner);
-            t_corner.y = t_max.y;   // min max max
+            t_corner.Y = t_max.Y;   // min max max
             AddPoint(TranformMatrix * t_corner);
-            t_corner.z = t_min.z;   // min max min
+            t_corner.Z = t_min.Z;   // min max min
             AddPoint(TranformMatrix * t_corner);
-            t_corner.x = t_max.x;   // max max min
+            t_corner.X = t_max.X;   // max max min
             AddPoint(TranformMatrix * t_corner);
-            t_corner.z = t_max.z;   // max max max
+            t_corner.Z = t_max.Z;   // max max max
             AddPoint(TranformMatrix * t_corner);
-            t_corner.y = t_min.y;   // max min max
+            t_corner.Y = t_min.Y;   // max min max
             AddPoint(TranformMatrix * t_corner);
-            t_corner.z = t_min.z;   // max min min
+            t_corner.Z = t_min.Z;   // max min min
             AddPoint(TranformMatrix * t_corner);
         }
 
@@ -172,7 +176,7 @@ namespace OpenGL
         /// <returns>True if the vector intersects the AxisAlignedBoundingBox</returns>
         public bool Intersects(Vector3 v)
         {
-            return (v.x >= min.x && v.x <= max.x && v.y >= min.y && v.y <= max.y && v.z >= min.z && v.z <= max.z);
+            return (v.X >= min.X && v.X <= max.X && v.Y >= min.Y && v.Y <= max.Y && v.Z >= min.Z && v.Z <= max.Z);
         }
 
         /// <summary>
@@ -213,12 +217,12 @@ namespace OpenGL
         public bool Intersects(AxisAlignedBoundingBox b)
         {
             // Test the six planes of the box
-            if (max.x < b.Min.x) return false;
-            if (max.y < b.Min.y) return false;
-            if (max.z < b.Min.z) return false;
-            if (min.x > b.Max.x) return false;
-            if (min.y > b.Max.y) return false;
-            if (min.z > b.Max.z) return false;
+            if (max.X < b.Min.X) return false;
+            if (max.Y < b.Min.Y) return false;
+            if (max.Z < b.Min.Z) return false;
+            if (min.X > b.Max.X) return false;
+            if (min.Y > b.Max.Y) return false;
+            if (min.Z > b.Max.Z) return false;
 
             // Must be intersecting if all planes check out
             return true;
@@ -235,7 +239,7 @@ namespace OpenGL
             Vector3 t_max = max;
             t_min.TakeMax(b.Min);
             t_max.TakeMin(b.Max);
-            if (t_min.x < t_max.x && t_min.y < t_max.y && t_min.z < t_max.z)
+            if (t_min.X < t_max.X && t_min.Y < t_max.Y && t_min.Z < t_max.Z)
                 return new AxisAlignedBoundingBox(t_min, t_max);
             return null;    // Must be no intersection
         }
@@ -247,9 +251,9 @@ namespace OpenGL
         /// <returns>True if the AABB contains the point</returns>
         public bool Contains(Vector3 Position)
         {
-            return (Position.x >= min.x && Position.x <= max.x &&
-                Position.y >= min.y && Position.y <= max.y &&
-                Position.z >= min.z && Position.z <= max.z);
+            return (Position.X >= min.X && Position.X <= max.X &&
+                Position.Y >= min.Y && Position.Y <= max.Y &&
+                Position.Z >= min.Z && Position.Z <= max.Z);
         }
         #endregion
     }

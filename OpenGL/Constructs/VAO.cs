@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
+#if USE_NUMERICS
+using System.Numerics;
+#endif
+
 namespace OpenGL
 {
     public class VAO<T1> : GenericVAO

@@ -3,13 +3,35 @@ using System.Runtime.InteropServices;
 
 namespace OpenGL
 {
+#if !USE_NUMERICS
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector2 : IEquatable<Vector2>
     {
-        public float x, y;
+        public float X, Y;
+
+        /// <summary>
+        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
+        /// </summary>
+        [Obsolete("Use X instead, which is compatible with System.Numerics.")]
+        public float x
+        {
+            get { return X; }
+            set { X = value; }
+        }
+
+        /// <summary>
+        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
+        /// </summary>
+        [Obsolete("Use Y instead, which is compatible with System.Numerics.")]
+        public float y
+        {
+            get { return Y; }
+            set { Y = value; }
+        }
 
         #region Static Constructors
+        [Obsolete("Vector2.Identity is not compatible with System.Numerics.  Use Vector2.One instead.")]
         public static Vector2 Identity
         {
             get { return new Vector2(1.0f, 1.0f); }
@@ -19,100 +41,123 @@ namespace OpenGL
         {
             get { return new Vector2(0.0f, 0.0f); }
         }
+
+        public static Vector2 One
+        {
+            get { return new Vector2(1.0f, 1.0f); }
+        }
+
+        public static Vector2 UnitX
+        {
+            get { return new Vector2(1.0f, 0.0f); }
+        }
+
+        public static Vector2 UnitY
+        {
+            get { return new Vector2(0.0f, 1.0f); }
+        }
         #endregion
 
         #region Operators
         public static Vector2 operator +(Vector2 v1, Vector2 v2)
         {
-            return new Vector2(v1.x + v2.x, v1.y + v2.y);
+            return new Vector2(v1.X + v2.X, v1.Y + v2.Y);
         }
 
         public static Vector2 operator +(Vector2 v, float s)
         {
-            return new Vector2(v.x + s, v.y + s);
+            return new Vector2(v.X + s, v.Y + s);
         }
 
         public static Vector2 operator +(float s, Vector2 v)
         {
-            return new Vector2(v.x + s, v.y + s);
+            return new Vector2(v.X + s, v.Y + s);
         }
 
         public static Vector2 operator -(Vector2 v1, Vector2 v2)
         {
-            return new Vector2(v1.x - v2.x, v1.y - v2.y);
+            return new Vector2(v1.X - v2.X, v1.Y - v2.Y);
         }
 
         public static Vector2 operator -(Vector2 v, float s)
         {
-            return new Vector2(v.x - s, v.y - s);
+            return new Vector2(v.X - s, v.Y - s);
         }
 
         public static Vector2 operator -(float s, Vector2 v)
         {
-            return new Vector2(s - v.x, s - v.y);
+            return new Vector2(s - v.X, s - v.Y);
         }
 
         public static Vector2 operator -(Vector2 v)
         {
-            return new Vector2(-v.x, -v.y);
+            return new Vector2(-v.X, -v.Y);
         }
 
         public static Vector2 operator *(Vector2 v1, Vector2 v2)
         {
-            return new Vector2(v1.x * v2.x, v1.y * v2.y);
+            return new Vector2(v1.X * v2.X, v1.Y * v2.Y);
         }
 
         public static Vector2 operator *(float s, Vector2 v)
         {
-            return new Vector2(v.x * s, v.y * s);
+            return new Vector2(v.X * s, v.Y * s);
         }
 
         public static Vector2 operator *(Vector2 v, float s)
         {
-            return new Vector2(v.x * s, v.y * s);
+            return new Vector2(v.X * s, v.Y * s);
         }
 
         public static Vector2 operator /(Vector2 v1, Vector2 v2)
         {
-            return new Vector2(v1.x / v2.x, v1.y / v2.y);
+            return new Vector2(v1.X / v2.X, v1.Y / v2.Y);
         }
 
         public static Vector2 operator /(float s, Vector2 v)
         {
-            return new Vector2(s / v.x, s / v.y);
+            return new Vector2(s / v.X, s / v.Y);
         }
 
         public static Vector2 operator /(Vector2 v, float s)
         {
-            return new Vector2(v.x / s, v.y / s);
+            return new Vector2(v.X / s, v.Y / s);
         }
 
         public static bool operator ==(Vector2 v1, Vector2 v2)
         {
-            return (v1.x == v2.x && v1.y == v2.y);
+            return (v1.X == v2.X && v1.Y == v2.Y);
         }
 
         public static bool operator !=(Vector2 v1, Vector2 v2)
         {
-            return (v1.x != v2.x || v1.y != v2.y);
+            return (v1.X != v2.X || v1.Y != v2.Y);
         }
         #endregion
 
         #region Constructors
-        /// <summary>Create a Vector2 structure, normally used to store Vertex positions.</summary>
-        /// <param name="x">x value</param>
-        /// <param name="y">y value</param>
+        /// <summary>Creates a Vector2 structure whose elements have the specified values.</summary>
+        /// <param name="x">The value to assign to the X field.</param>
+        /// <param name="y">The value to assign to the Y field.</param>
         public Vector2(float x, float y)
         {
-            this.x = x; this.y = y;
+            this.X = x; this.Y = y;
         }
 
-        /// <summary>Create a Vector2 structure, normally used to store Vertex positions.</summary>
-        /// <param name="x">x value</param>
-        /// <param name="y">y value</param>
+        /// <summary>Creates a Vector2 structure whose elements have the specified values.</summary>
+        /// <param name="x">The value to assign to the X field.</param>
+        /// <param name="y">The value to assign to the Y field.</param>
+        [Obsolete("Use floats instead, which is compatible with System.Numerics.")]
         public Vector2(double x, double y)
         {
-            this.x = (float)x; this.y = (float)y;
+            this.X = (float)x; this.Y = (float)y;
+        }
+
+        /// <summary>Creates a Vector2 structure whose two elements have the same value.</summary>
+        /// <param name="value">The value to assign to all two elements.</param>
+        public Vector2(float value)
+        {
+            X = Y = value;
         }
         #endregion
 
@@ -136,7 +181,7 @@ namespace OpenGL
 
         public override string ToString()
         {
-            return "{" + x + ", " + y + "}";
+            return "{" + X + ", " + Y + "}";
         }
 
         /// <summary>
@@ -152,7 +197,7 @@ namespace OpenGL
 
         public float this[int a]
         {
-            get { return (a == 0) ? x : y; }
+            get { return (a == 0) ? X : Y; }
         }
         #endregion
 
@@ -162,15 +207,25 @@ namespace OpenGL
         /// </summary>
         public float Length
         {
-            get { return (float)Math.Sqrt(x * x + y * y); }
+            get { return (float)Math.Sqrt(X * X + Y * Y); }
         }
 
         /// <summary>
         /// Get the squared length of the Vector2 structure.
         /// </summary>
+        [Obsolete("Use LengthSquared() instead, which is compatible with System.Numerics.")]
         public float SquaredLength
         {
-            get { return x * x + y * y; }
+            get { return X * X + Y * Y; }
+        }
+
+        /// <summary>
+        /// A System.Numerics compatible version of SquaredLength.
+        /// </summary>
+        /// <returns>Returns the squared length of the Vector2 structure.</returns>
+        public float LengthSquared()
+        {
+            return X * X + Y * Y;
         }
 
         /// <summary>
@@ -178,7 +233,7 @@ namespace OpenGL
         /// </summary>
         public Vector2 PerpendicularRight
         {
-            get { return new Vector2(y, -x); }
+            get { return new Vector2(Y, -X); }
         }
 
         /// <summary>
@@ -186,7 +241,7 @@ namespace OpenGL
         /// </summary>
         public Vector2 PerpendicularLeft
         {
-            get { return new Vector2(-y, x); }
+            get { return new Vector2(-Y, X); }
         }
         #endregion
 
@@ -197,7 +252,7 @@ namespace OpenGL
         /// <returns>Float array representation of a Vector2</returns>
         public float[] ToFloat()
         {
-            return new float[] { x, y };
+            return new float[] { X, Y };
         }
 
         /// <summary>
@@ -208,7 +263,7 @@ namespace OpenGL
         /// <returns>v1.x * v2.x + v1.y * v2.y</returns>
         public static float Dot(Vector2 v1, Vector2 v2)
         {
-            return v1.x * v2.x + v1.y * v2.y;
+            return v1.X * v2.X + v1.Y * v2.Y;
         }
 
         /// <summary>
@@ -228,7 +283,7 @@ namespace OpenGL
         public Vector2 Normalize()
         {
             if (Length == 0) return Zero;
-            else return new Vector2(x, y) / Length;
+            else return new Vector2(X, Y) / Length;
         }
 
         /// <summary>
@@ -238,8 +293,8 @@ namespace OpenGL
         /// <returns>A truncated Vector2</returns>
         public Vector2 Truncate()
         {
-            float _x = (Math.Abs(x) - 0.0001 < 0) ? 0 : x;
-            float _y = (Math.Abs(y) - 0.0001 < 0) ? 0 : y;
+            float _x = (Math.Abs(X) - 0.0001 < 0) ? 0 : X;
+            float _y = (Math.Abs(Y) - 0.0001 < 0) ? 0 : Y;
             return new Vector2(_x, _y);
         }
 
@@ -249,8 +304,8 @@ namespace OpenGL
         /// <param name="v">Vector to check against</param>
         public void TakeMin(Vector2 v)
         {
-            if (v.x < x) x = v.x;
-            if (v.y < y) y = v.y;
+            if (v.X < X) X = v.X;
+            if (v.Y < Y) Y = v.Y;
         }
 
         /// <summary>
@@ -259,8 +314,8 @@ namespace OpenGL
         /// <param name="v">Vector to check against</param>
         public void TakeMax(Vector2 v)
         {
-            if (v.x > x) x = v.x;
-            if (v.y > y) y = v.y;
+            if (v.X > X) X = v.X;
+            if (v.Y > Y) Y = v.Y;
         }
 
         /// <summary>
@@ -288,4 +343,6 @@ namespace OpenGL
         }
         #endregion
     }
+#else
+#endif
 }

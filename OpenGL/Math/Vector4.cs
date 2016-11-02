@@ -1,15 +1,61 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
+#if USE_NUMERICS
+using System.Numerics;
+#endif
+
 namespace OpenGL
 {
+#if !USE_NUMERICS
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector4 : IEquatable<Vector4>
     {
-        public float x, y, z, w;
+        public float X, Y, Z, W;
+
+        /// <summary>
+        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
+        /// </summary>
+        [Obsolete("Use X instead, which is compatible with System.Numerics.")]
+        public float x
+        {
+            get { return X; }
+            set { X = value; }
+        }
+
+        /// <summary>
+        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
+        /// </summary>
+        [Obsolete("Use Y instead, which is compatible with System.Numerics.")]
+        public float y
+        {
+            get { return Y; }
+            set { Y = value; }
+        }
+
+        /// <summary>
+        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
+        /// </summary>
+        [Obsolete("Use Z instead, which is compatible with System.Numerics.")]
+        public float z
+        {
+            get { return Z; }
+            set { Z = value; }
+        }
+
+        /// <summary>
+        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
+        /// </summary>
+        [Obsolete("Use W instead, which is compatible with System.Numerics.")]
+        public float w
+        {
+            get { return W; }
+            set { W = value; }
+        }
 
         #region Static Constructors
+        [Obsolete("Use Vector4.One instead, which is compatible with System.Numerics.")]
         public static Vector4 Identity
         {
             get { return new Vector4(1.0f, 1.0f, 1.0f, 1.0f); }
@@ -27,142 +73,184 @@ namespace OpenGL
 
         public static Vector4 UnitY
         {
-            get { return new Vector4(0.0, 1.0f, 0.0f, 0.0f); }
+            get { return new Vector4(0.0f, 1.0f, 0.0f, 0.0f); }
         }
 
         public static Vector4 UnitZ
         {
-            get { return new Vector4(0.0, 0.0f, 1.0f, 0.0f); }
+            get { return new Vector4(0.0f, 0.0f, 1.0f, 0.0f); }
         }
 
         public static Vector4 UnitW
         {
-            get { return new Vector4(0.0, 0.0f, 0.0f, 1.0f); }
+            get { return new Vector4(0.0f, 0.0f, 0.0f, 1.0f); }
+        }
+
+        public static Vector4 One
+        {
+            get { return new Vector4(1.0f, 1.0f, 1.0f, 1.0f); }
         }
         #endregion
 
         #region Operators
         public static Vector4 operator +(Vector4 v1, Vector4 v2)
         {
-            return new Vector4(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z, v1.w + v2.w);
+            return new Vector4(v1.X + v2.X, v1.Y + v2.Y, v1.Z + v2.Z, v1.W + v2.W);
         }
 
         public static Vector4 operator +(Vector4 v, float s)
         {
-            return new Vector4(v.x + s, v.y + s, v.z + s, v.w + s);
+            return new Vector4(v.X + s, v.Y + s, v.Z + s, v.W + s);
         }
 
         public static Vector4 operator +(float s, Vector4 v)
         {
-            return new Vector4(v.x + s, v.y + s, v.z + s, v.w + s);
+            return new Vector4(v.X + s, v.Y + s, v.Z + s, v.W + s);
         }
 
         public static Vector4 operator -(Vector4 v1, Vector4 v2)
         {
-            return new Vector4(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z, v1.w - v2.w);
+            return new Vector4(v1.X - v2.X, v1.Y - v2.Y, v1.Z - v2.Z, v1.W - v2.W);
         }
 
         public static Vector4 operator -(Vector4 v, float s)
         {
-            return new Vector4(v.x - s, v.y - s, v.z - s, v.w - s);
+            return new Vector4(v.X - s, v.Y - s, v.Z - s, v.W - s);
         }
 
         public static Vector4 operator -(float s, Vector4 v)
         {
-            return new Vector4(s - v.x, s - v.y, s - v.z, s - v.w);
+            return new Vector4(s - v.X, s - v.Y, s - v.Z, s - v.W);
         }
 
         public static Vector4 operator -(Vector4 v)
         {
-            return new Vector4(-v.x, -v.y, -v.z, -v.w);
+            return new Vector4(-v.X, -v.Y, -v.Z, -v.W);
         }
 
         public static Vector4 operator *(Vector4 v1, Vector4 v2)
         {
-            return new Vector4(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z, v1.w * v2.w);
+            return new Vector4(v1.X * v2.X, v1.Y * v2.Y, v1.Z * v2.Z, v1.W * v2.W);
         }
 
         public static Vector4 operator *(float s, Vector4 v)
         {
-            return new Vector4(v.x * s, v.y * s, v.z * s, v.w * s);
+            return new Vector4(v.X * s, v.Y * s, v.Z * s, v.W * s);
         }
 
         public static Vector4 operator *(Vector4 v, float s)
         {
-            return new Vector4(v.x * s, v.y * s, v.z * s, v.w * s);
+            return new Vector4(v.X * s, v.Y * s, v.Z * s, v.W * s);
         }
 
         public static Vector4 operator /(Vector4 v1, Vector4 v2)
         {
-            return new Vector4(v1.x / v2.x, v1.y / v2.y, v1.z / v2.z, v1.w / v2.w);
+            return new Vector4(v1.X / v2.X, v1.Y / v2.Y, v1.Z / v2.Z, v1.W / v2.W);
         }
 
         public static Vector4 operator /(float s, Vector4 v)
         {
-            return new Vector4(s / v.x, s / v.y, s / v.z, s / v.w);
+            return new Vector4(s / v.X, s / v.Y, s / v.Z, s / v.W);
         }
 
         public static Vector4 operator /(Vector4 v, float s)
         {
-            return new Vector4(v.x / s, v.y / s, v.z / s, v.w / s);
+            return new Vector4(v.X / s, v.Y / s, v.Z / s, v.W / s);
         }
 
         public static bool operator ==(Vector4 v1, Vector4 v2)
         {
-            return (v1.x == v2.x && v1.y == v2.y && v1.z == v2.z && v1.w == v2.w);
+            return (v1.X == v2.X && v1.Y == v2.Y && v1.Z == v2.Z && v1.W == v2.W);
         }
 
         public static bool operator !=(Vector4 v1, Vector4 v2)
         {
-            return (v1.x != v2.x || v1.y != v2.y || v1.z != v2.z || v1.w != v2.w);
+            return (v1.X != v2.X || v1.Y != v2.Y || v1.Z != v2.Z || v1.W != v2.W);
         }
         #endregion
 
         #region Constructors
-        /// <summary>Create a Vector4 structure.</summary>
-        /// <param name="x">x value</param>
-        /// <param name="y">y value</param>
-        /// <param name="z">z value</param>
-        /// <param name="w">w value</param>
+        /// <summary>Creates a Vector4 structure whose elements have the specified values.</summary>
+        /// <param name="x">The value to assign to the X field.</param>
+        /// <param name="y">The value to assign to the Y field.</param>
+        /// <param name="z">The value to assign to the Z field.</param>
+        /// <param name="w">The value to assign to the W field.</param>
         public Vector4(float x, float y, float z, float w)
         {
-            this.x = x; this.y = y; this.z = z; this.w = w;
+            X = x; 
+            Y = y; 
+            Z = z; 
+            W = w;
         }
 
-        /// <summary>Creates a Vector4 structure.  Casted to floats for OpenGL.</summary>
-        /// <param name="x">x value</param>
-        /// <param name="y">y value</param>
-        /// <param name="z">z value</param>
-        /// <param name="w">w value</param>
+        /// <summary>Creates a Vector4 structure whose elements have the specified values.</summary>
+        /// <param name="x">The value to assign to the X field.</param>
+        /// <param name="y">The value to assign to the Y field.</param>
+        /// <param name="z">The value to assign to the Z field.</param>
+        /// <param name="w">The value to assign to the W field.</param>
+        [Obsolete("Use floats instead, which is compatible with System.Numerics.")]
         public Vector4(double x, double y, double z, double w)
         {
-            this.x = (float)x; this.y = (float)y; this.z = (float)z; this.w = (float)w;
+            X = (float)x; 
+            Y = (float)y; 
+            Z = (float)z; 
+            W = (float)w;
         }
 
         /// <summary>Creates a Vector4 structure based on a Vector3 and w.</summary>
-        /// <param name="v">Vector3 to make up x,y,z</param>
-        /// <param name="w">Double to make up the w component</param>
+        /// <param name="v">The Vector3 to use for the X, Y and Z components.</param>
+        /// <param name="w">The value to assign to the W field.</param>
         public Vector4(Vector3 v, float w)
         {
-            x = v.x; y = v.y; z = v.z; this.w = w;
+            X = v.X; 
+            Y = v.Y; 
+            Z = v.Z; 
+            W = w;
         }
 
         /// <summary>
         /// Accepts a 24 bit color value and assumes an alpha of 1.0f.
         /// </summary>
-        /// <param name="RGBByte">24bit color value</param>
+        /// <param name="RGBByte">24bit color value.</param>
+        [Obsolete("Construct manually, which is compatible with System.Numerics.")]
         public Vector4(byte[] RGBByte)
         {
             if (RGBByte.Length < 3) throw new Exception("Color data was not 24bit as expected.");
-            x = (float)(RGBByte[0] / 256.0); y = (float)(RGBByte[1] / 256.0); z = (float)(RGBByte[2] / 256.0); w = 1.0f;
+            X = (float)(RGBByte[0] / 256.0); 
+            Y = (float)(RGBByte[1] / 256.0); 
+            Z = (float)(RGBByte[2] / 256.0); 
+            W = 1.0f;
         }
 
-        /// <summary>Creates a Vector4 tructure from a float array (assuming the float array is of length 4).</summary>
+        /// <summary>Creates a Vector4 structure from a float array (assuming the float array is of length 4).</summary>
         /// <param name="vector">The float array to convert to a Vector4.</param>
+        [Obsolete("Use Vector4(float, float, float, float) instead, which is compatible with System.Numerics.")]
         public Vector4(float[] vector)
         {
             if (vector.Length != 4) throw new Exception(string.Format("float[] vector was of length {0}.  Was expecting a length of 4.", vector.Length));
-            this.x = vector[0]; this.y = vector[1]; this.z = vector[2]; this.w = vector[3];
+            X = vector[0]; 
+            Y = vector[1]; 
+            Z = vector[2]; 
+            W = vector[3];
+        }
+
+        /// <summary>Creates a Vector4 structure whose four elements have the same value.</summary>
+        /// <param name="value">The value to assign to all four elements.</param>
+        public Vector4(float value)
+        {
+            X = Y = Z = W = value;
+        }
+
+        /// <summary>Creates a Vector4 structure based on a Vector2, z and w.</summary>
+        /// <param name="v">The Vector2 to use for the X and Y components.</param>
+        /// <param name="z">The value to assign to the Z field.</param>
+        /// <param name="w">The value to assign to the W field.</param>
+        public Vector4(Vector2 v, float z, float w)
+        {
+            X = v.X;
+            Y = v.Y;
+            Z = z;
+            W = w;
         }
         #endregion
 
@@ -186,7 +274,7 @@ namespace OpenGL
 
         public override string ToString()
         {
-            return "{" + x + ", " + y + ", " + z + ", " + w + "}";
+            return "{" + X + ", " + Y + ", " + Z + ", " + W + "}";
         }
 
         /// <summary>
@@ -200,15 +288,28 @@ namespace OpenGL
             return new Vector4(float.Parse(split[0]), float.Parse(split[1]), float.Parse(split[2]), float.Parse(split[3]));
         }
 
+        [Obsolete("Use Get instead, which is compatible with System.Numerics.")]
         public float this[int a]
         {
-            get { return (a == 0) ? x : (a == 1) ? y : (a == 2) ? z : w; }
+            get { return (a == 0) ? X : (a == 1) ? Y : (a == 2) ? Z : W; }
             set
             {
-                if (a == 0) x = value;
-                else if (a == 1) y = value;
-                else if (a == 2) z = value;
-                else if (a == 3) w = value;
+                if (a == 0) X = value;
+                else if (a == 1) Y = value;
+                else if (a == 2) Z = value;
+                else if (a == 3) W = value;
+            }
+        }
+
+        public float Get(int index)
+        {
+            switch (index)
+            {
+                case 0: return X;
+                case 1: return Y;
+                case 2: return Z;
+                case 3: return W;
+                default: return 0;  // error case
             }
         }
         #endregion
@@ -219,7 +320,7 @@ namespace OpenGL
         /// </summary>
         public float Length
         {
-            get { return (float)Math.Sqrt(x * x + y * y + z * z + w * w); }
+            get { return (float)Math.Sqrt(X * X + Y * Y + Z * Z + W * W); }
         }
 
         /// <summary>
@@ -227,18 +328,20 @@ namespace OpenGL
         /// </summary>
         public float SquaredLength
         {
-            get { return x * x + y * y + z * z + w * w; }
+            get { return X * X + Y * Y + Z * Z + W * W; }
         }
 
         /// <summary>
         /// Gets or sets an OpenGl.Types.Vector2 with the x and y components of this instance.
         /// </summary>
-        public Vector2 Xy { get { return new Vector2(x, y); } set { x = value.x; y = value.y; } }
+        [Obsolete]
+        public Vector2 Xy { get { return new Vector2(X, Y); } set { X = value.X; Y = value.Y; } }
 
         /// <summary>
         /// Gets or sets an OpenGl.Types.Vector3 with the x, y and z components of this instance.
         /// </summary>
-        public Vector3 Xyz { get { return new Vector3(x, y, z); } set { x = value.x; y = value.y; z = value.z; } }
+        [Obsolete]
+        public Vector3 Xyz { get { return new Vector3(X, Y, Z); } set { X = value.X; Y = value.Y; Z = value.Z; } }
         #endregion
 
         #region Methods
@@ -250,7 +353,7 @@ namespace OpenGL
         /// <returns>Scalar dot product value</returns>
         public static float Dot(Vector4 v1, Vector4 v2)
         {
-            return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z + v1.w * v2.w;
+            return v1.X * v2.X + v1.Y * v2.Y + v1.Z * v2.Z + v1.W * v2.W;
         }
 
         /// <summary>
@@ -269,7 +372,7 @@ namespace OpenGL
         /// <returns>Float array representation of a Vector4</returns>
         public float[] ToFloat()
         {
-            return new float[] { x, y, z, w };
+            return new float[] { X, Y, Z, W };
         }
 
         /// <summary>
@@ -279,7 +382,7 @@ namespace OpenGL
         public Vector4 Normalize()
         {
             if (Length == 0) return Zero;
-            else return new Vector4(x, y, z, w) / Length;
+            else return new Vector4(X, Y, Z, W) / Length;
         }
 
         /// <summary>
@@ -289,10 +392,10 @@ namespace OpenGL
         /// <returns>A truncated Vector4</returns>
         public Vector4 Truncate()
         {
-            float _x = (Math.Abs(x) - 0.0001 < 0) ? 0 : x;
-            float _y = (Math.Abs(y) - 0.0001 < 0) ? 0 : y;
-            float _z = (Math.Abs(z) - 0.0001 < 0) ? 0 : z;
-            float _w = (Math.Abs(w) - 0.0001 < 0) ? 0 : w;
+            float _x = (Math.Abs(X) - 0.0001 < 0) ? 0 : X;
+            float _y = (Math.Abs(Y) - 0.0001 < 0) ? 0 : Y;
+            float _z = (Math.Abs(Z) - 0.0001 < 0) ? 0 : Z;
+            float _w = (Math.Abs(W) - 0.0001 < 0) ? 0 : W;
             return new Vector4(_x, _y, _z, _w);
         }
 
@@ -302,10 +405,10 @@ namespace OpenGL
         /// <param name="v">Vector to check against</param>
         public void TakeMin(Vector4 v)
         {
-            if (v.x < x) x = v.x;
-            if (v.y < y) y = v.y;
-            if (v.z < z) z = v.z;
-            if (v.w < w) w = v.w;
+            if (v.X < X) X = v.X;
+            if (v.Y < Y) Y = v.Y;
+            if (v.Z < Z) Z = v.Z;
+            if (v.W < W) W = v.W;
         }
 
         /// <summary>
@@ -314,10 +417,10 @@ namespace OpenGL
         /// <param name="v">Vector to check against</param>
         public void TakeMax(Vector4 v)
         {
-            if (v.x > x) x = v.x;
-            if (v.y > y) y = v.y;
-            if (v.z > z) z = v.z;
-            if (v.w > w) w = v.w;
+            if (v.X > X) X = v.X;
+            if (v.Y > Y) Y = v.Y;
+            if (v.Z > Z) Z = v.Z;
+            if (v.W > W) W = v.W;
         }
 
         /// <summary>
@@ -345,4 +448,20 @@ namespace OpenGL
         }
         #endregion
     }
+#else
+    public static class Vector4Extensions
+    {
+        public static float Get(this Vector4 v, int index)
+        {
+            switch (index)
+            {
+                case 0: return v.X;
+                case 1: return v.Y;
+                case 2: return v.Z;
+                case 3: return v.W;
+                default: return 0;  // error case
+            }
+        }
+    }
+#endif
 }

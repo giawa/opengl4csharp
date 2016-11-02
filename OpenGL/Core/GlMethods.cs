@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
+
+#if USE_NUMERICS
+using System.Numerics;
+#endif
 
 namespace OpenGL
 {
@@ -253,13 +258,13 @@ namespace OpenGL
 
             for (int i = 0, j = 0; i < data1.Length; i++)
             {
-                interleaved[j++] = data1[i].x;
-                interleaved[j++] = data1[i].y;
-                interleaved[j++] = data1[i].z;
+                interleaved[j++] = data1[i].X;
+                interleaved[j++] = data1[i].Y;
+                interleaved[j++] = data1[i].Z;
 
-                interleaved[j++] = data2[i].x;
-                interleaved[j++] = data2[i].y;
-                interleaved[j++] = data2[i].z;
+                interleaved[j++] = data2[i].X;
+                interleaved[j++] = data2[i].Y;
+                interleaved[j++] = data2[i].Z;
             }
 
             return CreateVBO<float>(target, interleaved, hint);
@@ -273,16 +278,16 @@ namespace OpenGL
 
             for (int i = 0, j = 0; i < data1.Length; i++)
             {
-                interleaved[j++] = data1[i].x;
-                interleaved[j++] = data1[i].y;
-                interleaved[j++] = data1[i].z;
+                interleaved[j++] = data1[i].X;
+                interleaved[j++] = data1[i].Y;
+                interleaved[j++] = data1[i].Z;
 
-                interleaved[j++] = data2[i].x;
-                interleaved[j++] = data2[i].y;
-                interleaved[j++] = data2[i].z;
+                interleaved[j++] = data2[i].X;
+                interleaved[j++] = data2[i].Y;
+                interleaved[j++] = data2[i].Z;
 
-                interleaved[j++] = data3[i].x;
-                interleaved[j++] = data3[i].y;
+                interleaved[j++] = data3[i].X;
+                interleaved[j++] = data3[i].Y;
             }
 
             return CreateVBO<float>(target, interleaved, hint);
@@ -296,17 +301,17 @@ namespace OpenGL
 
             for (int i = 0, j = 0; i < data1.Length; i++)
             {
-                interleaved[j++] = data1[i].x;
-                interleaved[j++] = data1[i].y;
-                interleaved[j++] = data1[i].z;
+                interleaved[j++] = data1[i].X;
+                interleaved[j++] = data1[i].Y;
+                interleaved[j++] = data1[i].Z;
 
-                interleaved[j++] = data2[i].x;
-                interleaved[j++] = data2[i].y;
-                interleaved[j++] = data2[i].z;
+                interleaved[j++] = data2[i].X;
+                interleaved[j++] = data2[i].Y;
+                interleaved[j++] = data2[i].Z;
 
-                interleaved[j++] = data3[i].x;
-                interleaved[j++] = data3[i].y;
-                interleaved[j++] = data3[i].z;
+                interleaved[j++] = data3[i].X;
+                interleaved[j++] = data3[i].Y;
+                interleaved[j++] = data3[i].Z;
             }
 
             return CreateVBO<float>(target, interleaved, hint);
@@ -320,20 +325,20 @@ namespace OpenGL
 
             for (int i = 0, j = 0; i < data1.Length; i++)
             {
-                interleaved[j++] = data1[i].x;
-                interleaved[j++] = data1[i].y;
-                interleaved[j++] = data1[i].z;
+                interleaved[j++] = data1[i].X;
+                interleaved[j++] = data1[i].Y;
+                interleaved[j++] = data1[i].Z;
 
-                interleaved[j++] = data2[i].x;
-                interleaved[j++] = data2[i].y;
-                interleaved[j++] = data2[i].z;
+                interleaved[j++] = data2[i].X;
+                interleaved[j++] = data2[i].Y;
+                interleaved[j++] = data2[i].Z;
 
-                interleaved[j++] = data3[i].x;
-                interleaved[j++] = data3[i].y;
-                interleaved[j++] = data3[i].z;
+                interleaved[j++] = data3[i].X;
+                interleaved[j++] = data3[i].Y;
+                interleaved[j++] = data3[i].Z;
 
-                interleaved[j++] = data4[i].x;
-                interleaved[j++] = data4[i].y;
+                interleaved[j++] = data4[i].X;
+                interleaved[j++] = data4[i].Y;
             }
 
             return CreateVBO<float>(target, interleaved, hint);
@@ -483,10 +488,10 @@ namespace OpenGL
         public static void UniformMatrix4fv(int location, Matrix4 param)
         {
             // use the statically allocated float[] for setting the uniform
-            matrixFloat[0] = param[0].x; matrixFloat[1] = param[0].y; matrixFloat[2] = param[0].z; matrixFloat[3] = param[0].w;
-            matrixFloat[4] = param[1].x; matrixFloat[5] = param[1].y; matrixFloat[6] = param[1].z; matrixFloat[7] = param[1].w;
-            matrixFloat[8] = param[2].x; matrixFloat[9] = param[2].y; matrixFloat[10] = param[2].z; matrixFloat[11] = param[2].w;
-            matrixFloat[12] = param[3].x; matrixFloat[13] = param[3].y; matrixFloat[14] = param[3].z; matrixFloat[15] = param[3].w;
+            matrixFloat[0] = param[0].X; matrixFloat[1] = param[0].Y; matrixFloat[2] = param[0].Z; matrixFloat[3] = param[0].W;
+            matrixFloat[4] = param[1].X; matrixFloat[5] = param[1].Y; matrixFloat[6] = param[1].Z; matrixFloat[7] = param[1].W;
+            matrixFloat[8] = param[2].X; matrixFloat[9] = param[2].Y; matrixFloat[10] = param[2].Z; matrixFloat[11] = param[2].W;
+            matrixFloat[12] = param[3].X; matrixFloat[13] = param[3].Y; matrixFloat[14] = param[3].Z; matrixFloat[15] = param[3].W;
 
             Gl.UniformMatrix4fv(location, 1, false, matrixFloat);
         }
