@@ -82,7 +82,7 @@ namespace OpenGL
                 float d = box.Center.Dot(p.Normal);
                 float r = box.Size.X * Math.Abs(p.Normal.X) + box.Size.Y * Math.Abs(p.Normal.Y) + box.Size.Z * Math.Abs(p.Normal.Z);
                 float dpr = d + r;
-                float dmr = d - r;
+                //float dmr = d - r;
 
                 if (dpr < -p.Scalar) return false;
             }

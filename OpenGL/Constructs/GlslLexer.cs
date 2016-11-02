@@ -17,15 +17,6 @@ namespace OpenGL
                     "(?<string>\".*?\")|" +
                     @"(?<syntax>(;|#|=|\(|\)|,|@|\?|:|;|\[|\]|{|}))|" +
                     @"(?<other>.+?)";
-
-        private static Regex regex = new Regex(pattern, RegexOptions);
-
-        static readonly RegexOptions RegexOptions =
-            RegexOptions.Compiled |
-            RegexOptions.CultureInvariant |
-            RegexOptions.IgnoreCase |
-            RegexOptions.IgnorePatternWhitespace |
-            RegexOptions.Singleline;
         #endregion
 
         #region Keywords Dictionary

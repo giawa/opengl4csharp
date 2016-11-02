@@ -47,8 +47,8 @@ namespace OpenGL
                 for (int y = 0; y < v; y++)
                 {
                     Character[x + y * h] = new UVPair(
-                        new Vector2(x * delx / FontTexture.Size.Width, 1 - (y + 1) * delx / FontTexture.Size.Height),
-                        new Vector2((x + 1) * delx / FontTexture.Size.Width, 1 - (y * delx + 1) / FontTexture.Size.Height));
+                        new Vector2(x * delx / FontTexture.Size.Width, 1 - (y + 1) * dely / FontTexture.Size.Height),
+                        new Vector2((x + 1) * delx / FontTexture.Size.Width, 1 - (y * dely + 1) / FontTexture.Size.Height));
                 }
             }
         }
