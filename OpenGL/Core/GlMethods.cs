@@ -8,6 +8,84 @@ using System.Numerics;
 
 namespace OpenGL
 {
+    #region Simple Memory Logging for Debugging
+#if MEMORY_LOGGER
+    public static class MemoryLogger
+    {
+        /// <summary>
+        /// Configures the memory logger to log a stack trace with each allocated texture or VBO.
+        /// </summary>
+        public static bool LogStackTrace { get; set; }
+
+        /// <summary>
+        /// Gets the size in bytes of all of the textures that have been allocated.
+        /// </summary>
+        public static long TotalTextureMemory = 0;
+
+        /// <summary>
+        /// Gets the size in bytes of all of the VBOs that have been allocated.
+        /// </summary>
+        public static long TotalVBOMemory = 0;
+
+        private static readonly Dictionary<uint, string> validTextures = new Dictionary<uint, string>();
+        private static Dictionary<uint, int> validVBOs = new Dictionary<uint, int>();
+        private static Dictionary<uint, string> validVBOStackTrace = new Dictionary<uint, string>();
+
+        internal static void AllocateTexture(uint textureID, System.Drawing.Size size)
+        {
+            TotalTextureMemory += size.Height * size.Width * 4;
+            if (LogStackTrace) validTextures.Add(textureID, Environment.StackTrace);
+            else validTextures.Add(textureID, String.Empty);
+        }
+
+        internal static void DestroyTexture(uint textureID, System.Drawing.Size size)
+        {
+            if (validTextures.ContainsKey(textureID))
+            {
+                TotalTextureMemory -= size.Height * size.Width * 4;
+                validTextures.Remove(textureID);
+            }
+        }
+
+        internal static void AllocateVBO(uint id, int bytes)
+        {
+            if (validVBOs.ContainsKey(id))
+            {
+                TotalVBOMemory += bytes - validVBOs[id];
+                validVBOs[id] = bytes;
+                if (LogStackTrace) validVBOStackTrace[id] = Environment.StackTrace;
+            }
+            else
+            {
+                TotalVBOMemory += bytes;
+                validVBOs.Add(id, bytes);
+                if (LogStackTrace) validVBOStackTrace.Add(id, Environment.StackTrace);
+            }
+        }
+
+        internal static void DestroyVBO(uint id)
+        {
+            if (!validVBOs.ContainsKey(id)) return;
+
+            TotalVBOMemory -= validVBOs[id];
+
+            validVBOs.Remove(id);
+            if (validVBOStackTrace.ContainsKey(id)) validVBOStackTrace.Remove(id);
+        }
+
+        public static Dictionary<uint, string> TextureStackTraces
+        {
+            get { return validTextures; }
+        }
+
+        public static Dictionary<uint, string> VBOStackTraces
+        {
+            get { return validVBOStackTrace; }
+        }
+    }
+#endif
+    #endregion
+
     partial class Gl
     {
         #region Preallocated Memory
@@ -201,8 +279,14 @@ namespace OpenGL
             uint vboHandle = Gl.GenBuffer();
             if (vboHandle == 0) return 0;
 
+            int size = data.Length * Marshal.SizeOf(typeof(T));
+
+#if MEMORY_LOGGER
+            MemoryLogger.AllocateVBO(vboHandle, size);
+#endif
+
             Gl.BindBuffer(target, vboHandle);
-            Gl.BufferData<T>(target, data.Length * Marshal.SizeOf(typeof(T)), data, hint);
+            Gl.BufferData<T>(target, size, data, hint);
             Gl.BindBuffer(target, 0);
             return vboHandle;
         }
@@ -222,8 +306,14 @@ namespace OpenGL
             uint vboHandle = Gl.GenBuffer();
             if (vboHandle == 0) return 0;
 
+            int size = length * Marshal.SizeOf(typeof(T));
+
+#if MEMORY_LOGGER
+            MemoryLogger.AllocateVBO(vboHandle, size);
+#endif
+
             Gl.BindBuffer(target, vboHandle);
-            Gl.BufferData<T>(target, length * Marshal.SizeOf(typeof(T)), data, hint);
+            Gl.BufferData<T>(target, size, data, hint);
             Gl.BindBuffer(target, 0);
             return vboHandle;
         }
@@ -243,8 +333,15 @@ namespace OpenGL
             uint vboHandle = Gl.GenBuffer();
             if (vboHandle == 0) return 0;
 
+            int offset = position * Marshal.SizeOf(typeof(T));
+            int size = length * Marshal.SizeOf(typeof(T));
+
+#if MEMORY_LOGGER
+            MemoryLogger.AllocateVBO(vboHandle, size - offset);
+#endif
+
             Gl.BindBuffer(target, vboHandle);
-            Gl.BufferData<T>(target, position * Marshal.SizeOf(typeof(T)), length * Marshal.SizeOf(typeof(T)), data, hint);
+            Gl.BufferData<T>(target, offset, size, data, hint);
             Gl.BindBuffer(target, 0);
             return vboHandle;
         }
@@ -474,6 +571,10 @@ namespace OpenGL
         /// <param name="buffer">The OpenGL buffer to delete.</param>
         public static void DeleteBuffer(uint buffer)
         {
+#if MEMORY_LOGGER
+            MemoryLogger.DestroyVBO(buffer);
+#endif
+
             int1[0] = buffer;
             DeleteBuffers(1, int1);
             int1[0] = 0;

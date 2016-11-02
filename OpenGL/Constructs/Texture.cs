@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -67,6 +68,10 @@ namespace OpenGL
         {
             if (TextureID != 0)
             {
+#if MEMORY_LOGGER
+                MemoryLogger.DestroyTexture(TextureID, Size);
+#endif
+
                 Gl.DeleteTextures(1, new uint[] { TextureID });
                 TextureID = 0;
             }
@@ -94,6 +99,10 @@ namespace OpenGL
             Gl.TexImage2D(TextureTarget, 0, PixelInternalFormat.Rgba8, BitmapImage.Width, BitmapImage.Height, 0, PixelFormat.Bgra, PixelType.UnsignedByte, bitmapData.Scan0);
             Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMagFilter, TextureParameter.Nearest);
             Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMinFilter, TextureParameter.Nearest);//(int)TextureParam.Linear);   // linear filter
+
+#if MEMORY_LOGGER
+            MemoryLogger.AllocateTexture(TextureID, Size);
+#endif
 
             BitmapImage.UnlockBits(bitmapData);
             BitmapImage.Dispose();
@@ -184,6 +193,10 @@ namespace OpenGL
                         nWidth /= 2;
                         nHeight /= 2;
                     }
+
+#if MEMORY_LOGGER
+                    MemoryLogger.AllocateTexture(TextureID, Size);
+#endif
                 }
                 catch (Exception)
                 {   // There was some sort of Dll related error, or the target GPU does not support glCompressedTexImage2DARB
