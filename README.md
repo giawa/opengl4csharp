@@ -143,7 +143,7 @@ This is an example of creating a quad using a VBO for vertices (Vector3 data), a
 
 ### A Note on System.Numerics and SIMD Support
 
-The OpenGL library now supports System.Numerics and SIMD support for Vector2, Vector3, Vector4 and Quaternion.  However, the USE_NUMERICS compiler option must be used, and some functionality will be lost when moving to System.Numerics.  Make sure to add System.Numerics as a reference to your project, and then use Vector3 as normal.  The use of System.Numerics can improve performance by automatically using SIMD instructions where possible, however this support is currently EXPERIMENTAL.
+The OpenGL library can now use System.Numerics for Vector2, Vector3, Vector4 and Quaternion, which can provide performance improvements by utilizing SIMD.  To enable System.Numerics support you must compile with the USE_NUMERICS option.  Make sure to add System.Numerics as a reference to your project, and then use Vector3/etc as normal.
 
 ## Further Reading
 There isn't much documentation for this project at this time.  The source code for both the math and constructs is quite well documented.  I have also compiled [OpenGL 4 for C#/.NET Tutorials](https://github.com/giawa/opengl4tutorials) which reference this library.
