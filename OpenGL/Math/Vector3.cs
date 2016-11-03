@@ -511,6 +511,212 @@ namespace OpenGL
                 return new Quaternion(t_cross.X * t_invs, t_cross.Y * t_invs, t_cross.Z * t_invs, t_sqrt * 0.5f).Normalize();
             }
         }
+
+        /// <summary>
+        /// Take the absolute value of a vector.
+        /// </summary>
+        /// <param name="value">The source vector.</param>
+        /// <returns>A vector whose values are the absolute value of the source vector.</returns>
+        public static Vector3 Abs(Vector3 value)
+        {
+            return new Vector3(Math.Abs(value.X), Math.Abs(value.Y), Math.Abs(value.Z));
+        }
+
+        /// <summary>
+        /// Clamps a vector between a minimum and maximum vector.
+        /// Note:  This follows HLSL order of operations.
+        /// </summary>
+        /// <param name="value">The source vector.</param>
+        /// <param name="min">The minimum vector.</param>
+        /// <param name="max">The maximum vector.</param>
+        /// <returns>A vector that has been clamped between the minimum and maximum vectors.</returns>
+        public static Vector3 Clamp(Vector3 value, Vector3 min, Vector3 max)
+        {
+            float x = Math.Max(min.X, max.X);
+            x = (value.X < min.X ? min.X : value.X > x ? x : value.X);
+
+            float y = Math.Max(min.Y, max.Y);
+            y = (value.Y < min.Y ? min.Y : value.Y > y ? y : value.Y);
+
+            float z = Math.Max(min.Z, max.Z);
+            z = (value.Z < min.Z ? min.Z : value.Z > z ? z : value.Z);
+
+            return new Vector3(x, y, z);
+        }
+
+        /// <summary>
+        /// Add two vectors together.
+        /// </summary>
+        /// <param name="v1">The first vector.</param>
+        /// <param name="v2">The second vector.</param>
+        /// <returns>The sum of the two vectors.</returns>
+        public static Vector3 Add(Vector3 v1, Vector3 v2)
+        {
+            return v1 + v2;
+        }
+
+        /// <summary>
+        /// Find the length of the difference between two vectors.
+        /// </summary>
+        /// <param name="v1">The first vector.</param>
+        /// <param name="v2">The second vector.</param>
+        /// <returns>The length of the difference of the two vectors.</returns>
+        public static float Distance(Vector3 v1, Vector3 v2)
+        {
+            return (v1 - v2).Length;
+        }
+
+        /// <summary>
+        /// Find the squared length of the difference between two vectors.
+        /// </summary>
+        /// <param name="v1">The first vector.</param>
+        /// <param name="v2">The second vector.</param>
+        /// <returns>The squared length of the difference of the two vectors.</returns>
+        public static float DistanceSquared(Vector3 v1, Vector3 v2)
+        {
+            return (v1 - v2).LengthSquared();
+        }
+
+        /// <summary>
+        /// Divide a vector by a float.
+        /// </summary>
+        /// <param name="v">The source vector.</param>
+        /// <param name="f">A float to use as the denominator.</param>
+        /// <returns>A vector that has been divided by the float.</returns>
+        public static Vector3 Divide(Vector3 v, float f)
+        {
+            return v / f;
+        }
+
+        /// <summary>
+        /// Divide one vector by another.
+        /// </summary>
+        /// <param name="v1">The first vector (numerator).</param>
+        /// <param name="v2">The second vector (denominator).</param>
+        /// <returns>A vector that has been divided.</returns>
+        public static Vector3 Divide(Vector3 v1, Vector3 v2)
+        {
+            return v1 / v2;
+        }
+
+        /// <summary>
+        /// Take the maximum of two vectors.
+        /// </summary>
+        /// <param name="v1">The first vector.</param>
+        /// <param name="v2">The second vector.</param>
+        /// <returns>A vector that contains the maximum of the elements of the source vectors.</returns>
+        public static Vector3 Max(Vector3 v1, Vector3 v2)
+        {
+            return new Vector3(Math.Max(v1.X, v2.X), Math.Max(v1.Y, v2.Y), Math.Max(v1.Z, v2.Z));
+        }
+
+        /// <summary>
+        /// Take the minimum of two vectors.
+        /// </summary>
+        /// <param name="v1">The first vector.</param>
+        /// <param name="v2">The second vector.</param>
+        /// <returns>A vector that contains the minimum of the elements of the source vectors.</returns>
+        public static Vector3 Min(Vector3 v1, Vector3 v2)
+        {
+            return new Vector3(Math.Min(v1.X, v2.X), Math.Min(v1.Y, v2.Y), Math.Min(v1.Z, v2.Z));
+        }
+
+        /// <summary>
+        /// Multiply a vector by a float.
+        /// </summary>
+        /// <param name="v">The source vector.</param>
+        /// <param name="f">The source float.</param>
+        /// <returns>A vector that has been multiplied.</returns>
+        public static Vector3 Multiply(Vector3 v, float f)
+        {
+            return v * f;
+        }
+
+        /// <summary>
+        /// Multiply a vector by a float.
+        /// </summary>
+        /// <param name="v">The source vector.</param>
+        /// <param name="f">The source float.</param>
+        /// <returns>A vector that has been multiplied.</returns>
+        public static Vector3 Multiply(float f, Vector3 v)
+        {
+            return f * v;
+        }
+
+        /// <summary>
+        /// Multiply a vector by another vector.
+        /// </summary>
+        /// <param name="v1">The first vector.</param>
+        /// <param name="v2">The second vector.</param>
+        /// <returns>A vector that has been multiplied.</returns>
+        public static Vector3 Multiply(Vector3 v1, Vector3 v2)
+        {
+            return v1 * v2;
+        }
+
+        /// <summary>
+        /// Negative a source vector.
+        /// </summary>
+        /// <param name="v">The source vector.</param>
+        /// <returns>A vector that is the negation of the source vector.</returns>
+        public static Vector3 Negate(Vector3 v)
+        {
+            return new Vector3(-v.X, -v.Y, -v.Z);
+        }
+
+        /// <summary>
+        /// Normalize a source vector.
+        /// </summary>
+        /// <param name="v">The source vector.</param>
+        /// <returns>A vector normalized by taking the source vector divided by the source length.</returns>
+        public static Vector3 Normalize(Vector3 v)
+        {
+            if (v.Length == 0) return Zero;
+            else return new Vector3(v.X, v.Y, v.Z) / v.Length;
+        }
+
+        /// <summary>
+        /// Reflect a source vector off a surface with the specified normal.
+        /// </summary>
+        /// <param name="v">The source vector.</param>
+        /// <param name="normal">The normal of the reflecting surface.</param>
+        /// <returns>A vector reflected off a surface with the specified normal.</returns>
+        public static Vector3 Reflect(Vector3 v, Vector3 normal)
+        {
+            return v - Vector3.Dot(v, normal) * normal * 2f;
+        }
+
+        /// <summary>
+        /// Perform a square root calculation on a vector.
+        /// </summary>
+        /// <param name="v">The source vector.</param>
+        /// <returns>A vector that is the square root of the source vector.</returns>
+        public static Vector3 SquareRoot(Vector3 v)
+        {
+            return new Vector3((float)Math.Sqrt(v.X), (float)Math.Sqrt(v.Y), (float)Math.Sqrt(v.Z));
+        }
+
+        /// <summary>
+        /// Subtract one vector from another.
+        /// </summary>
+        /// <param name="v1">The first vector.</param>
+        /// <param name="v2">The second vector.</param>
+        /// <returns>The difference between two vectors.</returns>
+        public static Vector3 Subtract(Vector3 v1, Vector3 v2)
+        {
+            return v1 - v2;
+        }
+
+        /// <summary>
+        /// Transforms a source vector by a provided quaternion rotation.
+        /// </summary>
+        /// <param name="v">The source vector.</param>
+        /// <param name="q">The quaternion rotation to apply.</param>
+        /// <returns>A transformed vector.</returns>
+        public static Vector3 Transform(Vector3 v, Quaternion q)
+        {
+            return q * v;
+        }
         #endregion
     }
 #else
