@@ -140,7 +140,7 @@ namespace OpenGLUnitTests
 
             // make sure the diff between the identity matrix and the float[] is less than e-8
             for (int i = 0; i < identity.Length; i++)
-                Assert.IsTrue(identity[i] - Matrix4.Identity[i / 4][i % 4] < 10e-8);
+                Assert.IsTrue(identity[i] - Matrix4.Identity[i / 4].Get(i % 4) < 10e-8);
         }
     }
 }
