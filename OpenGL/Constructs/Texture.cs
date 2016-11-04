@@ -151,6 +151,9 @@ namespace OpenGL
                         if (imageData.PixelFormat.ABitMask == 0xf000 && imageData.PixelFormat.RBitMask == 0x0f00 &&
                             imageData.PixelFormat.GBitMask == 0x00f0 && imageData.PixelFormat.BBitMask == 0x000f &&
                             imageData.PixelFormat.RGBBitCount == 16) format = PixelInternalFormat.Rgba;
+                        else if (imageData.PixelFormat.ABitMask == unchecked((int) 0xff000000) && imageData.PixelFormat.RBitMask == 0x00ff0000 &&
+                            imageData.PixelFormat.GBitMask == 0x0000ff00 && imageData.PixelFormat.BBitMask == 0x000000ff &&
+                            imageData.PixelFormat.RGBBitCount == 32) format = PixelInternalFormat.Rgba;
                         throw new Exception(string.Format("File compression \"{0}\" is not supported.", imageData.PixelFormat.FourCC));
                 }
 
@@ -185,8 +188,10 @@ namespace OpenGL
                         }
                         else
                         {
-                            nSize = nWidth * nHeight * 4 * ((int)imageData.PixelFormat.RGBBitCount / 8);
-                            Gl.TexImage2D(TextureTarget, i, format, nWidth, nHeight, 0, PixelFormat.Bgra, PixelType.UnsignedShort4444, (IntPtr)(pinned.AddrOfPinnedObject().ToInt64() + nOffset));
+                            PixelType pixelType = imageData.PixelFormat.RGBBitCount == 16 ? PixelType.UnsignedShort4444Reversed : PixelType.UnsignedInt8888Reversed;
+
+                            nSize = nWidth * nHeight * imageData.PixelFormat.RGBBitCount / 8;
+                            Gl.TexImage2D(TextureTarget, i, format, nWidth, nHeight, 0, PixelFormat.Bgra, pixelType, (IntPtr)(pinned.AddrOfPinnedObject().ToInt64() + nOffset));
                         }
 
                         nOffset += nSize;
