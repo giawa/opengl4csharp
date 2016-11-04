@@ -154,7 +154,8 @@ namespace OpenGL
                         else if (imageData.PixelFormat.ABitMask == unchecked((int) 0xff000000) && imageData.PixelFormat.RBitMask == 0x00ff0000 &&
                             imageData.PixelFormat.GBitMask == 0x0000ff00 && imageData.PixelFormat.BBitMask == 0x000000ff &&
                             imageData.PixelFormat.RGBBitCount == 32) format = PixelInternalFormat.Rgba;
-                        throw new Exception(string.Format("File compression \"{0}\" is not supported.", imageData.PixelFormat.FourCC));
+                        else throw new Exception(string.Format("File compression \"{0}\" is not supported.", imageData.PixelFormat.FourCC));
+                        break;
                 }
 
                 if (imageData.LinearSize != 0) buffersize = (int)((imageData.MipmapCount > 1) ? imageData.LinearSize * factor : imageData.LinearSize);
