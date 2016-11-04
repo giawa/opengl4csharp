@@ -1820,6 +1820,12 @@ namespace OpenGL
         Texture2DArray = ((int)0x8C1A),
         TextureRectangle = ((int)0x84F5),
         TextureCubeMap = ((int)0x8513),
+        TextureCubeMapPositiveX = ((int)0x8515),
+        TextureCubeMapNegativeX = ((int)0x8516),
+        TextureCubeMapPositiveY = ((int)0x8517),
+        TextureCubeMapNegativeY = ((int)0x8518),
+        TextureCubeMapPositiveZ = ((int)0x8519),
+        TextureCubeMapNegativeZ = ((int)0x851A),
         TextureCubeMapArray = ((int)0x9009),
         Texture2DMultisample = ((int)0x9100),
         Texture2DMultisampleArray = ((int)0x9102)
