@@ -197,7 +197,17 @@ namespace OpenGL
 
         public float this[int a]
         {
-            get { return (a == 0) ? X : Y; }
+            get 
+            {
+                if (a > 1 || a < 0) throw new ArgumentOutOfRangeException();
+                return (a == 0) ? X : Y; 
+            }
+            set
+            {
+                if (a == 0) X = value;
+                else if (a == 1) Y = value;
+                else throw new ArgumentOutOfRangeException();
+            }
         }
         #endregion
 

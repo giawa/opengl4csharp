@@ -103,7 +103,7 @@ namespace OpenGL
         {
             get
             {
-                if (a > 3 || a < 0) return Vector4.Zero;
+                if (a > 3 || a < 0) throw new ArgumentOutOfRangeException();
                 return (a == 0 ? row1 : (a == 1 ? row2 : (a == 2 ? row3 : row4)));
             }
             set

@@ -285,7 +285,18 @@ namespace OpenGL
 
         public float this[int a]
         {
-            get { return (a == 0) ? X : (a == 1) ? Y : Z; }
+            get 
+            {
+                if (a > 2 || a < 0) throw new ArgumentOutOfRangeException();
+                return (a == 0) ? X : (a == 1) ? Y : Z; 
+            }
+            set
+            {
+                if (a == 0) X = value;
+                else if (a == 1) Y = value;
+                else if (a == 2) Z = value;
+                else throw new ArgumentOutOfRangeException();
+            }
         }
         #endregion
 

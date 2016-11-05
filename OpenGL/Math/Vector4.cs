@@ -291,13 +291,18 @@ namespace OpenGL
         [Obsolete("Use Get instead, which is compatible with System.Numerics.")]
         public float this[int a]
         {
-            get { return (a == 0) ? X : (a == 1) ? Y : (a == 2) ? Z : W; }
+            get 
+            {
+                if (a > 3 || a < 0) throw new ArgumentOutOfRangeException();
+                return (a == 0) ? X : (a == 1) ? Y : (a == 2) ? Z : W; 
+            }
             set
             {
                 if (a == 0) X = value;
                 else if (a == 1) Y = value;
                 else if (a == 2) Z = value;
                 else if (a == 3) W = value;
+                else throw new ArgumentOutOfRangeException();
             }
         }
 
