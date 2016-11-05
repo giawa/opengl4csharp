@@ -15,19 +15,23 @@ namespace OpenGL
         private Plane[] planes;
 
         /// <summary>
-        /// Get the planes that make up the Frustum.
+        /// Get the planes that make up the Frustum..
         /// </summary>
         /// <param name="a"></param>
         /// <returns></returns>
         public Plane this[int a]
         {
-            get { return (a >= 0 && a < 6) ? planes[a] : null; }
+            get
+            {
+                if (a > 6 || a < 0) throw new ArgumentOutOfRangeException();
+                else return planes[a];
+            }
         }
         #endregion
 
         #region Methods
         /// <summary>
-        /// Builds a new Frustum and initializes six new planes
+        /// Builds a new Frustum and initializes six new planes.
         /// </summary>
         public Frustum()
         {
@@ -69,10 +73,10 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// True if the AxisAlignedBoundingBox is in (or partially in) the Frustum
+        /// True if the AxisAlignedBoundingBox is in (or partially in) the Frustum.
         /// </summary>
-        /// <param name="b">AxixAlignedBoundingBox to check</param>
-        /// <returns>True if an intersection exists</returns>
+        /// <param name="b">AxixAlignedBoundingBox to check.</param>
+        /// <returns>True if an intersection exists.</returns>
         public bool Intersects(AxisAlignedBoundingBox box)
         {
             for (int i = 0; i < 6; i++)

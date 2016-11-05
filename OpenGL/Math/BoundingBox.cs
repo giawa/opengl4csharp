@@ -18,7 +18,7 @@ namespace OpenGL
 
         #region Properties
         /// <summary>
-        /// The minimum x, y, and z values for the AxisAlignedBoundingBox
+        /// The minimum x, y, and z values for the AxisAlignedBoundingBox.
         /// </summary>
         public Vector3 Min
         {
@@ -27,7 +27,7 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// The maximum x, y, and z values for the AxisAlignedBoundingBox
+        /// The maximum x, y, and z values for the AxisAlignedBoundingBox.
         /// </summary>
         public Vector3 Max
         {
@@ -36,7 +36,7 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// The size of the AxisAlignedBoundingBox.  (Max - Min)
+        /// The size of the AxisAlignedBoundingBox (Max - Min).
         /// </summary>
         public Vector3 Size
         {
@@ -44,7 +44,7 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// The center of the AxisAlignedBoundingBox
+        /// The center of the AxisAlignedBoundingBox.
         /// </summary>
         public Vector3 Center
         {
@@ -52,7 +52,7 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Gets the radius of a sphere that would encapsulate the AxisAlignedBoundingBox
+        /// Gets the radius of a sphere that would encapsulate the AxisAlignedBoundingBox.
         /// </summary>
         public float Radius
         {
@@ -66,7 +66,7 @@ namespace OpenGL
 
         #region Methods
         /// <summary>
-        /// Creates an axis-aligned bounding box of size min, max
+        /// Creates an axis-aligned bounding box of size min, max.
         /// </summary>
         /// <param name="Min">Minimum x,y,z</param>
         /// <param name="Max">Maximum x,y,z</param>
@@ -77,7 +77,7 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Constructor used by QuadTrees and Octrees
+        /// Constructor used by QuadTrees and Octrees.
         /// </summary>
         public AxisAlignedBoundingBox()
         {
@@ -86,10 +86,10 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Set new extents for the axis-aligned bounding box
+        /// Set new extents for the axis-aligned bounding box.
         /// </summary>
-        /// <param name="Min">Minimum x,y,z</param>
-        /// <param name="Max">Maximum x,y,z</param>
+        /// <param name="Min">Minimum x, y, z.</param>
+        /// <param name="Max">Maximum x, y, z.</param>
         public void SetExtents(Vector3 Min, Vector3 Max)
         {
             min = Min;
@@ -97,9 +97,9 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Increase the size of the bounding box (if needed) to fit the point within the box
+        /// Increase the size of the bounding box (if needed) to fit the point within the box.
         /// </summary>
-        /// <param name="Point">The point to fit into the AxisAlignedBoundingBox</param>
+        /// <param name="Point">The point to fit into the AxisAlignedBoundingBox.</param>
         public void AddPoint(Vector3 Point)
         {
             min.TakeMin(Point);
@@ -107,10 +107,10 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Clamp the point to within the boundary of the bounding box
+        /// Clamp the point to within the boundary of the bounding box.
         /// </summary>
-        /// <param name="Point">The point to clamp to the AxisAlignedBoundingBox</param>
-        /// <returns>The clamped point</returns>
+        /// <param name="Point">The point to clamp to the AxisAlignedBoundingBox.</param>
+        /// <returns>The clamped point.</returns>
         public Vector3 ClampPoint(Vector3 Point)
         {
             return new Vector3((Point.X > Max.X) ? Max.X : (Point.X < Min.X) ? Min.X : Point.X,
@@ -119,9 +119,9 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Increase the size of the bounding box (if needed) to fit the AxisAlignedBoundingBox
+        /// Increase the size of the bounding box (if needed) to fit the AxisAlignedBoundingBox.
         /// </summary>
-        /// <param name="Box">The AxisAlignedBoundingBox to fit into this AxisAlignedBoundingBox</param>
+        /// <param name="Box">The AxisAlignedBoundingBox to fit into this AxisAlignedBoundingBox.</param>
         public void AddBoundingBox(AxisAlignedBoundingBox Box)
         {
             min.TakeMin(Box.Min);
@@ -131,11 +131,12 @@ namespace OpenGL
         /// <summary>
         /// Transforms the box by a Matrix4.  Will maintain the axis-alignment even during rotations.
         /// </summary>
-        /// <param name="TranformMatrix">The Matrix4 to transform by</param>
+        /// <param name="TranformMatrix">The Matrix4 to transform by.</param>
         public void Transform(Matrix4 TranformMatrix)
         {
             Vector3 t_min = min, t_max = max, t_corner;
             min = max = Vector3.Zero;
+
             // Compute corners in the order of 0, 6, 5, 1, 2, 4, 7, 3
             // Allows the code to change only one member at a time to get to all corners
 
@@ -160,7 +161,7 @@ namespace OpenGL
         /// <summary>
         /// Translates a box by a given translation vector.  Do this after rotating and scaling!
         /// </summary>
-        /// <param name="Translation">Vector to translate by</param>
+        /// <param name="Translation">Vector to translate by.</param>
         public void Translate(Vector3 Translation)
         {
             min += Translation;
@@ -170,50 +171,51 @@ namespace OpenGL
 
         #region Intersects
         /// <summary>
-        /// Returns true if the vector intersects the AxisAlignedBoundingBox
+        /// Returns true if the vector intersects the AxisAlignedBoundingBox.
         /// </summary>
-        /// <param name="v">Vector3 to test in the AxisAlignedBoundingBox</param>
-        /// <returns>True if the vector intersects the AxisAlignedBoundingBox</returns>
+        /// <param name="v">Vector3 to test in the AxisAlignedBoundingBox.</param>
+        /// <returns>True if the vector intersects the AxisAlignedBoundingBox.</returns>
         public bool Intersects(Vector3 v)
         {
             return (v.X >= min.X && v.X <= max.X && v.Y >= min.Y && v.Y <= max.Y && v.Z >= min.Z && v.Z <= max.Z);
         }
 
         /// <summary>
-        /// Returns true if the ray intersects the AxisAlignedBoundingBox
+        /// Returns true if the ray intersects the AxisAlignedBoundingBox.
         /// </summary>
-        /// <param name="r">Ray to test in the AxisAlignedBoundingBox</param>
-        /// <returns>True if the ray intersects the AxisAlignedBoundingBox</returns>
+        /// <param name="r">Ray to test in the AxisAlignedBoundingBox.</param>
+        /// <returns>True if the ray intersects the AxisAlignedBoundingBox.</returns>
         public bool Intersects(Ray r)
         {
             return r.Intersects(this);
         }
 
         /// <summary>
-        /// Returns the position of the AxisAlignedBoudingBox relative to a plane
+        /// Returns the position of the AxisAlignedBoudingBox relative to a plane.
         /// </summary>
-        /// <param name="p">Plane to test</param>
-        /// <returns>Negative, Positive or Both sides of plane</returns>
+        /// <param name="p">Plane to test.</param>
+        /// <returns>Negative, Positive or Both sides of plane.</returns>
         public Plane.PlaneSide Intersects(Plane p)
         {
             return p.Intersects(this);
         }
 
         /// <summary>
-        /// Returns true if the AxisAlignedBoundingBox is within the frustum.  Cheats by using spherical representation of the bounding box.
+        /// Returns true if the AxisAlignedBoundingBox is within the frustum.
+        /// Cheats by using spherical representation of the bounding box.
         /// </summary>
-        /// <param name="f">The Frustum to check for intersections with</param>
-        /// <returns>True if the spherical representation of the AxisAlignedBoundingBox is withing the frustum</returns>
+        /// <param name="f">The Frustum to check for intersections with.</param>
+        /// <returns>True if the spherical representation of the AxisAlignedBoundingBox is withing the frustum.</returns>
         public bool Intersects(Frustum f)
         {
             return f.Intersects(this);
         }
 
         /// <summary>
-        /// Returns true if the AxisAlignedBoundingBox intersects this AxisAlignedBoundingBox
+        /// Returns true if the AxisAlignedBoundingBox intersects this AxisAlignedBoundingBox.
         /// </summary>
-        /// <param name="b">AxisAlignedBoundingBox to test in this AxisAlignedBoundingBox</param>
-        /// <returns>True if the AxisAlignedBoundingBox intersects this AxisAlignedBoundingBox</returns>
+        /// <param name="b">AxisAlignedBoundingBox to test in this AxisAlignedBoundingBox.</param>
+        /// <returns>True if the AxisAlignedBoundingBox intersects this AxisAlignedBoundingBox.</returns>
         public bool Intersects(AxisAlignedBoundingBox b)
         {
             // Test the six planes of the box
@@ -229,10 +231,10 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Returns the intersection of the two AxisAlignedBoundingBox objects if an intersection exists
+        /// Returns the intersection of the two AxisAlignedBoundingBox objects if an intersection exists.
         /// </summary>
-        /// <param name="b">AxisAlignedBoundingBox to intersect with this AxisAlignedBoundingBox</param>
-        /// <returns>The intersection of the two AxisAlignedBoundingBox objects</returns>
+        /// <param name="b">AxisAlignedBoundingBox to intersect with this AxisAlignedBoundingBox.</param>
+        /// <returns>The intersection of the two AxisAlignedBoundingBox objects.</returns>
         public AxisAlignedBoundingBox Intersection(AxisAlignedBoundingBox b)
         {
             Vector3 t_min = min;
@@ -245,10 +247,10 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Returns true if the point lies within the AxisAlignedBoundingBox
+        /// Returns true if the point lies within the AxisAlignedBoundingBox.
         /// </summary>
-        /// <param name="Position">The point in 3D space</param>
-        /// <returns>True if the AABB contains the point</returns>
+        /// <param name="Position">The point in 3D space.</param>
+        /// <returns>True if the AABB contains the point.</returns>
         public bool Contains(Vector3 Position)
         {
             return (Position.X >= min.X && Position.X <= max.X &&
@@ -270,7 +272,7 @@ namespace OpenGL
 
         #region Properties
         /// <summary>
-        /// The minimum x, y, and z values for the OrientatedBoundingBox
+        /// The minimum x, y, and z values for the OrientatedBoundingBox.
         /// </summary>
         public Vector3 Min
         {
@@ -279,7 +281,7 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// The maximum x, y, and z values for the OrientatedBoundingBox
+        /// The maximum x, y, and z values for the OrientatedBoundingBox.
         /// </summary>
         public Vector3 Max
         {
@@ -288,7 +290,7 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// The size of the OrientatedBoundingBox.  (Max - Min)
+        /// The size of the OrientatedBoundingBox (Max - Min).
         /// </summary>
         public Vector3 Size
         {
@@ -315,10 +317,10 @@ namespace OpenGL
 
         #region Methods
         /// <summary>
-        /// Creates an orientated bounding box of size min, max
+        /// Creates an orientated bounding box of size min, max.
         /// </summary>
-        /// <param name="Min">Minimum x,y,z</param>
-        /// <param name="Max">Maximum x,y,z</param>
+        /// <param name="Min">Minimum x, y, z.</param>
+        /// <param name="Max">Maximum x, y, z.</param>
         public OrientatedBoundingBox(Vector3 Min, Vector3 Max)
         {
             box = new AxisAlignedBoundingBox(Min, Max);
@@ -326,10 +328,10 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Set new extents for the orientated bounding box
+        /// Set new extents for the orientated bounding box.
         /// </summary>
-        /// <param name="Min">Minimum x,y,z</param>
-        /// <param name="Max">Maximum x,y,z</param>
+        /// <param name="Min">Minimum x, y, z.</param>
+        /// <param name="Max">Maximum x, y, z.</param>
         public void SetExtents(Vector3 Min, Vector3 Max)
         {
             box.SetExtents(Min, Max);
@@ -338,10 +340,10 @@ namespace OpenGL
 
         #region Intersects
         /// <summary>
-        /// Returns true if the ray intersects the OrientatedBoundingBox
+        /// Returns true if the ray intersects the OrientatedBoundingBox.
         /// </summary>
-        /// <param name="r">Ray to test in the OrientatedBoundingBox</param>
-        /// <returns>True if the ray intersects the OrientatedBoundingBox</returns>
+        /// <param name="r">Ray to test in the OrientatedBoundingBox.</param>
+        /// <returns>True if the ray intersects the OrientatedBoundingBox.</returns>
         public bool Intersects(Ray r)
         {
             return r.Intersects(this);

@@ -53,10 +53,10 @@ namespace OpenGL
 
         #region Methods
         /// <summary>
-        /// Standard ray constructor.  Ray must have an origin and distance
+        /// Standard ray constructor.  Ray must have an origin and distance.
         /// </summary>
-        /// <param name="Origin">Origin of the ray</param>
-        /// <param name="Direction">Direction of the ray</param>
+        /// <param name="Origin">Origin of the ray.</param>
+        /// <param name="Direction">Direction of the ray.</param>
         public Ray(Vector3 Origin, Vector3 Direction)
         {
             origin = Origin;
@@ -65,21 +65,21 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Multiplies the ray by a value t to get the position at that point
+        /// Multiplies the ray by a value t to get the position at that point.
         /// </summary>
-        /// <param name="t">Value of t to multiple direction by</param>
-        /// <returns>r_origin + r_direction * t</returns>
+        /// <param name="t">Value of t to multiple direction by.</param>
+        /// <returns>r_origin + r_direction * t.</returns>
         public Vector3 GetPoint(float t)
         {
             return origin + (direction * t);
         }
 
         /// <summary>
-        /// Multiplies the ray by a value t to get the position at that point
+        /// Multiplies the ray by a value t to get the position at that point.
         /// </summary>
-        /// <param name="r">Ray to find the point along</param>
-        /// <param name="t">Value of t to multiple direction by</param>
-        /// <returns>r_origin + r_direction * t</returns>
+        /// <param name="r">Ray to find the point along.</param>
+        /// <param name="t">Value of t to multiple direction by.</param>
+        /// <returns>r_origin + r_direction * t.</returns>
         public static Vector3 operator *(Ray r, float t)
         {
             return r.GetPoint(t);
@@ -103,7 +103,7 @@ namespace OpenGL
         /// </summary>
         private void PreCalculate()
         {
-            inverse = new Vector3(1.0f / direction.X, 1.0f / direction.Y, 1.0f / direction.Z);//1.0f / direction;
+            inverse = 1.0f / direction;
             ibyj = direction.X * inverse.Y;
             jbyi = direction.Y * inverse.X;
             jbyk = direction.Y * inverse.Z;
@@ -116,6 +116,7 @@ namespace OpenGL
             c_yz = origin.Z - kbyj * origin.Y;
             c_zx = origin.X - ibyk * origin.Z;
             c_zy = origin.Y - jbyk * origin.Z;
+
             if (direction.X < 0)
             {
                 if (direction.Y < 0)
@@ -192,8 +193,8 @@ namespace OpenGL
         /// Checks for an intersection between a ray and an AxisAlignedBoundingBox.
         /// Uses the algorithm "Fast Ray/Axis-Aligned Bounding Box Overlap Tests using Ray Slopes".
         /// </summary>
-        /// <param name="b">BoundingBox to check</param>
-        /// <returns>True if an intersection exists</returns>
+        /// <param name="b">BoundingBox to check.</param>
+        /// <returns>True if an intersection exists.</returns>
         public bool Intersects(AxisAlignedBoundingBox b)
         {
             if (dirty) PreCalculate();
@@ -429,10 +430,10 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Checks for an intersection between a ray and an OrientatedBoundingBox
+        /// Checks for an intersection between a ray and an OrientatedBoundingBox.
         /// </summary>
-        /// <param name="b">BoundingBox to check</param>
-        /// <returns>True if an intersection exists</returns>
+        /// <param name="b">BoundingBox to check.</param>
+        /// <returns>True if an intersection exists.</returns>
         public bool Intersects(OrientatedBoundingBox b)
         {
             Matrix4 inverse = b.Matrix.Inverse();

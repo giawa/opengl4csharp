@@ -296,9 +296,9 @@ namespace OpenGL
         /// <summary>
         /// Calculates the linear interpolation between q1 and q2 at time t.
         /// </summary>
-        /// <param name="q1">Source Quaternion</param>
-        /// <param name="q2">Destination Quaternion</param>
-        /// <param name="t">Time between 0 and 1</param>
+        /// <param name="q1">Source Quaternion.</param>
+        /// <param name="q2">Destination Quaternion.</param>
+        /// <param name="t">Time between 0 and 1.</param>
         public static Quaternion Lerp(Quaternion q1, Quaternion q2, float t)
         {
             return Normalize(q1 + t * (q1 - q2));
@@ -307,9 +307,9 @@ namespace OpenGL
         /// <summary>
         /// Calculates the spherical linear interpolation between q1 and q2 at time t.
         /// </summary>
-        /// <param name="q1">Source Quaternion</param>
-        /// <param name="q2">Destination Quaternion</param>
-        /// <param name="t">Time between 0 and 1</param>
+        /// <param name="q1">Source Quaternion.</param>
+        /// <param name="q2">Destination Quaternion.</param>
+        /// <param name="t">Time between 0 and 1.</param>
         public static Quaternion Slerp(Quaternion q1, Quaternion q2, float t)
         {
             float c0, c1;
@@ -430,7 +430,7 @@ namespace OpenGL
         /// <summary>
         /// Creates an orientation Quaternion given the 3 axis.
         /// </summary>
-        /// <param name="Axis">An array of 3 axis</param>
+        /// <param name="Axis">An array of 3 axis.</param>
         public static Quaternion FromAxis(Vector3 xvec, Vector3 yvec, Vector3 zvec)
         {
             Matrix4 Rotation = new Matrix4(

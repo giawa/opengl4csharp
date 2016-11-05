@@ -284,9 +284,11 @@ namespace OpenGL
                                  Vector4.UnitW);
         }
 
-        /// <summary>Creates a matrix which contains information on how to scale</summary>
-        /// <param name="scale">Amount to scale by in the x, y and z direction</param>
-        /// <returns>A Matrix4 object that contains the scaling matrix</returns>
+        /// <summary>
+        /// Creates a matrix which contains information on how to scale.
+        /// </summary>
+        /// <param name="scale">Amount to scale by in the x, y and z direction.</param>
+        /// <returns>A Matrix4 object that contains the scaling matrix.</returns>
         public static Matrix4 CreateScaling(Vector3 scale)
         {
             return new Matrix4(new Vector4(scale.X, 0.0f, 0.0f, 0.0f), new Vector4(0.0f, scale.Y, 0.0f, 0.0f), new Vector4(0.0f, 0.0f, scale.Z, 0.0f), new Vector4(0.0f, 0.0f, 0.0f, 1.0f));
@@ -327,18 +329,18 @@ namespace OpenGL
         /// <summary>
         /// Creates a perspective projection matrix.
         /// </summary>
-        /// <param name="fovy">Angle of the field of view in the y direction (in radians)</param>
-        /// <param name="aspect">Aspect ratio of the view (width / height)</param>
-        /// <param name="zNear">Distance to the near clip plane</param>
-        /// <param name="zFar">Distance to the far clip plane</param>
+        /// <param name="fovy">Angle of the field of view in the y direction (in radians).</param>
+        /// <param name="aspect">Aspect ratio of the view (width / height).</param>
+        /// <param name="zNear">Distance to the near clip plane.</param>
+        /// <param name="zFar">Distance to the far clip plane.</param>
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// Thrown under the following conditions:
         /// <list type="bullet">
-        /// <item>fovy is zero, less than zero or larger than Math.PI</item>
-        /// <item>aspect is negative or zero</item>
-        /// <item>zNear is negative or zero</item>
-        /// <item>zFar is negative or zero</item>
-        /// <item>zNear is larger than zFar</item>
+        /// <item>fovy is zero, less than zero or larger than Math.PI.</item>
+        /// <item>aspect is negative or zero.</item>
+        /// <item>zNear is negative or zero.</item>
+        /// <item>zFar is negative or zero.</item>
+        /// <item>zNear is larger than zFar.</item>
         /// </list>
         /// </exception>
         public static Matrix4 CreatePerspectiveFieldOfView(float fovy, float aspect, float zNear, float zFar)
@@ -359,18 +361,18 @@ namespace OpenGL
         /// <summary>
         /// Creates a perspective projection matrix.
         /// </summary>
-        /// <param name="left">Left edge of the view frustum</param>
-        /// <param name="right">Right edge of the view frustum</param>
-        /// <param name="bottom">Bottom edge of the view frustum</param>
-        /// <param name="top">Top edge of the view frustum</param>
-        /// <param name="zNear">Distance to the near clip plane</param>
-        /// <param name="zFar">Distance to the far clip plane</param>
+        /// <param name="left">Left edge of the view frustum.</param>
+        /// <param name="right">Right edge of the view frustum.</param>
+        /// <param name="bottom">Bottom edge of the view frustum.</param>
+        /// <param name="top">Top edge of the view frustum.</param>
+        /// <param name="zNear">Distance to the near clip plane.</param>
+        /// <param name="zFar">Distance to the far clip plane.</param>
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// Thrown under the following conditions:
         /// <list type="bullet">
-        /// <item>zNear is negative or zero</item>
-        /// <item>zFar is negative or zero</item>
-        /// <item>zNear is larger than zFar</item>
+        /// <item>zNear is negative or zero.</item>
+        /// <item>zFar is negative or zero.</item>
+        /// <item>zNear is larger than zFar.</item>
         /// </list>
         /// </exception>
         public static Matrix4 CreatePerspectiveOffCenter(float left, float right, float bottom, float top, float zNear, float zFar)
@@ -395,10 +397,10 @@ namespace OpenGL
         /// <summary>
         /// Build a world space to camera space matrix.
         /// </summary>
-        /// <param name="eye">Eye (camera) position in world space</param>
-        /// <param name="target">Target position in world space</param>
-        /// <param name="up">Up vector in world space (should not be parallel to the camera direction, that is target - eye)</param>
-        /// <returns>A Matrix4 that transforms world space to camera space</returns>
+        /// <param name="eye">Eye (camera) position in world space.</param>
+        /// <param name="target">Target position in world space.</param>
+        /// <param name="up">Up vector in world space (should not be parallel to the camera direction, that is target - eye).</param>
+        /// <returns>A Matrix4 that transforms world space to camera space.</returns>
         public static Matrix4 LookAt(Vector3 eye, Vector3 target, Vector3 up)
         {
             Vector3 z = (eye - target).Normalize();
@@ -416,7 +418,7 @@ namespace OpenGL
         /// <summary>
         /// Creates the transpose of the current matrix.
         /// </summary>
-        /// <returns>A Matrix4 object that contains the transposed matrix</returns>
+        /// <returns>A Matrix4 object that contains the transposed matrix.</returns>
         public Matrix4 Transpose()
         {
             return new Matrix4(new Vector4(this[0].X, this[1].X, this[2].X, this[3].X),
@@ -428,7 +430,7 @@ namespace OpenGL
         /// <summary>
         /// Creates the inverse matrix using Gauss-Jordan elimination with partial pivoting.
         /// </summary>
-        /// <returns>A Matrix4 object that contains the inversed matrix</returns>
+        /// <returns>A Matrix4 object that contains the inversed matrix.</returns>
         public Matrix4 Inverse()
         {
             Matrix4 original = new Matrix4(this);
@@ -444,8 +446,6 @@ namespace OpenGL
 
                 original.SwapRows(k, j);
                 identity.SwapRows(k, j);
-                //Vector4.Swap(ref original[k], ref original[j]);
-                //Vector4.Swap(ref identity[k], ref identity[j]);
 
                 if (original[j].Get(j) == 0.0f) 
                     throw new Exception("Matrix4 was a singular matrix and cannot be inverted.");
@@ -468,8 +468,8 @@ namespace OpenGL
         /// <summary>
         /// Swaps two rows in the Matrix4 object.
         /// </summary>
-        /// <param name="i">First row to switch</param>
-        /// <param name="j">Second row to switch</param>
+        /// <param name="i">First row to switch.</param>
+        /// <param name="j">Second row to switch.</param>
         public void SwapRows(int i, int j)
         {
             Vector4 temp = this[i];
@@ -478,26 +478,9 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Swaps two columns in the Matrix4 object.
-        /// </summary>
-        /// <param name="i">First column to switch</param>
-        /// <param name="j">Second column to switch</param>
-        /*public void SwapCols(int i, int j)
-        {
-            // TODO: This does not work with the new Matrix4 format
-            float temp;
-            for (int k = 0; k < 4; k++)
-            {
-                temp = Matrix[k][i];
-                Matrix[k][i] = Matrix[k][j];
-                Matrix[k][j] = temp;
-            }
-        }*/
-
-        /// <summary>
         /// Returns a floating array that represents the Matrix4.
         /// </summary>
-        /// <returns>Floating array that represents that Matrix4</returns>
+        /// <returns>Floating array that represents that Matrix4.</returns>
         public float[] ToFloat()
         {
             return new float[] { this[0].X, this[0].Y, this[0].Z, this[0].W, this[1].X, this[1].Y, this[1].Z, this[1].W,
@@ -505,10 +488,10 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Build a rotation matrix from a quaternion
+        /// Build a rotation matrix from a quaternion.
         /// </summary>
         /// <param name="rotation">A quaternion representation of the rotation.</param>
-        /// <returns>A rotation matrix</returns>
+        /// <returns>A rotation matrix.</returns>
         public static Matrix4 Rotate(Quaternion rotation)
         {
             Vector4 axisangle = rotation.ToAxisAngle();
