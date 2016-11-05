@@ -48,6 +48,7 @@
     <Compile Include="Core\Gl.cs" />
     <Compile Include="Math\BoundingBox.cs" />
     <Compile Include="Math\Frustum.cs" />
+    <Compile Include="Math\Matrix3.cs" />
     <Compile Include="Math\Matrix4.cs" />
     <Compile Include="Math\Plane.cs" />
     <Compile Include="Math\Quaternion.cs" />
