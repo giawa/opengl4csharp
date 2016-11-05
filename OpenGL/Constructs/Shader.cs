@@ -135,7 +135,12 @@ namespace OpenGL
             Gl.Uniform4f(location, param.X, param.Y, param.Z, param.W);
         }
 
-        
+        public void SetValue(Matrix3 param)
+        {
+            if (Type != typeof(Matrix3)) throw new Exception(string.Format("SetValue({0}) was given a Matrix3.", Type));
+
+            Gl.UniformMatrix3fv(location, param);
+        }
 
         public void SetValue(Matrix4 param)
         {
@@ -146,9 +151,40 @@ namespace OpenGL
 
         public void SetValue(float[] param)
         {
-            if (Type != typeof(Matrix4)) throw new Exception(string.Format("SetValue({0}) was given a Matrix4.", Type));
-            if (param.Length != 16) throw new Exception(string.Format("Expected a float[] of 16 for a Matrix4, but instead got {0}.", param.Length));
-            Gl.UniformMatrix4fv(location, 1, false, param);
+            if (param.Length == 16)
+            {
+                if (Type != typeof(Matrix4)) throw new Exception(string.Format("SetValue({0}) was given a Matrix4.", Type));
+                Gl.UniformMatrix4fv(location, 1, false, param);
+            }
+            else if (param.Length == 9)
+            {
+                if (Type != typeof(Matrix3)) throw new Exception(string.Format("SetValue({0}) was given a Matrix3.", Type));
+                Gl.UniformMatrix3fv(location, 1, false, param);
+            }
+            else if (param.Length == 4)
+            {
+                if (Type != typeof(Vector4)) throw new Exception(string.Format("SetValue({0}) was given a Vector4.", Type));
+                Gl.Uniform4f(location, param[0], param[1], param[2], param[3]);
+            }
+            else if (param.Length == 3)
+            {
+                if (Type != typeof(Vector3)) throw new Exception(string.Format("SetValue({0}) was given a Vector3.", Type));
+                Gl.Uniform3f(location, param[0], param[1], param[2]);
+            }
+            else if (param.Length == 2)
+            {
+                if (Type != typeof(Vector2)) throw new Exception(string.Format("SetValue({0}) was given a Vector2.", Type));
+                Gl.Uniform2f(location, param[0], param[1]);
+            }
+            else if (param.Length == 1)
+            {
+                if (Type != typeof(float)) throw new Exception(string.Format("SetValue({0}) was given a float.", Type));
+                Gl.Uniform1f(location, param[0]);
+            }
+            else
+            {
+                throw new ArgumentException("param was an unexpected length.", "param");
+            }
         }
 
         /*public void SetValue(Texture param)
@@ -221,6 +257,7 @@ namespace OpenGL
                 case "vec2": return typeof(Vector2);
                 case "vec3": return typeof(Vector3);
                 case "vec4": return typeof(Vector4);
+                case "mat3": return typeof(Matrix3);
                 case "mat4": return typeof(Matrix4);
                 case "sampler2d": 
                 case "sampler2dshadow": 
