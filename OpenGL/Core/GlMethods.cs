@@ -168,6 +168,7 @@ namespace OpenGL
         /// <returns>The ID of the generated framebuffer.  0 on failure.</returns>
         public static uint GenFramebuffer()
         {
+            uint1[0] = 0;
             Gl.GenFramebuffers(1, uint1);
             return uint1[0];
         }
@@ -518,6 +519,7 @@ namespace OpenGL
         /// <param name="name">Specifies the parameter value to be returned.</param>
         public static int GetInteger(GetPName name)
         {
+            int1[0] = 0;
             GetIntegerv(name, int1);
             return int1[0];
         }
