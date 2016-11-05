@@ -156,9 +156,9 @@ namespace OpenGL
 
         public Matrix3(double[] array)
         {
-            row1 = new Vector3(array[0], array[1], array[2]);
-            row2 = new Vector3(array[3], array[4], array[5]);
-            row3 = new Vector3(array[6], array[7], array[8]);
+            row1 = new Vector3((float)array[0], (float)array[1], (float)array[2]);
+            row2 = new Vector3((float)array[3], (float)array[4], (float)array[5]);
+            row3 = new Vector3((float)array[6], (float)array[7], (float)array[8]);
         }
 
         public void SetMatrix(Vector3 v0, Vector3 v1, Vector3 v2)
