@@ -89,9 +89,11 @@ namespace OpenGL
     partial class Gl
     {
         #region Preallocated Memory
-        // pre-allocate the float[] for matrix data
-        private static float[] matrixFloat = new float[16];
-        private static uint[] int1 = new uint[1];
+        // pre-allocate the float[] for matrix and array data
+        private static float[] matrix4Float = new float[16];
+        private static float[] matrix3Float = new float[9];
+        private static uint[] uint1 = new uint[1];
+        private static int[] int1 = new int[1];
         private static bool[] bool1 = new bool[1];
         #endregion
 
@@ -130,9 +132,9 @@ namespace OpenGL
         /// <returns>The ID of the generated buffer.  0 on failure.</returns>
         public static uint GenBuffer()
         {
-            int1[0] = 0;
-            Gl.GenBuffers(1, int1);
-            return int1[0];
+            uint1[0] = 0;
+            Gl.GenBuffers(1, uint1);
+            return uint1[0];
         }
 
         /// <summary>
@@ -142,9 +144,9 @@ namespace OpenGL
         /// <returns>The ID of the generated texture.  0 on failure.</returns>
         public static uint GenTexture()
         {
-            int1[0] = 0;
-            Gl.GenTextures(1, int1);
-            return int1[0];
+            uint1[0] = 0;
+            Gl.GenTextures(1, uint1);
+            return uint1[0];
         }
 
         /// <summary>
@@ -154,9 +156,9 @@ namespace OpenGL
         /// <returns>The ID of the generated vertex array.  0 on failure.</returns>
         public static uint GenVertexArray()
         {
-            int1[0] = 0;
-            Gl.GenVertexArrays(1, int1);
-            return int1[0];
+            uint1[0] = 0;
+            Gl.GenVertexArrays(1, uint1);
+            return uint1[0];
         }
 
         /// <summary>
@@ -166,9 +168,8 @@ namespace OpenGL
         /// <returns>The ID of the generated framebuffer.  0 on failure.</returns>
         public static uint GenFramebuffer()
         {
-            uint[] id = new uint[1];
-            Gl.GenFramebuffers(1, id);
-            return id[0];
+            Gl.GenFramebuffers(1, uint1);
+            return uint1[0];
         }
 
         /// <summary>
@@ -178,9 +179,9 @@ namespace OpenGL
         /// <returns>The ID of the generated framebuffer.  0 on failure.</returns>
         public static uint GenRenderbuffer()
         {
-            int1[0] = 0;
-            Gl.GenRenderbuffers(1, int1);
-            return int1[0];
+            uint1[0] = 0;
+            Gl.GenRenderbuffers(1, uint1);
+            return uint1[0];
         }
 
         /// <summary>
@@ -189,11 +190,10 @@ namespace OpenGL
         /// <param name="program">The ID of the shader program.</param>
         public static string GetProgramInfoLog(UInt32 program)
         {
-            int[] length = new int[1];
-            Gl.GetProgramiv(program, ProgramParameter.InfoLogLength, length);
-            if (length[0] == 0) return String.Empty;
-            System.Text.StringBuilder sb = new System.Text.StringBuilder(length[0]);
-            Gl.GetProgramInfoLog(program, sb.Capacity, length, sb);
+            Gl.GetProgramiv(program, ProgramParameter.InfoLogLength, int1);
+            if (int1[0] == 0) return String.Empty;
+            System.Text.StringBuilder sb = new System.Text.StringBuilder(int1[0]);
+            Gl.GetProgramInfoLog(program, sb.Capacity, int1, sb);
             return sb.ToString();
         }
 
@@ -203,11 +203,10 @@ namespace OpenGL
         /// <param name="program">The ID of the shader program.</param>
         public static string GetShaderInfoLog(UInt32 shader)
         {
-            int[] length = new int[1];
-            Gl.GetShaderiv(shader, ShaderParameter.InfoLogLength, length);
-            if (length[0] == 0) return String.Empty;
-            System.Text.StringBuilder sb = new System.Text.StringBuilder(length[0]);
-            Gl.GetShaderInfoLog(shader, sb.Capacity, length, sb);
+            Gl.GetShaderiv(shader, ShaderParameter.InfoLogLength, int1);
+            if (int1[0] == 0) return String.Empty;
+            System.Text.StringBuilder sb = new System.Text.StringBuilder(int1[0]);
+            Gl.GetShaderInfoLog(shader, sb.Capacity, int1, sb);
             return sb.ToString();
         }
 
@@ -513,16 +512,14 @@ namespace OpenGL
             Gl.BindTexture(Texture.TextureTarget, Texture.TextureID);
         }
 
-        private static int[] getInteger = new int[1];
-
         /// <summary>
         /// Return the value of the selected parameter.
         /// </summary>
         /// <param name="name">Specifies the parameter value to be returned.</param>
         public static int GetInteger(GetPName name)
         {
-            GetIntegerv(name, getInteger);
-            return getInteger[0];
+            GetIntegerv(name, int1);
+            return int1[0];
         }
 
         /// <summary>
@@ -575,9 +572,9 @@ namespace OpenGL
             MemoryLogger.DestroyVBO(buffer);
 #endif
 
-            int1[0] = buffer;
-            DeleteBuffers(1, int1);
-            int1[0] = 0;
+            uint1[0] = buffer;
+            DeleteBuffers(1, uint1);
+            uint1[0] = 0;
         }
 
         /// <summary>
@@ -589,12 +586,28 @@ namespace OpenGL
         public static void UniformMatrix4fv(int location, Matrix4 param)
         {
             // use the statically allocated float[] for setting the uniform
-            matrixFloat[0] = param[0].X; matrixFloat[1] = param[0].Y; matrixFloat[2] = param[0].Z; matrixFloat[3] = param[0].W;
-            matrixFloat[4] = param[1].X; matrixFloat[5] = param[1].Y; matrixFloat[6] = param[1].Z; matrixFloat[7] = param[1].W;
-            matrixFloat[8] = param[2].X; matrixFloat[9] = param[2].Y; matrixFloat[10] = param[2].Z; matrixFloat[11] = param[2].W;
-            matrixFloat[12] = param[3].X; matrixFloat[13] = param[3].Y; matrixFloat[14] = param[3].Z; matrixFloat[15] = param[3].W;
+            matrix4Float[0] = param[0].X; matrix4Float[1] = param[0].Y; matrix4Float[2] = param[0].Z; matrix4Float[3] = param[0].W;
+            matrix4Float[4] = param[1].X; matrix4Float[5] = param[1].Y; matrix4Float[6] = param[1].Z; matrix4Float[7] = param[1].W;
+            matrix4Float[8] = param[2].X; matrix4Float[9] = param[2].Y; matrix4Float[10] = param[2].Z; matrix4Float[11] = param[2].W;
+            matrix4Float[12] = param[3].X; matrix4Float[13] = param[3].Y; matrix4Float[14] = param[3].Z; matrix4Float[15] = param[3].W;
 
-            Gl.UniformMatrix4fv(location, 1, false, matrixFloat);
+            Gl.UniformMatrix4fv(location, 1, false, matrix4Float);
+        }
+
+        /// <summary>
+        /// Set a uniform mat3 in the shader.
+        /// Uses a cached float[] to reduce memory usage.
+        /// </summary>
+        /// <param name="location">The location of the uniform in the shader.</param>
+        /// <param name="param">The Matrix3 to load into the shader uniform.</param>
+        public static void UniformMatrix3fv(int location, Matrix3 param)
+        {
+            // use the statically allocated float[] for setting the uniform
+            matrix3Float[0] = param[0].X; matrix3Float[1] = param[0].Y; matrix3Float[2] = param[0].Z;
+            matrix3Float[3] = param[1].X; matrix3Float[4] = param[1].Y; matrix3Float[5] = param[1].Z;
+            matrix3Float[6] = param[2].X; matrix3Float[7] = param[2].Y; matrix3Float[8] = param[2].Z;
+
+            Gl.UniformMatrix3fv(location, 1, false, matrix3Float);
         }
     }
 }
