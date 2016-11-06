@@ -111,6 +111,52 @@ namespace OpenGL
         }
         #endregion
 
+        #region BufferSubData
+        /// <summary>
+        /// Updates a subset of the buffer object's data store.
+        /// </summary>
+        /// <param name="data">The new data that will be copied to the data store.</param>
+        public void BufferSubData(T[] data)
+        {
+            BufferSubData(data, Marshal.SizeOf(data[0]) * data.Length, 0);
+        }
+
+        /// <summary>
+        /// Updates a subset of the buffer object's data store.
+        /// </summary>
+        /// <param name="data">The new data that will be copied to the data store.</param>
+        /// <param name="size">The size in bytes of the data store region being replaced.</param>
+        public void BufferSubData(T[] data, int size)
+        {
+            BufferSubData(data, size, 0);
+        }
+
+        /// <summary>
+        /// Updates a subset of the buffer object's data store.
+        /// </summary>
+        /// <param name="data">The new data that will be copied to the data store.</param>
+        /// <param name="size">The size in bytes of the data store region being replaced.</param>
+        /// <param name="offset">The offset in bytes into the buffer object's data store where data replacement will begin.</param>
+        public void BufferSubData(T[] data, int size, int offset)
+        {
+            if (BufferTarget != OpenGL.BufferTarget.ArrayBuffer && BufferTarget != OpenGL.BufferTarget.ElementArrayBuffer &&
+                BufferTarget != OpenGL.BufferTarget.PixelPackBuffer && BufferTarget != OpenGL.BufferTarget.PixelUnpackBuffer)
+                throw new InvalidOperationException(string.Format("BufferSubData cannot be called with a BufferTarget of type {0}", BufferTarget.ToString()));
+
+            GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
+
+            try
+            {
+                Gl.BindBuffer(this);
+                Gl.BufferSubData(BufferTarget, (IntPtr)offset, (IntPtr)size, handle.AddrOfPinnedObject());
+            }
+            finally
+            {
+                handle.Free();
+            }
+        }
+        #endregion
+
         #region IDisposable
         /// <summary>
         /// Deletes this buffer from GPU memory.

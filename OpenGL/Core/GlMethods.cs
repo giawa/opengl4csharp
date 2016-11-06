@@ -611,5 +611,29 @@ namespace OpenGL
 
             Gl.UniformMatrix3fv(location, 1, false, matrix3Float);
         }
+
+        /// <summary>
+        /// Updates a subset of the buffer object's data store.
+        /// </summary>
+        /// <typeparam name="T">The type of data in the data array.</typeparam>
+        /// <param name="vboID">The VBO whose buffer will be updated.</param>
+        /// <param name="target">Specifies the target buffer object.  Must be ArrayBuffer, ElementArrayBuffer, PixelPackBuffer or PixelUnpackBuffer.</param>
+        /// <param name="data">The new data that will be copied to the data store.</param>
+        /// <param name="length">The size in bytes of the data store region being replaced.</param>
+        public static void BufferSubData<T>(uint vboID, BufferTarget target, T[] data, int length) 
+            where T : struct
+        {
+            GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
+
+            try
+            {
+                Gl.BindBuffer(target, vboID);
+                Gl.BufferSubData(target, IntPtr.Zero, (IntPtr)(Marshal.SizeOf(data[0]) * length), handle.AddrOfPinnedObject());
+            }
+            finally
+            {
+                handle.Free();
+            }
+        }
     }
 }
