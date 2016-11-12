@@ -19,19 +19,20 @@ This project includes a .sln and .csproj file which will create an OpenGL class 
 
 ## Examples
 
-### Getting started with [FreeGLUT](http://sourceforge.net/projects/opentk/)
+### Getting started with [SDL 2.0](https://www.libsdl.org/download-2.0.php)
 
-The purpose of these examples is to walk through most of the functionality of this OpenGL library.  To do so, we need an OpenGL context.  So, I'm going to use [FreeGLUT](http://sourceforge.net/projects/opentk/) and show an example of how to use it.  If you already have an OpenGL context, you can skip this example.  In this case I am using Tao.FreeGlut, but OpenTK also has an implementation.
+The purpose of these examples is to walk through most of the functionality of this OpenGL library.  To do so, we need an OpenGL context.  So, I'm going to use [SDL 2.0](https://www.libsdl.org/download-2.0.php) and show an example of how to use it.  If you already have an OpenGL context, you can skip this example.  In this case I am using OpenGL.Platform to open and manage a window for me, and to create an OpenGL context.
 
 ```csharp
-   Glut.glutInit();
-   Glut.glutInitDisplayMode(Glut.GLUT_DOUBLE | Glut.GLUT_DEPTH);
-   Glut.glutInitWindowSize(width, height);
-   Glut.glutCreateWindow("OpenGL");
-            
-   Glut.glutIdleFunc(OnRenderFrame);
-            
-   Glut.glutMainLoop();
+   // create an OpenGL window
+   OpenGL.Platform.Window.CreateWindow("OpenGL", 1280, 720);
+   
+   // handle events and render the frame
+   while (true)
+   {
+      OpenGL.Platform.Window.HandleEvents();
+	  OnRenderFrame();
+   }
 ```
 
 Note:  OnRenderFrame will be the method where we will be drawing something.  For now, you can leave it empty.
@@ -144,6 +145,16 @@ This is an example of creating a quad using a VBO for vertices (Vector3 data), a
 ### A Note on System.Numerics and SIMD Support
 
 The OpenGL library can now use System.Numerics for Vector2, Vector3, Vector4 and Quaternion, which can provide performance improvements by utilizing SIMD.  To enable System.Numerics support you must compile with the USE_NUMERICS option.  Make sure to add System.Numerics as a reference to your project, and then use Vector3/etc as normal.
+
+## Extensions of OpenGL 4 for C#
+
+### OpenGL.Platform
+
+OpenGL.Platform is an optional class library that can be included in your projects.  The class library helps to create and manager an SDL window and OpenGL context.  The class library also supports some helpful functionality such as input handling, vertical sync and more.
+
+### [OpenGL.UI](https://github.com/giawa/gui4opengl4csharp)
+
+OpenGL.UI provides several basic user interface components.  OpenGL.UI relies upon OpenGL.Platform for input handling.  Several example projects are included and are mentioned in the project [README](https://github.com/giawa/gui4opengl4csharp/blob/master/README.md).
 
 ## Further Reading
 There isn't much documentation for this project at this time.  The source code for both the math and constructs is quite well documented.  I have also compiled [OpenGL 4 for C#/.NET Tutorials](https://github.com/giawa/opengl4tutorials) which reference this library.
