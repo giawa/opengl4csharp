@@ -146,7 +146,9 @@ namespace OpenGL.Platform
                     int bpp = SDL2.SDL.SDL_BITSPERPIXEL(mode.format);
                     string name = SDL2.SDL.SDL_GetPixelFormatName(mode.format);
 
-                    if (name.Contains("RGB888")) ValidResolutions.Add(new ScreenResolution(mode.w, mode.h, 24, mode.refresh_rate));
+                    // deal with a bug in early versions of SDL2-CS.dll that would return 0 for all SDL_BITSPERPIXEL
+                    if (bpp == 0 && name.Contains("RGB888")) ValidResolutions.Add(new ScreenResolution(mode.w, mode.h, 24, mode.refresh_rate));
+                    else ValidResolutions.Add(new ScreenResolution(mode.w, mode.h, bpp, mode.refresh_rate));
                 }
             }
         }
