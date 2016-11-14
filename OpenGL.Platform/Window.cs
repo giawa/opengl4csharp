@@ -265,6 +265,10 @@ namespace OpenGL.Platform
         public static List<OnMouseCallback> OnMouseCallbacks = new List<OnMouseCallback>();
         public static List<OnMouseMoveCallback> OnMouseMoveCallbacks = new List<OnMouseMoveCallback>();
 
+        public static bool LockLMouse { get; set; }
+
+        public static bool LockRMouse { get; set; }
+
         private static void LockMouse(Click Mouse)
         {
             if (Mouse.state == MouseState.Up) WarpPointer(downx, downy);
@@ -274,38 +278,38 @@ namespace OpenGL.Platform
             downx = prevx = Mouse.x;
             downy = prevy = Mouse.y;
 
-            //if (Mouse.state == MouseState.Down) Input.MouseMove = new Event(MouseMove);
-            //else Input.MouseMove = new Event(MouseMovePassive);
+            if (Mouse.state == MouseState.Down) Input.MouseMove = new Event(MouseMove);
+            else Input.MouseMove = new Event(MouseMovePassive);
         }
 
         public static void MouseRightClick(Click Mouse)
         {
-            LockMouse(Mouse);
+            if (LockRMouse) LockMouse(Mouse);
 
-            //Input.RightMouse = (Mouse.state == MouseState.Down);
+            Input.RightMouse = (Mouse.state == MouseState.Down);
         }
 
         public static void MouseLeftClick(Click Mouse)
         {
-            /*if (Input.RightMouse) return;
+            if (Input.RightMouse) return;
 
             if (Input.LeftMouse && Mouse.state == MouseState.Up)
             {
-                LockMouse(Mouse);
+                if (LockLMouse) LockMouse(Mouse);
                 Input.LeftMouse = false;
             }
             else if (Mouse.state == MouseState.Down)
             {
-                LockMouse(Mouse);
+                if (LockLMouse) LockMouse(Mouse);
                 Input.LeftMouse = true;
-            }*/
+            }
         }
 
         private static void WarpPointer(int x, int y)
         {
-            //NativeMethods.CGSetLocalEventsDelegateOSIndependent(0.0);
+            NativeMethods.CGSetLocalEventsDelegateOSIndependent(0.0);
             SDL.SDL_WarpMouseInWindow(window, x, y);
-            //NativeMethods.CGSetLocalEventsDelegateOSIndependent(0.25);
+            NativeMethods.CGSetLocalEventsDelegateOSIndependent(0.25);
         }
 
         public static void MouseMove(int lx, int ly, int x, int y)
@@ -323,14 +327,31 @@ namespace OpenGL.Platform
         {
             downx = x; downy = y;
 
+            // everything below should eventually move into Input.cs
             bool handled = false;
 
             for (int i = 0; i < OnMouseCallbacks.Count && !handled; i++)
                 handled = OnMouseCallbacks[i](button, state, x, y);
+
+            if (!handled)
+            {
+                Click mouse = new Click(x, y, (MouseButton)button, (MouseState)state); 
+
+                switch ((MouseButton)button)
+                {
+                    case MouseButton.Left: if (Input.MouseLeftClick != null && Input.MouseLeftClick.Click != null) Input.MouseLeftClick.Click(mouse);
+                        break;
+                    case MouseButton.Middle: if (Input.MouseMiddleClick != null && Input.MouseMiddleClick.Click != null) Input.MouseMiddleClick.Click(mouse);
+                        break;
+                    case MouseButton.Right: if (Input.MouseRightClick != null && Input.MouseRightClick.Click != null) Input.MouseRightClick.Click(mouse);
+                        break;
+                }
+            }
         }
 
         private static void OnMovePassive(int x, int y)
         {
+            // everything below should eventually move into Input.cs
             bool handled = false;
 
             for (int i = 0; i < OnMouseMoveCallbacks.Count && !handled; i++)

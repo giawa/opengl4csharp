@@ -108,6 +108,12 @@ namespace OpenGL.Platform
         #region Variables
         private static List<char> keys;                                // a list of keys that are down
         private static Stack<Event[]> subqueue;                        // a stack of events, the topmost being the current key bindings
+        private static Click mousePosition, prevMousePosition;         // the current and previous mouse position and button
+        private static Event mouseLeft, mouseRight, mouseMiddle;       // the events to be called on a mouse click
+        private static Event mouseMove;                                // the event to call on a mouse move event
+
+        public static bool RightMouse { get; set; }
+        public static bool LeftMouse { get; set; }
         #endregion
 
         #region Properties
@@ -117,6 +123,60 @@ namespace OpenGL.Platform
         public static Event[] KeyBindings
         {
             get { lock (subqueue) return subqueue.Peek(); }
+        }
+
+        /// <summary>
+        /// The current mouse state (position and button press).
+        /// </summary>
+        public static Click MousePosition
+        {
+            get { return mousePosition; }
+            set { prevMousePosition = mousePosition; mousePosition = value; }
+        }
+
+        /// <summary>
+        /// The previous state of the mouse (position and button press).
+        /// </summary>
+        public static Click PreviousMousePosition
+        {
+            get { return prevMousePosition; }
+            set { prevMousePosition = value; }
+        }
+
+        /// <summary>
+        /// An event that will be called on a mouse left click.
+        /// </summary>
+        public static Event MouseLeftClick
+        {
+            get { return mouseLeft; }
+            set { mouseLeft = value; }
+        }
+
+        /// <summary>
+        /// An event that will be called on a mouse middle click.
+        /// </summary>
+        public static Event MouseMiddleClick
+        {
+            get { return mouseMiddle; }
+            set { mouseMiddle = value; }
+        }
+
+        /// <summary>
+        /// An event that will be called on a mouse right click.
+        /// </summary>
+        public static Event MouseRightClick
+        {
+            get { return mouseRight; }
+            set { mouseRight = value; }
+        }
+
+        /// <summary>
+        /// An event that will be called on a mouse move.
+        /// </summary>
+        public static Event MouseMove
+        {
+            get { return mouseMove; }
+            set { mouseMove = value; }
         }
         #endregion
 
