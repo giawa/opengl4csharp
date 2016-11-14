@@ -23,7 +23,7 @@ namespace OpenGL.Platform
         #endregion
 
         #region Public Methods
-        public static void InitDelegates()
+        static NativeMethods()
         {
             if (Compatibility.IsWindows())
             {

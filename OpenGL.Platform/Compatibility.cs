@@ -50,27 +50,34 @@ namespace OpenGL.Platform
         #endregion
 
         #region OS Detection
-        public enum OSVersion
+        public enum OSVersion : int
         {
-            MacOSX,
-            Unix,
-            Win32
+            Unknown = 0,
+            MacOSX = 1,
+            Unix = 2,
+            Win32 = 3
         }
 
         private static OSVersion osVersion;
 
         public static bool IsLinux()
         {
+            if (osVersion == OSVersion.Unknown) DetectOperatingSystem();
+
             return osVersion == OSVersion.Unix;
         }
 
         public static bool IsOSX()
         {
+            if (osVersion == OSVersion.Unknown) DetectOperatingSystem();
+
             return osVersion == OSVersion.MacOSX;
         }
 
         public static bool IsWindows()
         {
+            if (osVersion == OSVersion.Unknown) DetectOperatingSystem();
+
             return osVersion == OSVersion.Win32;
         }
 
@@ -119,8 +126,6 @@ namespace OpenGL.Platform
             if (Environment.OSVersion.Platform == PlatformID.Win32NT) osVersion = OSVersion.Win32;
             else if (DetectUnixType() == "Darwin") osVersion = OSVersion.MacOSX;
             else osVersion = OSVersion.Unix;
-
-            NativeMethods.InitDelegates();
         }
 
         /// <summary>
