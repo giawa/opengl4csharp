@@ -335,6 +335,21 @@ namespace OpenGL.Platform
         {
             SubscribeChord(Key, Special, new Event(Event));
         }
+
+        /// <summary>
+        /// Updates all of the key events that are repeatable.
+        /// </summary>
+        /// <param name="Time">The time since the last UpdateKeys call.</param>
+        public static void Update()
+        {
+            // Update all of the event which are repeatable
+            lock (keys)
+            {
+                for (int i = 0; i < keys.Count; i++)
+                    if (KeyBindings[keys[i]] != null && KeyBindings[keys[i]].Repeat != null)
+                        KeyBindings[keys[i]].Repeat(Time.DeltaTime);
+            }
+        }
         #endregion
     }
 }
