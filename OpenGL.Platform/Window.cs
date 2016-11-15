@@ -269,7 +269,12 @@ namespace OpenGL.Platform
 
         public static bool LockRMouse { get; set; }
 
-        private static void LockMouse(Click Mouse)
+        public static void ShowCursor(bool cursor)
+        {
+            SDL.SDL_ShowCursor(cursor ? 1 : 0);
+        }
+
+        public static void LockMouse(Click Mouse)
         {
             if (Mouse.state == MouseState.Up) WarpPointer(downx, downy);
 
@@ -305,7 +310,7 @@ namespace OpenGL.Platform
             }
         }
 
-        private static void WarpPointer(int x, int y)
+        public static void WarpPointer(int x, int y)
         {
             NativeMethods.CGSetLocalEventsDelegateOSIndependent(0.0);
             SDL.SDL_WarpMouseInWindow(window, x, y);
@@ -356,6 +361,14 @@ namespace OpenGL.Platform
 
             for (int i = 0; i < OnMouseMoveCallbacks.Count && !handled; i++)
                 handled = OnMouseMoveCallbacks[i](x, y);
+
+            if (!handled)
+            {
+                if (Input.MouseMove != null && Input.MouseMove.Move != null)
+                    Input.MouseMove.Move(Input.MousePosition.x, Input.MousePosition.y, x, y);
+
+                Input.MousePosition = new Click(x, y, Input.MousePosition.button, Input.MousePosition.state);
+            }
         }
         #endregion
 
