@@ -53,6 +53,7 @@
     <Compile Include="Math\Matrix3.cs" />
     <Compile Include="Math\Matrix4.cs" />
     <Compile Include="Math\Plane.cs" />
+    <Compile Include="Math\Point.cs" />
     <Compile Include="Math\Quaternion.cs" />
     <Compile Include="Math\Ray.cs" />
     <Compile Include="Math\Vector2.cs" />

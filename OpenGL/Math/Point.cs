@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenGL.Platform
+namespace OpenGL
 {
     public struct Point
     {

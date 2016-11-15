@@ -41,7 +41,7 @@
     <Compile Include="Input.cs" />
     <Compile Include="MouseEventArgs.cs" />
     <Compile Include="NativeMethods.cs" />
-    <Compile Include="Point.cs" />
+    <Compile Include="Time.cs" />
     <Compile Include="Window.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
