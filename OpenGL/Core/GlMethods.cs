@@ -90,8 +90,10 @@ namespace OpenGL
     {
         #region Preallocated Memory
         // pre-allocate the float[] for matrix and array data
+        private static float[] float1 = new float[1];
         private static float[] matrix4Float = new float[16];
         private static float[] matrix3Float = new float[9];
+        private static double[] double1 = new double[1];
         private static uint[] uint1 = new uint[1];
         private static int[] int1 = new int[1];
         private static bool[] bool1 = new bool[1];
@@ -110,19 +112,66 @@ namespace OpenGL
         #endregion
 
         /// <summary>
-        /// Returns the value or values of a selected parameter.
+        /// Returns the boolean value of a selected parameter.
         /// </summary>
-        /// <param name="pname">Supports Blend, CullFace, DepthTest, DepthWriteMask, </param>
-        /// <returns></returns>
+        /// <param name="pname">A parameter that returns a single boolean.</param>
+        [Obsolete("Use GetBoolean instead.")]
         public static bool GetBooleanv(GetPName pname)
         {
             GetBooleanv(pname, bool1);
             return bool1[0];
         }
 
+        /// <summary>
+        /// Returns the boolean value of a selected parameter.
+        /// </summary>
+        /// <param name="pname">A parameter that returns a single boolean.</param>
+        public static bool GetBoolean(GetPName pname)
+        {
+            GetBooleanv(pname, bool1);
+            return bool1[0];
+        }
+
+        /// <summary>
+        /// Returns the float value of a selected parameter.
+        /// </summary>
+        /// <param name="pname">A parameter that returns a single float.</param>
+        public static float GetFloat(GetPName pname)
+        {
+            GetFloatv(pname, float1);
+            return float1[0];
+        }
+
+        /// <summary>
+        /// Returns the double value of a selected parameter.
+        /// </summary>
+        /// <param name="pname">A parameter that returns a single double.</param>
+        public static double GetDouble(GetPName pname)
+        {
+            GetDoublev(pname, double1);
+            return double1[0];
+        }
+
+        /// <summary>
+        /// Returns the integer value of a selected parameter.
+        /// </summary>
+        /// <param name="pname">A parameter that returns a single integer.</param>
+        public static int GetInteger(GetPName name)
+        {
+            GetIntegerv(name, int1);
+            return int1[0];
+        }
+
         public static void TexParameteri(OpenGL.TextureTarget target, OpenGL.TextureParameterName pname, TextureParameter param)
         {
             Delegates.glTexParameteri(target, pname, (int)param);
+        }
+
+        public static void TexParameteriv(OpenGL.TextureTarget target, OpenGL.TextureParameterName pname, TextureParameter[] @params)
+        {
+            int[] iparams = new int[@params.Length];
+            for (int i = 0; i < iparams.Length; i++) iparams[i] = (int)@params[i];
+            Delegates.glTexParameteriv(target, pname, iparams);
         }
 
         /// <summary>
@@ -511,17 +560,6 @@ namespace OpenGL
         public static void BindTexture(Texture Texture)
         {
             Gl.BindTexture(Texture.TextureTarget, Texture.TextureID);
-        }
-
-        /// <summary>
-        /// Return the value of the selected parameter.
-        /// </summary>
-        /// <param name="name">Specifies the parameter value to be returned.</param>
-        public static int GetInteger(GetPName name)
-        {
-            int1[0] = 0;
-            GetIntegerv(name, int1);
-            return int1[0];
         }
 
         /// <summary>

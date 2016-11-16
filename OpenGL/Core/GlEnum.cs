@@ -1604,7 +1604,8 @@ namespace OpenGL
         ViewportBoundsRange = ((int)0x825D),
         ViewportIndexProvokingVertex = ((int)0x825F),
         ViewportSubpixelBits = ((int)0x825C),
-        MaxElementIndex = ((int)0x8D6B)
+        MaxElementIndex = ((int)0x8D6B),
+        MaxTextureMaxAnisotropyExt = ((int)0x84FF)
     }
 
     public enum GetPointerParameter : int
@@ -2456,7 +2457,7 @@ namespace OpenGL
         None = ((int)0),
         StencilIndex = ((int)0x1901),
         DepthComponent = ((int)0x1902),
-        MaxAnisotropy = ((int)0x84FE)
+        MaxAnisotropyExt = ((int)0x84FE)
     }
 
     public enum TextureParameterName : int

@@ -67,7 +67,7 @@ namespace OpenGL
         /// </summary>
         /// <remarks>
         /// <para>
-        /// This function will be automatically called the first time you use any opengl function. There is 
+        /// This function will be automatically called the first time you use any opengl function.
         /// </para>
         /// <para>
         /// Call this function manually whenever you need to update OpenGL entry points.
