@@ -276,14 +276,14 @@ namespace OpenGL.Platform
 
         public static void LockMouse(Click Mouse)
         {
-            if (Mouse.state == MouseState.Up) WarpPointer(downx, downy);
+            if (Mouse.State == MouseState.Up) WarpPointer(downx, downy);
 
-            SDL.SDL_ShowCursor((Mouse.state == MouseState.Down) ? 0 : 1);
+            SDL.SDL_ShowCursor((Mouse.State == MouseState.Down) ? 0 : 1);
 
-            downx = prevx = Mouse.x;
-            downy = prevy = Mouse.y;
+            downx = prevx = Mouse.X;
+            downy = prevy = Mouse.Y;
 
-            if (Mouse.state == MouseState.Down) Input.MouseMove = new Event(MouseMove);
+            if (Mouse.State == MouseState.Down) Input.MouseMove = new Event(MouseMove);
             else Input.MouseMove = new Event(MouseMovePassive);
         }
 
@@ -291,19 +291,19 @@ namespace OpenGL.Platform
         {
             if (LockRMouse) LockMouse(Mouse);
 
-            Input.RightMouse = (Mouse.state == MouseState.Down);
+            Input.RightMouse = (Mouse.State == MouseState.Down);
         }
 
         public static void MouseLeftClick(Click Mouse)
         {
             if (Input.RightMouse) return;
 
-            if (Input.LeftMouse && Mouse.state == MouseState.Up)
+            if (Input.LeftMouse && Mouse.State == MouseState.Up)
             {
                 if (LockLMouse) LockMouse(Mouse);
                 Input.LeftMouse = false;
             }
-            else if (Mouse.state == MouseState.Down)
+            else if (Mouse.State == MouseState.Down)
             {
                 if (LockLMouse) LockMouse(Mouse);
                 Input.LeftMouse = true;
@@ -365,9 +365,9 @@ namespace OpenGL.Platform
             if (!handled)
             {
                 if (Input.MouseMove != null && Input.MouseMove.Move != null)
-                    Input.MouseMove.Move(Input.MousePosition.x, Input.MousePosition.y, x, y);
+                    Input.MouseMove.Move(Input.MousePosition.X, Input.MousePosition.Y, x, y);
 
-                Input.MousePosition = new Click(x, y, Input.MousePosition.button, Input.MousePosition.state);
+                Input.MousePosition = new Click(x, y, Input.MousePosition.Button, Input.MousePosition.State);
             }
         }
         #endregion

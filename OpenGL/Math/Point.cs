@@ -5,48 +5,48 @@ namespace OpenGL
     public struct Point
     {
         #region Variables
-        public int x, y;
+        public int X, Y;
         #endregion
 
         #region Constructor
         public Point(int x, int y)
         {
-            this.x = x;
-            this.y = y;
+            X = x;
+            Y = y;
         }
         #endregion
 
         #region Operators
         public static Point operator +(Point a, Point b)
         {
-            return new Point(a.x + b.x, a.y + b.y);
+            return new Point(a.X + b.X, a.Y + b.Y);
         }
 
         public static Point operator -(Point a, Point b)
         {
-            return new Point(a.x - b.x, a.y - b.y);
+            return new Point(a.X - b.X, a.Y - b.Y);
         }
         #endregion
 
         #region Methods
         public override string ToString()
         {
-            return x + "," + y;
+            return X + "," + Y;
         }
 
         public static Point Min(Point a, Point b)
         {
-            return new Point((a.x > b.x) ? b.x : a.x, (a.y > b.y) ? b.y : a.y);
+            return new Point((a.X > b.X) ? b.X : a.X, (a.Y > b.Y) ? b.Y : a.Y);
         }
 
         public static Point Max(Point a, Point b)
         {
-            return new Point((a.x < b.x) ? b.x : a.x, (a.y < b.y) ? b.y : a.y);
+            return new Point((a.X < b.X) ? b.X : a.X, (a.Y < b.Y) ? b.Y : a.Y);
         }
 
         public bool IsWithin(Point Position, Point Size)
         {
-            return !(x < Position.x || y < Position.y || x > Position.x + Size.x || y > Position.y + Size.y);
+            return !(X < Position.X || Y < Position.Y || X > Position.X + Size.X || Y > Position.Y + Size.Y);
         }
         #endregion
     }

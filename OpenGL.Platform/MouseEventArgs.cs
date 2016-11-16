@@ -35,9 +35,9 @@ namespace OpenGL.Platform
         public MouseState State { get; private set; }
 
         public MouseEventArgs(Click MousePosition, Click LastMousePosition)
-            : this(new Point(MousePosition.x, MousePosition.y), MousePosition.button, MousePosition.state)
+            : this(new Point(MousePosition.X, MousePosition.Y), MousePosition.Button, MousePosition.State)
         {
-            this.LastLocaton = new Point(LastMousePosition.x, LastMousePosition.y);
+            this.LastLocaton = new Point(LastMousePosition.X, LastMousePosition.Y);
         }
 
         public MouseEventArgs()
@@ -47,13 +47,13 @@ namespace OpenGL.Platform
 
         public MouseEventArgs(Point Location)
         {
-            this.LastLocaton = new Point(Location.x, Location.y);
+            this.LastLocaton = new Point(Location.X, Location.Y);
             this.Location = this.LastLocaton;
         }
 
         public MouseEventArgs(Point Location, MouseButton Button, MouseState State)
         {
-            this.LastLocaton = new Point(Location.x, Location.y);
+            this.LastLocaton = new Point(Location.X, Location.Y);
             this.Location = this.LastLocaton;
             this.Button = Button;
             this.State = State;
@@ -62,13 +62,13 @@ namespace OpenGL.Platform
         internal void SetLocation(Point Location)
         {
             this.LastLocaton = this.Location;
-            this.Location = new Point(Location.x, Location.y);
+            this.Location = new Point(Location.X, Location.Y);
         }
 
         internal void SetState(Point Location, MouseButton Button, MouseState State)
         {
             this.LastLocaton = this.Location;
-            this.Location = new Point(Location.x, Location.y);
+            this.Location = new Point(Location.X, Location.Y);
             this.Button = Button;
             this.State = State;
         }
@@ -84,38 +84,38 @@ namespace OpenGL.Platform
         /// <summary>
         /// The x-location of the mouse wrt the top-left.
         /// </summary>
-        public int x;
+        public int X;
 
         /// <summary>
         /// The y-location of the mouse wrt the top-left.
         /// </summary>
-        public int y;
+        public int Y;
 
         /// <summary>
         /// The mouse button pressed on the click event.
         /// </summary>
-        public MouseButton button;
+        public MouseButton Button;
 
         /// <summary>
         /// True if the mouse button has been pressed, false if it has been released.
         /// </summary>
-        public MouseState state;
+        public MouseState State;
         #endregion
 
         #region Methods
         /// <summary>
         /// A new click object with x, y and button data.
         /// </summary>
-        /// <param name="_x">The x-location of the mouse wrt the top-left.</param>
-        /// <param name="_y">The y-location of the mouse wrt the top-left.</param>
-        /// <param name="_button">The mouse button pressed on the click event.</param>
-        /// <param name="_pressed">True if the mouse has been pressed, false if released.</param>
-        public Click(int _x, int _y, MouseButton _button, MouseState _state)
+        /// <param name="x">The x-location of the mouse wrt the top-left.</param>
+        /// <param name="y">The y-location of the mouse wrt the top-left.</param>
+        /// <param name="button">The mouse button pressed on the click event.</param>
+        /// <param name="pressed">True if the mouse has been pressed, false if released.</param>
+        public Click(int x, int y, MouseButton button, MouseState state)
         {
-            x = _x;
-            y = _y;
-            button = _button;
-            state = _state;
+            X = x;
+            Y = y;
+            Button = button;
+            State = state;
         }
 
         /// <summary>
@@ -127,8 +127,8 @@ namespace OpenGL.Platform
         /// <param name="middle">True if the middle button is pressed.</param>
         /// <param name="right">True if the right button is pressed.</param>
         /// <param name="pressed">True if the mouse has been pressed, false if released.</param>
-        public Click(int _x, int _y, bool left, bool middle, bool right, bool pressed) :
-            this(_x, _y, (left ? MouseButton.Left : (right ? MouseButton.Right : MouseButton.Middle)), pressed ? MouseState.Down : MouseState.Up) { }
+        public Click(int x, int y, bool left, bool middle, bool right, bool pressed) :
+            this(x, y, (left ? MouseButton.Left : (right ? MouseButton.Right : MouseButton.Middle)), pressed ? MouseState.Down : MouseState.Up) { }
 
         /// <summary>
         /// A new click object with button data.
@@ -145,7 +145,7 @@ namespace OpenGL.Platform
         /// </summary>
         public override string ToString()
         {
-            return string.Format("Mouse at {0},{1} and is {2}.", x, y, state);
+            return string.Format("Mouse at {0},{1} and is {2}.", X, Y, State);
         }
         #endregion
     }
