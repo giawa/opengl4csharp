@@ -2479,7 +2479,8 @@ namespace OpenGL
         TextureSwizzleRGBA = ((int)0x8E46),
         TextureWrapS = ((int)0x2802),
         TextureWrapT = ((int)0x2803),
-        TextureWrapR = ((int)0x8072)
+        TextureWrapR = ((int)0x8072),
+        MaxAnisotropyExt = ((int)0x84FE)
     }
 
     public enum TextureTarget : int
