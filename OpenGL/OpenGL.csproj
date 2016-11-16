@@ -48,6 +48,7 @@
     <Compile Include="Constructs\VAO.cs" />
     <Compile Include="Constructs\VBO.cs" />
     <Compile Include="Core\Gl.cs" />
+    <Compile Include="Core\GlExtensions.cs" />
     <Compile Include="Math\BoundingBox.cs" />
     <Compile Include="Math\Frustum.cs" />
     <Compile Include="Math\Matrix3.cs" />
