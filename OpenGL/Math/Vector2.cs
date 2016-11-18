@@ -174,14 +174,22 @@ namespace OpenGL
             return this == other;
         }
 
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns>The hash code.</returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();
         }
 
+        /// <summary>
+        /// Returns a string representing this Vector2.
+        /// </summary>
+        /// <returns>The string representation.</returns>
         public override string ToString()
         {
-            return "{" + X + ", " + Y + "}";
+            return string.Format("<{0}, {1}>", X, Y);
         }
 
         /// <summary>

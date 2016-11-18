@@ -262,14 +262,21 @@ namespace OpenGL
             return this == other;
         }
 
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
         public override int GetHashCode()
         {
             return base.GetHashCode();
         }
 
+        /// <summary>
+        /// Returns a string representing this Vector3.
+        /// </summary>
+        /// <returns>The string representation.</returns>
         public override string ToString()
         {
-            return "{" + X + ", " + Y + ", " + Z + "}";
+            return string.Format("<{0}, {1}, {2}>", X, Y, Z);
         }
 
         /// <summary>
