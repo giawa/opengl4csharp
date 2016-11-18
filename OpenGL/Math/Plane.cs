@@ -12,7 +12,7 @@ namespace OpenGL
     /// <summary>
     /// A 3d plane, brought in from Orchard Sun.
     /// </summary>
-    public class Plane
+    public class Plane : IEquatable<Plane>
     {
         #region Enumerations
         public enum PlaneSide
@@ -21,28 +21,34 @@ namespace OpenGL
         };
         #endregion
 
-        #region Variables
-        private float scalar;
-        private Vector3 normal;
-        #endregion
-
         #region Properties
         /// <summary>
-        /// Fourth float representation of a plane.
+        /// The distance of the plane along its normal from the origin.
         /// </summary>
-        public float Scalar
-        {
-            get { return scalar; }
-            set { scalar = value; }
-        }
+        public float D { get; set; }
 
         /// <summary>
-        /// The normalized normal that represents the plane.
+        /// The normal that represents the plane.
         /// </summary>
-        public Vector3 Normal
+        public Vector3 Normal { get; set; }
+
+        [Obsolete("Use D instead, which is compatible with System.Numerics.")]
+        public float Scalar
         {
-            get { return normal; }
-            set { normal = value; }
+            get { return D; }
+            set { D = value; }
+        }
+        #endregion
+
+        #region Operators
+        public static bool operator ==(Plane v1, Plane v2)
+        {
+            return (v1.Normal == v2.Normal && v1.D == v2.D);
+        }
+
+        public static bool operator !=(Plane v1, Plane v2)
+        {
+            return (v1.Normal != v2.Normal || v1.D != v2.D);
         }
         #endregion
 
@@ -63,8 +69,8 @@ namespace OpenGL
         /// <param name="_Plane">Plane to duplicate.</param>
         public Plane(Plane plane)
         {
-            normal = plane.Normal;
-            scalar = plane.Scalar;
+            Normal = plane.Normal;
+            D = plane.D;
         }
 
         /// <summary>
@@ -84,8 +90,8 @@ namespace OpenGL
         /// <param name="d">Scalar</param>
         public Plane(float a, float b, float c, float d)
         {
-            normal = new Vector3(a, b, c);
-            scalar = d;
+            Normal = new Vector3(a, b, c);
+            D = d;
         }
 
         /// <summary>
@@ -93,34 +99,34 @@ namespace OpenGL
         /// </summary>
         public void FromPoints(Vector3 Point0, Vector3 Point1, Vector3 Point2)
         {
-            Vector3 t_edge1 = Point1 - Point0;
-            Vector3 t_edge2 = Point2 - Point0;
-            normal = Vector3.Cross(t_edge1, t_edge2).Normalize();
-            scalar = Vector3.Dot(-normal, Point0);
+            Vector3 edge1 = Point1 - Point0;
+            Vector3 edge2 = Point2 - Point0;
+            Normal = Vector3.Cross(edge1, edge2).Normalize();
+            D = Vector3.Dot(-Normal, Point0);
         }
 
         /// <summary>
         /// Set new values for the scalar and normal.
         /// </summary>
-        /// <param name="Scalar">Scalar value.</param>
-        /// <param name="Normal">Normal to the plane.</param>
-        public void Set(float Scalar, Vector3 Normal)
+        /// <param name="scalar">Scalar value.</param>
+        /// <param name="normal">Normal to the plane.</param>
+        public void Set(float scalar, Vector3 normal)
         {
-            scalar = Scalar;
-            normal = Normal;
+            D = scalar;
+            Normal = normal;
         }
 
         /// <summary>
         /// Check which side a AxisAlignedBoundingBox falls to on the plane.
         /// </summary>
-        /// <param name="b">AxisAlignedBoundingBox.</param>
+        /// <param name="box">AxisAlignedBoundingBox.</param>
         /// <returns>PlaneSide.Negative, PlaneSide.Positive or PlaneSide.Both.</returns>
-        public PlaneSide Intersects(AxisAlignedBoundingBox b)
+        public PlaneSide Intersects(AxisAlignedBoundingBox box)
         {
-            float t_distance = DistanceFromPoint(b.Center);
-            float t_mdist = Math.Abs(Vector3.Dot(normal, b.Size * 0.5f));
-            if (t_distance < -t_mdist) return PlaneSide.Negative;
-            else if (t_distance > t_mdist) return PlaneSide.Positive;
+            float distance = DistanceFromPoint(box.Center);
+            float mdist = Math.Abs(Vector3.Dot(Normal, box.Size * 0.5f));
+            if (distance < -mdist) return PlaneSide.Negative;
+            else if (distance > mdist) return PlaneSide.Positive;
             else return PlaneSide.Both;
         }
 
@@ -131,7 +137,40 @@ namespace OpenGL
         /// <returns>The minimum distance between the plane and point.</returns>
         public float DistanceFromPoint(Vector3 Point)
         {
-            return Vector3.Dot(Normal, Point) + scalar;
+            return Vector3.Dot(Normal, Point) + D;
+        }
+
+        public bool Equals(Plane plane)
+        {
+            return this == plane;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Plane)
+            {
+                return this == ((Plane)obj);
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns a string representing this Plane.
+        /// </summary>
+        /// <returns>The string representation.</returns>
+        public override string ToString()
+        {
+            return string.Format("Normal: {0} D: {1}", Normal, D);
+        }
+
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns>The hash code.</returns>
+        public override int GetHashCode()
+        {
+            return Normal.GetHashCode() + D.GetHashCode();
         }
         #endregion
     }

@@ -59,7 +59,7 @@ namespace OpenGL
 #else
                 float length = planes[i].Normal.Length;
 #endif
-                planes[i].Scalar /= length;
+                planes[i].D /= length;
                 planes[i].Normal /= length;
             }
         }
@@ -88,7 +88,7 @@ namespace OpenGL
                 float dpr = d + r;
                 //float dmr = d - r;
 
-                if (dpr < -p.Scalar) return false;
+                if (dpr < -p.D) return false;
             }
             return true;
         }
