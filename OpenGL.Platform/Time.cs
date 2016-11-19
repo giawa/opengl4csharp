@@ -7,6 +7,7 @@ namespace OpenGL.Platform
         #region Static Fields and Properties
         private static System.Diagnostics.Stopwatch Timer;
         private static int deltaTimeIntegrator;
+        private static float physicsAccumulator = 0f;
 
         /// <summary>
         /// Gets the amount of time in seconds that the previous frame took to render.
@@ -41,9 +42,11 @@ namespace OpenGL.Platform
         /// </summary>
         public static float PhysicsTimeStep { get; private set; }
 
-        private const float physicsTimeStep = 0.025f;    // equates to 20fps
-        private const float physicsFrameRate = 1f / physicsTimeStep;
-        private static float physicsAccumulator = 0f;
+        /// <summary>
+        /// Gets or sets the amount of time between physics updates.
+        /// This defaults to 0.025s, which is equivalent to 20fps.
+        /// </summary>
+        public static float PhysicsUpdateRate { get; set; }
         #endregion
 
         #region Static Methods
@@ -56,6 +59,7 @@ namespace OpenGL.Platform
             FrameCount = 0;
             deltaTimeIntegrator = 0;
             TimeScale = 1.0f;
+            PhysicsUpdateRate = 0.025f;
         }
 
         /// <summary>
@@ -78,8 +82,8 @@ namespace OpenGL.Platform
             SmoothDeltaTime = (deltaTimeIntegrator >> 4) * frequencyInverse;
 
             physicsAccumulator += DeltaTime;
-            PhysicsSteps = (int)(physicsAccumulator * physicsFrameRate);
-            PhysicsTimeStep = PhysicsSteps * physicsTimeStep;
+            PhysicsSteps = (int)(physicsAccumulator / PhysicsUpdateRate);
+            PhysicsTimeStep = PhysicsSteps * PhysicsUpdateRate;
             physicsAccumulator -= PhysicsTimeStep;
 
             Timer.Restart();
