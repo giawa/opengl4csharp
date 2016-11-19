@@ -39,19 +39,27 @@ namespace OpenGL.Platform
         #region Create SDL Window and OpenGL Context
         private static IntPtr window, glContext;
 
+        public enum ErrorCode
+        {
+            Success = 1,
+            AlreadyInitialized,
+            CouldNotCreateWindow,
+            CouldNotCreateContext,
+            WindowWasNotInitialized
+        }
+
         /// <summary>
         /// Creates an OpenGL context and associated Window via the
         /// cross-platform SDL library.  Will clear the screen to black
         /// as quickly as possible by calling glClearColor and glClear.
         /// </summary>
         /// <param name="title"></param>
-        public static void CreateWindow(string title, int width, int height, bool fullscreen = false)
+        public static ErrorCode CreateWindow(string title, int width, int height, bool fullscreen = false)
         {
             // check if a window already exists
             if (window != IntPtr.Zero || glContext != IntPtr.Zero)
             {
-                //Logger.Instance.WriteLine(LogFlags.Warning | LogFlags.OpenGL, "There is already a valid window or OpenGL context.");
-                return;
+                return ErrorCode.AlreadyInitialized;
             }
 
             // initialize SDL and set a few defaults for the OpenGL context
@@ -71,11 +79,10 @@ namespace OpenGL.Platform
 
             if (window == IntPtr.Zero)
             {
-                //Logger.Instance.WriteLine(LogFlags.Error | LogFlags.OpenGL, "Could not initialize a window using SDL.");
-                return;
+                return ErrorCode.CouldNotCreateWindow;
             }
 
-            CreateContextFromWindow(window, fullscreen);
+            return CreateContextFromWindow(window, fullscreen);
         }
 
         /// <summary>
@@ -83,12 +90,11 @@ namespace OpenGL.Platform
         /// </summary>
         /// <param name="window">The valid SDL window.</param>
         /// <param name="fullscreen">True if the window is already in fullscreen mode.</param>
-        public static void CreateContextFromWindow(IntPtr window, bool fullscreen = false)
+        public static ErrorCode CreateContextFromWindow(IntPtr window, bool fullscreen = false)
         {
             if (window == IntPtr.Zero)
             {
-                //Logger.Instance.WriteLine(LogFlags.Error | LogFlags.OpenGL, "Could not initialize a window using SDL.");
-                return;
+                return ErrorCode.WindowWasNotInitialized;
             }
 
             int width, height;
@@ -102,14 +108,15 @@ namespace OpenGL.Platform
             glContext = SDL.SDL_GL_CreateContext(window);
             if (glContext == IntPtr.Zero)
             {
-                //Logger.Instance.WriteLine(LogFlags.Error | LogFlags.OpenGL, "Could not get a valid OpenGL context.");
-                return;
+                return ErrorCode.CouldNotCreateContext;
             }
 
             // initialize the screen to black as soon as possible
             Gl.ClearColor(0f, 0f, 0f, 1f);
             Gl.Clear(ClearBufferMask.ColorBufferBit);
             SwapBuffers();
+
+            return ErrorCode.Success;
         }
         #endregion
 
