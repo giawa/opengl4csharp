@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Runtime.InteropServices;
-using System.Reflection;
 using System.Diagnostics;
-using System.Reflection.Emit;
 using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace OpenGL
 {
@@ -29,7 +27,7 @@ namespace OpenGL
         {
             glClass = typeof(Gl);
             delegatesClass = glClass.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
-            coreClass = glClass.GetNestedType("Core", BindingFlags.Static | BindingFlags.NonPublic);
+            coreClass = glClass.GetNestedType("NativeMethods", BindingFlags.Static | BindingFlags.NonPublic);
             // 'Touch' Imports class to force initialization. We don't want anything yet, just to have
             // this class ready.
             if (Core.FunctionMap != null) { }
@@ -91,7 +89,7 @@ namespace OpenGL
             }
         }
 
-        static void set(object d, Delegate value)
+        static void Set(object d, Delegate value)
         {
             d = value;
         }
@@ -191,6 +189,22 @@ namespace OpenGL
 
         #region private static IntPtr GetAddress(string function)
 
+        internal partial class NativeMethods
+        {
+            [DllImport(Library, EntryPoint = "wglGetProcAddress", ExactSpelling = true)]
+            internal static extern IntPtr wglGetProcAddress(string lpszProc);
+
+            [DllImport(Library, EntryPoint = "glXGetProcAddress")]
+            internal static extern IntPtr glxGetProcAddress([MarshalAs(UnmanagedType.LPTStr)] string procName);
+
+            [DllImport("libdl.dylib", EntryPoint = "NSIsSymbolNameDefined")]
+            internal static extern bool NSIsSymbolNameDefined(string s);
+            [DllImport("libdl.dylib", EntryPoint = "NSLookupAndBindSymbol")]
+            internal static extern IntPtr NSLookupAndBindSymbol(string s);
+            [DllImport("libdl.dylib", EntryPoint = "NSAddressOfSymbol")]
+            internal static extern IntPtr NSAddressOfSymbol(IntPtr symbol);
+        }
+
         private static IGetProcAddress getProcAddress;
 
         internal interface IGetProcAddress
@@ -200,46 +214,31 @@ namespace OpenGL
 
         internal class GetProcAddressWindows : IGetProcAddress
         {
-            [System.Runtime.InteropServices.DllImport(Library, EntryPoint = "wglGetProcAddress", ExactSpelling = true)]
-            private static extern IntPtr wglGetProcAddress(String lpszProc);
-
             public IntPtr GetProcAddress(string function)
             {
-                return wglGetProcAddress(function);
+                return NativeMethods.wglGetProcAddress(function);
             }
         }
 
         internal class GetProcAddressX11 : IGetProcAddress
         {
-            [DllImport(Library, EntryPoint = "glXGetProcAddress")]
-            private static extern IntPtr glxGetProcAddress([MarshalAs(UnmanagedType.LPTStr)] string procName);
-
             public IntPtr GetProcAddress(string function)
             {
-                return glxGetProcAddress(function);
+                return NativeMethods.glxGetProcAddress(function);
             }
         }
 
         internal class GetProcAddressOSX : IGetProcAddress
         {
-            private const string Library = "libdl.dylib";
-
-            [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
-            private static extern bool NSIsSymbolNameDefined(string s);
-            [DllImport(Library, EntryPoint = "NSLookupAndBindSymbol")]
-            private static extern IntPtr NSLookupAndBindSymbol(string s);
-            [DllImport(Library, EntryPoint = "NSAddressOfSymbol")]
-            private static extern IntPtr NSAddressOfSymbol(IntPtr symbol);
-
             public IntPtr GetProcAddress(string function)
             {
                 string fname = "_" + function;
-                if (!NSIsSymbolNameDefined(fname))
+                if (!NativeMethods.NSIsSymbolNameDefined(fname))
                     return IntPtr.Zero;
 
-                IntPtr symbol = NSLookupAndBindSymbol(fname);
+                IntPtr symbol = NativeMethods.NSLookupAndBindSymbol(fname);
                 if (symbol != IntPtr.Zero)
-                    symbol = NSAddressOfSymbol(symbol);
+                    symbol = NativeMethods.NSAddressOfSymbol(symbol);
 
                 return symbol;
             }
@@ -268,15 +267,15 @@ namespace OpenGL
         {
             if (getProcAddress == null)
             {
-                if (System.Environment.OSVersion.Platform == PlatformID.Win32NT ||
-                    System.Environment.OSVersion.Platform == PlatformID.Win32S ||
-                    System.Environment.OSVersion.Platform == PlatformID.Win32Windows ||
-                    System.Environment.OSVersion.Platform == PlatformID.WinCE)
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT ||
+                    Environment.OSVersion.Platform == PlatformID.Win32S ||
+                    Environment.OSVersion.Platform == PlatformID.Win32Windows ||
+                    Environment.OSVersion.Platform == PlatformID.WinCE)
                 {
                     getProcAddress = new GetProcAddressWindows();
                 }
-                else if (System.Environment.OSVersion.Platform == PlatformID.Unix ||
-                         System.Environment.OSVersion.Platform == (PlatformID)4)
+                else if (Environment.OSVersion.Platform == PlatformID.Unix ||
+                         Environment.OSVersion.Platform == (PlatformID)4)
                 {
                     // Distinguish between Unix and Mac OS X kernels.
                     switch (DetectUnixKernel())
@@ -317,11 +316,14 @@ namespace OpenGL
         /// <remarks>Source code from "Mono: A Developer's Notebook"</remarks>
         private static string DetectUnixKernel()
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.Arguments = "-s";
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardError = true;
-            startInfo.UseShellExecute = false;
+            ProcessStartInfo startInfo = new ProcessStartInfo()
+            {
+                Arguments = "-s",
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false
+            };
+
             foreach (string unameprog in new string[] { "/usr/bin/uname", "/bin/uname", "uname" })
             {
                 try
@@ -331,7 +333,7 @@ namespace OpenGL
                     StreamReader stdout = uname.StandardOutput;
                     return stdout.ReadLine().Trim();
                 }
-                catch (System.IO.FileNotFoundException)
+                catch (FileNotFoundException)
                 {
                     // The requested executable doesn't exist, try next one.
                     continue;
