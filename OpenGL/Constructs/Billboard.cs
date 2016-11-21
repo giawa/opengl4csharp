@@ -26,16 +26,22 @@ namespace OpenGL
 
         public Billboard(ShaderProgram program, Texture texture, Vector3[] locations, Vector3[] colors)
         {
-            this.Program = program;
-            this.Texture = texture;
+            Program = program;
+            Texture = texture;
 
             int[] elements = new int[locations.Length];
             for (int i = 0; i < elements.Length; i++) elements[i] = i;
 
-            this.billboard = new VAO(program, new VBO<Vector3>(locations), new VBO<Vector3>(colors), new VBO<int>(elements));
-            this.billboard.DrawMode = BeginMode.Points;
-            this.billboard.DisposeChildren = true;
-            this.Color = new Vector4(1, 1, 1, 1);
+            billboard = new VAO(program, new VBO<Vector3>(locations), new VBO<Vector3>(colors), new VBO<int>(elements));
+            billboard.DrawMode = BeginMode.Points;
+            billboard.DisposeChildren = true;
+
+            Color = new Vector4(1, 1, 1, 1);
+        }
+
+        ~Billboard()
+        {
+            Dispose(false);
         }
         #endregion
 
@@ -55,10 +61,16 @@ namespace OpenGL
 
         public void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
             // dispose of all of the objects
-            this.Program.Dispose();
-            this.Texture.Dispose();
-            this.billboard.Dispose();
+            Program.Dispose();
+            Texture.Dispose();
+            billboard.Dispose();
         }
         #endregion
 

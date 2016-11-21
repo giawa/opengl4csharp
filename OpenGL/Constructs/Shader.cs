@@ -241,7 +241,7 @@ namespace OpenGL
 
         ~Shader()
         {
-            if (ShaderID != 0) System.Diagnostics.Debug.Fail("Shader was not disposed of properly.");
+            Dispose(false);
         }
         #endregion
 
@@ -310,10 +310,16 @@ namespace OpenGL
         #region IDisposable
         public void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void Dispose(bool disposing)
+        {
             if (ShaderID != 0)
             {
                 Gl.DeleteShader(ShaderID);
-                this.ShaderID = 0;
+                ShaderID = 0;
             }
         }
         #endregion
@@ -397,7 +403,7 @@ namespace OpenGL
 
         ~ShaderProgram()
         {
-            if (ProgramID != 0) System.Diagnostics.Debug.Fail("ShaderProgram was not disposed of properly.");
+            Dispose(false);
         }
         #endregion
 
@@ -450,6 +456,12 @@ namespace OpenGL
         #region IDisposable
         public void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public void Dispose(bool disposing)
+        {
             if (ProgramID != 0)
             {
                 // Make sure this program isn't being used
@@ -465,7 +477,7 @@ namespace OpenGL
                     FragmentShader.Dispose();
                 }
 
-                this.ProgramID = 0;
+                ProgramID = 0;
             }
         }
         #endregion

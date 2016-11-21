@@ -107,7 +107,7 @@ namespace OpenGL
         /// </summary>
         ~VBO()
         {
-            if (vboID != 0) System.Diagnostics.Debug.Fail("VBO was not disposed of properly.");
+            Dispose(false);
         }
         #endregion
 
@@ -162,6 +162,12 @@ namespace OpenGL
         /// Deletes this buffer from GPU memory.
         /// </summary>
         public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void Dispose(bool disposing)
         {
             if (vboID != 0)
             {

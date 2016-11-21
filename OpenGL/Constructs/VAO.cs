@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 #if USE_NUMERICS
 using System.Numerics;
@@ -231,8 +229,8 @@ namespace OpenGL
         #region Constructor and Destructor
         public GenericVAO(ShaderProgram program)
         {
-            this.Program = program;
-            this.DrawMode = BeginMode.Triangles;
+            Program = program;
+            DrawMode = BeginMode.Triangles;
         }
 
         public void Init(GenericVBO[] vbos)
@@ -245,7 +243,7 @@ namespace OpenGL
                 if (vaoID != 0)
                 {
                     Gl.BindVertexArray(vaoID);
-                    BindAttributes(this.Program);
+                    BindAttributes(Program);
                 }
                 Gl.BindVertexArray(0);
 
@@ -259,7 +257,7 @@ namespace OpenGL
 
         ~GenericVAO()
         {
-            if (vaoID != 0) System.Diagnostics.Debug.Fail("VAO was not disposed of properly.");
+            Dispose(false);
         }
         #endregion
 
@@ -370,7 +368,7 @@ namespace OpenGL
         private void DrawOGL2()
         {
             if (VertexCount == 0) return;
-            BindAttributes(this.Program);
+            BindAttributes(Program);
             Gl.DrawElements(DrawMode, VertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero);
         }
 
@@ -390,6 +388,12 @@ namespace OpenGL
         /// Deletes the vertex array from the GPU and will also dispose of any child VBOs if (DisposeChildren == true).
         /// </summary>
         public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
         {
             // first try to dispose of the vertex array
             if (vaoID != 0)
@@ -492,9 +496,10 @@ namespace OpenGL
 
         public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<Vector3> normal, VBO<Vector3> tangent, VBO<Vector2> uv, VBO<int> element)
         {
-            this.Program = program;
-            this.VertexCount = element.Count;
-            this.DrawMode = BeginMode.Triangles;
+            Program = program;
+            VertexCount = element.Count;
+            DrawMode = BeginMode.Triangles;
+
             this.vertex = vertex;
             this.normal = normal;
             this.tangent = tangent;
@@ -507,7 +512,7 @@ namespace OpenGL
                 if (vaoID != 0)
                 {
                     Gl.BindVertexArray(vaoID);
-                    BindAttributes(this.Program);
+                    BindAttributes(Program);
                 }
                 Gl.BindVertexArray(0);
 
@@ -521,7 +526,7 @@ namespace OpenGL
 
         ~VAO()
         {
-            if (vaoID != 0) System.Diagnostics.Debug.Fail("VAO was not disposed of properly.");
+            Dispose(false);
         }
         #endregion
 
@@ -645,7 +650,7 @@ namespace OpenGL
         /// </summary>
         private void DrawOGL2()
         {
-            BindAttributes(this.Program);
+            BindAttributes(Program);
 
             IntPtr offset = (IntPtr)(Offset * 4);
             Gl.DrawElements(DrawMode, VertexCount, DrawElementsType.UnsignedInt, offset);
@@ -668,6 +673,12 @@ namespace OpenGL
         /// Deletes the vertex array from the GPU and will also dispose of any child VBOs if (DisposeChildren == true).
         /// </summary>
         public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void Dispose(bool disposing)
         {
             // first try to dispose of the vertex array
             if (vaoID != 0)

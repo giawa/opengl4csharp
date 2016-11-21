@@ -52,19 +52,25 @@ namespace OpenGL
         /// <param name="FlipY">True if the bitmap should be flipped.</param>
         public Texture(Bitmap BitmapImage, bool FlipY = true)
         {
-            this.Filename = BitmapImage.GetHashCode().ToString();
+            Filename = BitmapImage.GetHashCode().ToString();
             LoadBitmap(BitmapImage, FlipY);
             Gl.BindTexture(TextureTarget, 0);
         }
         
         ~Texture()
         {
-            if (TextureID != 0) System.Diagnostics.Debug.Fail(string.Format("Texture {0} was not disposed of properly.", Filename));
+            Dispose(false);
         }
         #endregion
 
         #region Methods
         public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void Dispose(bool disposing)
         {
             if (TextureID != 0)
             {
@@ -83,14 +89,14 @@ namespace OpenGL
              * .net to convert any filetype to a bitmap.  Then the bitmap is locked into memory so
              * that the garbage collector doesn't touch it, and it is read via OpenGL glTexImage2D. */
             if (FlipY) BitmapImage.RotateFlip(RotateFlipType.RotateNoneFlipY);     // bitmaps read from bottom up, so flip it
-            this.Size = BitmapImage.Size;
+            Size = BitmapImage.Size;
 
             // must be Format32bppArgb file format, so convert it if it isn't in that format
             BitmapData bitmapData = BitmapImage.LockBits(new Rectangle(0, 0, BitmapImage.Width, BitmapImage.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
             // set the texture target and then generate the texture ID
-            this.TextureTarget = TextureTarget.Texture2D;
-            this.TextureID = Gl.GenTexture();
+            TextureTarget = TextureTarget.Texture2D;
+            TextureID = Gl.GenTexture();
 
             Gl.PixelStorei(PixelStoreParameter.UnpackAlignment, 1); // set pixel alignment
             Gl.BindTexture(TextureTarget, TextureID);     // bind the texture to memory in OpenGL
@@ -98,7 +104,7 @@ namespace OpenGL
             //Gl.TexParameteri(TextureTarget, TextureParameterName.GenerateMipmap, 0);
             Gl.TexImage2D(TextureTarget, 0, PixelInternalFormat.Rgba8, BitmapImage.Width, BitmapImage.Height, 0, PixelFormat.Bgra, PixelType.UnsignedByte, bitmapData.Scan0);
             Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMagFilter, TextureParameter.Nearest);
-            Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMinFilter, TextureParameter.Nearest);//(int)TextureParam.Linear);   // linear filter
+            Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMinFilter, TextureParameter.Nearest);
 
 #if MEMORY_LOGGER
             MemoryLogger.AllocateTexture(TextureID, Size);
@@ -168,8 +174,9 @@ namespace OpenGL
 
                 try
                 {
-                    this.TextureTarget = (imageData.Height == 1 || imageData.Width == 1) ? TextureTarget.Texture1D : TextureTarget.Texture2D;
-                    this.TextureID = Gl.GenTexture();
+                    TextureTarget = (imageData.Height == 1 || imageData.Width == 1) ? TextureTarget.Texture1D : TextureTarget.Texture2D;
+                    TextureID = Gl.GenTexture();
+
                     Gl.BindTexture(TextureTarget, TextureID);
                     Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMinFilter, TextureParameter.Linear);
                     Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMagFilter, TextureParameter.Linear);

@@ -52,6 +52,11 @@ namespace OpenGL
                 }
             }
         }
+
+        ~BitmapFont()
+        {
+            Dispose(false);
+        }
         #endregion
 
         #region Methods
@@ -92,6 +97,12 @@ namespace OpenGL
         }
 
         public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
         {
             FontTexture.Dispose();
         }

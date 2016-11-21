@@ -144,10 +144,7 @@ namespace OpenGL
         /// </summary>
         ~FBO()
         {
-            if (DepthID != 0 || BufferID != 0 || TextureID != null)
-            {
-                System.Diagnostics.Debug.Fail("FBO was not disposed of properly.");
-            }
+            Dispose(false);
         }
         #endregion
 
@@ -214,6 +211,12 @@ namespace OpenGL
 
         #region IDisposable
         public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
         {
             if (DepthID != 0 || BufferID != 0 || TextureID != null)
             {
