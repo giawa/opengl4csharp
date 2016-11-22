@@ -314,7 +314,7 @@ namespace OpenGL
             GC.SuppressFinalize(this);
         }
 
-        protected void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (ShaderID != 0)
             {
@@ -460,7 +460,7 @@ namespace OpenGL
             GC.SuppressFinalize(this);
         }
 
-        public void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (ProgramID != 0)
             {

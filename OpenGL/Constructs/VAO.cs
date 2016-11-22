@@ -678,7 +678,7 @@ namespace OpenGL
             GC.SuppressFinalize(this);
         }
 
-        protected void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             // first try to dispose of the vertex array
             if (vaoID != 0)
