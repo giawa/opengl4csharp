@@ -1557,6 +1557,7 @@ namespace OpenGL
 
         public static UInt32 GetUniformBlockIndex(UInt32 program, String uniformBlockName)
         {
+            UseProgram(program);    // take care of a crash that can occur on NVIDIA drivers by using the program first
             return Delegates.glGetUniformBlockIndex(program, uniformBlockName);
         }
 

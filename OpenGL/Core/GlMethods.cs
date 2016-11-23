@@ -1,9 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 #if USE_NUMERICS
 using System.Numerics;
+#endif
+
+#if MEMORY_LOGGER
+using System.Collections.Generic;
 #endif
 
 namespace OpenGL
@@ -100,14 +103,14 @@ namespace OpenGL
         #endregion
 
         #region Private Fields
-        private static int _version = 0;
+        private static int version = 0;
         private static uint currentProgram = 0;
         #endregion
 
         #region Public Properties
-        public static uint CurrentProgram 
-        { 
-            get { return currentProgram; } 
+        public static uint CurrentProgram
+        {
+            get { return currentProgram; }
         }
         #endregion
 
@@ -267,7 +270,8 @@ namespace OpenGL
         /// <param name="source">Specifies a string containing the source code to be loaded into the shader.</param>
         public static void ShaderSource(UInt32 shader, string source)
         {
-            ShaderSource(shader, 1, new string[] { source }, new int[] { source.Length });
+            int1[0] = source.Length;
+            Gl.ShaderSource(shader, 1, new string[] { source }, int1);
         }
 
         /// <summary>
@@ -523,19 +527,21 @@ namespace OpenGL
 
             return vaoHandle;
         }
-        
+
         /// <summary>
         /// Gets the current OpenGL version (returns a cached result on subsequent calls).
         /// </summary>
         /// <returns>The current OpenGL version, or 0 on an error.</returns>
         public static int Version()
         {
-            if (_version != 0) return _version;	// cache the version information
-            
+            if (version != 0) return version; // cache the version information
+
             try
             {
-                string version = Gl.GetString(StringName.Version);
-                return (_version = int.Parse(version.Substring(0, version.IndexOf('.'))));
+                string versionString = Gl.GetString(StringName.Version);
+
+                version = int.Parse(versionString.Substring(0, versionString.IndexOf('.')));
+                return Gl.version;
             }
             catch (Exception)
             {
@@ -572,15 +578,14 @@ namespace OpenGL
         /// <returns>The index of the uniform block.</returns>
         public static uint GetUniformBlockIndex(ShaderProgram program, string uniformBlockName)
         {
-            program.Use();  // take care of a crash that can occur on NVIDIA drivers by using the program first
-            return GetUniformBlockIndex(program.ProgramID, uniformBlockName);
+            return Gl.GetUniformBlockIndex(program.ProgramID, uniformBlockName);
         }
 
         /// <summary>
         /// Binds a VBO based on the buffer target.
         /// </summary>
         /// <param name="buffer">The VBO to bind.</param>
-        public static void BindBuffer<T>(VBO<T> buffer) 
+        public static void BindBuffer<T>(VBO<T> buffer)
             where T : struct
         {
             Gl.BindBuffer(buffer.BufferTarget, buffer.vboID);
@@ -592,7 +597,7 @@ namespace OpenGL
         /// <param name="buffer">The VBO to bind to the shader attribute.</param>
         /// <param name="program">The shader program whose attribute will be bound to.</param>
         /// <param name="attributeName">The name of the shader attribute to be bound to.</param>
-        public static void BindBufferToShaderAttribute<T>(VBO<T> buffer, ShaderProgram program, string attributeName) 
+        public static void BindBufferToShaderAttribute<T>(VBO<T> buffer, ShaderProgram program, string attributeName)
             where T : struct
         {
             uint location = (uint)Gl.GetAttribLocation(program.ProgramID, attributeName);
@@ -658,7 +663,7 @@ namespace OpenGL
         /// <param name="target">Specifies the target buffer object.  Must be ArrayBuffer, ElementArrayBuffer, PixelPackBuffer or PixelUnpackBuffer.</param>
         /// <param name="data">The new data that will be copied to the data store.</param>
         /// <param name="length">The size in bytes of the data store region being replaced.</param>
-        public static void BufferSubData<T>(uint vboID, BufferTarget target, T[] data, int length) 
+        public static void BufferSubData<T>(uint vboID, BufferTarget target, T[] data, int length)
             where T : struct
         {
             GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
