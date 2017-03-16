@@ -17,7 +17,9 @@ Check the included [LICENSE.md](https://github.com/giawa/opengl4csharp/blob/mast
 ## Getting the Project
 This project can be downloaded and built manually (see below) or can be loaded easily from [nuget](https://www.nuget.org/packages/Giawa.OpenGL/).
 
-```Install-Package Giawa.OpenGL```
+```
+Install-Package Giawa.OpenGL
+```
 
 ## Building the Project
 This project includes a .sln and .csproj file which will create an OpenGL class library.  This library includes a dll.config which will load the correct OpenGL on Windows, Mac OS X and Linux.  So, you need only compile this project once and it will work across platforms.
@@ -26,18 +28,18 @@ This project includes a .sln and .csproj file which will create an OpenGL class 
 
 ### Getting started with [SDL 2.0](https://www.libsdl.org/download-2.0.php)
 
-The purpose of these examples is to walk through most of the functionality of this OpenGL library.  To do so, we need an OpenGL context.  So, I'm going to use [SDL 2.0](https://www.libsdl.org/download-2.0.php) and show an example of how to use it.  If you already have an OpenGL context, you can skip this example.  In this case I am using OpenGL.Platform to open and manage a window for me, and to create an OpenGL context.
+The purpose of these examples is to walk through the setup of this OpenGL library.  To do so, we need an OpenGL context.  So, I'm going to use [SDL 2.0](https://www.libsdl.org/download-2.0.php) and show an example of how to use it.  If you already have an OpenGL context, you can skip this example.  In this case I am using OpenGL.Platform (which uses SDL 2.0) to open and manage a window for me, and to create an OpenGL context.
 
 ```csharp
-   // create an OpenGL window
-   OpenGL.Platform.Window.CreateWindow("OpenGL", 1280, 720);
+// create an OpenGL window
+OpenGL.Platform.Window.CreateWindow("OpenGL", 1280, 720);
    
-   // handle events and render the frame
-   while (true)
-   {
-      OpenGL.Platform.Window.HandleEvents();
-	  OnRenderFrame();
-   }
+// handle events and render the frame
+while (true)
+{
+   OpenGL.Platform.Window.HandleEvents();
+   OnRenderFrame();
+}
 ```
 
 Note:  OnRenderFrame will be the method where we will be drawing something.  For now, you can leave it empty.
@@ -76,11 +78,11 @@ void main(void)
 Here is how we load the vertex and fragment programs, and then link them together to create a shader program.  We can also set the 'color' uniform value to blue (0, 0, 1).
 
 ```csharp
-   // create the shader program
-   ShaderProgram program = new ShaderProgram(vertexShader2Source, fragmentShader2Source);
-            
-   // set the color to blue
-   program["color"].SetValue(new Vector3(0, 0, 1));
+// create the shader program
+ShaderProgram program = new ShaderProgram(vertexShader2Source, fragmentShader2Source);
+        
+// set the color to blue
+program["color"].SetValue(new Vector3(0, 0, 1));
 ```
 
 Note:  Make sure that you dispose of your new shader once your program closes!  The class library will alert you if the destructor of the object is called by the .NET framework before you call the Dispose method.
@@ -92,12 +94,12 @@ I'm assuming that you have your shader program loaded (use the example one above
 First, create the cube during initialization (just after setting up FreeGLUT, but just before Glut.glutMainLoop()).  We also need to set up the shader with some defaults for the modelview and projection matrices.
 
 ```csharp
-   // set up some defaults for the shader program project and modelview matrices
-   program["projection_matrix"].SetValue(Matrix4.CreatePerspectiveFieldOfView(0.45f, (float)width / height, 0.1f, 1000f));
-   program["modelview_matrix"].SetValue(Matrix4.CreateTranslation(new Vector3(2, 2, -10)) * Matrix4.CreateRotation(new Vector3(1, -1, 0), 0.2f));
+// set up some defaults for the shader program project and modelview matrices
+program["projection_matrix"].SetValue(Matrix4.CreatePerspectiveFieldOfView(0.45f, (float)width / height, 0.1f, 1000f));
+program["modelview_matrix"].SetValue(Matrix4.CreateTranslation(new Vector3(2, 2, -10)) * Matrix4.CreateRotation(new Vector3(1, -1, 0), 0.2f));
 
-   // create a cube
-   cube = OpenGL.Geometry.CreateCube(program, new Vector3(-1, -1, -1), new Vector3(1, 1, 1));
+// create a cube
+cube = OpenGL.Geometry.CreateCube(program, new Vector3(-1, -1, -1), new Vector3(1, 1, 1));
 ```
 
 Now draw the cube by using the shader program, drawing the cube and then swapping the Glut buffers.
@@ -131,25 +133,25 @@ Gl.BindTexture(newTexture);
 This is an example of creating a quad using a VBO for vertices (Vector3 data), a VBO for UV coordinates (Vector2 data) and a VBO of indices (int data).  This VBO can then be rendered in a similar fashion to the cube method above.
 
 ```csharp
-   // create the vertex data
-   Vector3[] vertices = new Vector3[] { new Vector3(0, 0, 0), new Vector3(1, 0, 0), new Vector3(1, 1, 0), new Vector3(0, 1, 0) };
-   VBO<Vector3> vertexVBO = new VBO<Vector3>(vertices);
+// create the vertex data
+Vector3[] vertices = new Vector3[] { new Vector3(0, 0, 0), new Vector3(1, 0, 0), new Vector3(1, 1, 0), new Vector3(0, 1, 0) };
+VBO<Vector3> vertexVBO = new VBO<Vector3>(vertices);
 
-   // create the UV data
-   Vector2[] uvs = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(0, 1) };
-   VBO<Vector2> uvVBO = new VBO<Vector2>(uvs);
+// create the UV data
+Vector2[] uvs = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(0, 1) };
+VBO<Vector2> uvVBO = new VBO<Vector2>(uvs);
 
-   // create the index data (the order in which the vertices should be drawn in groups of 3 to form triangles)
-   int[] indices = new int[] { 0, 1, 2, 2, 3, 0 };
-   VBO<int> indexVBO = new VBO<int>(indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticRead);
+// create the index data (the order in which the vertices should be drawn in groups of 3 to form triangles)
+int[] indices = new int[] { 0, 1, 2, 2, 3, 0 };
+VBO<int> indexVBO = new VBO<int>(indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticRead);
 
-   // create a vertex array object (VAO) from the vertex, UV and index data
-   VAO quad = new VAO(program, vertexVBO, uvVBO, indexVBO);
+// create a vertex array object (VAO) from the vertex, UV and index data
+VAO quad = new VAO(program, vertexVBO, uvVBO, indexVBO);
 ```
 
 ### A Note on System.Numerics and SIMD Support
 
-The OpenGL library can now use System.Numerics for Vector2, Vector3, Vector4 and Quaternion, which can provide performance improvements by utilizing SIMD.  To enable System.Numerics support you must compile with the USE_NUMERICS option.  Make sure to add System.Numerics as a reference to your project, and then use Vector3/etc as normal.
+The OpenGL library can now use System.Numerics for Vector2, Vector3, Vector4 and Quaternion, which can provide performance improvements by utilizing SIMD.  To enable System.Numerics support you must compile with the USE_NUMERICS option.  Make sure to add System.Numerics as a reference to your project, and then use Vector3/etc as normal.  The [nuget](https://www.nuget.org/packages/Giawa.OpenGL/) package and [dotnetcore](https://github.com/giawa/opengl4csharp/tree/dotnetcore) branch use SIMD by default.
 
 ## Extensions of OpenGL 4 for C#
 
