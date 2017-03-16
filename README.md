@@ -150,7 +150,7 @@ The OpenGL library can now use System.Numerics for Vector2, Vector3, Vector4 and
 
 ### OpenGL.Platform
 
-OpenGL.Platform is an optional class library that can be included in your projects.  The class library helps to create and manager an SDL window and OpenGL context.  The class library also supports some helpful functionality such as input handling, vertical sync and more.
+OpenGL.Platform is an optional class library that can be included in your projects.  The class library helps to create and manage an SDL window and OpenGL context.  The class library also supports some helpful functionality such as input handling, vertical sync and more.
 
 ### [OpenGL.UI](https://github.com/giawa/gui4opengl4csharp)
 
