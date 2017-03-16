@@ -14,6 +14,11 @@ Note:  To use this library you will need a valid OpenGL context.  You can get th
 ## License
 Check the included [LICENSE.md](https://github.com/giawa/opengl4csharp/blob/master/LICENSE.md) file for the license associated with this code.
 
+## Getting the Project
+This project can be downloaded and built manually (see below) or can be loaded easily from [nuget](https://www.nuget.org/packages/Giawa.OpenGL/).
+
+```Install-Package Giawa.OpenGL```
+
 ## Building the Project
 This project includes a .sln and .csproj file which will create an OpenGL class library.  This library includes a dll.config which will load the correct OpenGL on Windows, Mac OS X and Windows.  So, you need only compile this project once and it will work across platforms.
 
@@ -146,7 +151,7 @@ This is an example of creating a quad using a VBO for vertices (Vector3 data), a
 
 The OpenGL library can now use System.Numerics for Vector2, Vector3, Vector4 and Quaternion, which can provide performance improvements by utilizing SIMD.  To enable System.Numerics support you must compile with the USE_NUMERICS option.  Make sure to add System.Numerics as a reference to your project, and then use Vector3/etc as normal.
 
-## Extensions of OpenGL 4 for C*#*
+## Extensions of OpenGL 4 for C#
 
 ### OpenGL.Platform
 
