@@ -1,95 +1,22 @@
-﻿using System;
-using System.Runtime.InteropServices;
-
-#if USE_NUMERICS
+﻿#if USE_NUMERICS
 using System.Numerics;
+#else
+using System;
+using System.Runtime.InteropServices;
 #endif
 
 namespace OpenGL
 {
 #if !USE_NUMERICS
-    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector3 : IEquatable<Vector3>
     {
         public float X, Y, Z;
 
-        /// <summary>
-        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
-        /// </summary>
-        [Obsolete("Use X instead, which is compatible with System.Numerics.")]
-        public float x
-        {
-            get { return X; }
-            set { X = value; }
-        }
-
-        /// <summary>
-        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
-        /// </summary>
-        [Obsolete("Use Y instead, which is compatible with System.Numerics.")]
-        public float y
-        {
-            get { return Y; }
-            set { Y = value; }
-        }
-
-        /// <summary>
-        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
-        /// </summary>
-        [Obsolete("Use Z instead, which is compatible with System.Numerics.")]
-        public float z
-        {
-            get { return Z; }
-            set { Z = value; }
-        }
-
         #region Static Constructors
-        [Obsolete("Vector3.Identity is not compatible with System.Numerics.  Use Vector3.One instead.")]
-        public static Vector3 Identity
-        {
-            get { return new Vector3(1.0f, 1.0f, 1.0f); }
-        }
-
         public static Vector3 Zero
         {
             get { return new Vector3(0.0f, 0.0f, 0.0f); }
-        }
-
-        [Obsolete("Vector3.Up is not compatible with System.Numerics.  Use Vector3.UnitY instead.")]
-        public static Vector3 Up
-        {
-            get { return new Vector3(0.0f, 1.0f, 0.0f); }
-        }
-
-        [Obsolete("Vector3.Down is not compatible with System.Numerics.  Use new Vector3(0, -1, 0) instead.")]
-        public static Vector3 Down
-        {
-            get { return new Vector3(0.0f, -1.0f, 0.0f); }
-        }
-
-        [Obsolete("Vector3.Forward is not compatible with System.Numerics.  Use new Vector3(0, 0, -1) instead.")]
-        public static Vector3 Forward
-        {
-            get { return new Vector3(0.0f, 0.0f, -1.0f); }
-        }
-
-        [Obsolete("Vector3.Backward is not compatible with System.Numerics.  Use Vector3.UnitZ instead.")]
-        public static Vector3 Backward
-        {
-            get { return new Vector3(0.0f, 0.0f, 1.0f); }
-        }
-
-        [Obsolete("Vector3.Left is not compatible with System.Numerics.  Use new Vector3(-1, 0, 0) instead.")]
-        public static Vector3 Left
-        {
-            get { return new Vector3(-1.0f, 0.0f, 0.0f); }
-        }
-
-        [Obsolete("Vector3.Right is not compatible with System.Numerics.  Use Vector3.UnitX instead.")]
-        public static Vector3 Right
-        {
-            get { return new Vector3(1.0f, 0.0f, 0.0f); }
         }
 
         public static Vector3 UnitX
@@ -105,12 +32,6 @@ namespace OpenGL
         public static Vector3 UnitZ
         {
             get { return new Vector3(0.0f, 0.0f, 1.0f); }
-        }
-
-        [Obsolete("Vector3.UnitScale is not compatible with System.Numerics.  Use Vector3.One instead.")]
-        public static Vector3 UnitScale
-        {
-            get { return new Vector3(1.0f, 1.0f, 1.0f); }
         }
 
         public static Vector3 One
@@ -208,29 +129,6 @@ namespace OpenGL
             Z = z;
         }
 
-        /// <summary>Creates a Vector3 structure whose elements have the specified values.</summary>
-        /// <param name="x">The value to assign to the X field.</param>
-        /// <param name="y">The value to assign to the Y field.</param>
-        /// <param name="z">The value to assign to the Z field.</param>
-        [Obsolete("Use floats instead, which is compatible with System.Numerics.")]
-        public Vector3(double x, double y, double z)
-        {
-            X = (float)x; 
-            Y = (float)y; 
-            Z = (float)z;
-        }
-
-        /// <summary>Creates a Vector3 tructure from a float array (assuming the float array is of length 3).</summary>
-        /// <param name="vector">The float array to convert to a Vector3.</param>
-        [Obsolete("Use Vector3(float, float, float) instead, which is compatible with System.Numerics.")]
-        public Vector3(float[] vector)
-        {
-            if (vector.Length != 3) throw new Exception(string.Format("float[] vector was of length {0}.  Was expecting a length of 3.", vector.Length));
-            X = vector[0]; 
-            Y = vector[1]; 
-            Z = vector[2];
-        }
-
         /// <summary>Creates a Vector3 structure whose three elements have the same value.</summary>
         /// <param name="value">The value to assign to all three elements.</param>
         public Vector3(float value)
@@ -320,9 +218,9 @@ namespace OpenGL
         /// <summary>
         /// Get the length of the Vector3 structure.
         /// </summary>
-        public float Length
+        public float Length()
         {
-            get { return (float)Math.Sqrt(X * X + Y * Y + Z * Z); }
+            return (float)Math.Sqrt(X * X + Y * Y + Z * Z);
         }
 
         /// <summary>
@@ -344,15 +242,6 @@ namespace OpenGL
         public float Dot(Vector3 v)
         {
             return Vector3.Dot(this, v);
-        }
-
-        /// <summary>
-        /// Returns the squared length of the Vector3 structure.
-        /// </summary>
-        [Obsolete("Use LengthSquared() instead, which is compatible with System.Numerics.")]
-        public float SquaredLength
-        {
-            get { return X * X + Y * Y + Z * Z; }
         }
 
         /// <summary>
@@ -391,8 +280,8 @@ namespace OpenGL
         /// <returns>if (Length = 0) return Zero; else return Vector3(x,y,z)/Length</returns>
         public Vector3 Normalize()
         {
-            if (Length == 0) return Zero;
-            else return new Vector3(X, Y, Z) / Length;
+            if (Length() == 0) return Zero;
+            else return new Vector3(X, Y, Z) / Length();
         }
 
         /// <summary>
@@ -402,9 +291,9 @@ namespace OpenGL
         /// <returns>A truncated Vector3</returns>
         public Vector3 Truncate()
         {
-            float _x = (Math.Abs(X) - 0.0001 < 0) ? 0 : X;
-            float _y = (Math.Abs(Y) - 0.0001 < 0) ? 0 : Y;
-            float _z = (Math.Abs(Z) - 0.0001 < 0) ? 0 : Z;
+            float _x = (Math.Abs(X) - 0.0001f < 0) ? 0 : X;
+            float _y = (Math.Abs(Y) - 0.0001f < 0) ? 0 : Y;
+            float _z = (Math.Abs(Z) - 0.0001f < 0) ? 0 : Z;
             return new Vector3(_x, _y, _z);
         }
 
@@ -469,7 +358,7 @@ namespace OpenGL
         /// <remarks>Note that the returned angle is never bigger than the constant Pi.</remarks>
         public static float CalculateAngle(Vector3 first, Vector3 second)
         {
-            return (float)Math.Acos((Vector3.Dot(first, second)) / (first.Length * second.Length));
+            return (float)Math.Acos((Vector3.Dot(first, second)) / (first.Length() * second.Length()));
         }
 
         /// <summary>
@@ -581,7 +470,7 @@ namespace OpenGL
         /// <returns>The length of the difference of the two vectors.</returns>
         public static float Distance(Vector3 v1, Vector3 v2)
         {
-            return (v1 - v2).Length;
+            return (v1 - v2).Length();
         }
 
         /// <summary>
@@ -689,8 +578,8 @@ namespace OpenGL
         /// <returns>A vector normalized by taking the source vector divided by the source length.</returns>
         public static Vector3 Normalize(Vector3 v)
         {
-            if (v.Length == 0) return Zero;
-            else return new Vector3(v.X, v.Y, v.Z) / v.Length;
+            if (v.Length() == 0) return Zero;
+            else return new Vector3(v.X, v.Y, v.Z) / v.Length();
         }
 
         /// <summary>
@@ -780,6 +669,11 @@ namespace OpenGL
         public static float Dot(this Vector3 tv, Vector3 v)
         {
             return Vector3.Dot(tv, v);
+        }
+
+        public static float Get(this Vector3 v, int i)
+        {
+            return (i == 0 ? v.X : (i == 1 ? v.Y : v.Z));
         }
     }
 #endif

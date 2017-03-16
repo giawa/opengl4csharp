@@ -10,34 +10,27 @@ namespace OpenGL
     public partial class Gl
     {
         #region Fields
-
         //internal const string Library = "libGL.so.1";	// linux
         internal const string Library = "opengl32.dll";	// mac os x and windows
 
-        private static Type glClass;
         private static Type delegatesClass;
         private static Type coreClass;
         private static FieldInfo[] delegates;
-
         #endregion
 
         #region Constructor
-
         static Gl()
         {
-            glClass = typeof(Gl);
-            delegatesClass = glClass.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
-            coreClass = glClass.GetNestedType("NativeMethods", BindingFlags.Static | BindingFlags.NonPublic);
+            delegatesClass = typeof(Gl.Delegates);
+            coreClass = typeof(Gl.NativeMethods);
             // 'Touch' Imports class to force initialization. We don't want anything yet, just to have
             // this class ready.
             if (Core.FunctionMap != null) { }
             ReloadFunctions();
         }
-
         #endregion
 
         #region internal static partial class Core
-
         /// <summary>
         /// Contains DllImports for the core OpenGL functions.
         /// </summary>
@@ -49,17 +42,17 @@ namespace OpenGL
             internal static SortedList<string, MethodInfo> FunctionMap;  // This is faster than either Dictionary or SortedDictionary
             static Core()
             {
-                MethodInfo[] methods = coreClass.GetMethods(BindingFlags.Static | BindingFlags.NonPublic);
-                FunctionMap = new SortedList<string, MethodInfo>(methods.Length);
-                foreach (MethodInfo m in methods)
-                    FunctionMap.Add(m.Name, m);
+                FunctionMap = new SortedList<string, MethodInfo>();
+
+                foreach (var method in coreClass.GetTypeInfo().DeclaredMethods)
+                {
+                    if (method.IsStatic) FunctionMap.Add(method.Name, method);
+                }
             }
         }
-
         #endregion
 
         #region public static void ReloadFunctions()
-
         /// <summary>
         /// Loads all OpenGL functions (core and extensions).
         /// </summary>
@@ -78,26 +71,23 @@ namespace OpenGL
             // Using reflection is more than 3 times faster than directly loading delegates on the first
             // run, probably due to code generation overhead. Subsequent runs are faster with direct loading
             // than with reflection, but the first time is more significant.
-
             if (delegates == null)
-                delegates = delegatesClass.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
+            {
+                List<FieldInfo> fields = new List<FieldInfo>();
+                foreach (var field in delegatesClass.GetTypeInfo().DeclaredFields)
+                    if (field.IsStatic) fields.Add(field);
+                delegates = fields.ToArray();
+            }
 
             foreach (FieldInfo f in delegates)
             {
                 f.SetValue(null, GetDelegate(f.Name, f.FieldType));
-                if (f.GetValue(null) == null) Console.WriteLine("Failed to load extension {0}.", f.Name);
+                //if (f.GetValue(null) == null) Console.WriteLine("Failed to load extension {0}.", f.Name);
             }
         }
-
-        static void Set(object d, Delegate value)
-        {
-            d = value;
-        }
-
         #endregion
 
         #region public static bool ReloadFunction(string function)
-
         /// <summary>
         /// Tries to reload the given OpenGL function (core or extension).
         /// </summary>
@@ -122,7 +112,17 @@ namespace OpenGL
         /// </remarks>
         public static bool Load(string function)
         {
-            FieldInfo f = delegatesClass.GetField(function, BindingFlags.Static | BindingFlags.NonPublic);
+            //FieldInfo f = delegatesClass.GetField(function, BindingFlags.Static | BindingFlags.NonPublic);
+            FieldInfo f = null;
+            foreach (var field in delegatesClass.GetTypeInfo().DeclaredFields)
+            {
+                if (field.Name == function)
+                {
+                    f = field;
+                    break;
+                }
+            }
+
             if (f == null)
                 return false;
 
@@ -134,11 +134,9 @@ namespace OpenGL
             }
             return @new != null;
         }
-
         #endregion
 
         #region public static Delegate GetDelegate(string name, Type signature)
-
         /// <summary>
         /// Creates a System.Delegate that can be used to call an OpenGL function, core or extension.
         /// </summary>
@@ -153,13 +151,11 @@ namespace OpenGL
             MethodInfo m;
             return GetExtensionDelegate(name, signature) ??
                   (Core.FunctionMap.TryGetValue((name.Substring(2)), out m) ?
-                   Delegate.CreateDelegate(signature, m) : null);
+                   m.CreateDelegate(signature) : null);
         }
-
         #endregion
 
         #region internal static Delegate GetExtensionDelegate(string name, Type signature)
-
         /// <summary>
         /// Creates a System.Delegate that can be used to call a dynamically exported OpenGL function.
         /// </summary>
@@ -181,14 +177,14 @@ namespace OpenGL
             }
             else
             {
+#pragma warning disable 0618
                 return Marshal.GetDelegateForFunctionPointer(address, signature);
+#pragma warning restore 0618
             }
         }
-
         #endregion
 
         #region private static IntPtr GetAddress(string function)
-
         internal partial class NativeMethods
         {
             [DllImport(Library, EntryPoint = "wglGetProcAddress", ExactSpelling = true)]
@@ -267,85 +263,26 @@ namespace OpenGL
         {
             if (getProcAddress == null)
             {
-                if (Environment.OSVersion.Platform == PlatformID.Win32NT ||
-                    Environment.OSVersion.Platform == PlatformID.Win32S ||
-                    Environment.OSVersion.Platform == PlatformID.Win32Windows ||
-                    Environment.OSVersion.Platform == PlatformID.WinCE)
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
                     getProcAddress = new GetProcAddressWindows();
                 }
-                else if (Environment.OSVersion.Platform == PlatformID.Unix ||
-                         Environment.OSVersion.Platform == (PlatformID)4)
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 {
-                    // Distinguish between Unix and Mac OS X kernels.
-                    switch (DetectUnixKernel())
-                    {
-                        case "Unix":
-                        case "Linux":
-                            getProcAddress = new GetProcAddressX11();
-                            break;
-
-                        case "Darwin":
-                            getProcAddress = new GetProcAddressOSX();
-                            break;
-
-                        default:
-                            throw new PlatformNotSupportedException(
-                                DetectUnixKernel() + ": Unknown Unix platform - cannot load extensions. Please report a bug at http://taoframework.com");
-                    }
+                    getProcAddress = new GetProcAddressX11();
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    getProcAddress = new GetProcAddressOSX();
                 }
                 else
                 {
-                    throw new PlatformNotSupportedException(
-                        "Extension loading is only supported under Mac OS X, Unix/X11 and Windows. We are sorry for the inconvience.");
+                    throw new PlatformNotSupportedException("Extension loading is only supported under Mac OS X, Unix/X11 and Windows. We are sorry for the inconvience.");
                 }
             }
 
             return getProcAddress.GetProcAddress(function);
         }
-
-        #endregion
-
-        #region private static string DetectUnixKernel()
-
-        /// <summary>
-        /// Executes "uname" which returns a string representing the name of the
-        /// underlying Unix kernel.
-        /// </summary>
-        /// <returns>"Unix", "Linux", "Darwin" or null.</returns>
-        /// <remarks>Source code from "Mono: A Developer's Notebook"</remarks>
-        private static string DetectUnixKernel()
-        {
-            ProcessStartInfo startInfo = new ProcessStartInfo()
-            {
-                Arguments = "-s",
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false
-            };
-
-            foreach (string unameprog in new string[] { "/usr/bin/uname", "/bin/uname", "uname" })
-            {
-                try
-                {
-                    startInfo.FileName = unameprog;
-                    Process uname = Process.Start(startInfo);
-                    StreamReader stdout = uname.StandardOutput;
-                    return stdout.ReadLine().Trim();
-                }
-                catch (FileNotFoundException)
-                {
-                    // The requested executable doesn't exist, try next one.
-                    continue;
-                }
-                catch (System.ComponentModel.Win32Exception)
-                {
-                    continue;
-                }
-            }
-            return null;
-        }
-
         #endregion
     }
 }

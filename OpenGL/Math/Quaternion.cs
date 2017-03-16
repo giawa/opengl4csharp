@@ -1,58 +1,17 @@
-﻿using System;
-using System.Runtime.InteropServices;
-
-#if USE_NUMERICS
+﻿#if USE_NUMERICS
 using System.Numerics;
+#else
+using System;
+using System.Runtime.InteropServices;
 #endif
 
 namespace OpenGL
 {
 #if !USE_NUMERICS
-    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Quaternion : IEquatable<Quaternion>
     {
         public float X, Y, Z, W;
-
-        /// <summary>
-        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
-        /// </summary>
-        [Obsolete("Use X instead, which is compatible with System.Numerics.")]
-        public float x
-        {
-            get { return X; }
-            set { X = value; }
-        }
-
-        /// <summary>
-        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
-        /// </summary>
-        [Obsolete("Use Y instead, which is compatible with System.Numerics.")]
-        public float y
-        {
-            get { return Y; }
-            set { Y = value; }
-        }
-
-        /// <summary>
-        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
-        /// </summary>
-        [Obsolete("Use Z instead, which is compatible with System.Numerics.")]
-        public float z
-        {
-            get { return Z; }
-            set { Z = value; }
-        }
-
-        /// <summary>
-        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
-        /// </summary>
-        [Obsolete("Use W instead, which is compatible with System.Numerics.")]
-        public float w
-        {
-            get { return W; }
-            set { W = value; }
-        }
 
         #region Static Constructors
         public static Quaternion Zero

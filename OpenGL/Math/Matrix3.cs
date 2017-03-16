@@ -7,7 +7,6 @@ using System.Numerics;
 
 namespace OpenGL
 {
-    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Matrix3 : IEquatable<Matrix3>
     {
@@ -239,23 +238,23 @@ namespace OpenGL
             {
                 k = j;    // row with largest pivot cadence
                 for (int i = j + 1; i < 3; i++)
-                    if (Math.Abs(original[i][j]) > Math.Abs(original[k][j])) k = i;
+                    if (Math.Abs(original[i].Get(j)) > Math.Abs(original[k].Get(j))) k = i;
 
                 original.SwapRows(k, j);
                 identity.SwapRows(k, j);
 
-                if (original[j][j] == 0.0f) 
+                if (original[j].Get(j) == 0.0f) 
                     throw new Exception("Matrix3 was a singular matrix and cannot be inverted.");
 
-                identity[j] /= original[j][j];
-                original[j] /= original[j][j];
+                identity[j] /= original[j].Get(j);
+                original[j] /= original[j].Get(j);
 
                 for (int i = 0; i < 3; i++)
                 {
                     if (i != j)
                     {
-                        identity[i] -= original[i][j] * identity[j];
-                        original[i] -= original[i][j] * original[j];
+                        identity[i] -= original[i].Get(j) * identity[j];
+                        original[i] -= original[i].Get(j) * original[j];
                     }
                 }
             }

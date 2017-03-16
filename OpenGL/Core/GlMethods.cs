@@ -332,7 +332,7 @@ namespace OpenGL
             uint vboHandle = Gl.GenBuffer();
             if (vboHandle == 0) return 0;
 
-            int size = data.Length * Marshal.SizeOf(typeof(T));
+            int size = data.Length * Marshal.SizeOf<T>();
 
 #if MEMORY_LOGGER
             MemoryLogger.AllocateVBO(vboHandle, size);
@@ -359,7 +359,7 @@ namespace OpenGL
             uint vboHandle = Gl.GenBuffer();
             if (vboHandle == 0) return 0;
 
-            int size = length * Marshal.SizeOf(typeof(T));
+            int size = length * Marshal.SizeOf<T>();
 
 #if MEMORY_LOGGER
             MemoryLogger.AllocateVBO(vboHandle, size);
@@ -386,8 +386,8 @@ namespace OpenGL
             uint vboHandle = Gl.GenBuffer();
             if (vboHandle == 0) return 0;
 
-            int offset = position * Marshal.SizeOf(typeof(T));
-            int size = length * Marshal.SizeOf(typeof(T));
+            int offset = position * Marshal.SizeOf<T>();
+            int size = length * Marshal.SizeOf<T>();
 
 #if MEMORY_LOGGER
             MemoryLogger.AllocateVBO(vboHandle, size - offset);
@@ -545,7 +545,7 @@ namespace OpenGL
             }
             catch (Exception)
             {
-                Console.WriteLine("Error while retrieving the OpenGL version.");
+                //Console.WriteLine("Error while retrieving the OpenGL version.");
                 return 0;
             }
         }
@@ -604,7 +604,7 @@ namespace OpenGL
 
             Gl.EnableVertexAttribArray(location);
             Gl.BindBuffer(buffer);
-            Gl.VertexAttribPointer(location, buffer.Size, buffer.PointerType, true, Marshal.SizeOf(typeof(T)), IntPtr.Zero);
+            Gl.VertexAttribPointer(location, buffer.Size, buffer.PointerType, true, Marshal.SizeOf<T>(), IntPtr.Zero);
         }
 
         /// <summary>

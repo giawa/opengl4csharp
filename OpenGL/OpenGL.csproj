@@ -1,85 +1,40 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4A3D3106-AFEC-4E04-9630-7A1A2D0C16DB}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OpenGL</RootNamespace>
-    <AssemblyName>OpenGL</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <TargetFramework>netstandard1.4</TargetFramework>
+    <PackageId>Giawa.OpenGL</PackageId>
+    <PackageVersion>0.1.2</PackageVersion>
+    <Authors>Giawa</Authors>
+    <Description>.NET Standard Bindings to OpenGL 4.5</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+    <Copyright>Copyright 2017 (c) Giawa. All rights reserved.</Copyright>
+    <PackageTags>opengl</PackageTags>
+    <PackageLicenseUrl>https://github.com/giawa/opengl4csharp/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageProjectUrl>https://www.github.com/giawa/opengl4csharp</PackageProjectUrl>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+
+  <ItemGroup>
+    <Content Include="lib\ImageSharp.dll"></Content>
+    <Content Include="OpenGL.dll.config"></Content>
+    <PackageReference Include="System.Numerics.Vectors" Version="4.3.0"></PackageReference>
+    <PackageReference Include="System.Buffers" Version="4.3.0"></PackageReference>
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.0.2"></PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ImageSharp">
+      <HintPath>lib\ImageSharp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD1_4</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard1.4\OpenGL.xml</DocumentationFile>
+    <DefineConstants>RELEASE;NETSTANDARD1_4;USE_NUMERICS</DefineConstants>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Numerics" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Constructs\Billboard.cs" />
-    <Compile Include="Constructs\BitmapFont.cs" />
-    <Compile Include="Constructs\FBO.cs" />
-    <Compile Include="Constructs\GlslLexer.cs" />
-    <Compile Include="Constructs\Shader.cs" />
-    <Compile Include="Constructs\Geometry.cs" />
-    <Compile Include="Constructs\VAO.cs" />
-    <Compile Include="Constructs\VBO.cs" />
-    <Compile Include="Core\Gl.cs" />
-    <Compile Include="Core\GlExtensions.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Math\BoundingBox.cs" />
-    <Compile Include="Math\Frustum.cs" />
-    <Compile Include="Math\Matrix3.cs" />
-    <Compile Include="Math\Matrix4.cs" />
-    <Compile Include="Math\Plane.cs" />
-    <Compile Include="Math\Point.cs" />
-    <Compile Include="Math\Quaternion.cs" />
-    <Compile Include="Math\Ray.cs" />
-    <Compile Include="Math\Vector2.cs" />
-    <Compile Include="Math\Vector3.cs" />
-    <Compile Include="Math\Vector4.cs" />
-    <Compile Include="Constructs\Texture.cs" />
-    <Compile Include="Core\GlCore.cs" />
-    <Compile Include="Core\GlDelegates.cs" />
-    <Compile Include="Core\GlEnum.cs" />
-    <Compile Include="Core\GlMethods.cs" />
-    <Compile Include="Core\GlReload.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="OpenGL.dll.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

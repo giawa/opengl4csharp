@@ -54,11 +54,7 @@ namespace OpenGL
 
             for (int i = 0; i < 6; i++)
             {
-#if USE_NUMERICS
                 float length = planes[i].Normal.Length();
-#else
-                float length = planes[i].Normal.Length;
-#endif
                 planes[i].D /= length;
                 planes[i].Normal /= length;
             }

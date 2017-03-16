@@ -1,42 +1,19 @@
-﻿using System;
+﻿#if USE_NUMERICS
+using System.Numerics;
+#else
+using System;
 using System.Runtime.InteropServices;
+#endif
 
 namespace OpenGL
 {
 #if !USE_NUMERICS
-    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector2 : IEquatable<Vector2>
     {
         public float X, Y;
 
-        /// <summary>
-        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
-        /// </summary>
-        [Obsolete("Use X instead, which is compatible with System.Numerics.")]
-        public float x
-        {
-            get { return X; }
-            set { X = value; }
-        }
-
-        /// <summary>
-        /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
-        /// </summary>
-        [Obsolete("Use Y instead, which is compatible with System.Numerics.")]
-        public float y
-        {
-            get { return Y; }
-            set { Y = value; }
-        }
-
         #region Static Constructors
-        [Obsolete("Vector2.Identity is not compatible with System.Numerics.  Use Vector2.One instead.")]
-        public static Vector2 Identity
-        {
-            get { return new Vector2(1.0f, 1.0f); }
-        }
-
         public static Vector2 Zero
         {
             get { return new Vector2(0.0f, 0.0f); }
@@ -144,15 +121,6 @@ namespace OpenGL
             this.X = x; this.Y = y;
         }
 
-        /// <summary>Creates a Vector2 structure whose elements have the specified values.</summary>
-        /// <param name="x">The value to assign to the X field.</param>
-        /// <param name="y">The value to assign to the Y field.</param>
-        [Obsolete("Use floats instead, which is compatible with System.Numerics.")]
-        public Vector2(double x, double y)
-        {
-            this.X = (float)x; this.Y = (float)y;
-        }
-
         /// <summary>Creates a Vector2 structure whose two elements have the same value.</summary>
         /// <param name="value">The value to assign to all two elements.</param>
         public Vector2(float value)
@@ -223,18 +191,9 @@ namespace OpenGL
         /// <summary>
         /// Get the length of the Vector2 structure.
         /// </summary>
-        public float Length
+        public float Length()
         {
-            get { return (float)Math.Sqrt(X * X + Y * Y); }
-        }
-
-        /// <summary>
-        /// Get the squared length of the Vector2 structure.
-        /// </summary>
-        [Obsolete("Use LengthSquared() instead, which is compatible with System.Numerics.")]
-        public float SquaredLength
-        {
-            get { return X * X + Y * Y; }
+            return (float)Math.Sqrt(X * X + Y * Y);
         }
 
         /// <summary>
@@ -300,8 +259,8 @@ namespace OpenGL
         /// <returns>if (Length = 0) return Zero; else return Vector2(x,y)/Length</returns>
         public Vector2 Normalize()
         {
-            if (Length == 0) return Zero;
-            else return new Vector2(X, Y) / Length;
+            if (Length() == 0) return Zero;
+            else return new Vector2(X, Y) / Length();
         }
 
         /// <summary>
@@ -311,8 +270,8 @@ namespace OpenGL
         /// <returns>A truncated Vector2</returns>
         public Vector2 Truncate()
         {
-            float _x = (Math.Abs(X) - 0.0001 < 0) ? 0 : X;
-            float _y = (Math.Abs(Y) - 0.0001 < 0) ? 0 : Y;
+            float _x = (Math.Abs(X) - 0.0001f < 0) ? 0 : X;
+            float _y = (Math.Abs(Y) - 0.0001f < 0) ? 0 : Y;
             return new Vector2(_x, _y);
         }
 

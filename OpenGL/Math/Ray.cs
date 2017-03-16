@@ -1,6 +1,4 @@
-﻿using System;
-
-#if USE_NUMERICS
+﻿#if USE_NUMERICS
 using System.Numerics;
 #endif
 
@@ -103,7 +101,7 @@ namespace OpenGL
         /// </summary>
         private void PreCalculate()
         {
-            inverse = 1.0f / direction;
+            inverse = new Vector3(1.0f / direction.X, 1.0f / direction.Y, 1.0f / direction.Z);
             ibyj = direction.X * inverse.Y;
             jbyi = direction.Y * inverse.X;
             jbyk = direction.Y * inverse.Z;

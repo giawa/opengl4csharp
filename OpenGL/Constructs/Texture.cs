@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
+
+using ImageSharp;
+using ImageSharp.Processing;
 
 namespace OpenGL
 {
@@ -38,22 +38,28 @@ namespace OpenGL
             {
                 case ".dds": LoadDDS(Filename);
                     break;
-                default: LoadBitmap((Bitmap)Bitmap.FromFile(Filename));
+                default: LoadBitmap(Filename);
                     break;
             }
 
             Gl.BindTexture(TextureTarget, 0);
         }
 
-        /// <summary>
-        /// Create a texture from a supplie bitmap.
-        /// </summary>
-        /// <param name="BitmapImage">The already decoded bitmap image.</param>
-        /// <param name="FlipY">True if the bitmap should be flipped.</param>
-        public Texture(Bitmap BitmapImage, bool FlipY = true)
+        public Texture(IntPtr data, int width, int height)
         {
-            Filename = BitmapImage.GetHashCode().ToString();
-            LoadBitmap(BitmapImage, FlipY);
+            this.Filename = "Unknown";
+            this.Size = new Size(width, height);
+
+            TextureTarget = TextureTarget.Texture2D;
+            TextureID = Gl.GenTexture();
+
+            Gl.PixelStorei(PixelStoreParameter.UnpackAlignment, 1); // set pixel alignment
+            Gl.BindTexture(TextureTarget, TextureID);     // bind the texture to memory in OpenGL
+
+            Gl.TexImage2D(TextureTarget, 0, PixelInternalFormat.Rgba8, width, height, 0, PixelFormat.Bgra, PixelType.UnsignedByte, data);
+            Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMagFilter, TextureParameter.Nearest);
+            Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMinFilter, TextureParameter.Nearest);
+
             Gl.BindTexture(TextureTarget, 0);
         }
         
@@ -83,51 +89,51 @@ namespace OpenGL
             }
         }
 
-        private void LoadBitmap(Bitmap BitmapImage, bool FlipY = true)
+        private void LoadBitmap(string filename, bool flipy = true)
         {
-            /* .net library has methods for converting many image formats so I exploit that by using 
-             * .net to convert any filetype to a bitmap.  Then the bitmap is locked into memory so
-             * that the garbage collector doesn't touch it, and it is read via OpenGL glTexImage2D. */
-            if (FlipY) BitmapImage.RotateFlip(RotateFlipType.RotateNoneFlipY);     // bitmaps read from bottom up, so flip it
-            Size = BitmapImage.Size;
+            Image image = new Image(filename);
+            Size = new Size(image.Width, image.Height);
 
-            // must be Format32bppArgb file format, so convert it if it isn't in that format
-            BitmapData bitmapData = BitmapImage.LockBits(new Rectangle(0, 0, BitmapImage.Width, BitmapImage.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            if (flipy)
+            {
+                image = (Image)image.Flip(FlipType.Vertical);
+            }
 
-            // set the texture target and then generate the texture ID
-            TextureTarget = TextureTarget.Texture2D;
-            TextureID = Gl.GenTexture();
+            using (var imageData = image.Lock())
+            {
+                TextureTarget = TextureTarget.Texture2D;
+                TextureID = Gl.GenTexture();
 
-            Gl.PixelStorei(PixelStoreParameter.UnpackAlignment, 1); // set pixel alignment
-            Gl.BindTexture(TextureTarget, TextureID);     // bind the texture to memory in OpenGL
+                Gl.PixelStorei(PixelStoreParameter.UnpackAlignment, 1); // set pixel alignment
+                Gl.BindTexture(TextureTarget, TextureID);     // bind the texture to memory in OpenGL
 
-            //Gl.TexParameteri(TextureTarget, TextureParameterName.GenerateMipmap, 0);
-            Gl.TexImage2D(TextureTarget, 0, PixelInternalFormat.Rgba8, BitmapImage.Width, BitmapImage.Height, 0, PixelFormat.Bgra, PixelType.UnsignedByte, bitmapData.Scan0);
-            Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMagFilter, TextureParameter.Nearest);
-            Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMinFilter, TextureParameter.Nearest);
+                Gl.TexImage2D(TextureTarget, 0, PixelInternalFormat.Rgba8, image.Width, image.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, imageData.DataPointer);
+                Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMagFilter, TextureParameter.Nearest);
+                Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMinFilter, TextureParameter.Nearest);
+            }
+
+            image.Dispose();
 
 #if MEMORY_LOGGER
             MemoryLogger.AllocateTexture(TextureID, Size);
 #endif
-
-            BitmapImage.UnlockBits(bitmapData);
-            BitmapImage.Dispose();
         }
 
         /// <summary>
         /// Loads a compressed DDS file into an OpenGL texture.
         /// </summary>
-        /// <param name="ResourceFile">The path to the DDS file.</param>
-        private void LoadDDS(string ResourceFile)
+        /// <param name="filename">The path to the DDS file.</param>
+        private void LoadDDS(string filename)
         {
-            using (BinaryReader stream = new BinaryReader(new FileStream(ResourceFile, FileMode.Open)))
+            using (FileStream file = new FileStream(filename, FileMode.Open))
+            using (BinaryReader stream = new BinaryReader(file))
             {
                 string filecode = new string(stream.ReadChars(4));
                 if (filecode != "DDS ")                                 // first 4 chars should be "DDS "
                     throw new Exception("File was not a DDS file format.");
 
                 DDS.DDSURFACEDESC2 imageData = DDS.DDSURFACEDESC2.FromBinaryReader(stream);//new DDS.DDSURFACEDESC2(stream);  // read the DirectDraw surface descriptor
-                this.Size = new Size((int)imageData.Width, (int)imageData.Height);
+                this.Size = new Size(imageData.Width, imageData.Height);
 
                 if (imageData.LinearSize == 0)
                     throw new Exception("The linear scan line size was zero.");
@@ -296,7 +302,7 @@ namespace OpenGL
             {
                 byte[] data = stream.ReadBytes(124);    // Marshal.SizeOf(typeof(DDSURFACEDESC2)));
                 GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-                DDSURFACEDESC2 desc = (DDSURFACEDESC2)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(DDSURFACEDESC2));
+                DDSURFACEDESC2 desc = (DDSURFACEDESC2)Marshal.PtrToStructure<DDSURFACEDESC2>(handle.AddrOfPinnedObject());
                 handle.Free();
                 return desc;
             }

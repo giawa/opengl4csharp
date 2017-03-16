@@ -7,17 +7,10 @@ using System.Numerics;
 
 namespace OpenGL
 {
-    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Matrix4 : IEquatable<Matrix4>
     {
         private Vector4 row1, row2, row3, row4;
-
-        [System.Obsolete("This property no longer has the same functionality, and should be modified to this[].  This property will be removed in a future build.", false)]
-        public Vector4[] Matrix
-        {
-            get { return new Vector4[] { row1, row2, row3, row4 }; }
-        }
 
         #region Static Constructors
         public static Matrix4 Identity
