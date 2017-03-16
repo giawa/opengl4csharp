@@ -624,6 +624,11 @@ namespace OpenGL
         {
             return q * v;
         }
+
+        public float Get(int i)
+        {
+            return (i == 0 ? X : (i == 1 ? Y : Z));
+        }
         #endregion
     }
 #else
