@@ -20,7 +20,7 @@ This project can be downloaded and built manually (see below) or can be loaded e
 ```Install-Package Giawa.OpenGL```
 
 ## Building the Project
-This project includes a .sln and .csproj file which will create an OpenGL class library.  This library includes a dll.config which will load the correct OpenGL on Windows, Mac OS X and Windows.  So, you need only compile this project once and it will work across platforms.
+This project includes a .sln and .csproj file which will create an OpenGL class library.  This library includes a dll.config which will load the correct OpenGL on Windows, Mac OS X and Linux.  So, you need only compile this project once and it will work across platforms.
 
 ## Examples
 
@@ -162,4 +162,6 @@ OpenGL.Platform is an optional class library that can be included in your projec
 OpenGL.UI provides several basic user interface components.  OpenGL.UI relies upon OpenGL.Platform for input handling.  Several example projects are included and are mentioned in the project [README](https://github.com/giawa/gui4opengl4csharp/blob/master/README.md).
 
 ## Further Reading
-There isn't much documentation for this project at this time.  The source code for both the math and constructs is quite well documented.  I have also compiled [OpenGL 4 for C#/.NET Tutorials](https://github.com/giawa/opengl4tutorials) which reference this library.
+There isn't much documentation for this project at this time.  The source code for both the math and constructs is quite well documented.  I have also compiled [OpenGL 4 for C#/.NET Tutorials](https://github.com/giawa/opengl4tutorials) which reference this library.  Work is underway to automatically pull the relevant OpenGL documentation from the man pages.
+
+There is a [.NET Standard/Core branch](https://github.com/giawa/opengl4csharp/tree/dotnetcore) for this project, which is what has been used to build the [nuget](https://www.nuget.org/packages/Giawa.OpenGL/) package.  This package uses the excellent [ImageSharp](https://github.com/JimBobSquarePants/ImageSharp) library to load images, since .NET Standard does not include System.Drawing.  At some point I would like to merge the [dotnetcore](https://github.com/giawa/opengl4csharp/tree/dotnetcore) branch into master, but it needs further testing.
