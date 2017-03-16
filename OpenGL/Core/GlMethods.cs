@@ -108,23 +108,16 @@ namespace OpenGL
         #endregion
 
         #region Public Properties
+        /// <summary>
+        /// Gets the program ID of the currently active shader program.
+        /// </summary>
         public static uint CurrentProgram
         {
             get { return currentProgram; }
         }
         #endregion
 
-        /// <summary>
-        /// Returns the boolean value of a selected parameter.
-        /// </summary>
-        /// <param name="pname">A parameter that returns a single boolean.</param>
-        [Obsolete("Use GetBoolean instead.")]
-        public static bool GetBooleanv(GetPName pname)
-        {
-            GetBooleanv(pname, bool1);
-            return bool1[0];
-        }
-
+        #region OpenGL Helpers (Type Safe Equivalents or Shortcuts)
         /// <summary>
         /// Returns the boolean value of a selected parameter.
         /// </summary>
@@ -158,19 +151,31 @@ namespace OpenGL
         /// <summary>
         /// Returns the integer value of a selected parameter.
         /// </summary>
-        /// <param name="pname">A parameter that returns a single integer.</param>
+        /// <param name="name">A parameter that returns a single integer.</param>
         public static int GetInteger(GetPName name)
         {
             GetIntegerv(name, int1);
             return int1[0];
         }
 
-        public static void TexParameteri(OpenGL.TextureTarget target, OpenGL.TextureParameterName pname, TextureParameter param)
+        /// <summary>
+        /// Set a scalar texture parameter.
+        /// </summary>
+        /// <param name="target">Specificies the target for which the texture is bound.</param>
+        /// <param name="pname">Specifies the name of a single-values texture parameter.</param>
+        /// <param name="param">Specifies the value of pname.</param>
+        public static void TexParameteri(TextureTarget target, TextureParameterName pname, TextureParameter param)
         {
             Delegates.glTexParameteri(target, pname, (int)param);
         }
 
-        public static void TexParameteriv(OpenGL.TextureTarget target, OpenGL.TextureParameterName pname, TextureParameter[] @params)
+        /// <summary>
+        /// Set a vector texture parameter.
+        /// </summary>
+        /// <param name="target">Specificies the target for which the texture is bound.</param>
+        /// <param name="pname">Specifies the name of a single-values texture parameter.</param>
+        /// <param name="params"></param>
+        public static void TexParameteriv(TextureTarget target, TextureParameterName pname, TextureParameter[] @params)
         {
             int[] iparams = new int[@params.Length];
             for (int i = 0; i < iparams.Length; i++) iparams[i] = (int)@params[i];
@@ -253,7 +258,7 @@ namespace OpenGL
         /// <summary>
         /// Gets the program info from a shader program.
         /// </summary>
-        /// <param name="program">The ID of the shader program.</param>
+        /// <param name="shader">The ID of the shader program.</param>
         public static string GetShaderInfoLog(UInt32 shader)
         {
             Gl.GetShaderiv(shader, ShaderParameter.InfoLogLength, int1);
@@ -282,7 +287,7 @@ namespace OpenGL
         /// <param name="size">Specifies the size in bytes of the buffer object's new data store.</param>
         /// <param name="data">Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.</param>
         /// <param name="usage">Specifies expected usage pattern of the data store.</param>
-        public static void BufferData<T>(BufferTarget target, Int32 size, [InAttribute, OutAttribute] T[] data, BufferUsageHint usage)
+        public static void BufferData<T>(BufferTarget target, Int32 size, [In, Out] T[] data, BufferUsageHint usage)
             where T : struct
         {
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
@@ -301,10 +306,11 @@ namespace OpenGL
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="target">Specifies the target buffer object.</param>
+        /// <param name="position">Offset into the data from which to start copying to the buffer.</param>
         /// <param name="size">Specifies the size in bytes of the buffer object's new data store.</param>
         /// <param name="data">Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.</param>
         /// <param name="usage">Specifies expected usage pattern of the data store.</param>
-        public static void BufferData<T>(BufferTarget target, Int32 position, Int32 size, [InAttribute, OutAttribute] T[] data, BufferUsageHint usage)
+        public static void BufferData<T>(BufferTarget target, Int32 position, Int32 size, [In, Out] T[] data, BufferUsageHint usage)
             where T : struct
         {
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
@@ -326,7 +332,7 @@ namespace OpenGL
         /// <param name="data">The data to store in the VBO.</param>
         /// <param name="hint">The buffer usage hint (usually StaticDraw).</param>
         /// <returns>The buffer ID of the VBO on success, 0 on failure.</returns>
-        public static uint CreateVBO<T>(BufferTarget target, [InAttribute, OutAttribute] T[] data, BufferUsageHint hint)
+        public static uint CreateVBO<T>(BufferTarget target, [In, Out] T[] data, BufferUsageHint hint)
             where T : struct
         {
             uint vboHandle = Gl.GenBuffer();
@@ -353,7 +359,7 @@ namespace OpenGL
         /// <param name="hint">The buffer usage hint (usually StaticDraw).</param>
         /// <param name="length">The length of the VBO (will take the first 'length' elements from data).</param>
         /// <returns>The buffer ID of the VBO on success, 0 on failure.</returns>
-        public static uint CreateVBO<T>(BufferTarget target, [InAttribute, OutAttribute] T[] data, BufferUsageHint hint, int length)
+        public static uint CreateVBO<T>(BufferTarget target, [In, Out] T[] data, BufferUsageHint hint, int length)
             where T : struct
         {
             uint vboHandle = Gl.GenBuffer();
@@ -378,9 +384,10 @@ namespace OpenGL
         /// <param name="target">The VBO BufferTarget (usually ArrayBuffer or ElementArrayBuffer).</param>
         /// <param name="data">The data to store in the VBO.</param>
         /// <param name="hint">The buffer usage hint (usually StaticDraw).</param>
+        /// <param name="position">Starting element of the data that will be copied into the VBO.</param>
         /// <param name="length">The length of the VBO (will take the first 'length' elements from data).</param>
         /// <returns>The buffer ID of the VBO on success, 0 on failure.</returns>
-        public static uint CreateVBO<T>(BufferTarget target, [InAttribute, OutAttribute] T[] data, BufferUsageHint hint, int position, int length)
+        public static uint CreateVBO<T>(BufferTarget target, [In, Out] T[] data, BufferUsageHint hint, int position, int length)
             where T : struct
         {
             uint vboHandle = Gl.GenBuffer();
@@ -399,7 +406,14 @@ namespace OpenGL
             return vboHandle;
         }
 
-        #region CreateInterleavedVBO
+        /// <summary>
+        /// Creates an interleaved VBO that contains both Vector3 and Vector3 data (typically position and normal data).
+        /// </summary>
+        /// <param name="target">The VBO buffer target.</param>
+        /// <param name="data1">The first array of Vector3 data (usually position).</param>
+        /// <param name="data2">The second array of Vector3 data (usually normal).</param>
+        /// <param name="hint">Specifies expected usage pattern of the data store.</param>
+        /// <returns>The buffer ID of the VBO on success, 0 on failure.</returns>
         public static uint CreateInterleavedVBO(BufferTarget target, Vector3[] data1, Vector3[] data2, BufferUsageHint hint)
         {
             if (data2.Length != data1.Length) throw new Exception("Data lengths must be identical to construct an interleaved VBO.");
@@ -420,6 +434,15 @@ namespace OpenGL
             return CreateVBO<float>(target, interleaved, hint);
         }
 
+        /// <summary>
+        /// Creates an interleaved VBO that contains Vector3, Vector3 and Vector2 data (typically position, normal and UV data).
+        /// </summary>
+        /// <param name="target">The VBO buffer target.</param>
+        /// <param name="data1">The first array of Vector3 data (usually position).</param>
+        /// <param name="data2">The second array of Vector3 data (usually normal).</param>
+        /// <param name="data3">The Vector2 data (usually UV).</param>
+        /// <param name="hint">Specifies expected usage pattern of the data store.</param>
+        /// <returns>The buffer ID of the VBO on success, 0 on failure.</returns>
         public static uint CreateInterleavedVBO(BufferTarget target, Vector3[] data1, Vector3[] data2, Vector2[] data3, BufferUsageHint hint)
         {
             if (data2.Length != data1.Length || data3.Length != data1.Length) throw new Exception("Data lengths must be identical to construct an interleaved VBO.");
@@ -443,6 +466,15 @@ namespace OpenGL
             return CreateVBO<float>(target, interleaved, hint);
         }
 
+        /// <summary>
+        /// Creates an interleaved VBO that contains Vector3, Vector3 and Vector3 data (typically position, normal and tangent data).
+        /// </summary>
+        /// <param name="target">The VBO buffer target.</param>
+        /// <param name="data1">The first array of Vector3 data (usually position).</param>
+        /// <param name="data2">The second array of Vector3 data (usually normal).</param>
+        /// <param name="data3">The third array of Vector3 data (usually tangent).</param>
+        /// <param name="hint">Specifies expected usage pattern of the data store.</param>
+        /// <returns>The buffer ID of the VBO on success, 0 on failure.</returns>
         public static uint CreateInterleavedVBO(BufferTarget target, Vector3[] data1, Vector3[] data2, Vector3[] data3, BufferUsageHint hint)
         {
             if (data2.Length != data1.Length || data3.Length != data1.Length) throw new Exception("Data lengths must be identical to construct an interleaved VBO.");
@@ -467,9 +499,22 @@ namespace OpenGL
             return CreateVBO<float>(target, interleaved, hint);
         }
 
+        /// <summary>
+        /// Creates an interleaved VBO that contains Vector3, Vector3, Vector3 and Vector2 data (typically position, normal, tangent and UV data).
+        /// </summary>
+        /// <param name="target">The VBO buffer target.</param>
+        /// <param name="data1">The first array of Vector3 data (usually position).</param>
+        /// <param name="data2">The second array of Vector3 data (usually normal).</param>
+        /// <param name="data3">The third array of Vector3 data (usually tangent).</param>
+        /// <param name="data4">The Vector2 data (usually UV).</param>
+        /// <param name="hint">Specifies expected usage pattern of the data store.</param>
+        /// <returns>The buffer ID of the VBO on success, 0 on failure.</returns>
         public static uint CreateInterleavedVBO(BufferTarget target, Vector3[] data1, Vector3[] data2, Vector3[] data3, Vector2[] data4, BufferUsageHint hint)
         {
-            if (data2.Length != data1.Length || data3.Length != data1.Length) throw new Exception("Data lengths must be identical to construct an interleaved VBO.");
+            if (data2.Length != data1.Length || data3.Length != data1.Length || data4.Length != data1.Length)
+            {
+                throw new Exception("Data lengths must be identical to construct an interleaved VBO.");
+            }
 
             float[] interleaved = new float[data1.Length * 11];
 
@@ -493,7 +538,6 @@ namespace OpenGL
 
             return CreateVBO<float>(target, interleaved, hint);
         }
-        #endregion
 
         /// <summary>
         /// Creates a vertex array object based on a series of attribute arrays and and attribute names.
@@ -678,5 +722,6 @@ namespace OpenGL
                 handle.Free();
             }
         }
+        #endregion
     }
 }
