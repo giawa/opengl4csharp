@@ -6,4 +6,4 @@ sudo: required
 mono: none
 dotnet: 1.0.0-preview2-003121
 script:
-  - ./build.sh --quiet verify
+  - dotnet restore && dotnet build OpenGL/OpenGL.dll
