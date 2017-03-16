@@ -7852,7 +7852,7 @@ namespace OpenGL
         /// </summary>
         public static void UseProgram(UInt32 program)
         {
-            //Gl.currentProgram = program;
+            Gl.currentProgram = program;
             Delegates.glUseProgram(program);
         }
 
@@ -7873,7 +7873,7 @@ namespace OpenGL
         /// </summary>
         public static void UseProgramStages(UInt32 pipeline, UInt32 stages, UInt32 program)
         {
-            //Gl.currentProgram = program;
+            Gl.currentProgram = program;
             Delegates.glUseProgramStages(pipeline, stages, program);
         }
 
@@ -10026,6 +10026,5 @@ namespace OpenGL
         {
             Delegates.glWaitSync(sync, flags, timeout);
         }
-
     }
 }
