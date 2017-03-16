@@ -4,6 +4,6 @@ language: csharp
 dist: trusty
 sudo: required
 mono: none
-dotnet: 1.0.0-preview2-003121
+dotnet: 1.0.0-preview2-1-003177
 script:
   - dotnet restore && dotnet build OpenGL/OpenGL.dll
