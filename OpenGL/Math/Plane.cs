@@ -66,7 +66,7 @@ namespace OpenGL
         /// <summary>
         /// Builds a duplicate plane.
         /// </summary>
-        /// <param name="_Plane">Plane to duplicate.</param>
+        /// <param name="plane">Plane to duplicate.</param>
         public Plane(Plane plane)
         {
             Normal = plane.Normal;

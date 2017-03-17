@@ -89,6 +89,9 @@ namespace OpenGL
 #endif
     #endregion
 
+    /// <summary>
+    /// Bindings to OpenGL 4.5 methods as well as some helper shortcuts.
+    /// </summary>
     partial class Gl
     {
         #region Preallocated Memory

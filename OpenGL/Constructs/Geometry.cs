@@ -6,6 +6,10 @@ using System.Numerics;
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Helper class that performs simple math on some types of Geometry as
+    /// well as helps generate some simple objects such as cubes and quads.
+    /// </summary>
     public class Geometry
     {
         /// <summary>

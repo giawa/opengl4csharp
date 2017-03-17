@@ -65,6 +65,7 @@ namespace OpenGL
 
         public static class Extensions
         {
+#pragma warning disable CS1591
             // automatically generated
             public static bool Multitexture { get { return Gl.IsExtensionSupported(Extension.GL_ARB_multitexture); } }
             public static bool LXARBGetProcAddress_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_get_proc_address); } }
@@ -731,6 +732,7 @@ namespace OpenGL
             public static bool ShaderIntegerFunctions_MESA { get { return Gl.IsExtensionSupported(Extension.GL_MESA_shader_integer_functions); } }
             public static bool GpuShaderHalfFloat_AMD { get { return Gl.IsExtensionSupported(Extension.GL_AMD_gpu_shader_half_float); } }
             public static bool ShaderBallot_AMD { get { return Gl.IsExtensionSupported(Extension.GL_AMD_shader_ballot); } }
+#pragma warning restore
         }
     }
 }

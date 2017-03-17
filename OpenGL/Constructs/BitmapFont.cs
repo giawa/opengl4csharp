@@ -31,6 +31,8 @@ namespace OpenGL
         /// Creates a bitmap font object, which is created from a h by v array of bitmap characters.
         /// </summary>
         /// <param name="FontTexture">A grid of h*v characters ordered by ASCII number.</param>
+        /// <param name="h">The number of columns in the bitmap font texture.</param>
+        /// <param name="v">The number of rows in the bitmap font texture.</param>
         public BitmapFont(Texture FontTexture, int h, int v)
         {
             if (FontTexture.Size.Width % h != 0) throw new Exception("FontTexture is not a width that is divisible by h.");

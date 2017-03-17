@@ -462,8 +462,17 @@ namespace OpenGL
         #endregion
     }
 #else
+    /// <summary>
+    /// Extension methods for the Vector4 structure.
+    /// </summary>
     public static class Vector4Extensions
     {
+        /// <summary>
+        /// Provide an accessor for each of the elements of the Vector structure.
+        /// </summary>
+        /// <param name="v">The Vector4 to access.</param>
+        /// <param name="index">The element to access (0 = X, 1 = Y, 2 = Z, 3 = W).</param>
+        /// <returns>The element of the Vector3 as indexed by i.</returns>
         public static float Get(this Vector4 v, int index)
         {
             switch (index)
