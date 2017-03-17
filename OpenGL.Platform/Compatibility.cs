@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
+using System.Runtime.InteropServices;
 
 namespace OpenGL.Platform
 {
@@ -79,38 +78,6 @@ namespace OpenGL.Platform
 
             return osVersion == OSVersion.Win32;
         }
-
-        /// <summary>
-        /// Tries to determine which version of the unix kernel is running
-        /// by calling 'uname'.  Really we're only interested in knowing if
-        /// 'Darwin' is returned.
-        /// </summary>
-        private static string DetectUnixType()
-        {
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.Arguments = "-s";
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardError = true;
-            startInfo.UseShellExecute = false;
-
-            string[] unamePath = new string[] { "uname", "bin/uname", "/usr/bin/uname" };
-
-            for (int i = 0; i < unamePath.Length; i++)
-            {
-                try
-                {
-                    startInfo.FileName = unamePath[i];
-                    Process unameProcess = Process.Start(startInfo);
-                    StreamReader standardOutput = unameProcess.StandardOutput;
-                    return standardOutput.ReadLine().Trim();
-                }
-                catch (Exception)
-                {
-                    continue;
-                }
-            }
-            return null;
-        }
         #endregion
 
         #region Public Methods
@@ -122,8 +89,8 @@ namespace OpenGL.Platform
         /// </summary>
         public static void DetectOperatingSystem()
         {
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT) osVersion = OSVersion.Win32;
-            else if (DetectUnixType() == "Darwin") osVersion = OSVersion.MacOSX;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) osVersion = OSVersion.Win32;
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) osVersion = OSVersion.MacOSX;
             else osVersion = OSVersion.Unix;
         }
 
