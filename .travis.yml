@@ -7,4 +7,6 @@ mono: none
 env: DOTNETCORE=1
 dotnet: 1.0.1
 script:
-  - dotnet restore && dotnet build OpenGL/OpenGL.csproj -c Release
+  - dotnet restore
+  - dotnet build OpenGL/OpenGL.csproj -c Release
+  - dotnet build OpenGL.Platform/OpenGL.Platform.csproj -c Release
