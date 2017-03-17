@@ -34,6 +34,8 @@ namespace OpenGL.Platform
         /// </summary>
         public static int MainThreadID { get; private set; }
         public static bool VerticalSync { get; private set; }
+
+        public static bool Open = false;
         #endregion
 
         #region Create SDL Window and OpenGL Context
@@ -97,8 +99,7 @@ namespace OpenGL.Platform
                 return ErrorCode.WindowWasNotInitialized;
             }
 
-            int width, height;
-            SDL.SDL_GetWindowSize(window, out width, out height);
+            SDL.SDL_GetWindowSize(window, out int width, out int height);
 
             Width = width;
             Height = height;
@@ -115,6 +116,8 @@ namespace OpenGL.Platform
             Gl.ClearColor(0f, 0f, 0f, 1f);
             Gl.Clear(ClearBufferMask.ColorBufferBit);
             SwapBuffers();
+
+            Open = true;
 
             return ErrorCode.Success;
         }
@@ -161,9 +164,8 @@ namespace OpenGL.Platform
             {
                 IntPtr address = Gl.GetAddress("wglSwapIntervalEXT");
                 if (address != IntPtr.Zero && address != (IntPtr)1 && address != (IntPtr)2)
-                    NativeMethods.wglSwapInterval = (NativeMethods.wglSwapIntervalEXT)Marshal.GetDelegateForFunctionPointer(address, typeof(NativeMethods.wglSwapIntervalEXT));
-                if (NativeMethods.wglSwapInterval != null)
-                    NativeMethods.wglSwapInterval(verticalSync ? 1 : 0);
+                    NativeMethods.wglSwapInterval = Marshal.GetDelegateForFunctionPointer<NativeMethods.wglSwapIntervalEXT>(address);
+                NativeMethods.wglSwapInterval?.Invoke(verticalSync ? 1 : 0);
 
                 VerticalSync = verticalSync;
             }
@@ -182,7 +184,7 @@ namespace OpenGL.Platform
 
         public static void HandleEvents()
         {
-            while (SDL.SDL_PollEvent(out sdlEvent) != 0)
+            while (SDL.SDL_PollEvent(out sdlEvent) != 0 && window != IntPtr.Zero)
             {
                 switch (sdlEvent.type)
                 {
@@ -206,8 +208,7 @@ namespace OpenGL.Platform
                         OnMovePassive(sdlEvent.motion.x, sdlEvent.motion.y);
                         break;
                     case SDL.SDL_EventType.SDL_MOUSEWHEEL:
-                        //OnMouseWheel(sdlEvent.wheel.which, sdlEvent.wheel.y, 0, 0);
-                        if (OnMouseWheel != null) OnMouseWheel(sdlEvent.wheel.which, sdlEvent.wheel.y, 0, 0);
+                        OnMouseWheel?.Invoke(sdlEvent.wheel.which, sdlEvent.wheel.y, 0, 0);
                         break;
                     case SDL.SDL_EventType.SDL_WINDOWEVENT:
                         switch (sdlEvent.window.windowEvent)
@@ -259,7 +260,8 @@ namespace OpenGL.Platform
             SDL.SDL_GL_DeleteContext(glContext);
             SDL.SDL_DestroyWindow(window);
             SDL.SDL_Quit();
-            Environment.Exit(0);
+
+            Open = false;
         }
         #endregion
 
