@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenGL", "OpenGL\OpenGL.csproj", "{84C72296-0914-48C0-A129-AF02E0D1A1FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenGL.Platform", "OpenGL.Platform\OpenGL.Platform.csproj", "{6A7ADDE5-8FFF-413B-8B19-A7CD4777D8FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,14 @@ Global
 		{84C72296-0914-48C0-A129-AF02E0D1A1FB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{84C72296-0914-48C0-A129-AF02E0D1A1FB}.Release|x86.ActiveCfg = Release|Any CPU
 		{84C72296-0914-48C0-A129-AF02E0D1A1FB}.Release|x86.Build.0 = Release|Any CPU
+		{6A7ADDE5-8FFF-413B-8B19-A7CD4777D8FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A7ADDE5-8FFF-413B-8B19-A7CD4777D8FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A7ADDE5-8FFF-413B-8B19-A7CD4777D8FF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6A7ADDE5-8FFF-413B-8B19-A7CD4777D8FF}.Debug|x86.Build.0 = Debug|Any CPU
+		{6A7ADDE5-8FFF-413B-8B19-A7CD4777D8FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A7ADDE5-8FFF-413B-8B19-A7CD4777D8FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A7ADDE5-8FFF-413B-8B19-A7CD4777D8FF}.Release|x86.ActiveCfg = Release|Any CPU
+		{6A7ADDE5-8FFF-413B-8B19-A7CD4777D8FF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
