@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OpenGL.Platform
+﻿namespace OpenGL.Platform
 {
     public static class Time
     {
