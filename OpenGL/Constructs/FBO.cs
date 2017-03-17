@@ -2,6 +2,9 @@
 
 namespace OpenGL
 {
+    /// <summary>
+    /// Encapsulates a frame buffer and its associated depth buffer (if applicable).
+    /// </summary>
     public class FBO : IDisposable
     {
         #region Properties
@@ -35,39 +38,53 @@ namespace OpenGL
         /// </summary>
         public PixelInternalFormat Format { get; private set; }
 
-        private bool mipmaps;
+        /// <summary>
+        /// Specifies whether to build mipmaps after the frame buffer is unbound.
+        /// </summary>
+        public bool MipMaps { get; private set; }
         #endregion
 
         #region Constructor and Destructor
+        /// <summary>
+        /// Creates a framebuffer object and its associated resources (depth and frame buffers).
+        /// </summary>
+        /// <param name="width">Specifies the width (in pixels) of the framebuffer and its associated buffers.</param>
+        /// <param name="height">Specifies the height (in pixels) of the framebuffer and its associated buffers.</param>
+        /// <param name="attachment">Specifies the attachment to use for the frame buffer.</param>
+        /// <param name="format">Specifies the internal pixel format for the frame buffer.</param>
+        /// <param name="mipmaps">Specifies whether to build mipmaps after the frame buffer is unbound.</param>
         public FBO(int width, int height, FramebufferAttachment attachment = FramebufferAttachment.ColorAttachment0, PixelInternalFormat format = PixelInternalFormat.Rgba8, bool mipmaps = true)
             : this(new Size(width, height), new FramebufferAttachment[] { attachment }, format, mipmaps)
         {
         }
 
         /// <summary>
-        /// Creates a framebuffer object and its associated resources (depth and pbuffers).
+        /// Creates a framebuffer object and its associated resources (depth and frame buffers).
         /// </summary>
-        /// <param name="Size">Specifies the size (in pixels) of the framebuffer and it's associated buffers.</param>
-        /// <param name="Attachments">Specifies the attachment to use for the pbuffer.</param>
-        /// <param name="Format">Specifies the internal pixel format for the pbuffer.</param>
-        public FBO(Size Size, FramebufferAttachment Attachment = FramebufferAttachment.ColorAttachment0, PixelInternalFormat Format = PixelInternalFormat.Rgba8, bool Mipmaps = true)
-            : this(Size, new FramebufferAttachment[] { Attachment }, Format, Mipmaps)
+        /// <param name="size">Specifies the size (in pixels) of the framebuffer and its associated buffers.</param>
+        /// <param name="attachment">Specifies the attachment to use for the frame buffer.</param>
+        /// <param name="format">Specifies the internal pixel format for the frame buffer.</param>
+        /// <param name="mipmaps">Specifies whether to build mipmaps after the frame buffer is unbound.</param>
+        public FBO(Size size, FramebufferAttachment attachment = FramebufferAttachment.ColorAttachment0, PixelInternalFormat format = PixelInternalFormat.Rgba8, bool mipmaps = true)
+            : this(size, new FramebufferAttachment[] { attachment }, format, mipmaps)
         {
         }
 
         /// <summary>
-        /// Creates a framebuffer object and its associated resources (depth and pbuffers).
+        /// Creates a framebuffer object and its associated resources (depth and frame buffers).
         /// </summary>
-        /// <param name="Size">Specifies the size (in pixels) of the framebuffer and it's associated buffers.</param>
-        /// <param name="Attachments">Specifies the attachments to use for the frame buffer.</param>
-        /// <param name="Format">Specifies the internal pixel format for the frame buffer.</param>
-        /// <param name="Mipmaps">Specified whether to build mipmaps after the frame buffer is unbound.</param>
-        public FBO(Size Size, FramebufferAttachment[] Attachments, PixelInternalFormat Format, bool Mipmaps = false, TextureParameter filterType = TextureParameter.Linear, PixelType pixelType = PixelType.UnsignedByte)
+        /// <param name="size">Specifies the size (in pixels) of the framebuffer and its associated buffers.</param>
+        /// <param name="attachments">Specifies the attachments to use for the frame buffer.</param>
+        /// <param name="format">Specifies the internal pixel format for the frame buffer.</param>
+        /// <param name="mipmaps">Specifies whether to build mipmaps after the frame buffer is unbound.</param>
+        /// <param name="filterType">Specifies the type of filtering to apply to the frame buffer when bound as a texture.</param>
+        /// <param name="pixelType">Specifies the pixel type to use for the underlying format of the frame buffer.</param>
+        public FBO(Size size, FramebufferAttachment[] attachments, PixelInternalFormat format, bool mipmaps = false, TextureParameter filterType = TextureParameter.Linear, PixelType pixelType = PixelType.UnsignedByte)
         {
-            this.Size = Size;
-            this.Attachments = Attachments;
-            this.Format = Format;
-            this.mipmaps = Mipmaps;
+            this.Size = size;
+            this.Attachments = attachments;
+            this.Format = format;
+            this.MipMaps = mipmaps;
 
             // First create the framebuffer
             BufferID = Gl.GenFramebuffer();
@@ -100,7 +117,7 @@ namespace OpenGL
                 {
                     Gl.BindTexture(TextureTarget.Texture2D, TextureID[i]);
                     Gl.TexImage2D(TextureTarget.Texture2D, 0, Format, Size.Width, Size.Height, 0, PixelFormat.Rgba, pixelType, IntPtr.Zero);
-                    if (Mipmaps)
+                    if (MipMaps)
                     {
                         Gl.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, TextureParameter.Linear);
                         Gl.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, TextureParameter.LinearMipMapLinear);
@@ -200,7 +217,7 @@ namespace OpenGL
             Gl.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
 
             // have to generate mipmaps here
-            for (int i = 0; i < Attachments.Length && mipmaps; i++)
+            for (int i = 0; i < Attachments.Length && MipMaps; i++)
             {
                 Gl.BindTexture(TextureTarget.Texture2D, TextureID[i]);
                 Gl.GenerateMipmap(GenerateMipmapTarget.Texture2D);

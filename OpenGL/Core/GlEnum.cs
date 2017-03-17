@@ -2,6 +2,7 @@
 
 namespace OpenGL
 {
+#pragma warning disable CS1591
     public enum ActiveAttribType : int
     {
         Float = ((int)0x1406),
@@ -2687,4 +2688,5 @@ namespace OpenGL
         UnsignedUInt2101010Reversed = ((int)0x8368),
         UnsignedInt2101010Reversed = ((int)0x8D9F)
     }
+#pragma warning restore
 }

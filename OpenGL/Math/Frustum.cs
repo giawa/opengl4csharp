@@ -71,7 +71,7 @@ namespace OpenGL
         /// <summary>
         /// True if the AxisAlignedBoundingBox is in (or partially in) the Frustum.
         /// </summary>
-        /// <param name="b">AxixAlignedBoundingBox to check.</param>
+        /// <param name="box">AxixAlignedBoundingBox to check.</param>
         /// <returns>True if an intersection exists.</returns>
         public bool Intersects(AxisAlignedBoundingBox box)
         {

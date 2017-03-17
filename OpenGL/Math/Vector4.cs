@@ -13,7 +13,7 @@ namespace OpenGL
     {
         public float X, Y, Z, W;
 
-        #region Static Constructors
+    #region Static Constructors
         public static Vector4 Zero
         {
             get { return new Vector4(0.0f, 0.0f, 0.0f, 0.0f); }
@@ -45,7 +45,7 @@ namespace OpenGL
         }
         #endregion
 
-        #region Operators
+    #region Operators
         public static Vector4 operator +(Vector4 v1, Vector4 v2)
         {
             return new Vector4(v1.X + v2.X, v1.Y + v2.Y, v1.Z + v2.Z, v1.W + v2.W);
@@ -122,7 +122,7 @@ namespace OpenGL
         }
         #endregion
 
-        #region Constructors
+    #region Constructors
         /// <summary>Creates a Vector4 structure whose elements have the specified values.</summary>
         /// <param name="x">The value to assign to the X field.</param>
         /// <param name="y">The value to assign to the Y field.</param>
@@ -167,7 +167,7 @@ namespace OpenGL
         }
         #endregion
 
-        #region Overrides
+    #region Overrides
         public override bool Equals(object obj)
         {
             if (!(obj is Vector4)) return false;
@@ -222,7 +222,7 @@ namespace OpenGL
         }
         #endregion
 
-        #region Properties
+    #region Properties
         /// <summary>
         /// Get the length of the Vector4 structure.
         /// </summary>
@@ -240,7 +240,7 @@ namespace OpenGL
         }
         #endregion
 
-        #region Methods
+    #region Methods
         /// <summary>
         /// Vector4 scalar dot product.
         /// </summary>
@@ -345,8 +345,17 @@ namespace OpenGL
         #endregion
     }
 #else
+    /// <summary>
+    /// Extension methods for the Vector4 structure.
+    /// </summary>
     public static class Vector4Extensions
     {
+        /// <summary>
+        /// Provide an accessor for each of the elements of the Vector structure.
+        /// </summary>
+        /// <param name="v">The Vector4 to access.</param>
+        /// <param name="index">The element to access (0 = X, 1 = Y, 2 = Z, 3 = W).</param>
+        /// <returns>The element of the Vector3 as indexed by i.</returns>
         public static float Get(this Vector4 v, int index)
         {
             switch (index)

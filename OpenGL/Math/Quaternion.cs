@@ -454,6 +454,9 @@ namespace OpenGL
         #endregion
     }
 #else
+    /// <summary>
+    /// Extension methods for the Quaternion structure.
+    /// </summary>
     public static class QuaternionExtensions
     {
         /// <summary>

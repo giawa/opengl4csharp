@@ -10,12 +10,16 @@ namespace OpenGL
     public class Ray
     {
         #region Enumerations
-        // Ray can be of 3 types per dimension, resulting in 27 types
-        // Ray can be plus (P), zero (O) or minus (M)
+        /// <summary>
+        /// Ray can be of 3 types per dimension, resulting in 27 types
+        /// Ray can be plus (P), zero (O) or minus (M)
+        /// </summary>
         public enum RayType
         {
+#pragma warning disable CS1591
             MMM, MMP, MPM, MPP, PMM, PMP, PPM, PPP, POO, MOO, OPO, OMO, OOP, OOM,
             OMM, OMP, OPM, OPP, MOM, MOP, POM, POP, MMO, MPO, PMO, PPO
+#pragma warning restore
         };
         #endregion
 

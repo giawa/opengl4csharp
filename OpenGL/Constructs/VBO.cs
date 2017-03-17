@@ -64,6 +64,7 @@ namespace OpenGL
         /// Useful for reusing resources and avoiding unnecessary GC action.
         /// </summary>
         /// <param name="Data">An array of data of type T (which must be a struct) that will be buffered to the GPU.</param>
+        /// <param name="Position">An offset into the Data array from which to begin buffering.</param>
         /// <param name="Length">The length of the valid data in the data array.</param>
         /// <param name="Target">Specifies the target buffer object.</param>
         /// <param name="Hint">Specifies the expected usage of the data store.</param>
