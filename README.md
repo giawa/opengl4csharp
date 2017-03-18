@@ -21,6 +21,12 @@ This project can be downloaded and built manually (see below) or can be loaded e
 Install-Package Giawa.OpenGL
 ```
 
+The optional OpenGL.Platform (and all dependencies) can also be loaded from [nuget](https://www.nuget.org/packages/Giawa.OpenGL.Platform/).  Note:  You must still download and install SDL2 for your respective operating system.  OpenGL.Platform will look for SDL2.dll in your build directory.
+
+```
+Install-Package Giawa.OpenGL.Platform
+```
+
 ## Building the Project
 This project includes a .sln and .csproj file which will create an OpenGL class library.  This library includes a dll.config which will load the correct OpenGL on Windows, Mac OS X and Linux.  So, you need only compile this project once and it will work across platforms.
 
@@ -35,7 +41,7 @@ The purpose of these examples is to walk through the setup of this OpenGL librar
 OpenGL.Platform.Window.CreateWindow("OpenGL", 1280, 720);
    
 // handle events and render the frame
-while (true)
+while (OpenGL.Platform.Window.Open)
 {
    OpenGL.Platform.Window.HandleEvents();
    OnRenderFrame();
