@@ -125,7 +125,7 @@ namespace SDL2
 
 #endregion
 
-#region SDL_main.h
+        #region SDL_main.h
 
 		/// <summary>
 		/// Use this function to circumvent failure of SDL_Init() when not using SDL_main() as an entry point.
@@ -135,7 +135,7 @@ namespace SDL2
 
 #endregion
 
-#region SDL.h
+        #region SDL.h
 
 		public const uint SDL_INIT_TIMER =		0x00000001;
 		public const uint SDL_INIT_AUDIO =		0x00000010;
@@ -880,7 +880,7 @@ namespace SDL2
 
 #endregion
 
-#region SDL_messagebox.h
+        #region SDL_messagebox.h
 
 		[Flags]
 		public enum SDL_MessageBoxFlags : uint
@@ -1185,7 +1185,7 @@ namespace SDL2
 
 #endregion
 
-#region SDL_video.h
+        #region SDL_video.h
 
 		/* Actually, this is from SDL_blendmode.h */
 		/// <summary>
@@ -2051,7 +2051,7 @@ namespace SDL2
 
 #endregion
 
-#region SDL_render.h
+        #region SDL_render.h
 
 		[Flags]
 		public enum SDL_RendererFlags : uint
@@ -2584,7 +2584,7 @@ namespace SDL2
 
 #endregion
 
-#region SDL_pixels.h
+        #region SDL_pixels.h
 
 		public static uint SDL_DEFINE_PIXELFOURCC(byte A, byte B, byte C, byte D)
 		{
@@ -3135,7 +3135,7 @@ namespace SDL2
 
 #endregion
 
-#region SDL_rect.h
+        #region SDL_rect.h
 
 		[StructLayout(LayoutKind.Sequential)]
 		public struct SDL_Point
@@ -3202,7 +3202,7 @@ namespace SDL2
 
 #endregion
 
-#region SDL_surface.h
+        #region SDL_surface.h
 
 		public const uint SDL_SWSURFACE =	0x00000000;
 		public const uint SDL_PREALLOC =	0x00000001;
@@ -3600,7 +3600,7 @@ namespace SDL2
 
 #endregion
 
-#region SDL_clipboard.h
+        #region SDL_clipboard.h
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern SDL_bool SDL_HasClipboardText();
@@ -4207,7 +4207,7 @@ namespace SDL2
 		public static extern UInt32 SDL_RegisterEvents(int numevents);
 #endregion
 
-#region SDL_scancode.h
+        #region SDL_scancode.h
 
 		/* Scancodes based off USB keyboard page (0x07) */
 		public enum SDL_Scancode
@@ -4484,7 +4484,7 @@ namespace SDL2
 
 #endregion
 
-#region SDL_keycode.h
+        #region SDL_keycode.h
 
 		public const int SDLK_SCANCODE_MASK = (1 << 30);
 		public static SDL_Keycode SDL_SCANCODE_TO_KEYCODE(SDL_Scancode X)
@@ -4790,7 +4790,7 @@ namespace SDL2
 
 #endregion
 
-#region SDL_keyboard.h
+        #region SDL_keyboard.h
 
 		[StructLayout(LayoutKind.Sequential)]
 		public struct SDL_Keysym
@@ -4903,7 +4903,7 @@ namespace SDL2
 
 #endregion
 
-#region SDL_mouse.c
+        #region SDL_mouse.c
 
 		/* Note: SDL_Cursor is a typedef normally. We'll treat it as
 		 * an IntPtr, because C# doesn't do typedefs. Yay!
@@ -5033,7 +5033,7 @@ namespace SDL2
 
 #endregion
 
-#region SDL_touch.h
+        #region SDL_touch.h
 
 		public const uint SDL_TOUCH_MOUSEID = uint.MaxValue;
 
@@ -5072,7 +5072,7 @@ namespace SDL2
 
 #endregion
 
-#region SDL_joystick.h
+        #region SDL_joystick.h
 
 		public const byte SDL_HAT_CENTERED =	0x00;
 		public const byte SDL_HAT_UP =		0x01;
@@ -5223,7 +5223,7 @@ namespace SDL2
 
 #endregion
 
-#region SDL_gamecontroller.h
+        #region SDL_gamecontroller.h
 
 		public enum SDL_GameControllerBindType
 		{
@@ -5497,7 +5497,7 @@ namespace SDL2
 
 #endregion
 
-#region SDL_haptic.h
+        #region SDL_haptic.h
 
 		/* SDL_HapticEffect type */
 		public const ushort SDL_HAPTIC_CONSTANT =	(1 << 0);
@@ -5856,7 +5856,7 @@ namespace SDL2
 
 #endregion
 
-#region SDL_audio.h
+        #region SDL_audio.h
 
 		public const ushort SDL_AUDIO_MASK_BITSIZE =	0xFF;
 		public const ushort SDL_AUDIO_MASK_DATATYPE =	(1 << 8);
@@ -6159,7 +6159,7 @@ namespace SDL2
 
 #endregion
 
-#region SDL_timer.h
+        #region SDL_timer.h
 
 		/* System timers rely on different OS mechanisms depending on
 		 * which operating system SDL2 is compiled against.
@@ -6206,7 +6206,7 @@ namespace SDL2
 
 #endregion
 
-#region SDL_syswm.h
+        #region SDL_syswm.h
 
 		public enum SDL_SYSWM_TYPE
 		{
