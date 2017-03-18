@@ -99,7 +99,8 @@ namespace OpenGL.Platform
                 return ErrorCode.WindowWasNotInitialized;
             }
 
-            SDL.SDL_GetWindowSize(window, out int width, out int height);
+            int width, height;
+            SDL.SDL_GetWindowSize(window, out width, out height);
 
             Width = width;
             Height = height;
