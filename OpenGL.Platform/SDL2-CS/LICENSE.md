@@ -1,19 +1,16 @@
 Notice:  The SDL2# code is licensed under the zlib license.
 
- Copyright (c) 2017 Giawa
+Copyright (c) 2017 Giawa
 
- This code was taken from the SDL-2 repository on GitHub and has been modified
- in the following ways:
+This code was taken from the SDL-2 repository on GitHub and has been modified
+in the following ways:
  
- This source file has been modified by Giawa to make all methods 'safe'.
- This source file has also been modified to remove ICustomMarshaler, which
-   is not yet part of the .NET Standard < 2.0 when compiled for NETSTANDARD1_4
- This modified source code is part of the OpenGL.Platform package:
-    https://www.github.com/giawa/opengl4csharp
- The original source code was taken from here:
-    https://github.com/flibitijibibo/SDL2-CS
+1. This source file has been modified by Giawa to make all methods 'safe'.
+2. This source file has also been modified to remove ICustomMarshaler, which is not yet part of the .NET Standard < 2.0 when compiled for NETSTANDARD1_4
+3. This modified source code is part of the OpenGL.Platform package: https://www.github.com/giawa/opengl4csharp
+4. The original source code was taken from here: https://github.com/flibitijibibo/SDL2-CS
 
-Original License:
+## Original License:
 
  SDL2# - C# Wrapper for SDL2
 
