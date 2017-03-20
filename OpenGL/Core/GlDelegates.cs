@@ -136,7 +136,7 @@ namespace OpenGL
             internal static ClearNamedFramebufferuiv glClearNamedFramebufferuiv;
             internal delegate void ClearNamedFramebufferfv(UInt32 framebuffer, OpenGL.ClearBuffer buffer, Int32 drawbuffer, Single[] value);
             internal static ClearNamedFramebufferfv glClearNamedFramebufferfv;
-            internal delegate void ClearNamedFramebufferfi(UInt32 framebuffer, OpenGL.ClearBuffer buffer, Single depth, Int32 stencil);
+            internal delegate void ClearNamedFramebufferfi(UInt32 framebuffer, OpenGL.ClearBuffer buffer, Int32 drawbuffer, Single depth, Int32 stencil);
             internal static ClearNamedFramebufferfi glClearNamedFramebufferfi;
             internal delegate void ClearBufferData(OpenGL.BufferTarget target, OpenGL.SizedInternalFormat internalFormat, OpenGL.PixelInternalFormat format, OpenGL.PixelType type, IntPtr data);
             internal static ClearBufferData glClearBufferData;
