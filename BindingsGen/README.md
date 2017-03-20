@@ -1,0 +1,40 @@
+# OpenGL Binding Generation
+This is the personal code I wrote to help generate the OpenGL bindings.  This was never intended to be released publically, but I think it is best to have this available for posterity.  The instructions on how to generate the OpenGL bindings are included below.
+
+## License
+Check the included [LICENSE.md](https://github.com/giawa/opengl4csharp/blob/master/LICENSE.md) file for the license associated with this code.
+
+## Instructions
+1. Build the project.  This will populate the bin directory.
+2. Execute BuildGlCore to cache any necessary man pages and build the GlCore.cs file.
+3. Execute BuildLibrary to build the Gl.cs and GlDelegates.cs files.  You now have everything you need to build the OpenGL library!  Skip to step 6 if you would like to build the library now.  Otherwise, continue to step 4 to build the documentation for the library.
+4. If you would like to build the documentation for Gl.cs, then you will need to rebuild the solution (some files have been updated).
+5. Execute CreateDocumentation to load the documentation from the man pages into Gl.cs.  This will create a new file called GlDocumentation.cs, which you can use to replace Gl.cs.
+6. Replace Gl.cs, GlCore.cs and GlDelegates.cs in the Core directory of the opengl4csharp project to update the library.  Rebuild the project to get the latest bindings!
+
+## How it works
+### BuildGlCore
+A list of OpenGl 4 functions are included in BindingsGen.  This is the full list of OpenGL functions that the library should support.  If you would like to add/remove OpenGL functions then this is the list to modify.  You should check the console output to see if there are any unknown types after adding a new function.  It is possible you will need to add a new enumeration to GlEnum.cs to support the new functionality.
+
+BuildGlCore will download each man page and will extract the function prototype.  This includes the name, the return type, and all of the parameters.  BuildGlCore will try to figure out the equivalent C# type for each of the OpenGL types.  This includes figuring out a mapping to strongly typed enumerations.  Sometimes the man pages include typos, so those are accounted for in BuildGlCore.  For example:
+
+```csharp
+case "GLuint":
+case "Gluint":                  // Gluint is a typo on glGetActiveAtomicCounterBufferiv man page
+case "GLuitn": return "UInt32"; // GLuitn is a typo on glDrawElementsInstancedBaseInstance man page
+```
+
+This tool will also use an older version of GlCore.cs to resolve some OpenGL types.  This old copy of GlCore is included with the git repository.
+
+Note:  You need internet access to initially populate the OpenGL man pages cache.
+
+### BuildLibrary
+This is the simplest step, and consists of building the GlDelegates.cs and Gl.cs files from the GlCore.cs the was previously generated.  It is basically some simple string manipulation.  This tool will also update the code in the CreateDocumentation project.
+
+### CreateDocumentation
+This application will reprocess the man pages, this time looking for documentation associated with each OpenGL function.  Again, this is mostly really ugly string manipulation that could be done better.
+
+## TODO
+1. All of the XML parsing is done using simple string manipulation.  This should probably use an XML library.
+2. The list of OpenGL functions should be automatically grabbed from somewhere.
+3. BuildGlCore shouldn't rely on an old copy of GlCore.cs to resolve some types.  It should know how to do it all.
