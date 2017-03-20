@@ -1651,15 +1651,18 @@ namespace OpenGL
         /// <param name="buffer">
         /// Specify the buffer to clear.
         /// </param>
+        /// <param name="drawbuffer">
+        /// Specify a particular draw buffer to clear.
+        /// </param>
         /// <param name="depth">
         /// The value to clear the depth buffer to.
         /// </param>
         /// <param name="stencil">
         /// The value to clear the stencil buffer to.
         /// </param>
-        public static void ClearNamedFramebufferfi(UInt32 framebuffer, OpenGL.ClearBuffer buffer, Single depth, Int32 stencil)
+        public static void ClearNamedFramebufferfi(UInt32 framebuffer, OpenGL.ClearBuffer buffer, Int32 drawbuffer, Single depth, Int32 stencil)
         {
-            Delegates.glClearNamedFramebufferfi(framebuffer, buffer, depth, stencil);
+            Delegates.glClearNamedFramebufferfi(framebuffer, buffer, drawbuffer, depth, stencil);
         }
 
         /// <summary>
@@ -17932,5 +17935,6 @@ namespace OpenGL
         {
             Delegates.glWaitSync(sync, flags, timeout);
         }
+
     }
 }
