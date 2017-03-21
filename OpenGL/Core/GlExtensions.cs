@@ -65,11 +65,11 @@ namespace OpenGL
 #pragma warning disable CS1591
             // automatically generated
             public static bool Multitexture { get { return Gl.IsExtensionSupported(Extension.GL_ARB_multitexture); } }
-            public static bool LXARBGetProcAddress_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_get_proc_address); } }
+            public static bool LXARBGetProcAddress_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_get_proc_address); } }
             public static bool TransposeMatrix { get { return Gl.IsExtensionSupported(Extension.GL_ARB_transpose_matrix); } }
             public static bool ARBBufferRegion_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_ARB_buffer_region); } }
             public static bool Multisample { get { return Gl.IsExtensionSupported(Extension.GL_ARB_multisample); } }
-            public static bool LXARBMultisample_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_multisample); } }
+            public static bool LXARBMultisample_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_multisample); } }
             public static bool ARBMultisample_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_ARB_multisample); } }
             public static bool TextureEnvAdd { get { return Gl.IsExtensionSupported(Extension.GL_ARB_texture_env_add); } }
             public static bool TextureCubeMap { get { return Gl.IsExtensionSupported(Extension.GL_ARB_texture_cube_map); } }
@@ -94,7 +94,7 @@ namespace OpenGL
             public static bool VertexProgram { get { return Gl.IsExtensionSupported(Extension.GL_ARB_vertex_program); } }
             public static bool FragmentProgram { get { return Gl.IsExtensionSupported(Extension.GL_ARB_fragment_program); } }
             public static bool VertexBufferObject { get { return Gl.IsExtensionSupported(Extension.GL_ARB_vertex_buffer_object); } }
-            public static bool LXARBVertexBufferObject_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_vertex_buffer_object); } }
+            public static bool LXARBVertexBufferObject_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_vertex_buffer_object); } }
             public static bool OcclusionQuery { get { return Gl.IsExtensionSupported(Extension.GL_ARB_occlusion_query); } }
             public static bool ShaderObjects { get { return Gl.IsExtensionSupported(Extension.GL_ARB_shader_objects); } }
             public static bool VertexShader { get { return Gl.IsExtensionSupported(Extension.GL_ARB_vertex_shader); } }
@@ -107,7 +107,7 @@ namespace OpenGL
             public static bool TextureRectangle { get { return Gl.IsExtensionSupported(Extension.GL_ARB_texture_rectangle); } }
             public static bool ColorBufferFloat { get { return Gl.IsExtensionSupported(Extension.GL_ARB_color_buffer_float); } }
             public static bool ARBPixelFormatFloat_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_ARB_pixel_format_float); } }
-            public static bool LXARBFbconfigFloat_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_fbconfig_float); } }
+            public static bool LXARBFbconfigFloat_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_fbconfig_float); } }
             public static bool HalfFloatPixel { get { return Gl.IsExtensionSupported(Extension.GL_ARB_half_float_pixel); } }
             public static bool TextureFloat { get { return Gl.IsExtensionSupported(Extension.GL_ARB_texture_float); } }
             public static bool PixelBufferObject { get { return Gl.IsExtensionSupported(Extension.GL_ARB_pixel_buffer_object); } }
@@ -115,7 +115,7 @@ namespace OpenGL
             public static bool DrawInstanced { get { return Gl.IsExtensionSupported(Extension.GL_ARB_draw_instanced); } }
             public static bool FramebufferObject { get { return Gl.IsExtensionSupported(Extension.GL_ARB_framebuffer_object); } }
             public static bool FramebufferSRGB { get { return Gl.IsExtensionSupported(Extension.GL_ARB_framebuffer_sRGB); } }
-            public static bool LXARBFramebufferSRGB_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_framebuffer_sRGB); } }
+            public static bool LXARBFramebufferSRGB_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_framebuffer_sRGB); } }
             public static bool ARBFramebufferSRGB_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_ARB_framebuffer_sRGB); } }
             public static bool GeometryShader4 { get { return Gl.IsExtensionSupported(Extension.GL_ARB_geometry_shader4); } }
             public static bool HalfFloatVertex { get { return Gl.IsExtensionSupported(Extension.GL_ARB_half_float_vertex); } }
@@ -126,7 +126,7 @@ namespace OpenGL
             public static bool TextureRg { get { return Gl.IsExtensionSupported(Extension.GL_ARB_texture_rg); } }
             public static bool VertexArrayObject { get { return Gl.IsExtensionSupported(Extension.GL_ARB_vertex_array_object); } }
             public static bool ARBCreateContext_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_ARB_create_context); } }
-            public static bool LXARBCreateContext_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_create_context); } }
+            public static bool LXARBCreateContext_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_create_context); } }
             public static bool UniformBufferObject { get { return Gl.IsExtensionSupported(Extension.GL_ARB_uniform_buffer_object); } }
             public static bool Compatibility { get { return Gl.IsExtensionSupported(Extension.GL_ARB_compatibility); } }
             public static bool CopyBuffer { get { return Gl.IsExtensionSupported(Extension.GL_ARB_copy_buffer); } }
@@ -145,7 +145,7 @@ namespace OpenGL
             public static bool TextureGather { get { return Gl.IsExtensionSupported(Extension.GL_ARB_texture_gather); } }
             public static bool TextureQueryLod { get { return Gl.IsExtensionSupported(Extension.GL_ARB_texture_query_lod); } }
             public static bool ARBCreateContextProfile_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_ARB_create_context_profile); } }
-            public static bool LXARBCreateContextProfile_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_create_context_profile); } }
+            public static bool LXARBCreateContextProfile_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_create_context_profile); } }
             public static bool ShadingLanguageInclude { get { return Gl.IsExtensionSupported(Extension.GL_ARB_shading_language_include); } }
             public static bool TextureCompressionBptc { get { return Gl.IsExtensionSupported(Extension.GL_ARB_texture_compression_bptc); } }
             public static bool BlendFuncExtended { get { return Gl.IsExtensionSupported(Extension.GL_ARB_blend_func_extended); } }
@@ -171,7 +171,7 @@ namespace OpenGL
             public static bool ShaderPrecision { get { return Gl.IsExtensionSupported(Extension.GL_ARB_shader_precision); } }
             public static bool VertexAttrib64bit { get { return Gl.IsExtensionSupported(Extension.GL_ARB_vertex_attrib_64bit); } }
             public static bool ViewportArray { get { return Gl.IsExtensionSupported(Extension.GL_ARB_viewport_array); } }
-            public static bool LXARBCreateContextRobustness_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_create_context_robustness); } }
+            public static bool LXARBCreateContextRobustness_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_create_context_robustness); } }
             public static bool ARBCreateContextRobustness_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_ARB_create_context_robustness); } }
             public static bool ClEvent { get { return Gl.IsExtensionSupported(Extension.GL_ARB_cl_event); } }
             public static bool DebugOutput { get { return Gl.IsExtensionSupported(Extension.GL_ARB_debug_output); } }
@@ -213,8 +213,8 @@ namespace OpenGL
             public static bool TextureBufferRange { get { return Gl.IsExtensionSupported(Extension.GL_ARB_texture_buffer_range); } }
             public static bool TextureQueryLevels { get { return Gl.IsExtensionSupported(Extension.GL_ARB_texture_query_levels); } }
             public static bool TextureStorageMultisample { get { return Gl.IsExtensionSupported(Extension.GL_ARB_texture_storage_multisample); } }
-            public static bool LXARBRobustnessApplicationIsolation_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_robustness_application_isolation); } }
-            public static bool LXARBRobustnessShareGroupIsolation_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_robustness_share_group_isolation); } }
+            public static bool LXARBRobustnessApplicationIsolation_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_robustness_application_isolation); } }
+            public static bool LXARBRobustnessShareGroupIsolation_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_robustness_share_group_isolation); } }
             public static bool ARBRobustnessApplicationIsolation_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_ARB_robustness_application_isolation); } }
             public static bool ARBRobustnessShareGroupIsolation_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_ARB_robustness_share_group_isolation); } }
             public static bool BufferStorage { get { return Gl.IsExtensionSupported(Extension.GL_ARB_buffer_storage); } }
@@ -242,7 +242,7 @@ namespace OpenGL
             public static bool ShaderTextureImageSamples { get { return Gl.IsExtensionSupported(Extension.GL_ARB_shader_texture_image_samples); } }
             public static bool TextureBarrier { get { return Gl.IsExtensionSupported(Extension.GL_ARB_texture_barrier); } }
             public static bool ContextFlushControl_KHR { get { return Gl.IsExtensionSupported(Extension.GL_KHR_context_flush_control); } }
-            public static bool LXARBContextFlushControl_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_context_flush_control); } }
+            public static bool LXARBContextFlushControl_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_ARB_context_flush_control); } }
             public static bool ARBContextFlushControl_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_ARB_context_flush_control); } }
             public static bool RobustBufferAccessBehavior_KHR { get { return Gl.IsExtensionSupported(Extension.GL_KHR_robust_buffer_access_behavior); } }
             public static bool Robustness_KHR { get { return Gl.IsExtensionSupported(Extension.GL_KHR_robustness); } }
@@ -290,9 +290,9 @@ namespace OpenGL
             public static bool PackedPixels_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_packed_pixels); } }
             public static bool TextureLod_SGIS { get { return Gl.IsExtensionSupported(Extension.GL_SGIS_texture_lod); } }
             public static bool Multisample_SGIS { get { return Gl.IsExtensionSupported(Extension.GL_SGIS_multisample); } }
-            public static bool LXSGISMultisample_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIS_multisample); } }
+            public static bool LXSGISMultisample_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIS_multisample); } }
             public static bool RescaleNormal_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_rescale_normal); } }
-            public static bool LXEXTVisualInfo_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_visual_info); } }
+            public static bool LXEXTVisualInfo_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_visual_info); } }
             public static bool VertexArray_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_vertex_array); } }
             public static bool MiscAttribute_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_misc_attribute); } }
             public static bool GenerateMipmap_SGIS { get { return Gl.IsExtensionSupported(Extension.GL_SGIS_generate_mipmap); } }
@@ -303,15 +303,15 @@ namespace OpenGL
             public static bool BlendMinmax_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_blend_minmax); } }
             public static bool BlendSubtract_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_blend_subtract); } }
             public static bool BlendLogicOp_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_blend_logic_op); } }
-            public static bool LXSGISwapControl_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGI_swap_control); } }
-            public static bool LXSGIVideoSync_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGI_video_sync); } }
-            public static bool LXSGIMakeCurrentRead_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGI_make_current_read); } }
-            public static bool LXSGIXVideoSource_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIX_video_source); } }
-            public static bool LXEXTVisualRating_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_visual_rating); } }
+            public static bool LXSGISwapControl_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGI_swap_control); } }
+            public static bool LXSGIVideoSync_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGI_video_sync); } }
+            public static bool LXSGIMakeCurrentRead_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGI_make_current_read); } }
+            public static bool LXSGIXVideoSource_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIX_video_source); } }
+            public static bool LXEXTVisualRating_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_visual_rating); } }
             public static bool Interlace_SGIX { get { return Gl.IsExtensionSupported(Extension.GL_SGIX_interlace); } }
-            public static bool LXEXTImportContext_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_import_context); } }
-            public static bool LXSGIXFbconfig_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIX_fbconfig); } }
-            public static bool LXSGIXPbuffer_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIX_pbuffer); } }
+            public static bool LXEXTImportContext_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_import_context); } }
+            public static bool LXSGIXFbconfig_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIX_fbconfig); } }
+            public static bool LXSGIXPbuffer_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIX_pbuffer); } }
             public static bool TextureSelect_SGIS { get { return Gl.IsExtensionSupported(Extension.GL_SGIS_texture_select); } }
             public static bool Sprite_SGIX { get { return Gl.IsExtensionSupported(Extension.GL_SGIX_sprite); } }
             public static bool TextureMultiBuffer_SGIX { get { return Gl.IsExtensionSupported(Extension.GL_SGIX_texture_multi_buffer); } }
@@ -322,7 +322,7 @@ namespace OpenGL
             public static bool TagSampleBuffer_SGIX { get { return Gl.IsExtensionSupported(Extension.GL_SGIX_tag_sample_buffer); } }
             public static bool ReferencePlane_SGIX { get { return Gl.IsExtensionSupported(Extension.GL_SGIX_reference_plane); } }
             public static bool FlushRaster_SGIX { get { return Gl.IsExtensionSupported(Extension.GL_SGIX_flush_raster); } }
-            public static bool LXSGICushion_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGI_cushion); } }
+            public static bool LXSGICushion_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGI_cushion); } }
             public static bool DepthTexture_SGIX { get { return Gl.IsExtensionSupported(Extension.GL_SGIX_depth_texture); } }
             public static bool FogFunction_SGIS { get { return Gl.IsExtensionSupported(Extension.GL_SGIS_fog_function); } }
             public static bool FogOffset_SGIX { get { return Gl.IsExtensionSupported(Extension.GL_SGIX_fog_offset); } }
@@ -337,13 +337,13 @@ namespace OpenGL
             public static bool ClipVolumeHint_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_clip_volume_hint); } }
             public static bool ListPriority_SGIX { get { return Gl.IsExtensionSupported(Extension.GL_SGIX_list_priority); } }
             public static bool IrInstrument1_SGIX { get { return Gl.IsExtensionSupported(Extension.GL_SGIX_ir_instrument1); } }
-            public static bool LXSGIXVideoResize_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIX_video_resize); } }
+            public static bool LXSGIXVideoResize_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIX_video_resize); } }
             public static bool TextureLodBias_SGIX { get { return Gl.IsExtensionSupported(Extension.GL_SGIX_texture_lod_bias); } }
             public static bool SGIFilter4Parameters_GLU { get { return Gl.IsExtensionSupported(Extension.GLU_SGI_filter4_parameters); } }
-            public static bool LXSGIXDmBuffer_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIX_dm_buffer); } }
+            public static bool LXSGIXDmBuffer_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIX_dm_buffer); } }
             public static bool ShadowAmbient_SGIX { get { return Gl.IsExtensionSupported(Extension.GL_SGIX_shadow_ambient); } }
-            public static bool LXSGIXSwapGroup_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIX_swap_group); } }
-            public static bool LXSGIXSwapBarrier_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIX_swap_barrier); } }
+            public static bool LXSGIXSwapGroup_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIX_swap_group); } }
+            public static bool LXSGIXSwapBarrier_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIX_swap_barrier); } }
             public static bool IndexTexture_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_index_texture); } }
             public static bool IndexMaterial_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_index_material); } }
             public static bool IndexFunc_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_index_func); } }
@@ -358,12 +358,12 @@ namespace OpenGL
             public static bool DrawRangeElements_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_draw_range_elements); } }
             public static bool PhongShading_WIN { get { return Gl.IsExtensionSupported(Extension.GL_WIN_phong_shading); } }
             public static bool SpecularFog_WIN { get { return Gl.IsExtensionSupported(Extension.GL_WIN_specular_fog); } }
-            public static bool LXSGISColorRange_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIS_color_range); } }
+            public static bool LXSGISColorRange_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIS_color_range); } }
             public static bool ColorRange_SGIS { get { return Gl.IsExtensionSupported(Extension.GL_SGIS_color_range); } }
             public static bool LightTexture_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_light_texture); } }
             public static bool BlendAlphaMinmax_SGIX { get { return Gl.IsExtensionSupported(Extension.GL_SGIX_blend_alpha_minmax); } }
             public static bool SceneMarker_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_scene_marker); } }
-            public static bool LXEXTSceneMarker_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_scene_marker); } }
+            public static bool LXEXTSceneMarker_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_scene_marker); } }
             public static bool PixelTextureBits_SGIX { get { return Gl.IsExtensionSupported(Extension.GL_SGIX_pixel_texture_bits); } }
             public static bool Bgra_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_bgra); } }
             public static bool Async_SGIX { get { return Gl.IsExtensionSupported(Extension.GL_SGIX_async); } }
@@ -375,7 +375,7 @@ namespace OpenGL
             public static bool PixelTransform_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_pixel_transform); } }
             public static bool PixelTransformColorTable_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_pixel_transform_color_table); } }
             public static bool SharedTexturePalette_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_shared_texture_palette); } }
-            public static bool LXSGISBlendedOverlay_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIS_blended_overlay); } }
+            public static bool LXSGISBlendedOverlay_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIS_blended_overlay); } }
             public static bool SeparateSpecularColor_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_separate_specular_color); } }
             public static bool SecondaryColor_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_secondary_color); } }
             public static bool TextureEnv_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_texture_env); } }
@@ -407,7 +407,7 @@ namespace OpenGL
             public static bool TexgenReflection_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_texgen_reflection); } }
             public static bool TextureRange_SGIX { get { return Gl.IsExtensionSupported(Extension.GL_SGIX_texture_range); } }
             public static bool ConvolutionBorderModes_SUN { get { return Gl.IsExtensionSupported(Extension.GL_SUN_convolution_border_modes); } }
-            public static bool LXSUNGetTransparentIndex_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SUN_get_transparent_index); } }
+            public static bool LXSUNGetTransparentIndex_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SUN_get_transparent_index); } }
             public static bool TextureEnvAdd_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_texture_env_add); } }
             public static bool TextureLodBias_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_texture_lod_bias); } }
             public static bool TextureFilterAnisotropic_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_texture_filter_anisotropic); } }
@@ -436,10 +436,10 @@ namespace OpenGL
             public static bool Resample_SGIX { get { return Gl.IsExtensionSupported(Extension.GL_SGIX_resample); } }
             public static bool PointLineTexgen_SGIS { get { return Gl.IsExtensionSupported(Extension.GL_SGIS_point_line_texgen); } }
             public static bool TextureColorMask_SGIS { get { return Gl.IsExtensionSupported(Extension.GL_SGIS_texture_color_mask); } }
-            public static bool LXMESACopySubBuffer_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_MESA_copy_sub_buffer); } }
-            public static bool LXMESAPixmapColormap_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_MESA_pixmap_colormap); } }
-            public static bool LXMESAReleaseBuffers_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_MESA_release_buffers); } }
-            public static bool LXMESASet3dfxMode_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_MESA_set_3dfx_mode); } }
+            public static bool LXMESACopySubBuffer_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_MESA_copy_sub_buffer); } }
+            public static bool LXMESAPixmapColormap_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_MESA_pixmap_colormap); } }
+            public static bool LXMESAReleaseBuffers_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_MESA_release_buffers); } }
+            public static bool LXMESASet3dfxMode_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_MESA_set_3dfx_mode); } }
             public static bool TextureEnvDot3_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_texture_env_dot3); } }
             public static bool TextureMirrorOnce_ATI { get { return Gl.IsExtensionSupported(Extension.GL_ATI_texture_mirror_once); } }
             public static bool Fence_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_fence); } }
@@ -454,10 +454,10 @@ namespace OpenGL
             public static bool TextureShader2_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_texture_shader2); } }
             public static bool VertexArrayRange2_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_vertex_array_range2); } }
             public static bool VertexProgram_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_vertex_program); } }
-            public static bool LXSGIXVisualSelectGroup_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIX_visual_select_group); } }
+            public static bool LXSGIXVisualSelectGroup_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIX_visual_select_group); } }
             public static bool TextureCoordinateClamp_SGIX { get { return Gl.IsExtensionSupported(Extension.GL_SGIX_texture_coordinate_clamp); } }
-            public static bool LXOMLSwapMethod_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_OML_swap_method); } }
-            public static bool LXOMLSyncControl_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_OML_sync_control); } }
+            public static bool LXOMLSwapMethod_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_OML_swap_method); } }
+            public static bool LXOMLSyncControl_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_OML_sync_control); } }
             public static bool Interlace_OML { get { return Gl.IsExtensionSupported(Extension.GL_OML_interlace); } }
             public static bool Subsample_OML { get { return Gl.IsExtensionSupported(Extension.GL_OML_subsample); } }
             public static bool Resample_OML { get { return Gl.IsExtensionSupported(Extension.GL_OML_resample); } }
@@ -527,8 +527,8 @@ namespace OpenGL
             public static bool FragmentProgram2_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_fragment_program2); } }
             public static bool VertexProgram2Option_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_vertex_program2_option); } }
             public static bool VertexProgram3_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_vertex_program3); } }
-            public static bool LXSGIXHyperpipe_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIX_hyperpipe); } }
-            public static bool LXMESAAgpOffset_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_MESA_agp_offset); } }
+            public static bool LXSGIXHyperpipe_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_SGIX_hyperpipe); } }
+            public static bool LXMESAAgpOffset_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_MESA_agp_offset); } }
             public static bool TextureCompressionDxt1_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_texture_compression_dxt1); } }
             public static bool FramebufferObject_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_framebuffer_object); } }
             public static bool StringMarker_GREMEDY { get { return Gl.IsExtensionSupported(Extension.GL_GREMEDY_string_marker); } }
@@ -550,7 +550,7 @@ namespace OpenGL
             public static bool DrawInstanced_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_draw_instanced); } }
             public static bool PackedFloat_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_packed_float); } }
             public static bool EXTPixelFormatPackedFloat_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_EXT_pixel_format_packed_float); } }
-            public static bool LXEXTFbconfigPackedFloat_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_fbconfig_packed_float); } }
+            public static bool LXEXTFbconfigPackedFloat_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_fbconfig_packed_float); } }
             public static bool TextureArray_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_texture_array); } }
             public static bool TextureBufferObject_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_texture_buffer_object); } }
             public static bool TextureCompressionLatc_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_texture_compression_latc); } }
@@ -560,7 +560,7 @@ namespace OpenGL
             public static bool FragmentProgram4_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_fragment_program4); } }
             public static bool FramebufferMultisampleCoverage_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_framebuffer_multisample_coverage); } }
             public static bool FramebufferSRGB_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_framebuffer_sRGB); } }
-            public static bool LXEXTFramebufferSRGB_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_framebuffer_sRGB); } }
+            public static bool LXEXTFramebufferSRGB_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_framebuffer_sRGB); } }
             public static bool EXTFramebufferSRGB_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_EXT_framebuffer_sRGB); } }
             public static bool GeometryShader4_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_geometry_shader4); } }
             public static bool ParameterBufferObject_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_parameter_buffer_object); } }
@@ -568,15 +568,15 @@ namespace OpenGL
             public static bool TransformFeedback_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_transform_feedback); } }
             public static bool BindableUniform_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_bindable_uniform); } }
             public static bool TextureInteger_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_texture_integer); } }
-            public static bool LXEXTTextureFromPixmap_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_texture_from_pixmap); } }
+            public static bool LXEXTTextureFromPixmap_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_texture_from_pixmap); } }
             public static bool FrameTerminator_GREMEDY { get { return Gl.IsExtensionSupported(Extension.GL_GREMEDY_frame_terminator); } }
             public static bool ConditionalRender_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_conditional_render); } }
             public static bool PresentVideo_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_present_video); } }
-            public static bool LXNVPresentVideo_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_NV_present_video); } }
+            public static bool LXNVPresentVideo_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_NV_present_video); } }
             public static bool NVPresentVideo_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_NV_present_video); } }
-            public static bool LXNVVideoOut_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_NV_video_out); } }
+            public static bool LXNVVideoOut_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_NV_video_out); } }
             public static bool NVVideoOutput_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_NV_video_output); } }
-            public static bool LXNVSwapGroup_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_NV_swap_group); } }
+            public static bool LXNVSwapGroup_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_NV_swap_group); } }
             public static bool NVSwapGroup_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_NV_swap_group); } }
             public static bool TransformFeedback_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_transform_feedback); } }
             public static bool DirectStateAccess_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_direct_state_access); } }
@@ -601,12 +601,12 @@ namespace OpenGL
             public static bool RowBytes_APPLE { get { return Gl.IsExtensionSupported(Extension.GL_APPLE_row_bytes); } }
             public static bool Rgb422_APPLE { get { return Gl.IsExtensionSupported(Extension.GL_APPLE_rgb_422); } }
             public static bool VideoCapture_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_video_capture); } }
-            public static bool LXNVVideoCapture_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_NV_video_capture); } }
+            public static bool LXNVVideoCapture_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_NV_video_capture); } }
             public static bool NVVideoCapture_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_NV_video_capture); } }
             public static bool SwapControl_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_swap_control); } }
             public static bool CopyImage_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_copy_image); } }
             public static bool NVCopyImage_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_NV_copy_image); } }
-            public static bool LXNVCopyImage_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_NV_copy_image); } }
+            public static bool LXNVCopyImage_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_NV_copy_image); } }
             public static bool SeparateShaderObjects_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_separate_shader_objects); } }
             public static bool ParameterBufferObject2_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_parameter_buffer_object2); } }
             public static bool ShaderBufferLoad_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_shader_buffer_load); } }
@@ -614,7 +614,7 @@ namespace OpenGL
             public static bool TextureBarrier_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_texture_barrier); } }
             public static bool ShaderStencilExport_AMD { get { return Gl.IsExtensionSupported(Extension.GL_AMD_shader_stencil_export); } }
             public static bool SeamlessCubemapPerTexture_AMD { get { return Gl.IsExtensionSupported(Extension.GL_AMD_seamless_cubemap_per_texture); } }
-            public static bool LXINTELSwapEvent_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_INTEL_swap_event); } }
+            public static bool LXINTELSwapEvent_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_INTEL_swap_event); } }
             public static bool ConservativeDepth_AMD { get { return Gl.IsExtensionSupported(Extension.GL_AMD_conservative_depth); } }
             public static bool ShaderImageLoadStore_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_shader_image_load_store); } }
             public static bool VertexAttrib64bit_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_vertex_attrib_64bit); } }
@@ -628,9 +628,9 @@ namespace OpenGL
             public static bool DebugOutput_AMD { get { return Gl.IsExtensionSupported(Extension.GL_AMD_debug_output); } }
             public static bool VdpauInterop_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_vdpau_interop); } }
             public static bool TransformFeedback3LinesTriangles_AMD { get { return Gl.IsExtensionSupported(Extension.GL_AMD_transform_feedback3_lines_triangles); } }
-            public static bool LXAMDGpuAssociation_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_AMD_gpu_association); } }
-            public static bool LXEXTCreateContextEs2Profile_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_create_context_es2_profile); } }
-            public static bool LXEXTCreateContextEsProfile_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_create_context_es_profile); } }
+            public static bool LXAMDGpuAssociation_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_AMD_gpu_association); } }
+            public static bool LXEXTCreateContextEs2Profile_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_create_context_es2_profile); } }
+            public static bool LXEXTCreateContextEsProfile_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_create_context_es_profile); } }
             public static bool EXTCreateContextEs2Profile_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_EXT_create_context_es2_profile); } }
             public static bool EXTCreateContextEsProfile_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_EXT_create_context_es_profile); } }
             public static bool DepthClampSeparate_AMD { get { return Gl.IsExtensionSupported(Extension.GL_AMD_depth_clamp_separate); } }
@@ -646,7 +646,7 @@ namespace OpenGL
             public static bool PinnedMemory_AMD { get { return Gl.IsExtensionSupported(Extension.GL_AMD_pinned_memory); } }
             public static bool NVDXInterop2_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_NV_DX_interop2); } }
             public static bool StencilOperationExtended_AMD { get { return Gl.IsExtensionSupported(Extension.GL_AMD_stencil_operation_extended); } }
-            public static bool LXEXTSwapControlTear_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_swap_control_tear); } }
+            public static bool LXEXTSwapControlTear_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_swap_control_tear); } }
             public static bool EXTSwapControlTear_WGL { get { return Gl.IsExtensionSupported(Extension.WGL_EXT_swap_control_tear); } }
             public static bool VertexShaderViewportIndex_AMD { get { return Gl.IsExtensionSupported(Extension.GL_AMD_vertex_shader_viewport_index); } }
             public static bool VertexShaderLayer_AMD { get { return Gl.IsExtensionSupported(Extension.GL_AMD_vertex_shader_layer); } }
@@ -659,7 +659,7 @@ namespace OpenGL
             public static bool DeepTexture3D_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_deep_texture3D); } }
             public static bool ConditionalRender_NVX { get { return Gl.IsExtensionSupported(Extension.GL_NVX_conditional_render); } }
             public static bool SparseTexture_AMD { get { return Gl.IsExtensionSupported(Extension.GL_AMD_sparse_texture); } }
-            public static bool LXEXTBufferAge_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_buffer_age); } }
+            public static bool LXEXTBufferAge_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_buffer_age); } }
             public static bool ShaderTrinaryMinmax_AMD { get { return Gl.IsExtensionSupported(Extension.GL_AMD_shader_trinary_minmax); } }
             public static bool MapTexture_INTEL { get { return Gl.IsExtensionSupported(Extension.GL_INTEL_map_texture); } }
             public static bool DrawTexture_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_draw_texture); } }
@@ -678,8 +678,8 @@ namespace OpenGL
             public static bool OcclusionQueryEvent_AMD { get { return Gl.IsExtensionSupported(Extension.GL_AMD_occlusion_query_event); } }
             public static bool PerformanceQuery_INTEL { get { return Gl.IsExtensionSupported(Extension.GL_INTEL_performance_query); } }
             public static bool ShaderStencilValueExport_AMD { get { return Gl.IsExtensionSupported(Extension.GL_AMD_shader_stencil_value_export); } }
-            public static bool LXNVDelayBeforeSwap_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_NV_delay_before_swap); } }
-            public static bool LXMESAQueryRenderer_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_MESA_query_renderer); } }
+            public static bool LXNVDelayBeforeSwap_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_NV_delay_before_swap); } }
+            public static bool LXMESAQueryRenderer_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_MESA_query_renderer); } }
             public static bool ShaderThreadGroup_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_shader_thread_group); } }
             public static bool ShaderThreadShuffle_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_shader_thread_shuffle); } }
             public static bool ShaderImageLoadFormatted_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_shader_image_load_formatted); } }
@@ -689,7 +689,7 @@ namespace OpenGL
             public static bool GcnShader_AMD { get { return Gl.IsExtensionSupported(Extension.GL_AMD_gcn_shader); } }
             public static bool ShaderAtomicInt64_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_shader_atomic_int64); } }
             public static bool BindlessMultiDrawIndirectCount_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_bindless_multi_draw_indirect_count); } }
-            public static bool LXNVCopyBuffer_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_NV_copy_buffer); } }
+            public static bool LXNVCopyBuffer_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_NV_copy_buffer); } }
             public static bool UniformBufferUnifiedMemory_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_uniform_buffer_unified_memory); } }
             public static bool PolygonOffsetClamp_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_polygon_offset_clamp); } }
             public static bool PostDepthCoverage_EXT { get { return Gl.IsExtensionSupported(Extension.GL_EXT_post_depth_coverage); } }
@@ -713,7 +713,7 @@ namespace OpenGL
             public static bool Multiview2_OVR { get { return Gl.IsExtensionSupported(Extension.GL_OVR_multiview2); } }
             public static bool ConservativeRasterDilate_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_conservative_raster_dilate); } }
             public static bool FramebufferCMAA_INTEL { get { return Gl.IsExtensionSupported(Extension.GL_INTEL_framebuffer_CMAA); } }
-            public static bool LXEXTLibglvnd_GLX_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_libglvnd); } }
+            public static bool LXEXTLibglvnd_GLX { get { return Gl.IsExtensionSupported(Extension.GLX_EXT_libglvnd); } }
             public static bool ViewportSwizzle_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_viewport_swizzle); } }
             public static bool RobustnessVideoMemoryPurge_NV { get { return Gl.IsExtensionSupported(Extension.GL_NV_robustness_video_memory_purge); } }
             public static bool ShaderExplicitVertexParameter_AMD { get { return Gl.IsExtensionSupported(Extension.GL_AMD_shader_explicit_vertex_parameter); } }
