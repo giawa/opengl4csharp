@@ -12,7 +12,7 @@ namespace OpenGL
         {
             internal delegate void ActiveShaderProgram(UInt32 pipeline, UInt32 program);
             internal static ActiveShaderProgram glActiveShaderProgram;
-            internal delegate void ActiveTexture(OpenGL.TextureUnit texture);
+            internal delegate void ActiveTexture(Int32 texture);
             internal static ActiveTexture glActiveTexture;
             internal delegate void AttachShader(UInt32 program, UInt32 shader);
             internal static AttachShader glAttachShader;

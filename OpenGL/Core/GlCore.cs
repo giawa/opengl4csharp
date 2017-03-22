@@ -10,7 +10,7 @@ namespace OpenGL
             [DllImport(Gl.Library, EntryPoint = "glActiveShaderProgram", ExactSpelling = true)]
             internal extern static void ActiveShaderProgram(UInt32 pipeline, UInt32 program);
             [DllImport(Gl.Library, EntryPoint = "glActiveTexture", ExactSpelling = true)]
-            internal extern static void ActiveTexture(OpenGL.TextureUnit texture);
+            internal extern static void ActiveTexture(Int32 texture);
             [DllImport(Gl.Library, EntryPoint = "glAttachShader", ExactSpelling = true)]
             internal extern static void AttachShader(UInt32 program, UInt32 shader);
             [DllImport(Gl.Library, EntryPoint = "glBeginConditionalRender", ExactSpelling = true)]

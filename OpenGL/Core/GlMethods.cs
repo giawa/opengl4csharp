@@ -122,6 +122,25 @@ namespace OpenGL
 
         #region OpenGL Helpers (Type Safe Equivalents or Shortcuts)
         /// <summary>
+        /// Select active texture unit.
+        /// <para>
+        /// glActiveTexture selects which texture unit subsequent texture state calls will affect. The number of
+        /// texture units an implementation supports is implementation dependent, but must be at least 80.
+        /// </para>
+        /// </summary>
+        /// <param name="texture">
+        /// Specifies which texture unit to make active. The number of texture units is implementation
+        /// dependent, but must be at least 80. texture must be a value between 0 and 
+        /// GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS minus one. The initial value is 0.
+        /// </param>
+        public static void ActiveTexture(int texture)
+        {
+#pragma warning disable CS0618
+            Delegates.glActiveTexture((int)TextureUnit.Texture0 + texture);
+#pragma warning restore
+        }
+
+        /// <summary>
         /// Returns the boolean value of a selected parameter.
         /// </summary>
         /// <param name="pname">A parameter that returns a single boolean.</param>

@@ -2512,6 +2512,7 @@ namespace OpenGL
         ProxyTexture2DMultisampleArray = ((int)0x9103),
     }
 
+    [Obsolete("The TextureUnit enum is deprecated and may be removed in a future build.  Use ActiveTexture(Int32) instead, which will automatically offset your texture by the GL_TEXTURE0.")]
     public enum TextureUnit : int
     {
         Texture0 = ((int)0x84C0),
@@ -2545,7 +2546,7 @@ namespace OpenGL
         Texture28 = ((int)0x84DC),
         Texture29 = ((int)0x84DD),
         Texture30 = ((int)0x84DE),
-        Texture31 = ((int)0x84DF),
+        Texture31 = ((int)0x84DF)
     }
 
     public enum TransformFeedbackMode : int
