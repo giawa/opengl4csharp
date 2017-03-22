@@ -32,10 +32,11 @@ namespace OpenGL
             int[] elements = new int[locations.Length];
             for (int i = 0; i < elements.Length; i++) elements[i] = i;
 
-            billboard = new VAO(program, new VBO<Vector3>(locations), new VBO<Vector3>(colors), new VBO<int>(elements));
-            billboard.DrawMode = BeginMode.Points;
-            billboard.DisposeChildren = true;
-
+            billboard = new VAO(program, new VBO<Vector3>(locations), new VBO<Vector3>(colors), new VBO<int>(elements))
+            {
+                DrawMode = BeginMode.Points,
+                DisposeChildren = true
+            };
             Color = new Vector4(1, 1, 1, 1);
         }
 
@@ -52,7 +53,7 @@ namespace OpenGL
             Program.Use();
 
             // bind the active texture
-            Gl.ActiveTexture(TextureUnit.Texture0);
+            Gl.ActiveTexture(0);
             Gl.BindTexture(Texture);
 
             // draw the billboard

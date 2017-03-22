@@ -37,9 +37,10 @@ namespace OpenGL
         /// dependent, but must be at least 80. texture must be one of GL_TEXTUREi, where i ranges from zero to
         /// the value of GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS minus one. The initial value is GL_TEXTURE0.
         /// </param>
+        [Obsolete("ActiveTexture(int) should be used instead of ActiveTexture(TextureUnit).")]
         public static void ActiveTexture(OpenGL.TextureUnit texture)
         {
-            Delegates.glActiveTexture(texture);
+            Delegates.glActiveTexture((int)texture);
         }
 
         /// <summary>
