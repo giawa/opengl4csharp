@@ -810,7 +810,7 @@ namespace OpenGL
             [DllImport(Gl.Library, EntryPoint = "glProvokingVertex", ExactSpelling = true)]
             internal extern static void ProvokingVertex(OpenGL.ProvokingVertexMode provokeMode);
             [DllImport(Gl.Library, EntryPoint = "glQueryCounter", ExactSpelling = true)]
-            internal extern static void QueryCounter(UInt32 id, Int32 target);
+            internal extern static void QueryCounter(UInt32 id, OpenGL.QueryTarget target);
             [DllImport(Gl.Library, EntryPoint = "glReadBuffer", ExactSpelling = true)]
             internal extern static void ReadBuffer(OpenGL.ReadBufferMode mode);
             [DllImport(Gl.Library, EntryPoint = "glNamedFramebufferReadBuffer", ExactSpelling = true)]

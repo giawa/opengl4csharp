@@ -37,7 +37,7 @@ namespace OpenGL
         /// dependent, but must be at least 80. texture must be one of GL_TEXTUREi, where i ranges from zero to
         /// the value of GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS minus one. The initial value is GL_TEXTURE0.
         /// </param>
-        [Obsolete("ActiveTexture(int) should be used instead of ActiveTexture(TextureUnit).")]
+        [Obsolete("ActiveTexture(TextureUnit) is deprecated, please use ActiveTexture(int) instead.")]
         public static void ActiveTexture(OpenGL.TextureUnit texture)
         {
             Delegates.glActiveTexture((int)texture);
@@ -10995,7 +10995,7 @@ namespace OpenGL
         /// <param name="target">
         /// Specify the counter to query. target must be GL_TIMESTAMP.
         /// </param>
-        public static void QueryCounter(UInt32 id, Int32 target)
+        public static void QueryCounter(UInt32 id, OpenGL.QueryTarget target)
         {
             Delegates.glQueryCounter(id, target);
         }
