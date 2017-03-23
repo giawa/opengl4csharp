@@ -141,6 +141,29 @@ namespace OpenGL
         }
 
         /// <summary>
+        /// Record the GL time into a query object after all previous commands have reached the GL server but have not yet necessarily executed.
+        /// <para>
+        /// glQueryCounter causes the GL to record the current time into the query object named id. target must
+        /// be GL_TIMESTAMP. The time is recorded after all previous commands on the GL client and server state
+        /// and the framebuffer have been fully realized. When the time is recorded, the query result for that
+        /// object is marked available. glQueryCounter timer queries can be used within a glBeginQuery /
+        /// glEndQuery block where the target is GL_TIME_ELAPSED and it does not affect the result of that query
+        /// object.
+        /// </para>
+        /// </summary>
+        /// <param name="id">
+        /// Specify the name of a query object into which to record the GL time.
+        /// </param>
+        /// <param name="target">
+        /// Specify the counter to query. target must be GL_TIMESTAMP.
+        /// </param>
+        [Obsolete("QueryCounter(UInt32, Int32) is deprecated, please use QueryCounter(UInt32, QueryTarget) instead.")]
+        public static void QueryCounter(UInt32 id, Int32 target)
+        {
+            Delegates.glQueryCounter(id, (OpenGL.QueryTarget)target);
+        }
+
+        /// <summary>
         /// Returns the boolean value of a selected parameter.
         /// </summary>
         /// <param name="pname">A parameter that returns a single boolean.</param>

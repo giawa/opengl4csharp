@@ -812,7 +812,7 @@ namespace OpenGL
             internal static ProgramUniformMatrix4x3fv glProgramUniformMatrix4x3fv;
             internal delegate void ProvokingVertex(OpenGL.ProvokingVertexMode provokeMode);
             internal static ProvokingVertex glProvokingVertex;
-            internal delegate void QueryCounter(UInt32 id, Int32 target);
+            internal delegate void QueryCounter(UInt32 id, OpenGL.QueryTarget target);
             internal static QueryCounter glQueryCounter;
             internal delegate void ReadBuffer(OpenGL.ReadBufferMode mode);
             internal static ReadBuffer glReadBuffer;
