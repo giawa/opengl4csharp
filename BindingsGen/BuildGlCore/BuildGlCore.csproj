@@ -7,8 +7,8 @@
     <ProjectGuid>{DB6F5850-C728-4B64-8BFA-F0AD100D49B4}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>QueryOpenGL</RootNamespace>
-    <AssemblyName>QueryOpenGL</AssemblyName>
+    <RootNamespace>BuildGlCore</RootNamespace>
+    <AssemblyName>BuildGlCore</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

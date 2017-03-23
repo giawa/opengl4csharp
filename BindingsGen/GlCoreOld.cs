@@ -10,7 +10,7 @@ namespace OpenGL
             [System.Runtime.InteropServices.DllImport(Gl.Library, EntryPoint = "glActiveShaderProgram", ExactSpelling = true)]
             internal extern static void ActiveShaderProgram(UInt32 pipeline, UInt32 program);
             [System.Runtime.InteropServices.DllImport(Gl.Library, EntryPoint = "glActiveTexture", ExactSpelling = true)]
-            internal extern static void ActiveTexture(OpenGL.TextureUnit texture);
+            internal extern static void ActiveTexture(Int32 texture);
             [System.Runtime.InteropServices.DllImport(Gl.Library, EntryPoint = "glAttachShader", ExactSpelling = true)]
             internal extern static void AttachShader(UInt32 program, UInt32 shader);
             [System.Runtime.InteropServices.DllImport(Gl.Library, EntryPoint = "glBeginConditionalRender", ExactSpelling = true)]
@@ -730,7 +730,7 @@ namespace OpenGL
             [System.Runtime.InteropServices.DllImport(Gl.Library, EntryPoint = "glProgramBinary", ExactSpelling = true)]
             internal extern static void ProgramBinary(UInt32 program, Int32 binaryFormat, IntPtr binary, Int32 length);
             [System.Runtime.InteropServices.DllImport(Gl.Library, EntryPoint = "glQueryCounter", ExactSpelling = true)]
-            internal extern static void QueryCounter(UInt32 id, Int32 target);
+            internal extern static void QueryCounter(UInt32 id, OpenGL.QueryTarget target);
             [System.Runtime.InteropServices.DllImport(Gl.Library, EntryPoint = "glReleaseShaderCompiler", ExactSpelling = true)]
             internal extern static void ReleaseShaderCompiler();
             [System.Runtime.InteropServices.DllImport(Gl.Library, EntryPoint = "glSamplerParameterf", ExactSpelling = true)]

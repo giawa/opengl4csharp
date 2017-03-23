@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.IO;
 
-namespace QueryOpenGL
+namespace BuildGlCore
 {
     class Program
     {
@@ -269,7 +269,7 @@ namespace OpenGL
 
                 return "OpenGL.PixelInternalFormat";
             }
-            if (glName == "texture" && functionName.Contains("Texture")) return "OpenGL.TextureUnit";
+            if (glName == "texture" && functionName.Contains("Texture")) return "Int32";
             if (glName == "mode" && functionName.Contains("ConditionalRender")) return "OpenGL.ConditionalRenderType";
             if (glName == "primitiveMode" && functionName.Contains("Feedback")) return "OpenGL.BeginFeedbackMode";
             if (glName == "identifier" && functionName.Contains("ObjectLabel")) return "OpenGL.ObjectLabel";

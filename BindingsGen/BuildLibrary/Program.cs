@@ -5,7 +5,7 @@ using System.Linq;
 
 //using OpenGL;
 
-namespace BuildGl
+namespace BuildLibrary
 {
     class Program
     {
@@ -84,6 +84,17 @@ namespace OpenGL
                             output.WriteLine(@"            return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Delegates.glGetString(name));");
                             output.WriteLine(@"        }");
                             output.WriteLine();
+                        }
+                    }
+                    else if (extension.Name.StartsWith("ActiveTexture"))
+                    {
+                        if (extension.Call.StartsWith("void ActiveTexture"))
+                        {
+                            output.WriteLine("        [Obsolete(\"ActiveTexture(TextureUnit) is deprecated, please use ActiveTexture(int) instead.\")]");
+                            output.WriteLine("        public static void ActiveTexture(OpenGL.TextureUnit texture)");
+                            output.WriteLine("        {");
+                            output.WriteLine("            Delegates.glActiveTexture((int)texture);");
+                            output.WriteLine("        }");
                         }
                     }
                     else

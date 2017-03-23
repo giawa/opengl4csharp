@@ -44,10 +44,18 @@ namespace OpenGLManPages
             using (StreamReader glCs = new StreamReader(@"Gl.cs"))
             using (StreamWriter output = new StreamWriter("GlDocumented.cs"))
             {
+                List<string> attributes = new List<string>();
+
                 while (!glCs.EndOfStream)
                 {
                     string line = glCs.ReadLine();
-                    if (line.StartsWith("        public static"))
+
+                    if (line.Trim().StartsWith("["))
+                    {
+                        attributes.Add(line);
+                        continue;
+                    }
+                    else if (line.StartsWith("        public static"))
                     {
                         // get the method name
                         string name = line.Substring(0, line.IndexOf('('));
@@ -81,7 +89,10 @@ namespace OpenGLManPages
                         else throw new Exception("Could not find documentation!");
                     }
 
+                    foreach (var attr in attributes) output.WriteLine(attr);
                     output.WriteLine(line);
+
+                    attributes.Clear();
                 }
             }
         }
