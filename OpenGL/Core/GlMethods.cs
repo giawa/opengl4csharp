@@ -164,6 +164,31 @@ namespace OpenGL
         }
 
         /// <summary>
+        /// Select a color buffer source for pixels.
+        /// <para>
+        /// glReadBuffer specifies a color buffer as the source for subsequent glReadPixels, glCopyTexImage1D,
+        /// glCopyTexImage2D, glCopyTexSubImage1D, glCopyTexSubImage2D, and glCopyTexSubImage3D commands. mode
+        /// accepts one of twelve or more predefined values. In a fully configured system, GL_FRONT, GL_LEFT,
+        /// and GL_FRONT_LEFT all name the front left buffer, GL_FRONT_RIGHT and GL_RIGHT name the front right
+        /// buffer, and GL_BACK_LEFT and GL_BACK name the back left buffer. Further more, the constants
+        /// GL_COLOR_ATTACHMENTi may be used to indicate the ith color attachment where i ranges from zero to
+        /// the value of GL_MAX_COLOR_ATTACHMENTS minus one.
+        /// </para>
+        /// </summary>
+        /// <param name="framebuffer">
+        /// Specifies the name of the framebuffer object for glNamedFramebufferReadBuffer function.
+        /// </param>
+        /// <param name="mode">
+        /// Specifies a color buffer. Accepted values are GL_FRONT_LEFT, GL_FRONT_RIGHT, GL_BACK_LEFT,
+        /// GL_BACK_RIGHT, GL_FRONT, GL_BACK, GL_LEFT, GL_RIGHT, and the constants GL_COLOR_ATTACHMENTi.
+        /// </param>
+        [Obsolete("NamedFramebufferReadBuffer(UInt32, BeginMode) is deprecated, please use NamedFramebufferReadBuffer(ReadBufferMode, BeginMode) instead.")]
+        public static void NamedFramebufferReadBuffer(UInt32 framebuffer, OpenGL.BeginMode mode)
+        {
+            Delegates.glNamedFramebufferReadBuffer((OpenGL.ReadBufferMode)framebuffer, mode);
+        }
+
+        /// <summary>
         /// Returns the boolean value of a selected parameter.
         /// </summary>
         /// <param name="pname">A parameter that returns a single boolean.</param>

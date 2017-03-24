@@ -42,7 +42,6 @@ namespace OpenGL
         {
             Delegates.glActiveTexture((int)texture);
         }
-
         /// <summary>
         /// Attaches a shader object to a program object.
         /// <para>
@@ -11040,7 +11039,7 @@ namespace OpenGL
         /// Specifies a color buffer. Accepted values are GL_FRONT_LEFT, GL_FRONT_RIGHT, GL_BACK_LEFT,
         /// GL_BACK_RIGHT, GL_FRONT, GL_BACK, GL_LEFT, GL_RIGHT, and the constants GL_COLOR_ATTACHMENTi.
         /// </param>
-        public static void NamedFramebufferReadBuffer(UInt32 framebuffer, OpenGL.BeginMode mode)
+        public static void NamedFramebufferReadBuffer(OpenGL.ReadBufferMode framebuffer, OpenGL.BeginMode mode)
         {
             Delegates.glNamedFramebufferReadBuffer(framebuffer, mode);
         }
