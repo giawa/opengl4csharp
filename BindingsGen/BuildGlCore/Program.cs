@@ -189,6 +189,7 @@ namespace OpenGL
         {
             if (functionName.Contains("Hint") && glName == "target") return "OpenGL.HintTarget";
             if (functionName.Contains("glTexParameter") && glName == "pname") return "OpenGL.TextureParameterName";
+            if (functionName.Contains("SamplerParameter") && glName == "pname") return "OpenGL.TextureParameterName";
 
             using (StreamReader stream = new StreamReader("../GlCoreOld.cs"))
             {

@@ -172,6 +172,11 @@ namespace OpenGLManPages
                 description = StripHTML(description);
                 description = description.Replace('\n', ' ').Trim(new char[] { ' ', '\t', '.' });
                 while (description.Contains("  ")) description = description.Replace("  ", " ");
+
+                // special case for math formatting from the man pages
+                if (description.Contains("clamped to the range 0 "))
+                    description = description.Replace("clamped to the range 0 ", "clamped to the range [0, ").Replace("1", "1]");
+
                 this.Description = string.Format("{0}{1}.", char.ToUpper(description[0]), description.Substring(1));
 
                 if (xhtmlCode.IndexOf("id=\"parameters\"") > 0)
@@ -205,8 +210,12 @@ namespace OpenGLManPages
                         string parameterText = xhtmlCode.Substring(xhtmlCode.IndexOf("<p>") + 3);
                         parameterText = parameterText.Substring(0, parameterText.IndexOf("</dd>"));
                         parameterText = parameterText.Replace('\n', ' ').Trim(new char[] { '\r', '\n', '\t', ' ' });
-                        while (parameterText.Contains("  ")) parameterText = parameterText.Replace("  ", " ");
                         parameterText = StripHTML(parameterText);
+                        while (parameterText.Contains("  ")) parameterText = parameterText.Replace("  ", " ");
+
+                        // special case for math formatting from the man pages
+                        if (parameterText.Contains("clamped to the range 0 "))
+                            parameterText = parameterText.Replace("clamped to the range 0 ", "clamped to the range [0, ").Replace("1 .", "1].").Replace("2 n - 1 ,", "2^n - 1],");
 
                         xhtmlCode = xhtmlCode.Substring(xhtmlCode.IndexOf("</dd"));
 

@@ -294,14 +294,14 @@ namespace OpenGL
         /// </summary>
         /// <param name="target">
         /// Specifies the target to which the buffer object is bound, which must be one of the buffer binding
-        /// targets in the following table:            Buffer Binding Target     Purpose        GL_ARRAY_BUFFER
-        /// Vertex attributes    GL_ATOMIC_COUNTER_BUFFER  Atomic counter storage    GL_COPY_READ_BUFFER  Buffer
-        /// copy source    GL_COPY_WRITE_BUFFER  Buffer copy destination    GL_DISPATCH_INDIRECT_BUFFER
-        /// Indirect compute dispatch commands    GL_DRAW_INDIRECT_BUFFER  Indirect command arguments
-        /// GL_ELEMENT_ARRAY_BUFFER  Vertex array indices    GL_PIXEL_PACK_BUFFER  Pixel read target
-        /// GL_PIXEL_UNPACK_BUFFER  Texture data source    GL_QUERY_BUFFER  Query result buffer
-        /// GL_SHADER_STORAGE_BUFFER  Read-write storage for shaders    GL_TEXTURE_BUFFER  Texture data buffer
-        /// GL_TRANSFORM_FEEDBACK_BUFFER  Transform feedback buffer    GL_UNIFORM_BUFFER  Uniform block storage
+        /// targets in the following table: Buffer Binding Target Purpose GL_ARRAY_BUFFER Vertex attributes
+        /// GL_ATOMIC_COUNTER_BUFFER Atomic counter storage GL_COPY_READ_BUFFER Buffer copy source
+        /// GL_COPY_WRITE_BUFFER Buffer copy destination GL_DISPATCH_INDIRECT_BUFFER Indirect compute dispatch
+        /// commands GL_DRAW_INDIRECT_BUFFER Indirect command arguments GL_ELEMENT_ARRAY_BUFFER Vertex array
+        /// indices GL_PIXEL_PACK_BUFFER Pixel read target GL_PIXEL_UNPACK_BUFFER Texture data source
+        /// GL_QUERY_BUFFER Query result buffer GL_SHADER_STORAGE_BUFFER Read-write storage for shaders
+        /// GL_TEXTURE_BUFFER Texture data buffer GL_TRANSFORM_FEEDBACK_BUFFER Transform feedback buffer
+        /// GL_UNIFORM_BUFFER Uniform block storage
         /// </param>
         /// <param name="buffer">
         /// Specifies the name of a buffer object.
@@ -890,7 +890,7 @@ namespace OpenGL
         /// Set the blend color.
         /// <para>
         /// The GL_BLEND_COLOR may be used to calculate the source and destination blending factors. The color
-        /// components are clamped to the range 0 1 before being stored. See glBlendFunc for a complete
+        /// components are clamped to the range [0, 1] before being stored. See glBlendFunc for a complete
         /// description of the blending operations. Initially the GL_BLEND_COLOR is set to (0, 0, 0, 0).
         /// </para>
         /// </summary>
@@ -1215,14 +1215,14 @@ namespace OpenGL
         /// </summary>
         /// <param name="target">
         /// Specifies the target to which the buffer object is bound for glBufferData, which must be one of the
-        /// buffer binding targets in the following table:            Buffer Binding Target     Purpose
-        /// GL_ARRAY_BUFFER  Vertex attributes    GL_ATOMIC_COUNTER_BUFFER  Atomic counter storage
-        /// GL_COPY_READ_BUFFER  Buffer copy source    GL_COPY_WRITE_BUFFER  Buffer copy destination
-        /// GL_DISPATCH_INDIRECT_BUFFER  Indirect compute dispatch commands    GL_DRAW_INDIRECT_BUFFER  Indirect
-        /// command arguments    GL_ELEMENT_ARRAY_BUFFER  Vertex array indices    GL_PIXEL_PACK_BUFFER  Pixel
-        /// read target    GL_PIXEL_UNPACK_BUFFER  Texture data source    GL_QUERY_BUFFER  Query result buffer
-        /// GL_SHADER_STORAGE_BUFFER  Read-write storage for shaders    GL_TEXTURE_BUFFER  Texture data buffer
-        /// GL_TRANSFORM_FEEDBACK_BUFFER  Transform feedback buffer    GL_UNIFORM_BUFFER  Uniform block storage
+        /// buffer binding targets in the following table: Buffer Binding Target Purpose GL_ARRAY_BUFFER Vertex
+        /// attributes GL_ATOMIC_COUNTER_BUFFER Atomic counter storage GL_COPY_READ_BUFFER Buffer copy source
+        /// GL_COPY_WRITE_BUFFER Buffer copy destination GL_DISPATCH_INDIRECT_BUFFER Indirect compute dispatch
+        /// commands GL_DRAW_INDIRECT_BUFFER Indirect command arguments GL_ELEMENT_ARRAY_BUFFER Vertex array
+        /// indices GL_PIXEL_PACK_BUFFER Pixel read target GL_PIXEL_UNPACK_BUFFER Texture data source
+        /// GL_QUERY_BUFFER Query result buffer GL_SHADER_STORAGE_BUFFER Read-write storage for shaders
+        /// GL_TEXTURE_BUFFER Texture data buffer GL_TRANSFORM_FEEDBACK_BUFFER Transform feedback buffer
+        /// GL_UNIFORM_BUFFER Uniform block storage
         /// </param>
         /// <param name="size">
         /// Specifies the size in bytes of the buffer object's new data store.
@@ -1281,14 +1281,14 @@ namespace OpenGL
         /// </summary>
         /// <param name="target">
         /// Specifies the target to which the buffer object is bound for glBufferStorage, which must be one of
-        /// the buffer binding targets in the following table:            Buffer Binding Target     Purpose
-        /// GL_ARRAY_BUFFER  Vertex attributes    GL_ATOMIC_COUNTER_BUFFER  Atomic counter storage
-        /// GL_COPY_READ_BUFFER  Buffer copy source    GL_COPY_WRITE_BUFFER  Buffer copy destination
-        /// GL_DISPATCH_INDIRECT_BUFFER  Indirect compute dispatch commands    GL_DRAW_INDIRECT_BUFFER  Indirect
-        /// command arguments    GL_ELEMENT_ARRAY_BUFFER  Vertex array indices    GL_PIXEL_PACK_BUFFER  Pixel
-        /// read target    GL_PIXEL_UNPACK_BUFFER  Texture data source    GL_QUERY_BUFFER  Query result buffer
-        /// GL_SHADER_STORAGE_BUFFER  Read-write storage for shaders    GL_TEXTURE_BUFFER  Texture data buffer
-        /// GL_TRANSFORM_FEEDBACK_BUFFER  Transform feedback buffer    GL_UNIFORM_BUFFER  Uniform block storage
+        /// the buffer binding targets in the following table: Buffer Binding Target Purpose GL_ARRAY_BUFFER
+        /// Vertex attributes GL_ATOMIC_COUNTER_BUFFER Atomic counter storage GL_COPY_READ_BUFFER Buffer copy
+        /// source GL_COPY_WRITE_BUFFER Buffer copy destination GL_DISPATCH_INDIRECT_BUFFER Indirect compute
+        /// dispatch commands GL_DRAW_INDIRECT_BUFFER Indirect command arguments GL_ELEMENT_ARRAY_BUFFER Vertex
+        /// array indices GL_PIXEL_PACK_BUFFER Pixel read target GL_PIXEL_UNPACK_BUFFER Texture data source
+        /// GL_QUERY_BUFFER Query result buffer GL_SHADER_STORAGE_BUFFER Read-write storage for shaders
+        /// GL_TEXTURE_BUFFER Texture data buffer GL_TRANSFORM_FEEDBACK_BUFFER Transform feedback buffer
+        /// GL_UNIFORM_BUFFER Uniform block storage
         /// </param>
         /// <param name="size">
         /// Specifies the size in bytes of the buffer object's new data store.
@@ -1348,14 +1348,14 @@ namespace OpenGL
         /// </summary>
         /// <param name="target">
         /// Specifies the target to which the buffer object is bound for glBufferSubData, which must be one of
-        /// the buffer binding targets in the following table:            Buffer Binding Target     Purpose
-        /// GL_ARRAY_BUFFER  Vertex attributes    GL_ATOMIC_COUNTER_BUFFER  Atomic counter storage
-        /// GL_COPY_READ_BUFFER  Buffer copy source    GL_COPY_WRITE_BUFFER  Buffer copy destination
-        /// GL_DISPATCH_INDIRECT_BUFFER  Indirect compute dispatch commands    GL_DRAW_INDIRECT_BUFFER  Indirect
-        /// command arguments    GL_ELEMENT_ARRAY_BUFFER  Vertex array indices    GL_PIXEL_PACK_BUFFER  Pixel
-        /// read target    GL_PIXEL_UNPACK_BUFFER  Texture data source    GL_QUERY_BUFFER  Query result buffer
-        /// GL_SHADER_STORAGE_BUFFER  Read-write storage for shaders    GL_TEXTURE_BUFFER  Texture data buffer
-        /// GL_TRANSFORM_FEEDBACK_BUFFER  Transform feedback buffer    GL_UNIFORM_BUFFER  Uniform block storage
+        /// the buffer binding targets in the following table: Buffer Binding Target Purpose GL_ARRAY_BUFFER
+        /// Vertex attributes GL_ATOMIC_COUNTER_BUFFER Atomic counter storage GL_COPY_READ_BUFFER Buffer copy
+        /// source GL_COPY_WRITE_BUFFER Buffer copy destination GL_DISPATCH_INDIRECT_BUFFER Indirect compute
+        /// dispatch commands GL_DRAW_INDIRECT_BUFFER Indirect command arguments GL_ELEMENT_ARRAY_BUFFER Vertex
+        /// array indices GL_PIXEL_PACK_BUFFER Pixel read target GL_PIXEL_UNPACK_BUFFER Texture data source
+        /// GL_QUERY_BUFFER Query result buffer GL_SHADER_STORAGE_BUFFER Read-write storage for shaders
+        /// GL_TEXTURE_BUFFER Texture data buffer GL_TRANSFORM_FEEDBACK_BUFFER Transform feedback buffer
+        /// GL_UNIFORM_BUFFER Uniform block storage
         /// </param>
         /// <param name="offset">
         /// Specifies the offset into the buffer object's data store where data replacement will begin, measured
@@ -1674,14 +1674,14 @@ namespace OpenGL
         /// </summary>
         /// <param name="target">
         /// Specifies the target to which the buffer object is bound for glClearBufferData, which must must be
-        /// one of the buffer binding targets in the following table:            Buffer Binding Target
-        /// Purpose        GL_ARRAY_BUFFER  Vertex attributes    GL_ATOMIC_COUNTER_BUFFER  Atomic counter
-        /// storage    GL_COPY_READ_BUFFER  Buffer copy source    GL_COPY_WRITE_BUFFER  Buffer copy destination
-        /// GL_DISPATCH_INDIRECT_BUFFER  Indirect compute dispatch commands    GL_DRAW_INDIRECT_BUFFER  Indirect
-        /// command arguments    GL_ELEMENT_ARRAY_BUFFER  Vertex array indices    GL_PIXEL_PACK_BUFFER  Pixel
-        /// read target    GL_PIXEL_UNPACK_BUFFER  Texture data source    GL_QUERY_BUFFER  Query result buffer
-        /// GL_SHADER_STORAGE_BUFFER  Read-write storage for shaders    GL_TEXTURE_BUFFER  Texture data buffer
-        /// GL_TRANSFORM_FEEDBACK_BUFFER  Transform feedback buffer    GL_UNIFORM_BUFFER  Uniform block storage
+        /// one of the buffer binding targets in the following table: Buffer Binding Target Purpose
+        /// GL_ARRAY_BUFFER Vertex attributes GL_ATOMIC_COUNTER_BUFFER Atomic counter storage
+        /// GL_COPY_READ_BUFFER Buffer copy source GL_COPY_WRITE_BUFFER Buffer copy destination
+        /// GL_DISPATCH_INDIRECT_BUFFER Indirect compute dispatch commands GL_DRAW_INDIRECT_BUFFER Indirect
+        /// command arguments GL_ELEMENT_ARRAY_BUFFER Vertex array indices GL_PIXEL_PACK_BUFFER Pixel read
+        /// target GL_PIXEL_UNPACK_BUFFER Texture data source GL_QUERY_BUFFER Query result buffer
+        /// GL_SHADER_STORAGE_BUFFER Read-write storage for shaders GL_TEXTURE_BUFFER Texture data buffer
+        /// GL_TRANSFORM_FEEDBACK_BUFFER Transform feedback buffer GL_UNIFORM_BUFFER Uniform block storage
         /// </param>
         /// <param name="internalFormat">
         /// The internal format with which the data will be stored in the buffer object.
@@ -1736,14 +1736,14 @@ namespace OpenGL
         /// </summary>
         /// <param name="target">
         /// Specifies the target to which the buffer object is bound for glClearBufferSubData, which must be one
-        /// of the buffer binding targets in the following table:            Buffer Binding Target     Purpose
-        /// GL_ARRAY_BUFFER  Vertex attributes    GL_ATOMIC_COUNTER_BUFFER  Atomic counter storage
-        /// GL_COPY_READ_BUFFER  Buffer copy source    GL_COPY_WRITE_BUFFER  Buffer copy destination
-        /// GL_DISPATCH_INDIRECT_BUFFER  Indirect compute dispatch commands    GL_DRAW_INDIRECT_BUFFER  Indirect
-        /// command arguments    GL_ELEMENT_ARRAY_BUFFER  Vertex array indices    GL_PIXEL_PACK_BUFFER  Pixel
-        /// read target    GL_PIXEL_UNPACK_BUFFER  Texture data source    GL_QUERY_BUFFER  Query result buffer
-        /// GL_SHADER_STORAGE_BUFFER  Read-write storage for shaders    GL_TEXTURE_BUFFER  Texture data buffer
-        /// GL_TRANSFORM_FEEDBACK_BUFFER  Transform feedback buffer    GL_UNIFORM_BUFFER  Uniform block storage
+        /// of the buffer binding targets in the following table: Buffer Binding Target Purpose GL_ARRAY_BUFFER
+        /// Vertex attributes GL_ATOMIC_COUNTER_BUFFER Atomic counter storage GL_COPY_READ_BUFFER Buffer copy
+        /// source GL_COPY_WRITE_BUFFER Buffer copy destination GL_DISPATCH_INDIRECT_BUFFER Indirect compute
+        /// dispatch commands GL_DRAW_INDIRECT_BUFFER Indirect command arguments GL_ELEMENT_ARRAY_BUFFER Vertex
+        /// array indices GL_PIXEL_PACK_BUFFER Pixel read target GL_PIXEL_UNPACK_BUFFER Texture data source
+        /// GL_QUERY_BUFFER Query result buffer GL_SHADER_STORAGE_BUFFER Read-write storage for shaders
+        /// GL_TEXTURE_BUFFER Texture data buffer GL_TRANSFORM_FEEDBACK_BUFFER Transform feedback buffer
+        /// GL_UNIFORM_BUFFER Uniform block storage
         /// </param>
         /// <param name="internalFormat">
         /// The internal format with which the data will be stored in the buffer object.
@@ -1805,7 +1805,7 @@ namespace OpenGL
         /// Specify clear values for the color buffers.
         /// <para>
         /// glClearColor specifies the red, green, blue, and alpha values used by glClear to clear the color
-        /// buffers. Values specified by glClearColor are clamped to the range 0 1.
+        /// buffers. Values specified by glClearColor are clamped to the range [0, 1].
         /// </para>
         /// </summary>
         /// <param name="red">
@@ -1833,7 +1833,7 @@ namespace OpenGL
         /// Specify the clear value for the depth buffer.
         /// <para>
         /// glClearDepth specifies the depth value used by glClear to clear the depth buffer. Values specified
-        /// by glClearDepth are clamped to the range 0 1.
+        /// by glClearDepth are clamped to the range [0, 1].
         /// </para>
         /// </summary>
         /// <param name="depth">
@@ -1848,7 +1848,7 @@ namespace OpenGL
         /// Specify the clear value for the depth buffer.
         /// <para>
         /// glClearDepth specifies the depth value used by glClear to clear the depth buffer. Values specified
-        /// by glClearDepth are clamped to the range 0 1.
+        /// by glClearDepth are clamped to the range [0, 1].
         /// </para>
         /// </summary>
         /// <param name="depth">
@@ -4454,14 +4454,14 @@ namespace OpenGL
         /// </summary>
         /// <param name="target">
         /// Specifies the target to which the buffer object is bound for glFlushMappedBufferRange, which must be
-        /// one of the buffer binding targets in the following table:            Buffer Binding Target
-        /// Purpose        GL_ARRAY_BUFFER  Vertex attributes    GL_ATOMIC_COUNTER_BUFFER  Atomic counter
-        /// storage    GL_COPY_READ_BUFFER  Buffer copy source    GL_COPY_WRITE_BUFFER  Buffer copy destination
-        /// GL_DISPATCH_INDIRECT_BUFFER  Indirect compute dispatch commands    GL_DRAW_INDIRECT_BUFFER  Indirect
-        /// command arguments    GL_ELEMENT_ARRAY_BUFFER  Vertex array indices    GL_PIXEL_PACK_BUFFER  Pixel
-        /// read target    GL_PIXEL_UNPACK_BUFFER  Texture data source    GL_QUERY_BUFFER  Query result buffer
-        /// GL_SHADER_STORAGE_BUFFER  Read-write storage for shaders    GL_TEXTURE_BUFFER  Texture data buffer
-        /// GL_TRANSFORM_FEEDBACK_BUFFER  Transform feedback buffer    GL_UNIFORM_BUFFER  Uniform block storage
+        /// one of the buffer binding targets in the following table: Buffer Binding Target Purpose
+        /// GL_ARRAY_BUFFER Vertex attributes GL_ATOMIC_COUNTER_BUFFER Atomic counter storage
+        /// GL_COPY_READ_BUFFER Buffer copy source GL_COPY_WRITE_BUFFER Buffer copy destination
+        /// GL_DISPATCH_INDIRECT_BUFFER Indirect compute dispatch commands GL_DRAW_INDIRECT_BUFFER Indirect
+        /// command arguments GL_ELEMENT_ARRAY_BUFFER Vertex array indices GL_PIXEL_PACK_BUFFER Pixel read
+        /// target GL_PIXEL_UNPACK_BUFFER Texture data source GL_QUERY_BUFFER Query result buffer
+        /// GL_SHADER_STORAGE_BUFFER Read-write storage for shaders GL_TEXTURE_BUFFER Texture data buffer
+        /// GL_TRANSFORM_FEEDBACK_BUFFER Transform feedback buffer GL_UNIFORM_BUFFER Uniform block storage
         /// </param>
         /// <param name="offset">
         /// Specifies the start of the buffer subrange, in basic machine units.
@@ -5757,15 +5757,14 @@ namespace OpenGL
         /// </summary>
         /// <param name="target">
         /// Specifies the target to which the buffer object is bound for glGetBufferParameteriv and
-        /// glGetBufferParameteri64v. Must be one of the buffer binding targets in the following table:
-        /// Buffer Binding Target     Purpose        GL_ARRAY_BUFFER  Vertex attributes
-        /// GL_ATOMIC_COUNTER_BUFFER  Atomic counter storage    GL_COPY_READ_BUFFER  Buffer copy source
-        /// GL_COPY_WRITE_BUFFER  Buffer copy destination    GL_DISPATCH_INDIRECT_BUFFER  Indirect compute
-        /// dispatch commands    GL_DRAW_INDIRECT_BUFFER  Indirect command arguments    GL_ELEMENT_ARRAY_BUFFER
-        /// Vertex array indices    GL_PIXEL_PACK_BUFFER  Pixel read target    GL_PIXEL_UNPACK_BUFFER  Texture
-        /// data source    GL_QUERY_BUFFER  Query result buffer    GL_SHADER_STORAGE_BUFFER  Read-write storage
-        /// for shaders    GL_TEXTURE_BUFFER  Texture data buffer    GL_TRANSFORM_FEEDBACK_BUFFER  Transform
-        /// feedback buffer    GL_UNIFORM_BUFFER  Uniform block storage
+        /// glGetBufferParameteri64v. Must be one of the buffer binding targets in the following table: Buffer
+        /// Binding Target Purpose GL_ARRAY_BUFFER Vertex attributes GL_ATOMIC_COUNTER_BUFFER Atomic counter
+        /// storage GL_COPY_READ_BUFFER Buffer copy source GL_COPY_WRITE_BUFFER Buffer copy destination
+        /// GL_DISPATCH_INDIRECT_BUFFER Indirect compute dispatch commands GL_DRAW_INDIRECT_BUFFER Indirect
+        /// command arguments GL_ELEMENT_ARRAY_BUFFER Vertex array indices GL_PIXEL_PACK_BUFFER Pixel read
+        /// target GL_PIXEL_UNPACK_BUFFER Texture data source GL_QUERY_BUFFER Query result buffer
+        /// GL_SHADER_STORAGE_BUFFER Read-write storage for shaders GL_TEXTURE_BUFFER Texture data buffer
+        /// GL_TRANSFORM_FEEDBACK_BUFFER Transform feedback buffer GL_UNIFORM_BUFFER Uniform block storage
         /// </param>
         /// <param name="value">
         /// Specifies the name of the buffer object parameter to query.
@@ -5786,15 +5785,14 @@ namespace OpenGL
         /// </summary>
         /// <param name="target">
         /// Specifies the target to which the buffer object is bound for glGetBufferParameteriv and
-        /// glGetBufferParameteri64v. Must be one of the buffer binding targets in the following table:
-        /// Buffer Binding Target     Purpose        GL_ARRAY_BUFFER  Vertex attributes
-        /// GL_ATOMIC_COUNTER_BUFFER  Atomic counter storage    GL_COPY_READ_BUFFER  Buffer copy source
-        /// GL_COPY_WRITE_BUFFER  Buffer copy destination    GL_DISPATCH_INDIRECT_BUFFER  Indirect compute
-        /// dispatch commands    GL_DRAW_INDIRECT_BUFFER  Indirect command arguments    GL_ELEMENT_ARRAY_BUFFER
-        /// Vertex array indices    GL_PIXEL_PACK_BUFFER  Pixel read target    GL_PIXEL_UNPACK_BUFFER  Texture
-        /// data source    GL_QUERY_BUFFER  Query result buffer    GL_SHADER_STORAGE_BUFFER  Read-write storage
-        /// for shaders    GL_TEXTURE_BUFFER  Texture data buffer    GL_TRANSFORM_FEEDBACK_BUFFER  Transform
-        /// feedback buffer    GL_UNIFORM_BUFFER  Uniform block storage
+        /// glGetBufferParameteri64v. Must be one of the buffer binding targets in the following table: Buffer
+        /// Binding Target Purpose GL_ARRAY_BUFFER Vertex attributes GL_ATOMIC_COUNTER_BUFFER Atomic counter
+        /// storage GL_COPY_READ_BUFFER Buffer copy source GL_COPY_WRITE_BUFFER Buffer copy destination
+        /// GL_DISPATCH_INDIRECT_BUFFER Indirect compute dispatch commands GL_DRAW_INDIRECT_BUFFER Indirect
+        /// command arguments GL_ELEMENT_ARRAY_BUFFER Vertex array indices GL_PIXEL_PACK_BUFFER Pixel read
+        /// target GL_PIXEL_UNPACK_BUFFER Texture data source GL_QUERY_BUFFER Query result buffer
+        /// GL_SHADER_STORAGE_BUFFER Read-write storage for shaders GL_TEXTURE_BUFFER Texture data buffer
+        /// GL_TRANSFORM_FEEDBACK_BUFFER Transform feedback buffer GL_UNIFORM_BUFFER Uniform block storage
         /// </param>
         /// <param name="value">
         /// Specifies the name of the buffer object parameter to query.
@@ -5849,14 +5847,14 @@ namespace OpenGL
         /// </summary>
         /// <param name="target">
         /// Specifies the target to which the buffer object is bound for glGetBufferPointerv, which must be one
-        /// of the buffer binding targets in the following table:            Buffer Binding Target     Purpose
-        /// GL_ARRAY_BUFFER  Vertex attributes    GL_ATOMIC_COUNTER_BUFFER  Atomic counter storage
-        /// GL_COPY_READ_BUFFER  Buffer copy source    GL_COPY_WRITE_BUFFER  Buffer copy destination
-        /// GL_DISPATCH_INDIRECT_BUFFER  Indirect compute dispatch commands    GL_DRAW_INDIRECT_BUFFER  Indirect
-        /// command arguments    GL_ELEMENT_ARRAY_BUFFER  Vertex array indices    GL_PIXEL_PACK_BUFFER  Pixel
-        /// read target    GL_PIXEL_UNPACK_BUFFER  Texture data source    GL_QUERY_BUFFER  Query result buffer
-        /// GL_SHADER_STORAGE_BUFFER  Read-write storage for shaders    GL_TEXTURE_BUFFER  Texture data buffer
-        /// GL_TRANSFORM_FEEDBACK_BUFFER  Transform feedback buffer    GL_UNIFORM_BUFFER  Uniform block storage
+        /// of the buffer binding targets in the following table: Buffer Binding Target Purpose GL_ARRAY_BUFFER
+        /// Vertex attributes GL_ATOMIC_COUNTER_BUFFER Atomic counter storage GL_COPY_READ_BUFFER Buffer copy
+        /// source GL_COPY_WRITE_BUFFER Buffer copy destination GL_DISPATCH_INDIRECT_BUFFER Indirect compute
+        /// dispatch commands GL_DRAW_INDIRECT_BUFFER Indirect command arguments GL_ELEMENT_ARRAY_BUFFER Vertex
+        /// array indices GL_PIXEL_PACK_BUFFER Pixel read target GL_PIXEL_UNPACK_BUFFER Texture data source
+        /// GL_QUERY_BUFFER Query result buffer GL_SHADER_STORAGE_BUFFER Read-write storage for shaders
+        /// GL_TEXTURE_BUFFER Texture data buffer GL_TRANSFORM_FEEDBACK_BUFFER Transform feedback buffer
+        /// GL_UNIFORM_BUFFER Uniform block storage
         /// </param>
         /// <param name="pname">
         /// Specifies the name of the pointer to be returned. Must be GL_BUFFER_MAP_POINTER.
@@ -5905,14 +5903,14 @@ namespace OpenGL
         /// </summary>
         /// <param name="target">
         /// Specifies the target to which the buffer object is bound for glGetBufferSubData, which must be one
-        /// of the buffer binding targets in the following table:            Buffer Binding Target     Purpose
-        /// GL_ARRAY_BUFFER  Vertex attributes    GL_ATOMIC_COUNTER_BUFFER  Atomic counter storage
-        /// GL_COPY_READ_BUFFER  Buffer copy source    GL_COPY_WRITE_BUFFER  Buffer copy destination
-        /// GL_DISPATCH_INDIRECT_BUFFER  Indirect compute dispatch commands    GL_DRAW_INDIRECT_BUFFER  Indirect
-        /// command arguments    GL_ELEMENT_ARRAY_BUFFER  Vertex array indices    GL_PIXEL_PACK_BUFFER  Pixel
-        /// read target    GL_PIXEL_UNPACK_BUFFER  Texture data source    GL_QUERY_BUFFER  Query result buffer
-        /// GL_SHADER_STORAGE_BUFFER  Read-write storage for shaders    GL_TEXTURE_BUFFER  Texture data buffer
-        /// GL_TRANSFORM_FEEDBACK_BUFFER  Transform feedback buffer    GL_UNIFORM_BUFFER  Uniform block storage
+        /// of the buffer binding targets in the following table: Buffer Binding Target Purpose GL_ARRAY_BUFFER
+        /// Vertex attributes GL_ATOMIC_COUNTER_BUFFER Atomic counter storage GL_COPY_READ_BUFFER Buffer copy
+        /// source GL_COPY_WRITE_BUFFER Buffer copy destination GL_DISPATCH_INDIRECT_BUFFER Indirect compute
+        /// dispatch commands GL_DRAW_INDIRECT_BUFFER Indirect command arguments GL_ELEMENT_ARRAY_BUFFER Vertex
+        /// array indices GL_PIXEL_PACK_BUFFER Pixel read target GL_PIXEL_UNPACK_BUFFER Texture data source
+        /// GL_QUERY_BUFFER Query result buffer GL_SHADER_STORAGE_BUFFER Read-write storage for shaders
+        /// GL_TEXTURE_BUFFER Texture data buffer GL_TRANSFORM_FEEDBACK_BUFFER Transform feedback buffer
+        /// GL_UNIFORM_BUFFER Uniform block storage
         /// </param>
         /// <param name="offset">
         /// Specifies the offset into the buffer object's data store from which data will be returned, measured
@@ -6949,7 +6947,7 @@ namespace OpenGL
         /// <param name="params">
         /// Returns the sampler parameters.
         /// </param>
-        public static void GetSamplerParameterfv(UInt32 sampler, Int32 pname, [OutAttribute] Single[] @params)
+        public static void GetSamplerParameterfv(UInt32 sampler, OpenGL.TextureParameterName pname, [OutAttribute] Single[] @params)
         {
             Delegates.glGetSamplerParameterfv(sampler, pname, @params);
         }
@@ -6975,7 +6973,7 @@ namespace OpenGL
         /// <param name="params">
         /// Returns the sampler parameters.
         /// </param>
-        public static void GetSamplerParameteriv(UInt32 sampler, Int32 pname, [OutAttribute] Int32[] @params)
+        public static void GetSamplerParameteriv(UInt32 sampler, OpenGL.TextureParameterName pname, [OutAttribute] Int32[] @params)
         {
             Delegates.glGetSamplerParameteriv(sampler, pname, @params);
         }
@@ -9349,14 +9347,14 @@ namespace OpenGL
         /// </summary>
         /// <param name="target">
         /// Specifies the target to which the buffer object is bound for glMapBuffer, which must be one of the
-        /// buffer binding targets in the following table:            Buffer Binding Target     Purpose
-        /// GL_ARRAY_BUFFER  Vertex attributes    GL_ATOMIC_COUNTER_BUFFER  Atomic counter storage
-        /// GL_COPY_READ_BUFFER  Buffer copy source    GL_COPY_WRITE_BUFFER  Buffer copy destination
-        /// GL_DISPATCH_INDIRECT_BUFFER  Indirect compute dispatch commands    GL_DRAW_INDIRECT_BUFFER  Indirect
-        /// command arguments    GL_ELEMENT_ARRAY_BUFFER  Vertex array indices    GL_PIXEL_PACK_BUFFER  Pixel
-        /// read target    GL_PIXEL_UNPACK_BUFFER  Texture data source    GL_QUERY_BUFFER  Query result buffer
-        /// GL_SHADER_STORAGE_BUFFER  Read-write storage for shaders    GL_TEXTURE_BUFFER  Texture data buffer
-        /// GL_TRANSFORM_FEEDBACK_BUFFER  Transform feedback buffer    GL_UNIFORM_BUFFER  Uniform block storage
+        /// buffer binding targets in the following table: Buffer Binding Target Purpose GL_ARRAY_BUFFER Vertex
+        /// attributes GL_ATOMIC_COUNTER_BUFFER Atomic counter storage GL_COPY_READ_BUFFER Buffer copy source
+        /// GL_COPY_WRITE_BUFFER Buffer copy destination GL_DISPATCH_INDIRECT_BUFFER Indirect compute dispatch
+        /// commands GL_DRAW_INDIRECT_BUFFER Indirect command arguments GL_ELEMENT_ARRAY_BUFFER Vertex array
+        /// indices GL_PIXEL_PACK_BUFFER Pixel read target GL_PIXEL_UNPACK_BUFFER Texture data source
+        /// GL_QUERY_BUFFER Query result buffer GL_SHADER_STORAGE_BUFFER Read-write storage for shaders
+        /// GL_TEXTURE_BUFFER Texture data buffer GL_TRANSFORM_FEEDBACK_BUFFER Transform feedback buffer
+        /// GL_UNIFORM_BUFFER Uniform block storage
         /// </param>
         /// <param name="access">
         /// Specifies the access policy for glMapBuffer and glMapNamedBuffer, indicating whether it will be
@@ -9400,14 +9398,14 @@ namespace OpenGL
         /// </summary>
         /// <param name="target">
         /// Specifies the target to which the buffer object is bound for glMapBufferRange, which must be one of
-        /// the buffer binding targets in the following table:            Buffer Binding Target     Purpose
-        /// GL_ARRAY_BUFFER  Vertex attributes    GL_ATOMIC_COUNTER_BUFFER  Atomic counter storage
-        /// GL_COPY_READ_BUFFER  Buffer copy source    GL_COPY_WRITE_BUFFER  Buffer copy destination
-        /// GL_DISPATCH_INDIRECT_BUFFER  Indirect compute dispatch commands    GL_DRAW_INDIRECT_BUFFER  Indirect
-        /// command arguments    GL_ELEMENT_ARRAY_BUFFER  Vertex array indices    GL_PIXEL_PACK_BUFFER  Pixel
-        /// read target    GL_PIXEL_UNPACK_BUFFER  Texture data source    GL_QUERY_BUFFER  Query result buffer
-        /// GL_SHADER_STORAGE_BUFFER  Read-write storage for shaders    GL_TEXTURE_BUFFER  Texture data buffer
-        /// GL_TRANSFORM_FEEDBACK_BUFFER  Transform feedback buffer    GL_UNIFORM_BUFFER  Uniform block storage
+        /// the buffer binding targets in the following table: Buffer Binding Target Purpose GL_ARRAY_BUFFER
+        /// Vertex attributes GL_ATOMIC_COUNTER_BUFFER Atomic counter storage GL_COPY_READ_BUFFER Buffer copy
+        /// source GL_COPY_WRITE_BUFFER Buffer copy destination GL_DISPATCH_INDIRECT_BUFFER Indirect compute
+        /// dispatch commands GL_DRAW_INDIRECT_BUFFER Indirect command arguments GL_ELEMENT_ARRAY_BUFFER Vertex
+        /// array indices GL_PIXEL_PACK_BUFFER Pixel read target GL_PIXEL_UNPACK_BUFFER Texture data source
+        /// GL_QUERY_BUFFER Query result buffer GL_SHADER_STORAGE_BUFFER Read-write storage for shaders
+        /// GL_TEXTURE_BUFFER Texture data buffer GL_TRANSFORM_FEEDBACK_BUFFER Transform feedback buffer
+        /// GL_UNIFORM_BUFFER Uniform block storage
         /// </param>
         /// <param name="offset">
         /// Specifies the starting offset within the buffer of the range to be mapped.
@@ -9458,14 +9456,14 @@ namespace OpenGL
         /// </para>
         /// </summary>
         /// <param name="barriers">
-        /// Specifies the barriers to insert.   For glMemoryBarrier, must be a bitwise combination of any of
+        /// Specifies the barriers to insert. For glMemoryBarrier, must be a bitwise combination of any of
         /// GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT, GL_ELEMENT_ARRAY_BARRIER_BIT, GL_UNIFORM_BARRIER_BIT,
         /// GL_TEXTURE_FETCH_BARRIER_BIT, GL_SHADER_IMAGE_ACCESS_BARRIER_BIT, GL_COMMAND_BARRIER_BIT,
         /// GL_PIXEL_BUFFER_BARRIER_BIT, GL_TEXTURE_UPDATE_BARRIER_BIT, GL_BUFFER_UPDATE_BARRIER_BIT,
         /// GL_FRAMEBUFFER_BARRIER_BIT, GL_TRANSFORM_FEEDBACK_BARRIER_BIT, GL_ATOMIC_COUNTER_BARRIER_BIT, or
-        /// GL_SHADER_STORAGE_BARRIER_BIT.   For glMemoryBarrier, must be a bitwise combination of any of
+        /// GL_SHADER_STORAGE_BARRIER_BIT. For glMemoryBarrier, must be a bitwise combination of any of
         /// GL_ATOMIC_COUNTER_BARRIER_BIT, or GL_FRAMEBUFFER_BARRIER_BIT, GL_SHADER_IMAGE_ACCESS_BARRIER_BIT,
-        /// GL_SHADER_STORAGE_BARRIER_BIT. GL_TEXTURE_FETCH_BARRIER_BIT, or GL_UNIFORM_BARRIER_BIT.   If the
+        /// GL_SHADER_STORAGE_BARRIER_BIT. GL_TEXTURE_FETCH_BARRIER_BIT, or GL_UNIFORM_BARRIER_BIT. If the
         /// special value GL_ALL_BARRIER_BITS is specified, all supported barriers for the corresponding command
         /// will be inserted.
         /// </param>
@@ -9483,14 +9481,14 @@ namespace OpenGL
         /// </para>
         /// </summary>
         /// <param name="barriers">
-        /// Specifies the barriers to insert.   For glMemoryBarrier, must be a bitwise combination of any of
+        /// Specifies the barriers to insert. For glMemoryBarrier, must be a bitwise combination of any of
         /// GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT, GL_ELEMENT_ARRAY_BARRIER_BIT, GL_UNIFORM_BARRIER_BIT,
         /// GL_TEXTURE_FETCH_BARRIER_BIT, GL_SHADER_IMAGE_ACCESS_BARRIER_BIT, GL_COMMAND_BARRIER_BIT,
         /// GL_PIXEL_BUFFER_BARRIER_BIT, GL_TEXTURE_UPDATE_BARRIER_BIT, GL_BUFFER_UPDATE_BARRIER_BIT,
         /// GL_FRAMEBUFFER_BARRIER_BIT, GL_TRANSFORM_FEEDBACK_BARRIER_BIT, GL_ATOMIC_COUNTER_BARRIER_BIT, or
-        /// GL_SHADER_STORAGE_BARRIER_BIT.   For glMemoryBarrier, must be a bitwise combination of any of
+        /// GL_SHADER_STORAGE_BARRIER_BIT. For glMemoryBarrier, must be a bitwise combination of any of
         /// GL_ATOMIC_COUNTER_BARRIER_BIT, or GL_FRAMEBUFFER_BARRIER_BIT, GL_SHADER_IMAGE_ACCESS_BARRIER_BIT,
-        /// GL_SHADER_STORAGE_BARRIER_BIT. GL_TEXTURE_FETCH_BARRIER_BIT, or GL_UNIFORM_BARRIER_BIT.   If the
+        /// GL_SHADER_STORAGE_BARRIER_BIT. GL_TEXTURE_FETCH_BARRIER_BIT, or GL_UNIFORM_BARRIER_BIT. If the
         /// special value GL_ALL_BARRIER_BITS is specified, all supported barriers for the corresponding command
         /// will be inserted.
         /// </param>
@@ -10357,7 +10355,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10387,7 +10385,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10417,7 +10415,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10447,7 +10445,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10477,7 +10475,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10507,7 +10505,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10537,7 +10535,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10567,7 +10565,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10597,7 +10595,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10627,7 +10625,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10657,7 +10655,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10687,7 +10685,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10717,7 +10715,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10751,7 +10749,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10785,7 +10783,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10819,7 +10817,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10853,7 +10851,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10887,7 +10885,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10921,7 +10919,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10955,7 +10953,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -10989,7 +10987,7 @@ namespace OpenGL
         /// <param name="count">
         /// For the vector commands (glProgramUniform*v), specifies the number of elements that are to be
         /// modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is
-        /// an array.   For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
+        /// an array. For the matrix commands (glProgramUniformMatrix*), specifies the number of matrices that
         /// are to be modified. This should be 1 if the targeted uniform variable is not an array of matrices,
         /// and 1 or more if it is an array of matrices.
         /// </param>
@@ -11302,8 +11300,8 @@ namespace OpenGL
         /// </para>
         /// </summary>
         /// <param name="value">
-        /// Specify a single floating-point sample coverage value. The value is clamped to the range   0 1  .
-        /// The initial value is 1.0.
+        /// Specify a single floating-point sample coverage value. The value is clamped to the range [0, 1]. The
+        /// initial value is 1.0.
         /// </param>
         /// <param name="invert">
         /// Specify a single boolean value representing if the coverage masks should be inverted. GL_TRUE and
@@ -11351,7 +11349,7 @@ namespace OpenGL
         /// <param name="param">
         /// For the scalar commands, specifies the value of pname.
         /// </param>
-        public static void SamplerParameterf(UInt32 sampler, Int32 pname, Single param)
+        public static void SamplerParameterf(UInt32 sampler, OpenGL.TextureParameterName pname, Single param)
         {
             Delegates.glSamplerParameterf(sampler, pname, param);
         }
@@ -11376,7 +11374,7 @@ namespace OpenGL
         /// <param name="param">
         /// For the scalar commands, specifies the value of pname.
         /// </param>
-        public static void SamplerParameteri(UInt32 sampler, Int32 pname, Int32 param)
+        public static void SamplerParameteri(UInt32 sampler, OpenGL.TextureParameterName pname, Int32 param)
         {
             Delegates.glSamplerParameteri(sampler, pname, param);
         }
@@ -11402,7 +11400,7 @@ namespace OpenGL
         /// For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or
         /// values of pname are stored.
         /// </param>
-        public static void SamplerParameterfv(UInt32 sampler, Int32 pname, Single[] @params)
+        public static void SamplerParameterfv(UInt32 sampler, OpenGL.TextureParameterName pname, Single[] @params)
         {
             Delegates.glSamplerParameterfv(sampler, pname, @params);
         }
@@ -11428,7 +11426,7 @@ namespace OpenGL
         /// For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or
         /// values of pname are stored.
         /// </param>
-        public static void SamplerParameteriv(UInt32 sampler, Int32 pname, Int32[] @params)
+        public static void SamplerParameteriv(UInt32 sampler, OpenGL.TextureParameterName pname, Int32[] @params)
         {
             Delegates.glSamplerParameteriv(sampler, pname, @params);
         }
@@ -11692,8 +11690,8 @@ namespace OpenGL
         /// GL_GREATER, GL_GEQUAL, GL_EQUAL, GL_NOTEQUAL, and GL_ALWAYS. The initial value is GL_ALWAYS.
         /// </param>
         /// <param name="ref">
-        /// Specifies the reference value for the stencil test. ref is clamped to the range   0  2 n  - 1   ,
-        /// where n is the number of bitplanes in the stencil buffer. The initial value is 0.
+        /// Specifies the reference value for the stencil test. ref is clamped to the range [0, 2^n - 1], where
+        /// n is the number of bitplanes in the stencil buffer. The initial value is 0.
         /// </param>
         /// <param name="mask">
         /// Specifies a mask that is ANDed with both the reference value and the stored stencil value when the
@@ -11723,8 +11721,8 @@ namespace OpenGL
         /// GL_GREATER, GL_GEQUAL, GL_EQUAL, GL_NOTEQUAL, and GL_ALWAYS. The initial value is GL_ALWAYS.
         /// </param>
         /// <param name="ref">
-        /// Specifies the reference value for the stencil test. ref is clamped to the range   0  2 n  - 1   ,
-        /// where n is the number of bitplanes in the stencil buffer. The initial value is 0.
+        /// Specifies the reference value for the stencil test. ref is clamped to the range [0, 2^n - 1], where
+        /// n is the number of bitplanes in the stencil buffer. The initial value is 0.
         /// </param>
         /// <param name="mask">
         /// Specifies a mask that is ANDed with both the reference value and the stored stencil value when the
@@ -12090,7 +12088,7 @@ namespace OpenGL
         /// or GL_PROXY_TEXTURE_2D_ARRAY.
         /// </param>
         /// <param name="level">
-        /// Specifies the level-of-detail number. Level 0 is the base image level. Level n is the  n th   mipmap
+        /// Specifies the level-of-detail number. Level 0 is the base image level. Level n is the n th mipmap
         /// reduction image.
         /// </param>
         /// <param name="internalFormat">
@@ -14280,14 +14278,14 @@ namespace OpenGL
         /// </summary>
         /// <param name="target">
         /// Specifies the target to which the buffer object is bound for glUnmapBuffer, which must be one of the
-        /// buffer binding targets in the following table:            Buffer Binding Target     Purpose
-        /// GL_ARRAY_BUFFER  Vertex attributes    GL_ATOMIC_COUNTER_BUFFER  Atomic counter storage
-        /// GL_COPY_READ_BUFFER  Buffer copy source    GL_COPY_WRITE_BUFFER  Buffer copy destination
-        /// GL_DISPATCH_INDIRECT_BUFFER  Indirect compute dispatch commands    GL_DRAW_INDIRECT_BUFFER  Indirect
-        /// command arguments    GL_ELEMENT_ARRAY_BUFFER  Vertex array indices    GL_PIXEL_PACK_BUFFER  Pixel
-        /// read target    GL_PIXEL_UNPACK_BUFFER  Texture data source    GL_QUERY_BUFFER  Query result buffer
-        /// GL_SHADER_STORAGE_BUFFER  Read-write storage for shaders    GL_TEXTURE_BUFFER  Texture data buffer
-        /// GL_TRANSFORM_FEEDBACK_BUFFER  Transform feedback buffer    GL_UNIFORM_BUFFER  Uniform block storage
+        /// buffer binding targets in the following table: Buffer Binding Target Purpose GL_ARRAY_BUFFER Vertex
+        /// attributes GL_ATOMIC_COUNTER_BUFFER Atomic counter storage GL_COPY_READ_BUFFER Buffer copy source
+        /// GL_COPY_WRITE_BUFFER Buffer copy destination GL_DISPATCH_INDIRECT_BUFFER Indirect compute dispatch
+        /// commands GL_DRAW_INDIRECT_BUFFER Indirect command arguments GL_ELEMENT_ARRAY_BUFFER Vertex array
+        /// indices GL_PIXEL_PACK_BUFFER Pixel read target GL_PIXEL_UNPACK_BUFFER Texture data source
+        /// GL_QUERY_BUFFER Query result buffer GL_SHADER_STORAGE_BUFFER Read-write storage for shaders
+        /// GL_TEXTURE_BUFFER Texture data buffer GL_TRANSFORM_FEEDBACK_BUFFER Transform feedback buffer
+        /// GL_UNIFORM_BUFFER Uniform block storage
         /// </param>
         public static Boolean UnmapBuffer(OpenGL.BufferTarget target)
         {
