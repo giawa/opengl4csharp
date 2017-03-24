@@ -78,10 +78,10 @@ namespace OpenGLManPages
 
                             foreach (var parameter in command.Method.GetParameters())
                             {
-                                if (command.MethodDescriptions.ContainsKey(parameter.Name))
+                                if (command.MethodDescriptions.ContainsKey(parameter.Name.ToLower()))
                                 {
                                     output.WriteLine("        /// <param name=\"" + parameter.Name + "\">");
-                                    WriteMultiLine(output, command.MethodDescriptions[parameter.Name]);
+                                    WriteMultiLine(output, command.MethodDescriptions[parameter.Name.ToLower()]);
                                     output.WriteLine("        /// </param>");
                                 }
                             }
@@ -218,7 +218,7 @@ namespace OpenGLManPages
                             }
                             else
                             {
-                                MethodDescriptions.Add(parameterName, parameterText);
+                                MethodDescriptions.Add(parameterName.ToLower(), parameterText);
                             }
                         }
                     }

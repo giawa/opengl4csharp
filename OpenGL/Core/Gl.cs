@@ -1683,6 +1683,9 @@ namespace OpenGL
         /// GL_SHADER_STORAGE_BUFFER  Read-write storage for shaders    GL_TEXTURE_BUFFER  Texture data buffer
         /// GL_TRANSFORM_FEEDBACK_BUFFER  Transform feedback buffer    GL_UNIFORM_BUFFER  Uniform block storage
         /// </param>
+        /// <param name="internalFormat">
+        /// The internal format with which the data will be stored in the buffer object.
+        /// </param>
         /// <param name="format">
         /// The format of the data in memory addressed by data.
         /// </param>
@@ -1706,6 +1709,9 @@ namespace OpenGL
         /// </summary>
         /// <param name="buffer">
         /// Specifies the name of the buffer object for glClearNamedBufferData.
+        /// </param>
+        /// <param name="internalFormat">
+        /// The internal format with which the data will be stored in the buffer object.
         /// </param>
         /// <param name="format">
         /// The format of the data in memory addressed by data.
@@ -1739,6 +1745,9 @@ namespace OpenGL
         /// GL_SHADER_STORAGE_BUFFER  Read-write storage for shaders    GL_TEXTURE_BUFFER  Texture data buffer
         /// GL_TRANSFORM_FEEDBACK_BUFFER  Transform feedback buffer    GL_UNIFORM_BUFFER  Uniform block storage
         /// </param>
+        /// <param name="internalFormat">
+        /// The internal format with which the data will be stored in the buffer object.
+        /// </param>
         /// <param name="offset">
         /// The offset in basic machine units into the buffer object's data store at which to start filling.
         /// </param>
@@ -1768,6 +1777,9 @@ namespace OpenGL
         /// </summary>
         /// <param name="buffer">
         /// Specifies the name of the buffer object for glClearNamedBufferSubData.
+        /// </param>
+        /// <param name="internalFormat">
+        /// The internal format with which the data will be stored in the buffer object.
         /// </param>
         /// <param name="offset">
         /// The offset in basic machine units into the buffer object's data store at which to start filling.
@@ -2068,6 +2080,9 @@ namespace OpenGL
         /// Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap
         /// reduction image.
         /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the format of the compressed image data stored at address data.
+        /// </param>
         /// <param name="width">
         /// Specifies the width of the texture image. All implementations support texture images that are at
         /// least 64 texels wide. The height of the 1D texture image is 1.
@@ -2101,6 +2116,9 @@ namespace OpenGL
         /// <param name="level">
         /// Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap
         /// reduction image.
+        /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the format of the compressed image data stored at address data.
         /// </param>
         /// <param name="width">
         /// Specifies the width of the texture image. All implementations support 2D texture and cube map
@@ -2137,6 +2155,9 @@ namespace OpenGL
         /// <param name="level">
         /// Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap
         /// reduction image.
+        /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the format of the compressed image data stored at address data.
         /// </param>
         /// <param name="width">
         /// Specifies the width of the texture image. All implementations support 3D texture images that are at
@@ -2532,6 +2553,14 @@ namespace OpenGL
         /// Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap
         /// reduction image.
         /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the internal format of the texture. Must be one of the following symbolic constants:
+        /// GL_COMPRESSED_RED, GL_COMPRESSED_RG, GL_COMPRESSED_RGB, GL_COMPRESSED_RGBA. GL_COMPRESSED_SRGB,
+        /// GL_COMPRESSED_SRGB_ALPHA. GL_DEPTH_COMPONENT, GL_DEPTH_COMPONENT16, GL_DEPTH_COMPONENT24,
+        /// GL_DEPTH_COMPONENT32, GL_STENCIL_INDEX8, GL_RED, GL_RG, GL_RGB, GL_R3_G3_B2, GL_RGB4, GL_RGB5,
+        /// GL_RGB8, GL_RGB10, GL_RGB12, GL_RGB16, GL_RGBA, GL_RGBA2, GL_RGBA4, GL_RGB5_A1, GL_RGBA8,
+        /// GL_RGB10_A2, GL_RGBA12, GL_RGBA16, GL_SRGB, GL_SRGB8, GL_SRGB_ALPHA, or GL_SRGB8_ALPHA8.
+        /// </param>
         /// <param name="x">
         /// Specify the window coordinates of the left corner of the row of pixels to be copied.
         /// </param>
@@ -2564,6 +2593,14 @@ namespace OpenGL
         /// <param name="level">
         /// Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap
         /// reduction image.
+        /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the internal format of the texture. Must be one of the following symbolic constants:
+        /// GL_COMPRESSED_RED, GL_COMPRESSED_RG, GL_COMPRESSED_RGB, GL_COMPRESSED_RGBA. GL_COMPRESSED_SRGB,
+        /// GL_COMPRESSED_SRGB_ALPHA. GL_DEPTH_COMPONENT, GL_DEPTH_COMPONENT16, GL_DEPTH_COMPONENT24,
+        /// GL_DEPTH_COMPONENT32, GL_STENCIL_INDEX8, GL_RED, GL_RG, GL_RGB, GL_R3_G3_B2, GL_RGB4, GL_RGB5,
+        /// GL_RGB8, GL_RGB10, GL_RGB12, GL_RGB16, GL_RGBA, GL_RGBA2, GL_RGBA4, GL_RGB5_A1, GL_RGBA8,
+        /// GL_RGB10_A2, GL_RGBA12, GL_RGBA16, GL_SRGB, GL_SRGB8, GL_SRGB_ALPHA, or GL_SRGB8_ALPHA8.
         /// </param>
         /// <param name="x">
         /// Specify the window coordinates of the lower left corner of the rectangular region of pixels to be
@@ -6244,6 +6281,9 @@ namespace OpenGL
         /// GL_TEXTURE_RECTANGLE, GL_TEXTURE_BUFFER, GL_RENDERBUFFER, GL_TEXTURE_2D_MULTISAMPLE or
         /// GL_TEXTURE_2D_MULTISAMPLE_ARRAY.
         /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the internal format about which to retrieve information.
+        /// </param>
         /// <param name="pname">
         /// Specifies the type of information to query.
         /// </param>
@@ -6274,6 +6314,9 @@ namespace OpenGL
         /// GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, GL_TEXTURE_CUBE_MAP_ARRAY,
         /// GL_TEXTURE_RECTANGLE, GL_TEXTURE_BUFFER, GL_RENDERBUFFER, GL_TEXTURE_2D_MULTISAMPLE or
         /// GL_TEXTURE_2D_MULTISAMPLE_ARRAY.
+        /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the internal format about which to retrieve information.
         /// </param>
         /// <param name="pname">
         /// Specifies the type of information to query.
@@ -6423,6 +6466,9 @@ namespace OpenGL
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program object whose binary representation to retrieve.
+        /// </param>
+        /// <param name="bufsize">
+        /// Specifies the size of the buffer whose address is given by binary.
         /// </param>
         /// <param name="length">
         /// Specifies the address of a variable to receive the number of bytes written into binary.
@@ -11153,6 +11199,9 @@ namespace OpenGL
         /// Specifies a binding target of the allocation for glRenderbufferStorage function. Must be
         /// GL_RENDERBUFFER.
         /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the internal format to use for the renderbuffer object's image.
+        /// </param>
         /// <param name="width">
         /// Specifies the width of the renderbuffer, in pixels.
         /// </param>
@@ -11174,6 +11223,9 @@ namespace OpenGL
         /// </summary>
         /// <param name="renderbuffer">
         /// Specifies the name of the renderbuffer object for glNamedRenderbufferStorage function.
+        /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the internal format to use for the renderbuffer object's image.
         /// </param>
         /// <param name="width">
         /// Specifies the width of the renderbuffer, in pixels.
@@ -11200,6 +11252,9 @@ namespace OpenGL
         /// <param name="samples">
         /// Specifies the number of samples to be used for the renderbuffer object's storage.
         /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the internal format to use for the renderbuffer object's image.
+        /// </param>
         /// <param name="width">
         /// Specifies the width of the renderbuffer, in pixels.
         /// </param>
@@ -11223,6 +11278,9 @@ namespace OpenGL
         /// </param>
         /// <param name="samples">
         /// Specifies the number of samples to be used for the renderbuffer object's storage.
+        /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the internal format to use for the renderbuffer object's image.
         /// </param>
         /// <param name="width">
         /// Specifies the width of the renderbuffer, in pixels.
@@ -11999,6 +12057,10 @@ namespace OpenGL
         /// <param name="samples">
         /// The number of samples in the multisample texture's image.
         /// </param>
+        /// <param name="internalFormat">
+        /// The internal format to be used to store the multisample texture's image. internalformat must specify
+        /// a color-renderable, depth-renderable, or stencil-renderable format.
+        /// </param>
         /// <param name="width">
         /// The width of the multisample texture's image, in texels.
         /// </param>
@@ -12086,6 +12148,10 @@ namespace OpenGL
         /// </param>
         /// <param name="samples">
         /// The number of samples in the multisample texture's image.
+        /// </param>
+        /// <param name="internalFormat">
+        /// The internal format to be used to store the multisample texture's image. internalformat must specify
+        /// a color-renderable, depth-renderable, or stencil-renderable format.
         /// </param>
         /// <param name="width">
         /// The width of the multisample texture's image, in texels.
@@ -12501,6 +12567,9 @@ namespace OpenGL
         /// <param name="levels">
         /// Specify the number of texture levels.
         /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the sized internal format to be used to store texture image data.
+        /// </param>
         /// <param name="width">
         /// Specifies the width of the texture, in texels.
         /// </param>
@@ -12525,6 +12594,9 @@ namespace OpenGL
         /// </param>
         /// <param name="levels">
         /// Specify the number of texture levels.
+        /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the sized internal format to be used to store texture image data.
         /// </param>
         /// <param name="width">
         /// Specifies the width of the texture, in texels.
@@ -12551,6 +12623,9 @@ namespace OpenGL
         /// </param>
         /// <param name="levels">
         /// Specify the number of texture levels.
+        /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the sized internal format to be used to store texture image data.
         /// </param>
         /// <param name="width">
         /// Specifies the width of the texture, in texels.
@@ -12580,6 +12655,9 @@ namespace OpenGL
         /// <param name="levels">
         /// Specify the number of texture levels.
         /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the sized internal format to be used to store texture image data.
+        /// </param>
         /// <param name="width">
         /// Specifies the width of the texture, in texels.
         /// </param>
@@ -12607,6 +12685,9 @@ namespace OpenGL
         /// </param>
         /// <param name="samples">
         /// Specify the number of samples in the texture.
+        /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the sized internal format to be used to store texture image data.
         /// </param>
         /// <param name="width">
         /// Specifies the width of the texture, in texels.
@@ -12640,6 +12721,9 @@ namespace OpenGL
         /// </param>
         /// <param name="samples">
         /// Specify the number of samples in the texture.
+        /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the sized internal format to be used to store texture image data.
         /// </param>
         /// <param name="width">
         /// Specifies the width of the texture, in texels.
@@ -12675,6 +12759,9 @@ namespace OpenGL
         /// <param name="levels">
         /// Specify the number of texture levels.
         /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the sized internal format to be used to store texture image data.
+        /// </param>
         /// <param name="width">
         /// Specifies the width of the texture, in texels.
         /// </param>
@@ -12706,6 +12793,9 @@ namespace OpenGL
         /// <param name="levels">
         /// Specify the number of texture levels.
         /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the sized internal format to be used to store texture image data.
+        /// </param>
         /// <param name="width">
         /// Specifies the width of the texture, in texels.
         /// </param>
@@ -12736,6 +12826,9 @@ namespace OpenGL
         /// </param>
         /// <param name="samples">
         /// Specify the number of samples in the texture.
+        /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the sized internal format to be used to store texture image data.
         /// </param>
         /// <param name="width">
         /// Specifies the width of the texture, in texels.
@@ -12772,6 +12865,9 @@ namespace OpenGL
         /// </param>
         /// <param name="samples">
         /// Specify the number of samples in the texture.
+        /// </param>
+        /// <param name="internalFormat">
+        /// Specifies the sized internal format to be used to store texture image data.
         /// </param>
         /// <param name="width">
         /// Specifies the width of the texture, in texels.
