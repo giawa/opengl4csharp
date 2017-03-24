@@ -96,6 +96,7 @@ namespace OpenGL
                             if (paramName == "internalFormat" && paramType.Trim() == "GLint") paramType = "GLenum";
                             if (paramName == "mask" && paramType.StartsWith("GL")) paramType = "GLenum";
                             if (paramName == "access" && function.Contains("MapBuffer")) paramType = "GLenum";
+                            if (paramName == "framebuffer" && function.Contains("NamedFramebufferReadBuffer")) paramType = "GLenum";
 
                             string csharpType = GetCSharpType(paramType);
                             if (csharpType == "Unknown") csharpType = GetUnknownType(paramName, function);
@@ -306,6 +307,7 @@ namespace OpenGL
             if (glName == "attachments" && functionName.Contains("Framebuffer")) return "OpenGL.FramebufferAttachment";
             if (glName == "props" && functionName.Contains("GetProgramResourceiv")) return "OpenGL.ProgramResourceParameterName";
             if (functionName.StartsWith("GetString")) return "String";
+            if (glName == "framebuffer" && functionName.Contains("NamedFramebufferReadBuffer")) return "OpenGL.ReadBufferMode";
 
             return "Unknown";
         }

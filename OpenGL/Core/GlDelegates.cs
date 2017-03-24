@@ -816,7 +816,7 @@ namespace OpenGL
             internal static QueryCounter glQueryCounter;
             internal delegate void ReadBuffer(OpenGL.ReadBufferMode mode);
             internal static ReadBuffer glReadBuffer;
-            internal delegate void NamedFramebufferReadBuffer(UInt32 framebuffer, OpenGL.BeginMode mode);
+            internal delegate void NamedFramebufferReadBuffer(OpenGL.ReadBufferMode framebuffer, OpenGL.BeginMode mode);
             internal static NamedFramebufferReadBuffer glNamedFramebufferReadBuffer;
             internal delegate void ReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenGL.PixelFormat format, OpenGL.PixelType type, Int32[] data);
             internal static ReadPixels glReadPixels;
