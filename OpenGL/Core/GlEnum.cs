@@ -2321,8 +2321,7 @@ namespace OpenGL
 
     public enum RenderbufferTarget : int
     {
-        Renderbuffer = ((int)0x8D41),
-        RenderbufferExt = ((int)0x8D41),
+        Renderbuffer = ((int)0x8D41)
     }
 
     public enum ShaderParameter : int
