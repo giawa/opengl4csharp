@@ -14,6 +14,7 @@ namespace OpenGL
     {
         public float X, Y, Z;
 
+#pragma warning disable IDE1006
         /// <summary>
         /// Maintains backwards compatible with legacy OpenGL library code (prior to USE_NUMERICS).
         /// </summary>
@@ -43,6 +44,7 @@ namespace OpenGL
             get { return Z; }
             set { Z = value; }
         }
+#pragma warning restore
 
         #region Static Constructors
         [Obsolete("Vector3.Identity is not compatible with System.Numerics.  Use Vector3.One instead.")]
