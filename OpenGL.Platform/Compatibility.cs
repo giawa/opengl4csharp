@@ -87,12 +87,13 @@ namespace OpenGL.Platform
         /// </summary>
         private static string DetectUnixType()
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.Arguments = "-s";
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardError = true;
-            startInfo.UseShellExecute = false;
-
+            ProcessStartInfo startInfo = new ProcessStartInfo()
+            {
+                Arguments = "-s",
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false
+            };
             string[] unamePath = new string[] { "uname", "bin/uname", "/usr/bin/uname" };
 
             for (int i = 0; i < unamePath.Length; i++)
