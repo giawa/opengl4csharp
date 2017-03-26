@@ -243,11 +243,6 @@ namespace OpenGL
         /// <returns>A list of lines that make up the GLSL program.</returns>
         public static List<Line> GetLinesFromMemory(string fileContents, string filename = "")
         {
-            return GetLinesFromMemoryInternal(fileContents, filename);
-        }
-
-        private static List<Line> GetLinesFromMemoryInternal(string fileContents, string filename = "")
-        {
             List<Line> lines = new List<Line>();
             int lineNumber = 0;
 
