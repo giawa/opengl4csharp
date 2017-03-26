@@ -212,5 +212,32 @@ namespace OpenGL
         {
             Delegates.glGetSamplerParameteriv(sampler, (OpenGL.TextureParameterName)pname, @params);
         }
+
+        /// <summary>
+        /// Delimit the boundaries of a query object on an indexed target.
+        /// <para>
+        /// glBeginQueryIndexed and glEndQueryIndexed delimit the boundaries of a query object. query must be a
+        /// name previously returned from a call to glGenQueries. If a query object with name id does not yet
+        /// exist it is created with the type determined by target. target must be one of GL_SAMPLES_PASSED,
+        /// GL_ANY_SAMPLES_PASSED, GL_PRIMITIVES_GENERATED, GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, or
+        /// GL_TIME_ELAPSED. The behavior of the query object depends on its type and is as follows.
+        /// </para>
+        /// </summary>
+        /// <param name="target">
+        /// Specifies the target type of query object established between glBeginQueryIndexed and the subsequent
+        /// glEndQueryIndexed. The symbolic constant must be one of GL_SAMPLES_PASSED, GL_ANY_SAMPLES_PASSED,
+        /// GL_PRIMITIVES_GENERATED, GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, or GL_TIME_ELAPSED.
+        /// </param>
+        /// <param name="index">
+        /// Specifies the index of the query target upon which to begin the query.
+        /// </param>
+        /// <param name="id">
+        /// Specifies the name of a query object.
+        /// </param>
+        [Obsolete("BeginQueryIndexed(UInt32, UInt32, UInt32) is deprecated, please use BeginQueryIndexed(UInt32, UInt32, UInt32) instead.")]
+        public static void BeginQueryIndexed(UInt32 target, UInt32 index, UInt32 id)
+        {
+            Delegates.glBeginQueryIndexed((OpenGL.QueryTarget)target, index, id);
+        }
     }
 }

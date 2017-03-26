@@ -84,6 +84,13 @@ namespace OpenGLManPages
                                     WriteMultiLine(output, command.MethodDescriptions[parameter.Name.ToLower()]);
                                     output.WriteLine("        /// </param>");
                                 }
+                                else if (parameter.Name.ToLower() == "first" && command.MethodDescriptions.ContainsKey("index"))
+                                {
+                                    // fix typo in some man pages (glBindBuffersBase and glBindBuffersRange)
+                                    output.WriteLine("        /// <param name=\"" + parameter.Name + "\">");
+                                    WriteMultiLine(output, command.MethodDescriptions["index"]);
+                                    output.WriteLine("        /// </param>");
+                                }
                             }
                         }
                         else throw new Exception("Could not find documentation!");
