@@ -10,7 +10,7 @@ namespace OpenGL
             [DllImport(Gl.Library, EntryPoint = "glActiveShaderProgram", ExactSpelling = true)]
             internal extern static void ActiveShaderProgram(UInt32 pipeline, UInt32 program);
             [DllImport(Gl.Library, EntryPoint = "glActiveTexture", ExactSpelling = true)]
-            internal extern static void ActiveTexture(OpenGL.TextureUnit texture);
+            internal extern static void ActiveTexture(Int32 texture);
             [DllImport(Gl.Library, EntryPoint = "glAttachShader", ExactSpelling = true)]
             internal extern static void AttachShader(UInt32 program, UInt32 shader);
             [DllImport(Gl.Library, EntryPoint = "glBeginConditionalRender", ExactSpelling = true)]
@@ -22,7 +22,7 @@ namespace OpenGL
             [DllImport(Gl.Library, EntryPoint = "glEndQuery", ExactSpelling = true)]
             internal extern static void EndQuery(OpenGL.QueryTarget target);
             [DllImport(Gl.Library, EntryPoint = "glBeginQueryIndexed", ExactSpelling = true)]
-            internal extern static void BeginQueryIndexed(UInt32 target, UInt32 index, UInt32 id);
+            internal extern static void BeginQueryIndexed(OpenGL.QueryTarget target, UInt32 index, UInt32 id);
             [DllImport(Gl.Library, EntryPoint = "glEndQueryIndexed", ExactSpelling = true)]
             internal extern static void EndQueryIndexed(OpenGL.QueryTarget target, UInt32 index);
             [DllImport(Gl.Library, EntryPoint = "glBeginTransformFeedback", ExactSpelling = true)]
@@ -478,9 +478,9 @@ namespace OpenGL
             [DllImport(Gl.Library, EntryPoint = "glGetMultisamplefv", ExactSpelling = true)]
             internal extern static void GetMultisamplefv(OpenGL.GetMultisamplePName pname, UInt32 index, [OutAttribute] Single[] val);
             [DllImport(Gl.Library, EntryPoint = "glGetObjectLabel", ExactSpelling = true)]
-            internal extern static void GetObjectLabel(OpenGL.ObjectLabel identifier, UInt32 name, Int32 bifSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label);
+            internal extern static void GetObjectLabel(OpenGL.ObjectLabel identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label);
             [DllImport(Gl.Library, EntryPoint = "glGetObjectPtrLabel", ExactSpelling = true)]
-            internal extern static void GetObjectPtrLabel([OutAttribute] IntPtr ptr, Int32 bifSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label);
+            internal extern static void GetObjectPtrLabel([OutAttribute] IntPtr ptr, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label);
             [DllImport(Gl.Library, EntryPoint = "glGetPointerv", ExactSpelling = true)]
             internal extern static void GetPointerv(OpenGL.GetPointerParameter pname, [OutAttribute] IntPtr @params);
             [DllImport(Gl.Library, EntryPoint = "glGetProgramiv", ExactSpelling = true)]
@@ -524,9 +524,9 @@ namespace OpenGL
             [DllImport(Gl.Library, EntryPoint = "glGetNamedRenderbufferParameteriv", ExactSpelling = true)]
             internal extern static void GetNamedRenderbufferParameteriv(UInt32 renderbuffer, OpenGL.RenderbufferParameterName pname, [OutAttribute] Int32[] @params);
             [DllImport(Gl.Library, EntryPoint = "glGetSamplerParameterfv", ExactSpelling = true)]
-            internal extern static void GetSamplerParameterfv(UInt32 sampler, Int32 pname, [OutAttribute] Single[] @params);
+            internal extern static void GetSamplerParameterfv(UInt32 sampler, OpenGL.TextureParameterName pname, [OutAttribute] Single[] @params);
             [DllImport(Gl.Library, EntryPoint = "glGetSamplerParameteriv", ExactSpelling = true)]
-            internal extern static void GetSamplerParameteriv(UInt32 sampler, Int32 pname, [OutAttribute] Int32[] @params);
+            internal extern static void GetSamplerParameteriv(UInt32 sampler, OpenGL.TextureParameterName pname, [OutAttribute] Int32[] @params);
             [DllImport(Gl.Library, EntryPoint = "glGetSamplerParameterIiv", ExactSpelling = true)]
             internal extern static void GetSamplerParameterIiv(UInt32 sampler, OpenGL.TextureParameterName pname, [OutAttribute] Int32[] @params);
             [DllImport(Gl.Library, EntryPoint = "glGetSamplerParameterIuiv", ExactSpelling = true)]
@@ -810,11 +810,11 @@ namespace OpenGL
             [DllImport(Gl.Library, EntryPoint = "glProvokingVertex", ExactSpelling = true)]
             internal extern static void ProvokingVertex(OpenGL.ProvokingVertexMode provokeMode);
             [DllImport(Gl.Library, EntryPoint = "glQueryCounter", ExactSpelling = true)]
-            internal extern static void QueryCounter(UInt32 id, Int32 target);
+            internal extern static void QueryCounter(UInt32 id, OpenGL.QueryTarget target);
             [DllImport(Gl.Library, EntryPoint = "glReadBuffer", ExactSpelling = true)]
             internal extern static void ReadBuffer(OpenGL.ReadBufferMode mode);
             [DllImport(Gl.Library, EntryPoint = "glNamedFramebufferReadBuffer", ExactSpelling = true)]
-            internal extern static void NamedFramebufferReadBuffer(UInt32 framebuffer, OpenGL.BeginMode mode);
+            internal extern static void NamedFramebufferReadBuffer(OpenGL.ReadBufferMode framebuffer, OpenGL.BeginMode mode);
             [DllImport(Gl.Library, EntryPoint = "glReadPixels", ExactSpelling = true)]
             internal extern static void ReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenGL.PixelFormat format, OpenGL.PixelType type, Int32[] data);
             [DllImport(Gl.Library, EntryPoint = "glReadnPixels", ExactSpelling = true)]
@@ -832,13 +832,13 @@ namespace OpenGL
             [DllImport(Gl.Library, EntryPoint = "glSampleMaski", ExactSpelling = true)]
             internal extern static void SampleMaski(UInt32 maskNumber, UInt32 mask);
             [DllImport(Gl.Library, EntryPoint = "glSamplerParameterf", ExactSpelling = true)]
-            internal extern static void SamplerParameterf(UInt32 sampler, Int32 pname, Single param);
+            internal extern static void SamplerParameterf(UInt32 sampler, OpenGL.TextureParameterName pname, Single param);
             [DllImport(Gl.Library, EntryPoint = "glSamplerParameteri", ExactSpelling = true)]
-            internal extern static void SamplerParameteri(UInt32 sampler, Int32 pname, Int32 param);
+            internal extern static void SamplerParameteri(UInt32 sampler, OpenGL.TextureParameterName pname, Int32 param);
             [DllImport(Gl.Library, EntryPoint = "glSamplerParameterfv", ExactSpelling = true)]
-            internal extern static void SamplerParameterfv(UInt32 sampler, Int32 pname, Single[] @params);
+            internal extern static void SamplerParameterfv(UInt32 sampler, OpenGL.TextureParameterName pname, Single[] @params);
             [DllImport(Gl.Library, EntryPoint = "glSamplerParameteriv", ExactSpelling = true)]
-            internal extern static void SamplerParameteriv(UInt32 sampler, Int32 pname, Int32[] @params);
+            internal extern static void SamplerParameteriv(UInt32 sampler, OpenGL.TextureParameterName pname, Int32[] @params);
             [DllImport(Gl.Library, EntryPoint = "glSamplerParameterIiv", ExactSpelling = true)]
             internal extern static void SamplerParameterIiv(UInt32 sampler, OpenGL.TextureParameterName pname, Int32[] @params);
             [DllImport(Gl.Library, EntryPoint = "glSamplerParameterIuiv", ExactSpelling = true)]

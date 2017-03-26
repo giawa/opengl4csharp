@@ -11,11 +11,11 @@ namespace OpenGL
             Delegates.glActiveShaderProgram(pipeline, program);
         }
 
+        [Obsolete("ActiveTexture(TextureUnit) is deprecated, please use ActiveTexture(int) instead.")]
         public static void ActiveTexture(OpenGL.TextureUnit texture)
         {
-            Delegates.glActiveTexture(texture);
+            Delegates.glActiveTexture((int)texture);
         }
-
         public static void AttachShader(UInt32 program, UInt32 shader)
         {
             Delegates.glAttachShader(program, shader);
@@ -41,7 +41,7 @@ namespace OpenGL
             Delegates.glEndQuery(target);
         }
 
-        public static void BeginQueryIndexed(UInt32 target, UInt32 index, UInt32 id)
+        public static void BeginQueryIndexed(OpenGL.QueryTarget target, UInt32 index, UInt32 id)
         {
             Delegates.glBeginQueryIndexed(target, index, id);
         }
@@ -1235,14 +1235,14 @@ namespace OpenGL
             Delegates.glGetMultisamplefv(pname, index, val);
         }
 
-        public static void GetObjectLabel(OpenGL.ObjectLabel identifier, UInt32 name, Int32 bifSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label)
+        public static void GetObjectLabel(OpenGL.ObjectLabel identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label)
         {
-            Delegates.glGetObjectLabel(identifier, name, bifSize, length, label);
+            Delegates.glGetObjectLabel(identifier, name, bufSize, length, label);
         }
 
-        public static void GetObjectPtrLabel([OutAttribute] IntPtr ptr, Int32 bifSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label)
+        public static void GetObjectPtrLabel([OutAttribute] IntPtr ptr, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label)
         {
-            Delegates.glGetObjectPtrLabel(ptr, bifSize, length, label);
+            Delegates.glGetObjectPtrLabel(ptr, bufSize, length, label);
         }
 
         public static void GetPointerv(OpenGL.GetPointerParameter pname, [OutAttribute] IntPtr @params)
@@ -1350,12 +1350,12 @@ namespace OpenGL
             Delegates.glGetNamedRenderbufferParameteriv(renderbuffer, pname, @params);
         }
 
-        public static void GetSamplerParameterfv(UInt32 sampler, Int32 pname, [OutAttribute] Single[] @params)
+        public static void GetSamplerParameterfv(UInt32 sampler, OpenGL.TextureParameterName pname, [OutAttribute] Single[] @params)
         {
             Delegates.glGetSamplerParameterfv(sampler, pname, @params);
         }
 
-        public static void GetSamplerParameteriv(UInt32 sampler, Int32 pname, [OutAttribute] Int32[] @params)
+        public static void GetSamplerParameteriv(UInt32 sampler, OpenGL.TextureParameterName pname, [OutAttribute] Int32[] @params)
         {
             Delegates.glGetSamplerParameteriv(sampler, pname, @params);
         }
@@ -2108,7 +2108,7 @@ namespace OpenGL
             Delegates.glProvokingVertex(provokeMode);
         }
 
-        public static void QueryCounter(UInt32 id, Int32 target)
+        public static void QueryCounter(UInt32 id, OpenGL.QueryTarget target)
         {
             Delegates.glQueryCounter(id, target);
         }
@@ -2118,7 +2118,7 @@ namespace OpenGL
             Delegates.glReadBuffer(mode);
         }
 
-        public static void NamedFramebufferReadBuffer(UInt32 framebuffer, OpenGL.BeginMode mode)
+        public static void NamedFramebufferReadBuffer(OpenGL.ReadBufferMode framebuffer, OpenGL.BeginMode mode)
         {
             Delegates.glNamedFramebufferReadBuffer(framebuffer, mode);
         }
@@ -2163,22 +2163,22 @@ namespace OpenGL
             Delegates.glSampleMaski(maskNumber, mask);
         }
 
-        public static void SamplerParameterf(UInt32 sampler, Int32 pname, Single param)
+        public static void SamplerParameterf(UInt32 sampler, OpenGL.TextureParameterName pname, Single param)
         {
             Delegates.glSamplerParameterf(sampler, pname, param);
         }
 
-        public static void SamplerParameteri(UInt32 sampler, Int32 pname, Int32 param)
+        public static void SamplerParameteri(UInt32 sampler, OpenGL.TextureParameterName pname, Int32 param)
         {
             Delegates.glSamplerParameteri(sampler, pname, param);
         }
 
-        public static void SamplerParameterfv(UInt32 sampler, Int32 pname, Single[] @params)
+        public static void SamplerParameterfv(UInt32 sampler, OpenGL.TextureParameterName pname, Single[] @params)
         {
             Delegates.glSamplerParameterfv(sampler, pname, @params);
         }
 
-        public static void SamplerParameteriv(UInt32 sampler, Int32 pname, Int32[] @params)
+        public static void SamplerParameteriv(UInt32 sampler, OpenGL.TextureParameterName pname, Int32[] @params)
         {
             Delegates.glSamplerParameteriv(sampler, pname, @params);
         }

@@ -12,7 +12,7 @@ namespace OpenGL
         {
             internal delegate void ActiveShaderProgram(UInt32 pipeline, UInt32 program);
             internal static ActiveShaderProgram glActiveShaderProgram;
-            internal delegate void ActiveTexture(OpenGL.TextureUnit texture);
+            internal delegate void ActiveTexture(Int32 texture);
             internal static ActiveTexture glActiveTexture;
             internal delegate void AttachShader(UInt32 program, UInt32 shader);
             internal static AttachShader glAttachShader;
@@ -24,7 +24,7 @@ namespace OpenGL
             internal static BeginQuery glBeginQuery;
             internal delegate void EndQuery(OpenGL.QueryTarget target);
             internal static EndQuery glEndQuery;
-            internal delegate void BeginQueryIndexed(UInt32 target, UInt32 index, UInt32 id);
+            internal delegate void BeginQueryIndexed(OpenGL.QueryTarget target, UInt32 index, UInt32 id);
             internal static BeginQueryIndexed glBeginQueryIndexed;
             internal delegate void EndQueryIndexed(OpenGL.QueryTarget target, UInt32 index);
             internal static EndQueryIndexed glEndQueryIndexed;
@@ -480,9 +480,9 @@ namespace OpenGL
             internal static GetInternalformati64v glGetInternalformati64v;
             internal delegate void GetMultisamplefv(OpenGL.GetMultisamplePName pname, UInt32 index, [OutAttribute] Single[] val);
             internal static GetMultisamplefv glGetMultisamplefv;
-            internal delegate void GetObjectLabel(OpenGL.ObjectLabel identifier, UInt32 name, Int32 bifSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label);
+            internal delegate void GetObjectLabel(OpenGL.ObjectLabel identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label);
             internal static GetObjectLabel glGetObjectLabel;
-            internal delegate void GetObjectPtrLabel([OutAttribute] IntPtr ptr, Int32 bifSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label);
+            internal delegate void GetObjectPtrLabel([OutAttribute] IntPtr ptr, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label);
             internal static GetObjectPtrLabel glGetObjectPtrLabel;
             internal delegate void GetPointerv(OpenGL.GetPointerParameter pname, [OutAttribute] IntPtr @params);
             internal static GetPointerv glGetPointerv;
@@ -526,9 +526,9 @@ namespace OpenGL
             internal static GetRenderbufferParameteriv glGetRenderbufferParameteriv;
             internal delegate void GetNamedRenderbufferParameteriv(UInt32 renderbuffer, OpenGL.RenderbufferParameterName pname, [OutAttribute] Int32[] @params);
             internal static GetNamedRenderbufferParameteriv glGetNamedRenderbufferParameteriv;
-            internal delegate void GetSamplerParameterfv(UInt32 sampler, Int32 pname, [OutAttribute] Single[] @params);
+            internal delegate void GetSamplerParameterfv(UInt32 sampler, OpenGL.TextureParameterName pname, [OutAttribute] Single[] @params);
             internal static GetSamplerParameterfv glGetSamplerParameterfv;
-            internal delegate void GetSamplerParameteriv(UInt32 sampler, Int32 pname, [OutAttribute] Int32[] @params);
+            internal delegate void GetSamplerParameteriv(UInt32 sampler, OpenGL.TextureParameterName pname, [OutAttribute] Int32[] @params);
             internal static GetSamplerParameteriv glGetSamplerParameteriv;
             internal delegate void GetSamplerParameterIiv(UInt32 sampler, OpenGL.TextureParameterName pname, [OutAttribute] Int32[] @params);
             internal static GetSamplerParameterIiv glGetSamplerParameterIiv;
@@ -812,11 +812,11 @@ namespace OpenGL
             internal static ProgramUniformMatrix4x3fv glProgramUniformMatrix4x3fv;
             internal delegate void ProvokingVertex(OpenGL.ProvokingVertexMode provokeMode);
             internal static ProvokingVertex glProvokingVertex;
-            internal delegate void QueryCounter(UInt32 id, Int32 target);
+            internal delegate void QueryCounter(UInt32 id, OpenGL.QueryTarget target);
             internal static QueryCounter glQueryCounter;
             internal delegate void ReadBuffer(OpenGL.ReadBufferMode mode);
             internal static ReadBuffer glReadBuffer;
-            internal delegate void NamedFramebufferReadBuffer(UInt32 framebuffer, OpenGL.BeginMode mode);
+            internal delegate void NamedFramebufferReadBuffer(OpenGL.ReadBufferMode framebuffer, OpenGL.BeginMode mode);
             internal static NamedFramebufferReadBuffer glNamedFramebufferReadBuffer;
             internal delegate void ReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenGL.PixelFormat format, OpenGL.PixelType type, Int32[] data);
             internal static ReadPixels glReadPixels;
@@ -834,13 +834,13 @@ namespace OpenGL
             internal static SampleCoverage glSampleCoverage;
             internal delegate void SampleMaski(UInt32 maskNumber, UInt32 mask);
             internal static SampleMaski glSampleMaski;
-            internal delegate void SamplerParameterf(UInt32 sampler, Int32 pname, Single param);
+            internal delegate void SamplerParameterf(UInt32 sampler, OpenGL.TextureParameterName pname, Single param);
             internal static SamplerParameterf glSamplerParameterf;
-            internal delegate void SamplerParameteri(UInt32 sampler, Int32 pname, Int32 param);
+            internal delegate void SamplerParameteri(UInt32 sampler, OpenGL.TextureParameterName pname, Int32 param);
             internal static SamplerParameteri glSamplerParameteri;
-            internal delegate void SamplerParameterfv(UInt32 sampler, Int32 pname, Single[] @params);
+            internal delegate void SamplerParameterfv(UInt32 sampler, OpenGL.TextureParameterName pname, Single[] @params);
             internal static SamplerParameterfv glSamplerParameterfv;
-            internal delegate void SamplerParameteriv(UInt32 sampler, Int32 pname, Int32[] @params);
+            internal delegate void SamplerParameteriv(UInt32 sampler, OpenGL.TextureParameterName pname, Int32[] @params);
             internal static SamplerParameteriv glSamplerParameteriv;
             internal delegate void SamplerParameterIiv(UInt32 sampler, OpenGL.TextureParameterName pname, Int32[] @params);
             internal static SamplerParameterIiv glSamplerParameterIiv;
