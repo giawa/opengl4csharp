@@ -22,7 +22,7 @@ namespace OpenGL
             [DllImport(Gl.Library, EntryPoint = "glEndQuery", ExactSpelling = true)]
             internal extern static void EndQuery(OpenGL.QueryTarget target);
             [DllImport(Gl.Library, EntryPoint = "glBeginQueryIndexed", ExactSpelling = true)]
-            internal extern static void BeginQueryIndexed(UInt32 target, UInt32 index, UInt32 id);
+            internal extern static void BeginQueryIndexed(OpenGL.QueryTarget target, UInt32 index, UInt32 id);
             [DllImport(Gl.Library, EntryPoint = "glEndQueryIndexed", ExactSpelling = true)]
             internal extern static void EndQueryIndexed(OpenGL.QueryTarget target, UInt32 index);
             [DllImport(Gl.Library, EntryPoint = "glBeginTransformFeedback", ExactSpelling = true)]

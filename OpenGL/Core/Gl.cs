@@ -174,7 +174,7 @@ namespace OpenGL
         /// <param name="id">
         /// Specifies the name of a query object.
         /// </param>
-        public static void BeginQueryIndexed(UInt32 target, UInt32 index, UInt32 id)
+        public static void BeginQueryIndexed(OpenGL.QueryTarget target, UInt32 index, UInt32 id)
         {
             Delegates.glBeginQueryIndexed(target, index, id);
         }
@@ -384,6 +384,9 @@ namespace OpenGL
         /// Specify the target of the bind operation. target must be one of GL_ATOMIC_COUNTER_BUFFER,
         /// GL_TRANSFORM_FEEDBACK_BUFFER, GL_UNIFORM_BUFFER or GL_SHADER_STORAGE_BUFFER.
         /// </param>
+        /// <param name="first">
+        /// Specify the index of the first binding point within the array specified by target.
+        /// </param>
         /// <param name="count">
         /// Specify the number of contiguous binding points to which to bind buffers.
         /// </param>
@@ -412,6 +415,9 @@ namespace OpenGL
         /// <param name="target">
         /// Specify the target of the bind operation. target must be one of GL_ATOMIC_COUNTER_BUFFER,
         /// GL_TRANSFORM_FEEDBACK_BUFFER, GL_UNIFORM_BUFFER or GL_SHADER_STORAGE_BUFFER.
+        /// </param>
+        /// <param name="first">
+        /// Specify the index of the first binding point within the array specified by target.
         /// </param>
         /// <param name="count">
         /// Specify the number of contiguous binding points to which to bind buffers.
