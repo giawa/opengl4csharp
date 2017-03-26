@@ -624,10 +624,16 @@ namespace OpenGL
         {
             return q * v;
         }
-
-        public float Get(int i)
+        
+        /// <summary>
+        /// Provide an accessor for each of the elements of the Vector structure.
+        /// </summary>
+        /// <param name="v">The Vector3 to access.</param>
+        /// <param name="index">The element to access (0 = X, 1 = Y, 2 = Z).</param>
+        /// <returns>The element of the Vector3 as indexed by i.</returns>
+        public float Get(int index)
         {
-            return (i == 0 ? X : (i == 1 ? Y : Z));
+            return (index == 0 ? X : (index == 1 ? Y : Z));
         }
         #endregion
     }
