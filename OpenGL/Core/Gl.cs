@@ -148,6 +148,11 @@ namespace OpenGL
         /// GL_TIME_ELAPSED. The behavior of the query object depends on its type and is as follows.
         /// </para>
         /// </summary>
+        /// <param name="target">
+        /// Specifies the target type of query object to be concluded. The symbolic constant must be one of
+        /// GL_SAMPLES_PASSED, GL_ANY_SAMPLES_PASSED, GL_ANY_SAMPLES_PASSED_CONSERVATIVE,
+        /// GL_PRIMITIVES_GENERATED, GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, or GL_TIME_ELAPSED.
+        /// </param>
         public static void EndQuery(OpenGL.QueryTarget target)
         {
             Delegates.glEndQuery(target);
@@ -189,8 +194,13 @@ namespace OpenGL
         /// GL_TIME_ELAPSED. The behavior of the query object depends on its type and is as follows.
         /// </para>
         /// </summary>
+        /// <param name="target">
+        /// Specifies the target type of query object to be concluded. The symbolic constant must be one of
+        /// GL_SAMPLES_PASSED, GL_ANY_SAMPLES_PASSED, GL_PRIMITIVES_GENERATED,
+        /// GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, or GL_TIME_ELAPSED.
+        /// </param>
         /// <param name="index">
-        /// Specifies the index of the query target upon which to begin the query.
+        /// Specifies the index of the query target upon which to end the query.
         /// </param>
         public static void EndQueryIndexed(OpenGL.QueryTarget target, UInt32 index)
         {
@@ -2359,6 +2369,8 @@ namespace OpenGL
         /// <param name="yoffset">
         /// Specifies a texel offset in the y direction within the texture array.
         /// </param>
+        /// <param name="zoffset">
+        /// </param>
         /// <param name="width">
         /// Specifies the width of the texture subimage.
         /// </param>
@@ -2400,6 +2412,8 @@ namespace OpenGL
         /// </param>
         /// <param name="yoffset">
         /// Specifies a texel offset in the y direction within the texture array.
+        /// </param>
+        /// <param name="zoffset">
         /// </param>
         /// <param name="width">
         /// Specifies the width of the texture subimage.
@@ -2521,6 +2535,8 @@ namespace OpenGL
         /// </param>
         /// <param name="dstTarget">
         /// The target representing the namespace of the destination name dstName.
+        /// </param>
+        /// <param name="dstLevel">
         /// </param>
         /// <param name="dstX">
         /// The X coordinate of the left edge of the destination region.
@@ -2898,6 +2914,8 @@ namespace OpenGL
         /// </summary>
         /// <param name="n">
         /// Number of framebuffer objects to create.
+        /// </param>
+        /// <param name="ids">
         /// </param>
         public static void CreateFramebuffers(Int32 n, UInt32[] ids)
         {
@@ -4709,6 +4727,8 @@ namespace OpenGL
         /// <param name="level">
         /// Specifies the mipmap level of the texture object to attach.
         /// </param>
+        /// <param name="layer">
+        /// </param>
         public static void FramebufferTexture3D(OpenGL.FramebufferTarget target, OpenGL.FramebufferAttachment attachment, OpenGL.TextureTarget textarget, UInt32 texture, Int32 level, Int32 layer)
         {
             Delegates.glFramebufferTexture3D(target, attachment, textarget, texture, level, layer);
@@ -5821,6 +5841,10 @@ namespace OpenGL
         /// Specifies the name of the buffer object for glGetNamedBufferParameteriv and
         /// glGetNamedBufferParameteri64v.
         /// </param>
+        /// <param name="pname">
+        /// </param>
+        /// <param name="params">
+        /// </param>
         public static void GetNamedBufferParameteriv(UInt32 buffer, OpenGL.BufferParameterName pname, [OutAttribute] Int32[] @params)
         {
             Delegates.glGetNamedBufferParameteriv(buffer, pname, @params);
@@ -5835,6 +5859,10 @@ namespace OpenGL
         /// <param name="buffer">
         /// Specifies the name of the buffer object for glGetNamedBufferParameteriv and
         /// glGetNamedBufferParameteri64v.
+        /// </param>
+        /// <param name="pname">
+        /// </param>
+        /// <param name="params">
         /// </param>
         public static void GetNamedBufferParameteri64v(UInt32 buffer, OpenGL.BufferParameterName pname, [OutAttribute] Int64[] @params)
         {
@@ -6252,6 +6280,8 @@ namespace OpenGL
         /// <param name="pname">
         /// Specifies the parameter of the framebuffer object to query.
         /// </param>
+        /// <param name="param">
+        /// </param>
         public static void GetNamedFramebufferParameteriv(UInt32 framebuffer, OpenGL.FramebufferPName pname, [OutAttribute] Int32[] param)
         {
             Delegates.glGetNamedFramebufferParameteriv(framebuffer, pname, param);
@@ -6379,15 +6409,18 @@ namespace OpenGL
         /// <param name="name">
         /// The name of the object whose label to retrieve.
         /// </param>
+        /// <param name="bufSize">
+        /// The length of the buffer whose address is in label.
+        /// </param>
         /// <param name="length">
         /// The address of a variable to receive the length of the object label.
         /// </param>
         /// <param name="label">
         /// The address of a string that will receive the object label.
         /// </param>
-        public static void GetObjectLabel(OpenGL.ObjectLabel identifier, UInt32 name, Int32 bifSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label)
+        public static void GetObjectLabel(OpenGL.ObjectLabel identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label)
         {
-            Delegates.glGetObjectLabel(identifier, name, bifSize, length, label);
+            Delegates.glGetObjectLabel(identifier, name, bufSize, length, label);
         }
 
         /// <summary>
@@ -6399,15 +6432,18 @@ namespace OpenGL
         /// <param name="ptr">
         /// The name of the sync object whose label to retrieve.
         /// </param>
+        /// <param name="bufSize">
+        /// The length of the buffer whose address is in label.
+        /// </param>
         /// <param name="length">
         /// The address of a variable to receive the length of the object label.
         /// </param>
         /// <param name="label">
         /// The address of a string that will receive the object label.
         /// </param>
-        public static void GetObjectPtrLabel([OutAttribute] IntPtr ptr, Int32 bifSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label)
+        public static void GetObjectPtrLabel([OutAttribute] IntPtr ptr, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label)
         {
-            Delegates.glGetObjectPtrLabel(ptr, bifSize, length, label);
+            Delegates.glGetObjectPtrLabel(ptr, bufSize, length, label);
         }
 
         /// <summary>
@@ -6607,6 +6643,18 @@ namespace OpenGL
         /// </param>
         /// <param name="programInterface">
         /// A token identifying the interface within program containing the resource named name.
+        /// </param>
+        /// <param name="index">
+        /// </param>
+        /// <param name="propCount">
+        /// </param>
+        /// <param name="props">
+        /// </param>
+        /// <param name="bufSize">
+        /// </param>
+        /// <param name="length">
+        /// </param>
+        /// <param name="params">
         /// </param>
         public static void GetProgramResourceiv(UInt32 program, OpenGL.ProgramInterface programInterface, UInt32 index, Int32 propCount, [OutAttribute] OpenGL.ProgramResourceParameterName[] props, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] Int32[] @params)
         {
@@ -12163,6 +12211,8 @@ namespace OpenGL
         /// <param name="height">
         /// The height of the multisample texture's image, in texels.
         /// </param>
+        /// <param name="depth">
+        /// </param>
         /// <param name="fixedsamplelocations">
         /// Specifies whether the image will use identical sample locations and the same number of samples for
         /// all texels in the image, and the sample locations will not depend on the internal format or size of
@@ -12456,6 +12506,8 @@ namespace OpenGL
         /// GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S,
         /// GL_TEXTURE_WRAP_T, or GL_TEXTURE_WRAP_R. For the vector commands (glTexParameter*v), pname can also
         /// be one of GL_TEXTURE_BORDER_COLOR or GL_TEXTURE_SWIZZLE_RGBA.
+        /// </param>
+        /// <param name="paramtexture">
         /// </param>
         public static void TextureParameterfv(UInt32 texture, OpenGL.TextureParameter pname, Single[] paramtexture)
         {
@@ -17978,6 +18030,14 @@ namespace OpenGL
         /// <param name="y">
         /// For glViewportIndexedf, specifies the lower left corner of the viewport rectangle, in pixels. The
         /// initial value is (0,0).
+        /// </param>
+        /// <param name="w">
+        /// For glViewportIndexedf, specifies the width and height of the viewport. When a GL context is first
+        /// attached to a window, width and height are set to the dimensions of that window.
+        /// </param>
+        /// <param name="h">
+        /// For glViewportIndexedf, specifies the width and height of the viewport. When a GL context is first
+        /// attached to a window, width and height are set to the dimensions of that window.
         /// </param>
         public static void ViewportIndexedf(UInt32 index, Single x, Single y, Single w, Single h)
         {

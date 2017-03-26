@@ -480,9 +480,9 @@ namespace OpenGL
             internal static GetInternalformati64v glGetInternalformati64v;
             internal delegate void GetMultisamplefv(OpenGL.GetMultisamplePName pname, UInt32 index, [OutAttribute] Single[] val);
             internal static GetMultisamplefv glGetMultisamplefv;
-            internal delegate void GetObjectLabel(OpenGL.ObjectLabel identifier, UInt32 name, Int32 bifSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label);
+            internal delegate void GetObjectLabel(OpenGL.ObjectLabel identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label);
             internal static GetObjectLabel glGetObjectLabel;
-            internal delegate void GetObjectPtrLabel([OutAttribute] IntPtr ptr, Int32 bifSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label);
+            internal delegate void GetObjectPtrLabel([OutAttribute] IntPtr ptr, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label);
             internal static GetObjectPtrLabel glGetObjectPtrLabel;
             internal delegate void GetPointerv(OpenGL.GetPointerParameter pname, [OutAttribute] IntPtr @params);
             internal static GetPointerv glGetPointerv;

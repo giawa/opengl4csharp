@@ -478,9 +478,9 @@ namespace OpenGL
             [DllImport(Gl.Library, EntryPoint = "glGetMultisamplefv", ExactSpelling = true)]
             internal extern static void GetMultisamplefv(OpenGL.GetMultisamplePName pname, UInt32 index, [OutAttribute] Single[] val);
             [DllImport(Gl.Library, EntryPoint = "glGetObjectLabel", ExactSpelling = true)]
-            internal extern static void GetObjectLabel(OpenGL.ObjectLabel identifier, UInt32 name, Int32 bifSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label);
+            internal extern static void GetObjectLabel(OpenGL.ObjectLabel identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label);
             [DllImport(Gl.Library, EntryPoint = "glGetObjectPtrLabel", ExactSpelling = true)]
-            internal extern static void GetObjectPtrLabel([OutAttribute] IntPtr ptr, Int32 bifSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label);
+            internal extern static void GetObjectPtrLabel([OutAttribute] IntPtr ptr, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] System.Text.StringBuilder label);
             [DllImport(Gl.Library, EntryPoint = "glGetPointerv", ExactSpelling = true)]
             internal extern static void GetPointerv(OpenGL.GetPointerParameter pname, [OutAttribute] IntPtr @params);
             [DllImport(Gl.Library, EntryPoint = "glGetProgramiv", ExactSpelling = true)]
