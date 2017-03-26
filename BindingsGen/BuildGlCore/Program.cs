@@ -130,6 +130,7 @@ namespace OpenGL
                             if (paramName == "params") paramName = "@params";
                             if (paramName == "ref") paramName = "@ref";
                             if (paramName == "string") paramName = "@string";
+                            if (paramName == "bifSize") paramName = "bufSize";
                             paramNames.Add(paramName);
                         }
                     }

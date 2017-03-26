@@ -78,19 +78,29 @@ namespace OpenGLManPages
 
                             foreach (var parameter in command.Method.GetParameters())
                             {
+                                output.WriteLine("        /// <param name=\"" + parameter.Name + "\">");
+
                                 if (command.MethodDescriptions.ContainsKey(parameter.Name.ToLower()))
                                 {
-                                    output.WriteLine("        /// <param name=\"" + parameter.Name + "\">");
                                     WriteMultiLine(output, command.MethodDescriptions[parameter.Name.ToLower()]);
-                                    output.WriteLine("        /// </param>");
                                 }
                                 else if (parameter.Name.ToLower() == "first" && command.MethodDescriptions.ContainsKey("index"))
                                 {
                                     // fix typo in some man pages (glBindBuffersBase and glBindBuffersRange)
-                                    output.WriteLine("        /// <param name=\"" + parameter.Name + "\">");
                                     WriteMultiLine(output, command.MethodDescriptions["index"]);
-                                    output.WriteLine("        /// </param>");
                                 }
+                                else if (parameter.Name.ToLower() == "w" && command.MethodDescriptions.ContainsKey("width"))
+                                {
+                                    // create mapping between 'w' and 'width'
+                                    WriteMultiLine(output, command.MethodDescriptions["width"]);
+                                }
+                                else if (parameter.Name.ToLower() == "h" && command.MethodDescriptions.ContainsKey("height"))
+                                {
+                                    // create mapping between 'h' and 'height'
+                                    WriteMultiLine(output, command.MethodDescriptions["height"]);
+                                }
+
+                                output.WriteLine("        /// </param>");
                             }
                         }
                         else throw new Exception("Could not find documentation!");
@@ -193,7 +203,14 @@ namespace OpenGLManPages
                     // check if multiple methods are in here - if so, move to the correct method
                     if (xhtmlCode.Contains("parameters2"))
                     {
-                        xhtmlCode = xhtmlCode.Substring(xhtmlCode.IndexOf(Name));
+                        if (xhtmlCode.Contains(Name + "</code></h2>"))
+                        {
+                            xhtmlCode = xhtmlCode.Substring(xhtmlCode.IndexOf(Name + "</code></h2>"));
+                        }
+                        else
+                        {
+                            xhtmlCode = xhtmlCode.Substring(xhtmlCode.IndexOf(Name));
+                        }
                     }
 
                     xhtmlCode = xhtmlCode.Substring(0, xhtmlCode.IndexOf("div class=\"refsect1\""));
