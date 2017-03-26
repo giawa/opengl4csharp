@@ -11,10 +11,25 @@ namespace OpenGL
         where T : struct
     {
         #region Properties
+#pragma warning disable IDE1006
         /// <summary>
         /// The ID of the vertex buffer object.
         /// </summary>
-        public uint vboID { get; private set; }
+        [Obsolete("Use ID instead.")]
+        public uint vboID
+        {
+            get { return ID; }
+            private set
+            {
+                ID = value;
+            }
+        }
+#pragma warning restore
+
+        /// <summary>
+        /// The ID of the vertex buffer object.
+        /// </summary>
+        public uint ID { get; private set; }
 
         /// <summary>
         /// The type of the buffer.
@@ -51,7 +66,7 @@ namespace OpenGL
         {
             Length = Math.Max(0, Math.Min(Length, Data.Length));
 
-            vboID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint, Length);
+            ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint, Length);
 
             this.Size = (Data is int[] ? 1 : (Data is Vector2[] ? 2 : (Data is Vector3[] ? 3 : (Data is Vector4[] ? 4 : 0))));
             this.PointerType = (Data is int[] ? VertexAttribPointerType.Int : VertexAttribPointerType.Float);
@@ -72,7 +87,7 @@ namespace OpenGL
         {
             Length = Math.Max(0, Math.Min(Length, Data.Length));
 
-            vboID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint, Position, Length);
+            ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint, Position, Length);
 
             this.Size = (Data is int[] ? 1 : (Data is Vector2[] ? 2 : (Data is Vector3[] ? 3 : (Data is Vector4[] ? 4 : 0))));
             this.PointerType = (Data is int[] ? VertexAttribPointerType.Int : VertexAttribPointerType.Float);
@@ -87,7 +102,7 @@ namespace OpenGL
         /// <param name="Hint">Specifies the expected usage of the data store.</param>
         public VBO(T[] Data, BufferTarget Target = OpenGL.BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
         {
-            vboID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint);
+            ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint);
 
             Size = (Data is int[] ? 1 : (Data is Vector2[] ? 2 : (Data is Vector3[] ? 3 : (Data is Vector4[] ? 4 : 0))));
             PointerType = (Data is int[] ? VertexAttribPointerType.Int : VertexAttribPointerType.Float);
@@ -170,10 +185,10 @@ namespace OpenGL
 
         protected virtual void Dispose(bool disposing)
         {
-            if (vboID != 0)
+            if (ID != 0)
             {
-                Gl.DeleteBuffer(vboID);
-                vboID = 0;
+                Gl.DeleteBuffer(ID);
+                ID = 0;
             }
         }
         #endregion

@@ -24,7 +24,7 @@ namespace OpenGL
             internal static BeginQuery glBeginQuery;
             internal delegate void EndQuery(OpenGL.QueryTarget target);
             internal static EndQuery glEndQuery;
-            internal delegate void BeginQueryIndexed(UInt32 target, UInt32 index, UInt32 id);
+            internal delegate void BeginQueryIndexed(OpenGL.QueryTarget target, UInt32 index, UInt32 id);
             internal static BeginQueryIndexed glBeginQueryIndexed;
             internal delegate void EndQueryIndexed(OpenGL.QueryTarget target, UInt32 index);
             internal static EndQueryIndexed glEndQueryIndexed;

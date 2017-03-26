@@ -654,7 +654,7 @@ namespace OpenGL
         public static void BindBuffer<T>(VBO<T> buffer)
             where T : struct
         {
-            Gl.BindBuffer(buffer.BufferTarget, buffer.vboID);
+            Gl.BindBuffer(buffer.BufferTarget, buffer.ID);
         }
 
         /// <summary>
