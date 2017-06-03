@@ -7,8 +7,8 @@ using System.Numerics;
 
 namespace OpenGL
 {
-    public enum ParamType 
-    { 
+    public enum ParamType
+    {
         Uniform,
         Attribute
     }
@@ -195,6 +195,23 @@ namespace OpenGL
         #endregion
     }
 
+    /// <summary>
+    /// This class holds property names and types contained within a defined struct.
+    /// </summary>
+    public class StructProperty
+    {
+
+        /// <summary>
+        /// The C# type mapping for the glsl type.
+        /// </summary>
+        public Type Type;
+
+        /// <summary>
+        /// The name of the property inside the type.
+        /// </summary>
+        public string Name;
+    }
+
     public class Shader : IDisposable
     {
         #region Properties
@@ -259,12 +276,12 @@ namespace OpenGL
                 case "vec4": return typeof(Vector4);
                 case "mat3": return typeof(Matrix3);
                 case "mat4": return typeof(Matrix4);
-                case "sampler2d": 
-                case "sampler2dshadow": 
-                case "sampler1d": 
-                case "sampler1dshadow": 
-                case "sampler3d": 
-                case "sampler2darray": 
+                case "sampler2d":
+                case "sampler2dshadow":
+                case "sampler1d":
+                case "sampler1dshadow":
+                case "sampler3d":
+                case "sampler2darray":
                 case "sampler2darrayshadow": return typeof(Texture);
                 default: throw new Exception(string.Format("Unsupported GLSL type {0}", type));
             }
@@ -277,11 +294,50 @@ namespace OpenGL
         /// <param name="source">Specifies the source code of the shader.</param>
         private void GetParams(string source)
         {
+            Dictionary<string, List<StructProperty>> structTypes = new Dictionary<string, List<StructProperty>>();
             List<ProgramParam> shaderParams = new List<ProgramParam>();
             var tokens = GlslLexer.GetTokensFromMemory(source);
 
             for (int i = 0; i < tokens.Count; i++)
             {
+                // special handling for struct types
+                if (tokens[i].TokenType == GlslLexer.TokenType.Keyword && tokens[i].Text == "struct")
+                {
+                    i++;
+                    if (i == tokens.Count) break;
+
+                    // capture, advance, and assert open bracket
+                    string structTypeName = tokens[i].Text;
+                    i++;
+                    if (i == tokens.Count || tokens[i].Text != "{") break;
+
+                    // advance to the first type, and start capturing
+                    i++;
+                    List<StructProperty> innerTypes = new List<StructProperty>();
+                    while (i < tokens.Count && tokens[i].Text != "}")
+                    {
+                        if (i == tokens.Count) break;
+
+                        Type type = GlslTypeFromString(tokens[i].Text);
+                        i++;
+
+                        // now continue reading parameters until we hit EOF, semi-colon or the glsl programmer assigns a default value
+                        while (i < tokens.Count && tokens[i].Text != ";")
+                        {
+                            if (tokens[i].TokenType == GlslLexer.TokenType.Word) innerTypes.Add(new StructProperty() { Name = tokens[i].Text, Type = type });
+                            else if (tokens[i].Text == "=") break;  // they've assigned a default value, so continue on
+                            i++;
+                        }
+                        ++i;
+                    }
+
+                    // ensure we captured at least one inner property
+                    if (innerTypes.Count > 0)
+                    {
+                        structTypes[structTypeName] = innerTypes;
+                    }
+                }
+
                 if (tokens[i].TokenType == GlslLexer.TokenType.Keyword && (tokens[i].Text == "uniform" || tokens[i].Text == "attribute" || tokens[i].Text == "in"))
                 {
                     // get the parameter type (either uniform or attribute/in)
@@ -290,15 +346,35 @@ namespace OpenGL
 
                     // get the glsl type of the parameter
                     if (i == tokens.Count) break;
-                    Type type = GlslTypeFromString(tokens[i].Text);
-                    i++;    // move past the type
 
-                    // now continue reading parameters until we hit EOF, semi-colon or the glsl programmer assigns a default value
-                    while (i < tokens.Count && tokens[i].Text != ";")
+                    var typeName = tokens[i].Text;
+
+                    // determine if type is one of the defined struct types
+                    if (structTypes.ContainsKey(typeName))
                     {
-                        if (tokens[i].TokenType == GlslLexer.TokenType.Word) shaderParams.Add(new ProgramParam(type, paramType, tokens[i].Text));
-                        else if (tokens[i].Text == "=") break;  // they've assigned a default value, so continue on
                         i++;
+
+                        // loop each property name for the struct type and create a program parameter with the format
+                        // <token>.property (the string used to find locations of struct types in glsl)
+                        foreach (var innerProperty in structTypes[typeName])
+                        {
+                            // property format
+                            var paramName = string.Format("{0}.{1}", tokens[i].Text, innerProperty.Name);
+                            shaderParams.Add(new ProgramParam(innerProperty.Type, paramType, paramName));
+                        }
+                    }
+                    else
+                    {
+                        Type type = GlslTypeFromString(tokens[i].Text);
+                        i++;    // move past the type
+
+                        // now continue reading parameters until we hit EOF, semi-colon or the glsl programmer assigns a default value
+                        while (i < tokens.Count && tokens[i].Text != ";")
+                        {
+                            if (tokens[i].TokenType == GlslLexer.TokenType.Word) shaderParams.Add(new ProgramParam(type, paramType, tokens[i].Text));
+                            else if (tokens[i].Text == "=") break;  // they've assigned a default value, so continue on
+                            i++;
+                        }
                     }
                 }
             }
@@ -368,6 +444,7 @@ namespace OpenGL
         {
             get { return Gl.GetProgramInfoLog(ProgramID); }
         }
+
         #endregion
 
         #region Constructors and Destructor
