@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
     <PackageId>Giawa.OpenGL</PackageId>
-    <PackageVersion>0.1.7</PackageVersion>
+    <PackageVersion>0.1.8</PackageVersion>
     <Authors>Giawa</Authors>
     <Description>.NET Standard Bindings to OpenGL 4.5</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
