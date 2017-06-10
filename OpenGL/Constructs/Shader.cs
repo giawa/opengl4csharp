@@ -209,11 +209,6 @@ namespace OpenGL
         public ShaderType ShaderType { get; private set; }
 
         /// <summary>
-        /// Contains all of the attributes and uniforms parsed from this shader source.
-        /// </summary>
-        public ProgramParam[] ShaderParams { get; private set; }
-
-        /// <summary>
         /// Returns Gl.GetShaderInfoLog(ShaderID), which contains any compilation errors.
         /// </summary>
         public string ShaderLog
@@ -235,8 +230,6 @@ namespace OpenGL
 
             Gl.ShaderSource(ShaderID, source);
             Gl.CompileShader(ShaderID);
-
-            GetParams(source);
         }
 
         ~Shader()
@@ -268,42 +261,6 @@ namespace OpenGL
                 case "sampler2darrayshadow": return typeof(Texture);
                 default: throw new Exception(string.Format("Unsupported GLSL type {0}", type));
             }
-        }
-
-        /// <summary>
-        /// Parses the shader source code and finds all attributes and uniforms
-        /// to cache their location for speedy lookup.
-        /// </summary>
-        /// <param name="source">Specifies the source code of the shader.</param>
-        private void GetParams(string source)
-        {
-            List<ProgramParam> shaderParams = new List<ProgramParam>();
-            var tokens = GlslLexer.GetTokensFromMemory(source);
-
-            for (int i = 0; i < tokens.Count; i++)
-            {
-                if (tokens[i].TokenType == GlslLexer.TokenType.Keyword && (tokens[i].Text == "uniform" || tokens[i].Text == "attribute" || tokens[i].Text == "in"))
-                {
-                    // get the parameter type (either uniform or attribute/in)
-                    ParamType paramType = (tokens[i].Text == "uniform" ? ParamType.Uniform : ParamType.Attribute);
-                    i++;    // move past the uniform/attribute/in keyword
-
-                    // get the glsl type of the parameter
-                    if (i == tokens.Count) break;
-                    Type type = GlslTypeFromString(tokens[i].Text);
-                    i++;    // move past the type
-
-                    // now continue reading parameters until we hit EOF, semi-colon or the glsl programmer assigns a default value
-                    while (i < tokens.Count && tokens[i].Text != ";")
-                    {
-                        if (tokens[i].TokenType == GlslLexer.TokenType.Word) shaderParams.Add(new ProgramParam(type, paramType, tokens[i].Text));
-                        else if (tokens[i].Text == "=") break;  // they've assigned a default value, so continue on
-                        i++;
-                    }
-                }
-            }
-
-            this.ShaderParams = shaderParams.ToArray();
         }
         #endregion
 
@@ -415,26 +372,173 @@ namespace OpenGL
         private void GetParams()
         {
             shaderParams = new Dictionary<string, ProgramParam>();
-            foreach (ProgramParam pParam in VertexShader.ShaderParams)
+
+#if GET_PROGRAM_INTERFACE
+            if (Gl.GetAddress("glGetProgramInterfaceiv") == IntPtr.Zero)
             {
-                if (!shaderParams.ContainsKey(pParam.Name))
+#endif
+                int[] resources = new int[1];
+                int[] actualLength = new int[1];
+                int[] arraySize = new int[1];
+
+                Gl.GetProgramiv(ProgramID, ProgramParameter.ActiveAttributes, resources);
+
+                for (int i = 0; i < resources[0]; i++)
                 {
-                    shaderParams.Add(pParam.Name, pParam);
-                    pParam.GetLocation(this);
+                    ActiveAttribType[] type = new ActiveAttribType[1];
+                    System.Text.StringBuilder sb = new System.Text.StringBuilder(256);
+                    Gl.GetActiveAttrib(ProgramID, i, 256, actualLength, arraySize, type, sb);
+
+                    if (!shaderParams.ContainsKey(sb.ToString()))
+                    {
+                        ProgramParam param = new ProgramParam(TypeFromAttributeType(type[0]), ParamType.Attribute, sb.ToString());
+                        shaderParams.Add(param.Name, param);
+                        param.GetLocation(this);
+                    }
+                }
+
+                Gl.GetProgramiv(ProgramID, ProgramParameter.ActiveUniforms, resources);
+
+                for (int i = 0; i < resources[0]; i++)
+                {
+                    ActiveUniformType[] type = new ActiveUniformType[1];
+                    System.Text.StringBuilder sb = new System.Text.StringBuilder(256);
+                    Gl.GetActiveUniform(ProgramID, (uint)i, 256, actualLength, arraySize, type, sb);
+
+                    if (!shaderParams.ContainsKey(sb.ToString()))
+                    {
+                        ProgramParam param = new ProgramParam(TypeFromUniformType(type[0]), ParamType.Uniform, sb.ToString());
+                        shaderParams.Add(param.Name, param);
+                        param.GetLocation(this);
+                    }
+                }
+#if GET_PROGRAM_INTERFACE
+            }
+            else
+            {
+                int[] resources = new int[1];
+                Gl.GetProgramInterfaceiv(ProgramID, ProgramInterface.ProgramInput, ProgramInterfaceParameterName.ActiveResources, resources);
+
+                for (int i = 0; i < resources[0]; i++)
+                {
+                    int[] values = new int[2];
+                    Gl.GetProgramResourceiv(ProgramID, ProgramInterface.ProgramInput, (uint)i, 2, new ProgramResourceParameterName[] { ProgramResourceParameterName.NameLength, ProgramResourceParameterName.Type }, 256, null, values);
+                    System.Text.StringBuilder sb = new System.Text.StringBuilder(values[0]);
+                    Gl.GetProgramResourceName(ProgramID, ProgramInterface.ProgramInput, (uint)i, values[0], null, sb);
+
+                    if (!shaderParams.ContainsKey(sb.ToString()))
+                    {
+                        ProgramParam param = new ProgramParam(TypeFromAttributeType((ActiveAttribType)values[1]), ParamType.Attribute, sb.ToString());
+                        shaderParams.Add(param.Name, param);
+                        param.GetLocation(this);
+                    }
+                }
+
+                Gl.GetProgramInterfaceiv(ProgramID, ProgramInterface.Uniform, ProgramInterfaceParameterName.ActiveResources, resources);
+
+                for (int i = 0; i < resources[0]; i++)
+                {
+                    int[] values = new int[2];
+                    Gl.GetProgramResourceiv(ProgramID, ProgramInterface.Uniform, (uint)i, 2, new ProgramResourceParameterName[] { ProgramResourceParameterName.NameLength, ProgramResourceParameterName.Type }, 256, null, values);
+                    System.Text.StringBuilder sb = new System.Text.StringBuilder(values[0]);
+                    Gl.GetProgramResourceName(ProgramID, ProgramInterface.Uniform, (uint)i, values[0], null, sb);
+
+                    if (!shaderParams.ContainsKey(sb.ToString()))
+                    {
+                        ProgramParam param = new ProgramParam(TypeFromUniformType((ActiveUniformType)values[1]), ParamType.Uniform, sb.ToString());
+                        shaderParams.Add(param.Name, param);
+                        param.GetLocation(this);
+                    }
                 }
             }
-            foreach (ProgramParam pParam in FragmentShader.ShaderParams)
+#endif
+        }
+
+        private Type TypeFromAttributeType(ActiveAttribType type)
+        {
+            switch (type)
             {
-                if (!shaderParams.ContainsKey(pParam.Name))
-                {
-                    shaderParams.Add(pParam.Name, pParam);
-                    pParam.GetLocation(this);
-                }
+                case ActiveAttribType.Float: return typeof(float);
+                case ActiveAttribType.FloatMat2: return typeof(float[]);
+                case ActiveAttribType.FloatMat3: return typeof(Matrix3);
+                case ActiveAttribType.FloatMat4: return typeof(Matrix4);
+                case ActiveAttribType.FloatVec2: return typeof(Vector2);
+                case ActiveAttribType.FloatVec3: return typeof(Vector3);
+                case ActiveAttribType.FloatVec4: return typeof(Vector4);
+                default: return typeof(object);
             }
         }
-        #endregion
 
-        #region Methods
+        private Type TypeFromUniformType(ActiveUniformType type)
+        {
+            switch (type)
+            {
+                case ActiveUniformType.Int: return typeof(int);
+                case ActiveUniformType.Float: return typeof(float);
+                case ActiveUniformType.FloatVec2: return typeof(Vector2);
+                case ActiveUniformType.FloatVec3: return typeof(Vector3);
+                case ActiveUniformType.FloatVec4: return typeof(Vector4);
+                case ActiveUniformType.IntVec2: return typeof(int[]);
+                case ActiveUniformType.IntVec3: return typeof(int[]);
+                case ActiveUniformType.IntVec4: return typeof(int[]);
+                case ActiveUniformType.Bool: return typeof(bool);
+                case ActiveUniformType.BoolVec2: return typeof(bool[]);
+                case ActiveUniformType.BoolVec3: return typeof(bool[]);
+                case ActiveUniformType.BoolVec4: return typeof(bool[]);
+                case ActiveUniformType.FloatMat2: return typeof(float[]);
+                case ActiveUniformType.FloatMat3: return typeof(Matrix3);
+                case ActiveUniformType.FloatMat4: return typeof(Matrix4);
+                case ActiveUniformType.Sampler1D: 
+                case ActiveUniformType.Sampler2D: 
+                case ActiveUniformType.Sampler3D: 
+                case ActiveUniformType.SamplerCube: 
+                case ActiveUniformType.Sampler1DShadow: 
+                case ActiveUniformType.Sampler2DShadow: 
+                case ActiveUniformType.Sampler2DRect: 
+                case ActiveUniformType.Sampler2DRectShadow: return typeof(int);
+                case ActiveUniformType.FloatMat2x3: 
+                case ActiveUniformType.FloatMat2x4: 
+                case ActiveUniformType.FloatMat3x2: 
+                case ActiveUniformType.FloatMat3x4: 
+                case ActiveUniformType.FloatMat4x2: 
+                case ActiveUniformType.FloatMat4x3: return typeof(float[]);
+                case ActiveUniformType.Sampler1DArray: 
+                case ActiveUniformType.Sampler2DArray: 
+                case ActiveUniformType.SamplerBuffer: 
+                case ActiveUniformType.Sampler1DArrayShadow: 
+                case ActiveUniformType.Sampler2DArrayShadow: 
+                case ActiveUniformType.SamplerCubeShadow: return typeof(int);
+                case ActiveUniformType.UnsignedIntVec2: return typeof(uint[]);
+                case ActiveUniformType.UnsignedIntVec3: return typeof(uint[]);
+                case ActiveUniformType.UnsignedIntVec4: return typeof(uint[]);
+                case ActiveUniformType.IntSampler1D: 
+                case ActiveUniformType.IntSampler2D: 
+                case ActiveUniformType.IntSampler3D: 
+                case ActiveUniformType.IntSamplerCube: 
+                case ActiveUniformType.IntSampler2DRect: 
+                case ActiveUniformType.IntSampler1DArray: 
+                case ActiveUniformType.IntSampler2DArray: 
+                case ActiveUniformType.IntSamplerBuffer: return typeof(int);
+                case ActiveUniformType.UnsignedIntSampler1D: 
+                case ActiveUniformType.UnsignedIntSampler2D: 
+                case ActiveUniformType.UnsignedIntSampler3D: 
+                case ActiveUniformType.UnsignedIntSamplerCube: 
+                case ActiveUniformType.UnsignedIntSampler2DRect: 
+                case ActiveUniformType.UnsignedIntSampler1DArray: 
+                case ActiveUniformType.UnsignedIntSampler2DArray: 
+                case ActiveUniformType.UnsignedIntSamplerBuffer: return typeof(uint);
+                case ActiveUniformType.Sampler2DMultisample: return typeof(int);
+                case ActiveUniformType.IntSampler2DMultisample: return typeof(int);
+                case ActiveUniformType.UnsignedIntSampler2DMultisample: return typeof(uint);
+                case ActiveUniformType.Sampler2DMultisampleArray: return typeof(int);
+                case ActiveUniformType.IntSampler2DMultisampleArray: return typeof(int);
+                case ActiveUniformType.UnsignedIntSampler2DMultisampleArray: return typeof(uint);
+                default: return typeof(object);
+            }
+        }
+#endregion
+
+#region Methods
         public void Use()
         {
             if (Gl.CurrentProgram != ProgramID) Gl.UseProgram(this.ProgramID);
@@ -451,9 +555,9 @@ namespace OpenGL
             Use();
             return Gl.GetAttribLocation(ProgramID, Name);
         }
-        #endregion
+#endregion
 
-        #region IDisposable
+#region IDisposable
         public void Dispose()
         {
             Dispose(true);
@@ -480,6 +584,6 @@ namespace OpenGL
                 ProgramID = 0;
             }
         }
-        #endregion
+#endregion
     }
 }
