@@ -60,6 +60,10 @@ namespace OpenGL
             return availableExtensions[(int)name];
         }
 
+        /// <summary>
+        /// Exposes each extension as a boolean that can be queried at runtime.  The boolean will be true if the OpenGL extension is supported.
+        /// Note:  The extensions are loaded lazily, so the first call to IsExtensionSupported may take some time.
+        /// </summary>
         public static class Extensions
         {
 #pragma warning disable CS1591
