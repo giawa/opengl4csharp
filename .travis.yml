@@ -5,7 +5,7 @@ dist: trusty
 sudo: required
 mono: none
 env: DOTNETCORE=1
-dotnet: 1.0.1
+dotnet: 2.1.502
 script:
   - dotnet restore
   - dotnet build OpenGL/OpenGL.csproj -c Release
