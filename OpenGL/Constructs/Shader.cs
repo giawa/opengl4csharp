@@ -230,6 +230,16 @@ namespace OpenGL
 
             Gl.ShaderSource(ShaderID, source);
             Gl.CompileShader(ShaderID);
+
+            int[] shaderStatus = new int[1];
+            Gl.GetShaderiv(ShaderID, ShaderParameter.CompileStatus, shaderStatus);
+
+            const int NOT_COMPILED = 0;
+            if (shaderStatus[0] == NOT_COMPILED)
+            {
+                string errorMessage = Gl.GetShaderInfoLog(ShaderID);
+                throw new Exception(errorMessage);
+            }
         }
 
         ~Shader()
@@ -343,6 +353,16 @@ namespace OpenGL
             Gl.AttachShader(ProgramID, vertexShader.ShaderID);
             Gl.AttachShader(ProgramID, fragmentShader.ShaderID);
             Gl.LinkProgram(ProgramID);
+
+            int[] programStatus = new int[1];
+            Gl.GetProgramiv(ProgramID, ProgramParameter.LinkStatus, programStatus);
+
+            const int NOT_LINKED = 0;
+            if (programStatus[0] == NOT_LINKED)
+            {
+                string errorMessage = Gl.GetProgramInfoLog(ProgramID);
+                throw new Exception(errorMessage);
+            }
 
             GetParams();
         }
