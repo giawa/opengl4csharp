@@ -639,21 +639,21 @@ namespace OpenGL
 
         /// <summary>
         /// Generic method for binding the VBOs to their respective attribute locations.
-        /// OpenGL.dll assumes the common naming conventions below:
-        ///     vertices: vec3 in_position
-        ///     normals: vec3 in_normal
-        ///     uv: vec2 in_uv
-        ///     tangent: vec3 in_tangent
         /// </summary>
-        public void BindAttributes(ShaderProgram program)
+        /// <param name="program">The shader program to bind attributes to.</param>
+        /// <param name="positionName">The attribute name for the vertex positions.</param>
+        /// <param name="normalName">The attribute naem for the vertex normals.</param>
+        /// <param name="uvName">The attribute name for the vertex UV co-ordinates.</param>
+        /// <param name="tangentName">The attribute name for the vertex tangents.</param>
+        public void BindAttributes(ShaderProgram program, string positionName = "in_position", string normalName = "in_normal", string uvName = "in_uv", string tangentName = "in_tangent")
         {
             if (vertex == null || vertex.ID == 0) throw new Exception("Error binding attributes.  No vertices were supplied.");
             if (element == null || element.ID == 0) throw new Exception("Error binding attributes.  No element array was supplied.");
 
             // Note:  Since the shader is already compiled, we cannot set the attribute locations.
             //  Instead we must query the shader for the locations that the linker chose and use them.
-            int loc = Gl.GetAttribLocation(program.ProgramID, "in_position");
-            if (loc == -1) throw new Exception("Shader did not contain 'in_position'.");
+            int loc = Gl.GetAttribLocation(program.ProgramID, positionName);
+            if (loc == -1) throw new Exception("Shader did not contain '" + positionName + "'.");
 
             Gl.EnableVertexAttribArray((uint)loc);
             Gl.BindBuffer(vertex.BufferTarget, vertex.ID);
@@ -661,7 +661,7 @@ namespace OpenGL
 
             if (normal != null && normal.ID != 0)
             {
-                loc = Gl.GetAttribLocation(program.ProgramID, "in_normal");
+                loc = Gl.GetAttribLocation(program.ProgramID, normalName);
                 if (loc != -1)
                 {
                     Gl.EnableVertexAttribArray((uint)loc);
@@ -672,7 +672,7 @@ namespace OpenGL
 
             if (uv != null && uv.ID != 0)
             {
-                loc = Gl.GetAttribLocation(program.ProgramID, "in_uv");
+                loc = Gl.GetAttribLocation(program.ProgramID, uvName);
                 if (loc != -1)
                 {
                     Gl.EnableVertexAttribArray((uint)loc);
@@ -683,7 +683,7 @@ namespace OpenGL
 
             if (tangent != null && tangent.ID != 0)
             {
-                loc = Gl.GetAttribLocation(program.ProgramID, "in_tangent");
+                loc = Gl.GetAttribLocation(program.ProgramID, tangentName);
                 if (loc != -1)
                 {
                     Gl.EnableVertexAttribArray((uint)loc);
