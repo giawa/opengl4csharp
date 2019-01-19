@@ -230,6 +230,13 @@ namespace OpenGL
 
             Gl.ShaderSource(ShaderID, source);
             Gl.CompileShader(ShaderID);
+
+            //Check whether the shader compiled successfully.
+            //If not then throw an error with the compile error.
+            if (!Gl.GetShaderCompileStatus(ShaderID))
+            {
+                throw new Exception(ShaderLog);
+            }
         }
 
         ~Shader()
@@ -343,6 +350,13 @@ namespace OpenGL
             Gl.AttachShader(ProgramID, vertexShader.ShaderID);
             Gl.AttachShader(ProgramID, fragmentShader.ShaderID);
             Gl.LinkProgram(ProgramID);
+
+            //Check whether the program linked successfully.
+            //If not then throw an error with the linking error.
+            if (!Gl.GetProgramLinkStatus(ProgramID))
+            {
+                throw new Exception(ProgramLog);
+            }
 
             GetParams();
         }
