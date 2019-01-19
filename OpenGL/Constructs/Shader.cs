@@ -7,8 +7,8 @@ using System.Numerics;
 
 namespace OpenGL
 {
-    public enum ParamType 
-    { 
+    public enum ParamType
+    {
         Uniform,
         Attribute
     }
@@ -259,12 +259,12 @@ namespace OpenGL
                 case "vec4": return typeof(Vector4);
                 case "mat3": return typeof(Matrix3);
                 case "mat4": return typeof(Matrix4);
-                case "sampler2d": 
-                case "sampler2dshadow": 
-                case "sampler1d": 
-                case "sampler1dshadow": 
-                case "sampler3d": 
-                case "sampler2darray": 
+                case "sampler2d":
+                case "sampler2dshadow":
+                case "sampler1d":
+                case "sampler1dshadow":
+                case "sampler3d":
+                case "sampler2darray":
                 case "sampler2darrayshadow": return typeof(Texture);
                 default: throw new Exception(string.Format("Unsupported GLSL type {0}", type));
             }
@@ -502,44 +502,44 @@ namespace OpenGL
                 case ActiveUniformType.FloatMat2: return typeof(float[]);
                 case ActiveUniformType.FloatMat3: return typeof(Matrix3);
                 case ActiveUniformType.FloatMat4: return typeof(Matrix4);
-                case ActiveUniformType.Sampler1D: 
-                case ActiveUniformType.Sampler2D: 
-                case ActiveUniformType.Sampler3D: 
-                case ActiveUniformType.SamplerCube: 
-                case ActiveUniformType.Sampler1DShadow: 
-                case ActiveUniformType.Sampler2DShadow: 
-                case ActiveUniformType.Sampler2DRect: 
+                case ActiveUniformType.Sampler1D:
+                case ActiveUniformType.Sampler2D:
+                case ActiveUniformType.Sampler3D:
+                case ActiveUniformType.SamplerCube:
+                case ActiveUniformType.Sampler1DShadow:
+                case ActiveUniformType.Sampler2DShadow:
+                case ActiveUniformType.Sampler2DRect:
                 case ActiveUniformType.Sampler2DRectShadow: return typeof(int);
-                case ActiveUniformType.FloatMat2x3: 
-                case ActiveUniformType.FloatMat2x4: 
-                case ActiveUniformType.FloatMat3x2: 
-                case ActiveUniformType.FloatMat3x4: 
-                case ActiveUniformType.FloatMat4x2: 
+                case ActiveUniformType.FloatMat2x3:
+                case ActiveUniformType.FloatMat2x4:
+                case ActiveUniformType.FloatMat3x2:
+                case ActiveUniformType.FloatMat3x4:
+                case ActiveUniformType.FloatMat4x2:
                 case ActiveUniformType.FloatMat4x3: return typeof(float[]);
-                case ActiveUniformType.Sampler1DArray: 
-                case ActiveUniformType.Sampler2DArray: 
-                case ActiveUniformType.SamplerBuffer: 
-                case ActiveUniformType.Sampler1DArrayShadow: 
-                case ActiveUniformType.Sampler2DArrayShadow: 
+                case ActiveUniformType.Sampler1DArray:
+                case ActiveUniformType.Sampler2DArray:
+                case ActiveUniformType.SamplerBuffer:
+                case ActiveUniformType.Sampler1DArrayShadow:
+                case ActiveUniformType.Sampler2DArrayShadow:
                 case ActiveUniformType.SamplerCubeShadow: return typeof(int);
                 case ActiveUniformType.UnsignedIntVec2: return typeof(uint[]);
                 case ActiveUniformType.UnsignedIntVec3: return typeof(uint[]);
                 case ActiveUniformType.UnsignedIntVec4: return typeof(uint[]);
-                case ActiveUniformType.IntSampler1D: 
-                case ActiveUniformType.IntSampler2D: 
-                case ActiveUniformType.IntSampler3D: 
-                case ActiveUniformType.IntSamplerCube: 
-                case ActiveUniformType.IntSampler2DRect: 
-                case ActiveUniformType.IntSampler1DArray: 
-                case ActiveUniformType.IntSampler2DArray: 
+                case ActiveUniformType.IntSampler1D:
+                case ActiveUniformType.IntSampler2D:
+                case ActiveUniformType.IntSampler3D:
+                case ActiveUniformType.IntSamplerCube:
+                case ActiveUniformType.IntSampler2DRect:
+                case ActiveUniformType.IntSampler1DArray:
+                case ActiveUniformType.IntSampler2DArray:
                 case ActiveUniformType.IntSamplerBuffer: return typeof(int);
-                case ActiveUniformType.UnsignedIntSampler1D: 
-                case ActiveUniformType.UnsignedIntSampler2D: 
-                case ActiveUniformType.UnsignedIntSampler3D: 
-                case ActiveUniformType.UnsignedIntSamplerCube: 
-                case ActiveUniformType.UnsignedIntSampler2DRect: 
-                case ActiveUniformType.UnsignedIntSampler1DArray: 
-                case ActiveUniformType.UnsignedIntSampler2DArray: 
+                case ActiveUniformType.UnsignedIntSampler1D:
+                case ActiveUniformType.UnsignedIntSampler2D:
+                case ActiveUniformType.UnsignedIntSampler3D:
+                case ActiveUniformType.UnsignedIntSamplerCube:
+                case ActiveUniformType.UnsignedIntSampler2DRect:
+                case ActiveUniformType.UnsignedIntSampler1DArray:
+                case ActiveUniformType.UnsignedIntSampler2DArray:
                 case ActiveUniformType.UnsignedIntSamplerBuffer: return typeof(uint);
                 case ActiveUniformType.Sampler2DMultisample: return typeof(int);
                 case ActiveUniformType.IntSampler2DMultisample: return typeof(int);
@@ -550,9 +550,9 @@ namespace OpenGL
                 default: return typeof(object);
             }
         }
-#endregion
+        #endregion
 
-#region Methods
+        #region Methods
         public void Use()
         {
             if (Gl.CurrentProgram != ProgramID) Gl.UseProgram(this.ProgramID);
@@ -569,9 +569,9 @@ namespace OpenGL
             Use();
             return Gl.GetAttribLocation(ProgramID, Name);
         }
-#endregion
+        #endregion
 
-#region IDisposable
+        #region IDisposable
         public void Dispose()
         {
             Dispose(true);
@@ -598,6 +598,6 @@ namespace OpenGL
                 ProgramID = 0;
             }
         }
-#endregion
+        #endregion
     }
 }
