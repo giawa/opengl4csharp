@@ -62,7 +62,7 @@ namespace OpenGL
         /// <param name="Length">The length of the valid data in the data array.</param>
         /// <param name="Target">Specifies the target buffer object.</param>
         /// <param name="Hint">Specifies the expected usage of the data store.</param>
-        public VBO(T[] Data, int Length, BufferTarget Target = OpenGL.BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
+        public VBO(T[] Data, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
         {
             Length = Math.Max(0, Math.Min(Length, Data.Length));
 
@@ -83,7 +83,7 @@ namespace OpenGL
         /// <param name="Length">The length of the valid data in the data array.</param>
         /// <param name="Target">Specifies the target buffer object.</param>
         /// <param name="Hint">Specifies the expected usage of the data store.</param>
-        public VBO(T[] Data, int Position, int Length, BufferTarget Target = OpenGL.BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
+        public VBO(T[] Data, int Position, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
         {
             Length = Math.Max(0, Math.Min(Length, Data.Length));
 
@@ -100,7 +100,7 @@ namespace OpenGL
         /// <param name="Data">Specifies a pointer to data that will be copied into the data store for initialization.</param>
         /// <param name="Target">Specifies the target buffer object.</param>
         /// <param name="Hint">Specifies the expected usage of the data store.</param>
-        public VBO(T[] Data, BufferTarget Target = OpenGL.BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
+        public VBO(T[] Data, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
         {
             ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint);
 
@@ -155,8 +155,8 @@ namespace OpenGL
         /// <param name="offset">The offset in bytes into the buffer object's data store where data replacement will begin.</param>
         public void BufferSubData(T[] data, int size, int offset)
         {
-            if (BufferTarget != OpenGL.BufferTarget.ArrayBuffer && BufferTarget != OpenGL.BufferTarget.ElementArrayBuffer &&
-                BufferTarget != OpenGL.BufferTarget.PixelPackBuffer && BufferTarget != OpenGL.BufferTarget.PixelUnpackBuffer)
+            if (BufferTarget != BufferTarget.ArrayBuffer && BufferTarget != BufferTarget.ElementArrayBuffer &&
+                BufferTarget != BufferTarget.PixelPackBuffer && BufferTarget != BufferTarget.PixelUnpackBuffer)
                 throw new InvalidOperationException(string.Format("BufferSubData cannot be called with a BufferTarget of type {0}", BufferTarget.ToString()));
 
             GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
