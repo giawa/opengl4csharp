@@ -265,6 +265,30 @@ namespace OpenGL
         }
 
         /// <summary>
+        /// Gets whether the shader compiled successfully.
+        /// </summary>
+        /// <param name="shader">The ID of the shader program.</param>
+        /// <returns></returns>
+        public static bool GetShaderCompileStatus(UInt32 shader)
+        {
+            const int SUCCESS = 1;
+            Gl.GetShaderiv(shader, ShaderParameter.CompileStatus, int1);
+            return int1[0] == SUCCESS;
+        }
+
+        /// <summary>
+        /// Get whether program linking was performed successfully.
+        /// </summary>
+        /// <param name="program"></param>
+        /// <returns></returns>
+        public static bool GetProgramLinkStatus(UInt32 program)
+        {
+            const int SUCCESS = 1;
+            Gl.GetProgramiv(program, ProgramParameter.LinkStatus, int1);
+            return int1[0] == SUCCESS;
+        }
+
+        /// <summary>
         /// Gets the program info from a shader program.
         /// </summary>
         /// <param name="program">The ID of the shader program.</param>
