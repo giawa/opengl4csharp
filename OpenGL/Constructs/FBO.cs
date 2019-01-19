@@ -237,8 +237,8 @@ namespace OpenGL
             if (DepthID != 0 || BufferID != 0 || TextureID != null)
             {
                 Gl.DeleteTextures(TextureID.Length, TextureID);
-                Gl.DeleteFramebuffers(1, new uint[] { BufferID });
-                Gl.DeleteFramebuffers(1, new uint[] { DepthID });
+                Gl.DeleteFramebuffer(BufferID);
+                Gl.DeleteFramebuffer(DepthID);
 
                 BufferID = 0;
                 DepthID = 0;

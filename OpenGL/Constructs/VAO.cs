@@ -454,7 +454,7 @@ namespace OpenGL
             // first try to dispose of the vertex array
             if (ID != 0)
             {
-                Gl.DeleteVertexArrays(1, new uint[] { ID });
+                Gl.DeleteVertexArray(ID);
 
                 ID = 0;
             }
@@ -751,7 +751,7 @@ namespace OpenGL
             // first try to dispose of the vertex array
             if (ID != 0)
             {
-                Gl.DeleteVertexArrays(1, new uint[] { ID });
+                Gl.DeleteVertexArray(ID);
 
                 ID = 0;
             }
