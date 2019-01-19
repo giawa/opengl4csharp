@@ -78,7 +78,7 @@ namespace OpenGL
                 MemoryLogger.DestroyTexture(TextureID, Size);
 #endif
 
-                Gl.DeleteTextures(1, new uint[] { TextureID });
+                Gl.DeleteTexture(TextureID);
                 TextureID = 0;
             }
         }

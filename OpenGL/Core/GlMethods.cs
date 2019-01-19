@@ -229,6 +229,17 @@ namespace OpenGL
         }
 
         /// <summary>
+        /// Shortcut for deleting a single texture without created an array to pass to the gl function.
+        /// Calls Gl.DeleteTextures(1, id).
+        /// </summary>
+        /// <param name="texture">The ID of the texture to delete.</param>
+        public static void DeleteTexture(uint texture)
+        {
+            uint1[0] = texture;
+            Gl.DeleteTextures(1, uint1);
+        }
+
+        /// <summary>
         /// Shortcut for quickly generating a single vertex array id without creating an array to
         /// pass to the gl function.  Calls Gl.GenVertexArrays(1, id).
         /// </summary>
@@ -241,6 +252,17 @@ namespace OpenGL
         }
 
         /// <summary>
+        /// Shortcut for deleting a single texture without created an array to pass to the gl function.
+        /// Calls Gl.DeleteVertexArrays(1, id).
+        /// </summary>
+        /// <param name="vao">The ID of the vertex array to delete.</param>
+        public static void DeleteVertexArray(uint vao)
+        {
+            uint1[0] = vao;
+            Gl.DeleteVertexArrays(1, uint1);
+        }
+
+        /// <summary>
         /// Shortcut for quickly generating a single framebuffer object without creating an array
         /// to pass to the gl function.  Calls Gl.GenFramebuffers(1, id).
         /// </summary>
@@ -250,6 +272,17 @@ namespace OpenGL
             uint1[0] = 0;
             Gl.GenFramebuffers(1, uint1);
             return uint1[0];
+        }
+
+        /// <summary>
+        /// Shortcut for deleting a framebuffer without created an array to pass to the gl function.
+        /// Calls Gl.DeleteFramebuffers(1, id).
+        /// </summary>
+        /// <param name="vao">The ID of the vertex array to delete.</param>
+        public static void DeleteFramebuffer(uint framebuffer)
+        {
+            uint1[0] = framebuffer;
+            Gl.DeleteFramebuffers(1, uint1);
         }
 
         /// <summary>
