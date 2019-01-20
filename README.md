@@ -9,7 +9,7 @@ This library also includes some common Math libraries, taken from my own graphic
 
 Random History:  This code was written to help my friend with his Masters thesis, as he was wanting to do work with GLSL and OpenGL.  I wrote up these OpenGL 4 bindings over the course of two weeks in 2011 and they were never used.  It is about time someone got to play with them!  I'm also working on a [Voxel Engine](http://www.giawa.com) using this library, which is largely open source.
 
-Note:  To use this library you will need a valid OpenGL context.  You can get this using FreeGLUT, or some equivalent.
+Note:  To use this library you will need a valid OpenGL context.  You can get this using FreeGLUT, SDL, or some equivalent.
 
 ## License
 Check the included [LICENSE.md](https://github.com/giawa/opengl4csharp/blob/master/LICENSE.md) file for the license associated with this code.
@@ -91,7 +91,7 @@ Note:  Make sure that you dispose of your new shader once your program closes!  
 
 I'm assuming that you have your shader program loaded (use the example one above if not).  Here we'll use the Geometry class to quickly build up a cube and render it in our OnRenderFrame method.
 
-First, create the cube during initialization (just after setting up FreeGLUT, but just before Glut.glutMainLoop()).  We also need to set up the shader with some defaults for the modelview and projection matrices.
+First, create the cube during initialization (just after CreateWindow, but before the main loop).  We also need to set up the shader with some defaults for the modelview and projection matrices.
 
 ```csharp
 // set up some defaults for the shader program project and modelview matrices
@@ -102,7 +102,7 @@ program["modelview_matrix"].SetValue(Matrix4.CreateTranslation(new Vector3(2, 2,
 cube = OpenGL.Geometry.CreateCube(program, new Vector3(-1, -1, -1), new Vector3(1, 1, 1));
 ```
 
-Now draw the cube by using the shader program, drawing the cube and then swapping the Glut buffers.
+Now draw the cube by using the shader program, drawing the cube and then swapping the buffers.
 
 ```csharp
 private static void OnRenderFrame()
@@ -113,7 +113,7 @@ private static void OnRenderFrame()
    cube.Program.Use();
    cube.Draw();
 
-   Glut.glutSwapBuffers();
+   OpenGL.Platform.Window.SwapBuffers();
 }
 ```
 
