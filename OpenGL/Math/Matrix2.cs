@@ -120,36 +120,72 @@ namespace OpenGL
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Creates an identical copy of a Matrix2.
+        /// </summary>
+        /// <param name="existingMatrix">Specifies the Matrix2 to copy.</param>
         public Matrix2(Matrix2 existingMatrix)
         {
             row1 = existingMatrix[0];
             row2 = existingMatrix[1];
         }
 
+        /// <summary>
+        /// Creates a Matrix2 from rows of vectors.
+        /// </summary>
+        /// <param name="v0">Specifies the first row of the matrix.</param>
+        /// <param name="v1">Specifies the second row of the matrix.</param>
         public Matrix2(Vector2 v0, Vector2 v1)
         {
             row1 = v0;
             row2 = v1;
         }
 
+        /// <summary>
+        /// Takes the first four values of a float[] and creates a Matrix2 out of it.
+        /// The first two values specify the first row of the matrix. The next two
+        /// specifies the second row of the matrix.
+        /// </summary>
+        /// <param name="array">Specifies the float[] to make into a Matrix2.</param>
         public Matrix2(float[] array)
         {
             row1 = new Vector2(array[0], array[1]);
             row2 = new Vector2(array[2], array[3]);
         }
 
+        /// <summary>
+        /// Takes the first four values of a double[] and creates a Matrix2 out of it.
+        /// The first two values specify the first row of the matrix. The next two
+        /// specifies the second row of the matrix. The values are cast to floats.
+        /// </summary>
+        /// <param name="array">Specifies the double[] to make into a Matrix2.</param>
         public Matrix2(double[] array)
         {
             row1 = new Vector2((float)array[0], (float)array[1]);
             row2 = new Vector2((float)array[2], (float)array[3]);
         }
 
+        /// <summary>
+        /// <para/>Takes four floats to make a matrix.
+        /// <para/>The values will be setup as follows in the matrix.
+        /// <para/>f11, f12
+        /// <para/>f21, f22
+        /// </summary>
+        /// <param name="f11">Top left value in the matrix.</param>
+        /// <param name="f12">Top right value in the matrix.</param>
+        /// <param name="f21">Bottom left value in the matrix.</param>
+        /// <param name="f22">Bottom right value in the matrix.</param>
         public Matrix2(float f11, float f12, float f21, float f22)
         {
             row1 = new Vector2(f11, f12);
             row2 = new Vector2(f21, f22);
         }
 
+        /// <summary>
+        /// Set matrix rows with new rows.
+        /// </summary>
+        /// <param name="v0">Set first row to this vector.</param>
+        /// <param name="v1">Set second row to this vector.</param>
         public void SetMatrix(Vector2 v0, Vector2 v1)
         {
             row1 = v0;
@@ -175,7 +211,7 @@ namespace OpenGL
 
 
         /// <summary>
-        /// Creates the inverse matrix using Gauss-Jordan elimination with partial pivoting.
+        /// Creates the inverse matrix if it has any. If no inverse matrix exists then it throws an error.
         /// </summary>
         /// <returns>A Matrix2 object that contains the inversed matrix</returns>
         /// <exception cref="System.Exception">Throws error if the matrix doesn't have an inverse matrix.</exception>
