@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 #if USE_NUMERICS
 using System.Numerics;
@@ -10,6 +11,20 @@ namespace OpenGL
     public class VBO<T> : IDisposable
         where T : struct
     {
+        #region Private Fields
+        /// <summary>
+        /// A collection of types and their respective number of components per generic vertex attribute.
+        /// </summary>
+        private static readonly Dictionary<Type, int> TypeComponentSize = new Dictionary<Type, int>()
+        {
+            [typeof(int)] = 1,
+            [typeof(float)] = 1,
+            [typeof(Vector2)] = 2,
+            [typeof(Vector3)] = 3,
+            [typeof(Vector4)] = 4,
+        };
+        #endregion
+
         #region Properties
 #pragma warning disable IDE1006
         /// <summary>
@@ -50,6 +65,12 @@ namespace OpenGL
         /// The length of data that is stored in the buffer.
         /// </summary>
         public int Count { get; private set; }
+
+        /// <summary>
+        /// Specifies the number of instances that will pass between updates of the generic attribute slot.
+        /// Only used for instance drawing.
+        /// </summary>
+        public uint Divisor { get; private set; }
         #endregion
 
         #region Constructor and Destructor
@@ -62,15 +83,17 @@ namespace OpenGL
         /// <param name="Length">The length of the valid data in the data array.</param>
         /// <param name="Target">Specifies the target buffer object.</param>
         /// <param name="Hint">Specifies the expected usage of the data store.</param>
-        public VBO(T[] Data, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
+        /// <param name="Divisor">Specifies the devisor when using instanced rendering</param>
+        public VBO(T[] Data, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw, uint Divisor = 0)
         {
             Length = Math.Max(0, Math.Min(Length, Data.Length));
 
             ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint, Length);
 
-            this.Size = (Data is int[] ? 1 : (Data is Vector2[] ? 2 : (Data is Vector3[] ? 3 : (Data is Vector4[] ? 4 : 0))));
+            this.Size = GetTypeComponentSize();
             this.PointerType = (Data is int[] ? VertexAttribPointerType.Int : VertexAttribPointerType.Float);
             this.Count = Length;
+            this.Divisor = Divisor;
         }
 
         /// <summary>
@@ -83,15 +106,17 @@ namespace OpenGL
         /// <param name="Length">The length of the valid data in the data array.</param>
         /// <param name="Target">Specifies the target buffer object.</param>
         /// <param name="Hint">Specifies the expected usage of the data store.</param>
-        public VBO(T[] Data, int Position, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
+        /// <param name="Divisor">Specifies the devisor when using instanced rendering</param>
+        public VBO(T[] Data, int Position, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw, uint Divisor = 0)
         {
             Length = Math.Max(0, Math.Min(Length, Data.Length));
 
             ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint, Position, Length);
 
-            this.Size = (Data is int[] ? 1 : (Data is Vector2[] ? 2 : (Data is Vector3[] ? 3 : (Data is Vector4[] ? 4 : 0))));
+            this.Size = GetTypeComponentSize();
             this.PointerType = (Data is int[] ? VertexAttribPointerType.Int : VertexAttribPointerType.Float);
             this.Count = Length;
+            this.Divisor = Divisor;
         }
 
         /// <summary>
@@ -100,13 +125,15 @@ namespace OpenGL
         /// <param name="Data">Specifies a pointer to data that will be copied into the data store for initialization.</param>
         /// <param name="Target">Specifies the target buffer object.</param>
         /// <param name="Hint">Specifies the expected usage of the data store.</param>
-        public VBO(T[] Data, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
+        /// <param name="Divisor">Specifies the devisor when using instanced rendering</param>
+        public VBO(T[] Data, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw, uint Divisor = 0)
         {
             ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint);
 
-            Size = (Data is int[] ? 1 : (Data is Vector2[] ? 2 : (Data is Vector3[] ? 3 : (Data is Vector4[] ? 4 : 0))));
-            PointerType = (Data is int[] ? VertexAttribPointerType.Int : VertexAttribPointerType.Float);
-            Count = Data.Length;
+            this.Size = GetTypeComponentSize();
+            this.PointerType = (Data is int[] ? VertexAttribPointerType.Int : VertexAttribPointerType.Float);
+            this.Count = Data.Length;
+            this.Divisor = Divisor;
         }
 
         /// <summary>
@@ -116,6 +143,15 @@ namespace OpenGL
         public VBO(T[] Data)
             : this(Data, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw)
         {
+        }
+
+        /// <summary>
+        /// Get the component size of T.
+        /// </summary>
+        /// <returns>The component size of T.</returns>
+        private int GetTypeComponentSize()
+        {
+            return TypeComponentSize[typeof(T)];
         }
 
         /// <summary>
