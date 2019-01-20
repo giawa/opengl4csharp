@@ -11,6 +11,20 @@ namespace OpenGL
     public class VBO<T> : IDisposable
         where T : struct
     {
+        #region Private Fields
+        /// <summary>
+        /// A collection of types and their respective number of components per generic vertex attribute.
+        /// </summary>
+        private static readonly Dictionary<Type, int> TypeComponentSize = new Dictionary<Type, int>()
+        {
+            [typeof(int)] = 1,
+            [typeof(float)] = 1,
+            [typeof(Vector2)] = 2,
+            [typeof(Vector3)] = 3,
+            [typeof(Vector4)] = 4,
+        };
+        #endregion
+
         #region Properties
 #pragma warning disable IDE1006
         /// <summary>
@@ -52,7 +66,10 @@ namespace OpenGL
         /// </summary>
         public int Count { get; private set; }
 
-
+        /// <summary>
+        /// Specifies the number of instances that will pass between updates of the generic attribute slot.
+        /// Only used for instance drawing.
+        /// </summary>
         public uint Divisor { get; private set; }
         #endregion
 
@@ -73,7 +90,7 @@ namespace OpenGL
 
             ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint, Length);
 
-            this.Size = GetStructSize();
+            this.Size = GetTypeComponentSize();
             this.PointerType = (Data is int[] ? VertexAttribPointerType.Int : VertexAttribPointerType.Float);
             this.Count = Length;
             this.Divisor = Divisor;
@@ -96,7 +113,7 @@ namespace OpenGL
 
             ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint, Position, Length);
 
-            this.Size = GetStructSize();
+            this.Size = GetTypeComponentSize();
             this.PointerType = (Data is int[] ? VertexAttribPointerType.Int : VertexAttribPointerType.Float);
             this.Count = Length;
             this.Divisor = Divisor;
@@ -113,7 +130,7 @@ namespace OpenGL
         {
             ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint);
 
-            this.Size = GetStructSize();
+            this.Size = GetTypeComponentSize();
             this.PointerType = (Data is int[] ? VertexAttribPointerType.Int : VertexAttribPointerType.Float);
             this.Count = Data.Length;
             this.Divisor = Divisor;
@@ -128,18 +145,13 @@ namespace OpenGL
         {
         }
 
-        private int GetStructSize()
+        /// <summary>
+        /// Get the component size of T.
+        /// </summary>
+        /// <returns>The component size of T.</returns>
+        private int GetTypeComponentSize()
         {
-            Dictionary<Type, int> structSizes = new Dictionary<Type, int>()
-            {
-                [typeof(int)] = 1,
-                [typeof(float)] = 1,
-                [typeof(Vector2)] = 2,
-                [typeof(Vector3)] = 3,
-                [typeof(Vector4)] = 4,
-            };
-
-            return structSizes[typeof(T)];
+            return TypeComponentSize[typeof(T)];
         }
 
         /// <summary>
