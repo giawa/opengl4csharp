@@ -13,8 +13,8 @@ namespace OpenGL
             : base(program)
         {
             GenericVAO.GenericVBO[] vbos = new GenericVBO[2];
-            vbos[0] = new GenericVBO(vbo1.ID, attribName, vbo1.Count, vbo1.Size, vbo1.PointerType, vbo1.BufferTarget);
-            vbos[1] = new GenericVBO(elementArray.ID, "", elementArray.Count, elementArray.Size, elementArray.PointerType, elementArray.BufferTarget);
+            vbos[0] = new GenericVBO(vbo1.ID, attribName, vbo1.Count, vbo1.Size, vbo1.PointerType, vbo1.BufferTarget, vbo1.Divisor);
+            vbos[1] = new GenericVBO(elementArray.ID, "", elementArray.Count, elementArray.Size, elementArray.PointerType, elementArray.BufferTarget, elementArray.Divisor);
 
             Init(vbos);
         }
@@ -25,8 +25,8 @@ namespace OpenGL
             if (attribNames.Length != 1) throw new Exception(string.Format("Expected an array of 1 name, but instead got {0}.", attribNames.Length));
 
             GenericVAO.GenericVBO[] vbos = new GenericVBO[2];
-            vbos[0] = new GenericVBO(vbo1.ID, attribNames[0], vbo1.Count, vbo1.Size, vbo1.PointerType, vbo1.BufferTarget);
-            vbos[1] = new GenericVBO(elementArray.ID, "", elementArray.Count, elementArray.Size, elementArray.PointerType, elementArray.BufferTarget);
+            vbos[0] = new GenericVBO(vbo1.ID, attribNames[0], vbo1.Count, vbo1.Size, vbo1.PointerType, vbo1.BufferTarget, vbo1.Divisor);
+            vbos[1] = new GenericVBO(elementArray.ID, "", elementArray.Count, elementArray.Size, elementArray.PointerType, elementArray.BufferTarget, elementArray.Divisor);
 
             Init(vbos);
         }
@@ -42,9 +42,9 @@ namespace OpenGL
             if (attribNames.Length != 2) throw new Exception(string.Format("Expected an array of 2 names, but instead got {0}.", attribNames.Length));
 
             GenericVAO.GenericVBO[] vbos = new GenericVBO[3];
-            vbos[0] = new GenericVBO(vbo1.ID, attribNames[0], vbo1.Count, vbo1.Size, vbo1.PointerType, vbo1.BufferTarget);
-            vbos[1] = new GenericVBO(vbo2.ID, attribNames[1], vbo2.Count, vbo2.Size, vbo2.PointerType, vbo2.BufferTarget);
-            vbos[2] = new GenericVBO(elementArray.ID, "", elementArray.Count, elementArray.Size, elementArray.PointerType, elementArray.BufferTarget);
+            vbos[0] = new GenericVBO(vbo1.ID, attribNames[0], vbo1.Count, vbo1.Size, vbo1.PointerType, vbo1.BufferTarget, vbo1.Divisor);
+            vbos[1] = new GenericVBO(vbo2.ID, attribNames[1], vbo2.Count, vbo2.Size, vbo2.PointerType, vbo2.BufferTarget, vbo2.Divisor);
+            vbos[2] = new GenericVBO(elementArray.ID, "", elementArray.Count, elementArray.Size, elementArray.PointerType, elementArray.BufferTarget, elementArray.Divisor);
 
             Init(vbos);
         }
@@ -61,10 +61,10 @@ namespace OpenGL
             if (attribNames.Length != 3) throw new Exception(string.Format("Expected an array of 3 names, but instead got {0}.", attribNames.Length));
 
             GenericVAO.GenericVBO[] vbos = new GenericVBO[4];
-            vbos[0] = new GenericVBO(vbo1.ID, attribNames[0], vbo1.Count, vbo1.Size, vbo1.PointerType, vbo1.BufferTarget);
-            vbos[1] = new GenericVBO(vbo2.ID, attribNames[1], vbo2.Count, vbo2.Size, vbo2.PointerType, vbo2.BufferTarget);
-            vbos[2] = new GenericVBO(vbo3.ID, attribNames[2], vbo3.Count, vbo3.Size, vbo3.PointerType, vbo3.BufferTarget);
-            vbos[3] = new GenericVBO(elementArray.ID, "", elementArray.Count, elementArray.Size, elementArray.PointerType, elementArray.BufferTarget);
+            vbos[0] = new GenericVBO(vbo1.ID, attribNames[0], vbo1.Count, vbo1.Size, vbo1.PointerType, vbo1.BufferTarget, vbo1.Divisor);
+            vbos[1] = new GenericVBO(vbo2.ID, attribNames[1], vbo2.Count, vbo2.Size, vbo2.PointerType, vbo2.BufferTarget, vbo2.Divisor);
+            vbos[2] = new GenericVBO(vbo3.ID, attribNames[2], vbo3.Count, vbo3.Size, vbo3.PointerType, vbo3.BufferTarget, vbo3.Divisor);
+            vbos[3] = new GenericVBO(elementArray.ID, "", elementArray.Count, elementArray.Size, elementArray.PointerType, elementArray.BufferTarget, elementArray.Divisor);
 
             Init(vbos);
         }
@@ -82,11 +82,11 @@ namespace OpenGL
             if (attribNames.Length != 4) throw new Exception(string.Format("Expected an array of 4 names, but instead got {0}.", attribNames.Length));
 
             GenericVAO.GenericVBO[] vbos = new GenericVBO[5];
-            vbos[0] = new GenericVBO(vbo1.ID, attribNames[0], vbo1.Count, vbo1.Size, vbo1.PointerType, vbo1.BufferTarget);
-            vbos[1] = new GenericVBO(vbo2.ID, attribNames[1], vbo2.Count, vbo2.Size, vbo2.PointerType, vbo2.BufferTarget);
-            vbos[2] = new GenericVBO(vbo3.ID, attribNames[2], vbo3.Count, vbo3.Size, vbo3.PointerType, vbo3.BufferTarget);
-            vbos[3] = new GenericVBO(vbo4.ID, attribNames[3], vbo4.Count, vbo4.Size, vbo4.PointerType, vbo4.BufferTarget);
-            vbos[4] = new GenericVBO(elementArray.ID, "", elementArray.Count, elementArray.Size, elementArray.PointerType, elementArray.BufferTarget);
+            vbos[0] = new GenericVBO(vbo1.ID, attribNames[0], vbo1.Count, vbo1.Size, vbo1.PointerType, vbo1.BufferTarget, vbo1.Divisor);
+            vbos[1] = new GenericVBO(vbo2.ID, attribNames[1], vbo2.Count, vbo2.Size, vbo2.PointerType, vbo2.BufferTarget, vbo2.Divisor);
+            vbos[2] = new GenericVBO(vbo3.ID, attribNames[2], vbo3.Count, vbo3.Size, vbo3.PointerType, vbo3.BufferTarget, vbo3.Divisor);
+            vbos[3] = new GenericVBO(vbo4.ID, attribNames[3], vbo4.Count, vbo4.Size, vbo4.PointerType, vbo4.BufferTarget, vbo4.Divisor);
+            vbos[4] = new GenericVBO(elementArray.ID, "", elementArray.Count, elementArray.Size, elementArray.PointerType, elementArray.BufferTarget, elementArray.Divisor);
 
             Init(vbos);
         }
@@ -105,12 +105,12 @@ namespace OpenGL
             if (attribNames.Length != 5) throw new Exception(string.Format("Expected an array of 5 names, but instead got {0}.", attribNames.Length));
 
             GenericVAO.GenericVBO[] vbos = new GenericVBO[6];
-            vbos[0] = new GenericVBO(vbo1.ID, attribNames[0], vbo1.Count, vbo1.Size, vbo1.PointerType, vbo1.BufferTarget);
-            vbos[1] = new GenericVBO(vbo2.ID, attribNames[1], vbo2.Count, vbo2.Size, vbo2.PointerType, vbo2.BufferTarget);
-            vbos[2] = new GenericVBO(vbo3.ID, attribNames[2], vbo3.Count, vbo3.Size, vbo3.PointerType, vbo3.BufferTarget);
-            vbos[3] = new GenericVBO(vbo4.ID, attribNames[3], vbo4.Count, vbo4.Size, vbo4.PointerType, vbo4.BufferTarget);
-            vbos[4] = new GenericVBO(vbo5.ID, attribNames[4], vbo5.Count, vbo5.Size, vbo5.PointerType, vbo5.BufferTarget);
-            vbos[5] = new GenericVBO(elementArray.ID, "", elementArray.Count, elementArray.Size, elementArray.PointerType, elementArray.BufferTarget);
+            vbos[0] = new GenericVBO(vbo1.ID, attribNames[0], vbo1.Count, vbo1.Size, vbo1.PointerType, vbo1.BufferTarget, vbo1.Divisor);
+            vbos[1] = new GenericVBO(vbo2.ID, attribNames[1], vbo2.Count, vbo2.Size, vbo2.PointerType, vbo2.BufferTarget, vbo2.Divisor);
+            vbos[2] = new GenericVBO(vbo3.ID, attribNames[2], vbo3.Count, vbo3.Size, vbo3.PointerType, vbo3.BufferTarget, vbo3.Divisor);
+            vbos[3] = new GenericVBO(vbo4.ID, attribNames[3], vbo4.Count, vbo4.Size, vbo4.PointerType, vbo4.BufferTarget, vbo4.Divisor);
+            vbos[4] = new GenericVBO(vbo5.ID, attribNames[4], vbo5.Count, vbo5.Size, vbo5.PointerType, vbo5.BufferTarget, vbo5.Divisor);
+            vbos[5] = new GenericVBO(elementArray.ID, "", elementArray.Count, elementArray.Size, elementArray.PointerType, elementArray.BufferTarget, elementArray.Divisor);
 
             Init(vbos);
         }
@@ -130,13 +130,13 @@ namespace OpenGL
             if (attribNames.Length != 6) throw new Exception(string.Format("Expected an array of 6 names, but instead got {0}.", attribNames.Length));
 
             GenericVAO.GenericVBO[] vbos = new GenericVBO[7];
-            vbos[0] = new GenericVBO(vbo1.ID, attribNames[0], vbo1.Count, vbo1.Size, vbo1.PointerType, vbo1.BufferTarget);
-            vbos[1] = new GenericVBO(vbo2.ID, attribNames[1], vbo2.Count, vbo2.Size, vbo2.PointerType, vbo2.BufferTarget);
-            vbos[2] = new GenericVBO(vbo3.ID, attribNames[2], vbo3.Count, vbo3.Size, vbo3.PointerType, vbo3.BufferTarget);
-            vbos[3] = new GenericVBO(vbo4.ID, attribNames[3], vbo4.Count, vbo4.Size, vbo4.PointerType, vbo4.BufferTarget);
-            vbos[4] = new GenericVBO(vbo5.ID, attribNames[4], vbo5.Count, vbo5.Size, vbo5.PointerType, vbo5.BufferTarget);
-            vbos[5] = new GenericVBO(vbo6.ID, attribNames[5], vbo6.Count, vbo6.Size, vbo6.PointerType, vbo6.BufferTarget);
-            vbos[6] = new GenericVBO(elementArray.ID, "", elementArray.Count, elementArray.Size, elementArray.PointerType, elementArray.BufferTarget);
+            vbos[0] = new GenericVBO(vbo1.ID, attribNames[0], vbo1.Count, vbo1.Size, vbo1.PointerType, vbo1.BufferTarget, vbo1.Divisor);
+            vbos[1] = new GenericVBO(vbo2.ID, attribNames[1], vbo2.Count, vbo2.Size, vbo2.PointerType, vbo2.BufferTarget, vbo2.Divisor);
+            vbos[2] = new GenericVBO(vbo3.ID, attribNames[2], vbo3.Count, vbo3.Size, vbo3.PointerType, vbo3.BufferTarget, vbo3.Divisor);
+            vbos[3] = new GenericVBO(vbo4.ID, attribNames[3], vbo4.Count, vbo4.Size, vbo4.PointerType, vbo4.BufferTarget, vbo4.Divisor);
+            vbos[4] = new GenericVBO(vbo5.ID, attribNames[4], vbo5.Count, vbo5.Size, vbo5.PointerType, vbo5.BufferTarget, vbo5.Divisor);
+            vbos[5] = new GenericVBO(vbo6.ID, attribNames[5], vbo6.Count, vbo6.Size, vbo6.PointerType, vbo6.BufferTarget, vbo6.Divisor);
+            vbos[6] = new GenericVBO(elementArray.ID, "", elementArray.Count, elementArray.Size, elementArray.PointerType, elementArray.BufferTarget, elementArray.Divisor);
 
             Init(vbos);
         }
@@ -157,14 +157,14 @@ namespace OpenGL
             if (attribNames.Length != 7) throw new Exception(string.Format("Expected an array of 7 names, but instead got {0}.", attribNames.Length));
 
             GenericVAO.GenericVBO[] vbos = new GenericVBO[8];
-            vbos[0] = new GenericVBO(vbo1.ID, attribNames[0], vbo1.Count, vbo1.Size, vbo1.PointerType, vbo1.BufferTarget);
-            vbos[1] = new GenericVBO(vbo2.ID, attribNames[1], vbo2.Count, vbo2.Size, vbo2.PointerType, vbo2.BufferTarget);
-            vbos[2] = new GenericVBO(vbo3.ID, attribNames[2], vbo3.Count, vbo3.Size, vbo3.PointerType, vbo3.BufferTarget);
-            vbos[3] = new GenericVBO(vbo4.ID, attribNames[3], vbo4.Count, vbo4.Size, vbo4.PointerType, vbo4.BufferTarget);
-            vbos[4] = new GenericVBO(vbo5.ID, attribNames[4], vbo5.Count, vbo5.Size, vbo5.PointerType, vbo5.BufferTarget);
-            vbos[5] = new GenericVBO(vbo6.ID, attribNames[5], vbo6.Count, vbo6.Size, vbo6.PointerType, vbo6.BufferTarget);
-            vbos[6] = new GenericVBO(vbo7.ID, attribNames[6], vbo7.Count, vbo7.Size, vbo7.PointerType, vbo7.BufferTarget);
-            vbos[7] = new GenericVBO(elementArray.ID, "", elementArray.Count, elementArray.Size, elementArray.PointerType, elementArray.BufferTarget);
+            vbos[0] = new GenericVBO(vbo1.ID, attribNames[0], vbo1.Count, vbo1.Size, vbo1.PointerType, vbo1.BufferTarget, vbo1.Divisor);
+            vbos[1] = new GenericVBO(vbo2.ID, attribNames[1], vbo2.Count, vbo2.Size, vbo2.PointerType, vbo2.BufferTarget, vbo2.Divisor);
+            vbos[2] = new GenericVBO(vbo3.ID, attribNames[2], vbo3.Count, vbo3.Size, vbo3.PointerType, vbo3.BufferTarget, vbo3.Divisor);
+            vbos[3] = new GenericVBO(vbo4.ID, attribNames[3], vbo4.Count, vbo4.Size, vbo4.PointerType, vbo4.BufferTarget, vbo4.Divisor);
+            vbos[4] = new GenericVBO(vbo5.ID, attribNames[4], vbo5.Count, vbo5.Size, vbo5.PointerType, vbo5.BufferTarget, vbo5.Divisor);
+            vbos[5] = new GenericVBO(vbo6.ID, attribNames[5], vbo6.Count, vbo6.Size, vbo6.PointerType, vbo6.BufferTarget, vbo6.Divisor);
+            vbos[6] = new GenericVBO(vbo7.ID, attribNames[6], vbo7.Count, vbo7.Size, vbo7.PointerType, vbo7.BufferTarget, vbo7.Divisor);
+            vbos[7] = new GenericVBO(elementArray.ID, "", elementArray.Count, elementArray.Size, elementArray.PointerType, elementArray.BufferTarget, elementArray.Divisor);
 
             Init(vbos);
         }
@@ -186,15 +186,15 @@ namespace OpenGL
             if (attribNames.Length != 8) throw new Exception(string.Format("Expected an array of 8 names, but instead got {0}.", attribNames.Length));
 
             GenericVAO.GenericVBO[] vbos = new GenericVBO[8];
-            vbos[0] = new GenericVBO(vbo1.ID, attribNames[0], vbo1.Count, vbo1.Size, vbo1.PointerType, vbo1.BufferTarget);
-            vbos[1] = new GenericVBO(vbo2.ID, attribNames[1], vbo2.Count, vbo2.Size, vbo2.PointerType, vbo2.BufferTarget);
-            vbos[2] = new GenericVBO(vbo3.ID, attribNames[2], vbo3.Count, vbo3.Size, vbo3.PointerType, vbo3.BufferTarget);
-            vbos[3] = new GenericVBO(vbo4.ID, attribNames[3], vbo4.Count, vbo4.Size, vbo4.PointerType, vbo4.BufferTarget);
-            vbos[4] = new GenericVBO(vbo5.ID, attribNames[4], vbo5.Count, vbo5.Size, vbo5.PointerType, vbo5.BufferTarget);
-            vbos[5] = new GenericVBO(vbo6.ID, attribNames[5], vbo6.Count, vbo6.Size, vbo6.PointerType, vbo6.BufferTarget);
-            vbos[6] = new GenericVBO(vbo7.ID, attribNames[6], vbo7.Count, vbo7.Size, vbo7.PointerType, vbo7.BufferTarget);
-            vbos[7] = new GenericVBO(vbo8.ID, attribNames[7], vbo8.Count, vbo8.Size, vbo8.PointerType, vbo8.BufferTarget);
-            vbos[8] = new GenericVBO(elementArray.ID, "", elementArray.Count, elementArray.Size, elementArray.PointerType, elementArray.BufferTarget);
+            vbos[0] = new GenericVBO(vbo1.ID, attribNames[0], vbo1.Count, vbo1.Size, vbo1.PointerType, vbo1.BufferTarget, vbo1.Divisor);
+            vbos[1] = new GenericVBO(vbo2.ID, attribNames[1], vbo2.Count, vbo2.Size, vbo2.PointerType, vbo2.BufferTarget, vbo2.Divisor);
+            vbos[2] = new GenericVBO(vbo3.ID, attribNames[2], vbo3.Count, vbo3.Size, vbo3.PointerType, vbo3.BufferTarget, vbo3.Divisor);
+            vbos[3] = new GenericVBO(vbo4.ID, attribNames[3], vbo4.Count, vbo4.Size, vbo4.PointerType, vbo4.BufferTarget, vbo4.Divisor);
+            vbos[4] = new GenericVBO(vbo5.ID, attribNames[4], vbo5.Count, vbo5.Size, vbo5.PointerType, vbo5.BufferTarget, vbo5.Divisor);
+            vbos[5] = new GenericVBO(vbo6.ID, attribNames[5], vbo6.Count, vbo6.Size, vbo6.PointerType, vbo6.BufferTarget, vbo6.Divisor);
+            vbos[6] = new GenericVBO(vbo7.ID, attribNames[6], vbo7.Count, vbo7.Size, vbo7.PointerType, vbo7.BufferTarget, vbo7.Divisor);
+            vbos[7] = new GenericVBO(vbo8.ID, attribNames[7], vbo8.Count, vbo8.Size, vbo8.PointerType, vbo8.BufferTarget, vbo8.Divisor);
+            vbos[8] = new GenericVBO(elementArray.ID, "", elementArray.Count, elementArray.Size, elementArray.PointerType, elementArray.BufferTarget, elementArray.Divisor);
 
             Init(vbos);
         }
@@ -213,6 +213,7 @@ namespace OpenGL
             public BufferTarget BufferTarget;
             public uint ID;
             public int Size;
+            public uint Divisor;
 
 #pragma warning disable IDE1006
             [Obsolete("Use Name instead.")]
@@ -258,7 +259,7 @@ namespace OpenGL
             }
 #pragma warning restore
 
-            public GenericVBO(uint id, string name, int length, int size, VertexAttribPointerType pointerType, BufferTarget bufferTarget)
+            public GenericVBO(uint id, string name, int length, int size, VertexAttribPointerType pointerType, BufferTarget bufferTarget, uint divisor)
             {
                 ID = id;
                 Name = name;
@@ -266,6 +267,7 @@ namespace OpenGL
                 Size = size;
                 PointerType = pointerType;
                 BufferTarget = bufferTarget;
+                Divisor = divisor;
             }
         }
         #endregion
@@ -292,10 +294,12 @@ namespace OpenGL
                 Gl.BindVertexArray(0);
 
                 Draw = DrawOGL3;
+                DrawInstanced = DrawInstancedOGL3;
             }
             else
             {
                 Draw = DrawOGL2;
+                DrawInstanced = DrawInstancedOGL2;
             }
         }
 
@@ -378,7 +382,7 @@ namespace OpenGL
 
         public void BindAttributes(ShaderProgram program)
         {
-            GenericVBO elementArray = new GenericVBO(0, "", 0, 0, VertexAttribPointerType.Byte, BufferTarget.ArrayBuffer);
+            GenericVBO elementArray = new GenericVBO(0, "", 0, 0, VertexAttribPointerType.Byte, BufferTarget.ArrayBuffer, 0);
 
             for (int i = 0; i < vbos.Length; i++)
             {
@@ -394,6 +398,12 @@ namespace OpenGL
                 Gl.EnableVertexAttribArray((uint)loc);
                 Gl.BindBuffer(vbos[i].BufferTarget, vbos[i].ID);
                 Gl.VertexAttribPointer((uint)loc, vbos[i].Size, vbos[i].PointerType, true, vbos[i].Size * SizeOfType(vbos[i].PointerType), IntPtr.Zero);
+                //0 is the divisors default value.
+                //No need to set the divisor to its default value.
+                if (vbos[i].Divisor != 0)
+                {
+                    Gl.VertexAttribDivisor((uint)loc, vbos[i].Divisor);
+                }
             }
 
             if (elementArray.ID != 0)
@@ -404,8 +414,10 @@ namespace OpenGL
         }
 
         public delegate void DrawFunc();
+        public delegate void DrawInstancedFunc(int count);
 
         public DrawFunc Draw;
+        public DrawInstancedFunc DrawInstanced;
 
         /// <summary>
         /// OGL3 method uses a vertex array object for quickly binding the VBOs to their attributes.
@@ -426,6 +438,25 @@ namespace OpenGL
             if (VertexCount == 0) return;
             BindAttributes(Program);
             Gl.DrawElements(DrawMode, VertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero);
+        }
+
+        /// <summary>
+        /// OGL3 method uses a vertex array object for quickly binding the VBOs to their attributes.
+        /// </summary>
+        private void DrawInstancedOGL3(int count)
+        {
+            if (ID == 0 || VertexCount == 0 || count == 0) return;
+            Gl.BindVertexArray(ID);
+            Gl.DrawElementsInstanced(DrawMode, VertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero, count);
+            Gl.BindVertexArray(0);
+        }
+
+        /// <summary>
+        /// OGL2 does not support Gl.DrawElementsInstanced.
+        /// </summary>
+        private void DrawInstancedOGL2(int count)
+        {
+            throw new Exception("The Function glDrawElementsInstanced was first added in OpenGL 3.1 which is not supported on this system.");
         }
 
         /// <summary>
