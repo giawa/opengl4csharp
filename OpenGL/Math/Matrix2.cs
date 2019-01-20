@@ -12,6 +12,16 @@ namespace OpenGL
     {
         private Vector2 row1, row2;
 
+        #region Properties
+        /// <summary>
+        /// Returns the determinant of this matrix.
+        /// </summary>
+        public float Determinant
+        {
+            get { return this[0].X * this[1].Y - this[0].Y * this[1].X; }
+        }
+        #endregion
+
         #region Static Constructors
         public static Matrix2 Identity
         {
@@ -134,6 +144,12 @@ namespace OpenGL
             row2 = new Vector2((float)array[2], (float)array[3]);
         }
 
+        public Matrix2(float f11, float f12, float f21, float f22)
+        {
+            row1 = new Vector2(f11, f12);
+            row2 = new Vector2(f21, f22);
+        }
+
         public void SetMatrix(Vector2 v0, Vector2 v1)
         {
             row1 = v0;
@@ -155,6 +171,24 @@ namespace OpenGL
             return new Matrix2(
                 new Vector2(cos, -sin),
                 new Vector2(sin, cos));
+        }
+
+
+        /// <summary>
+        /// Creates the inverse matrix using Gauss-Jordan elimination with partial pivoting.
+        /// </summary>
+        /// <returns>A Matrix2 object that contains the inversed matrix</returns>
+        /// <exception cref="System.Exception">Throws error if the matrix doesn't have an inverse matrix.</exception>
+        public Matrix2 Inverse()
+        {
+            float det = Determinant;
+
+            //Some matrices cannot be inverted
+            if (det == 0)
+                throw new Exception("Matrix2 was a singular matrix and cannot be inverted.");
+
+            Matrix2 m1 = new Matrix2(this[1].Y, -this[0].Y, -this[1].X, this[0].X);
+            return m1 * (1 / det);
         }
 
         /// <summary>
