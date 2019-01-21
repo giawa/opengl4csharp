@@ -392,7 +392,9 @@ namespace OpenGL
                     continue;
                 }
 
-                int loc = Gl.GetAttribLocation(program.ProgramID, vbos[i].Name);
+                //According to OGL spec then, if there is no location for an attribute, -1 is returned.
+                //The same error representation is used here.
+                int loc = program[vbos[i].Name]?.Location ?? -1;
                 if (loc == -1) throw new Exception(string.Format("Shader did not contain '{0}'.", vbos[i].Name));
 
                 Gl.EnableVertexAttribArray((uint)loc);
