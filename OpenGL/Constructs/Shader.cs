@@ -245,32 +245,6 @@ namespace OpenGL
         }
         #endregion
 
-        #region GetParams
-        private Type GlslTypeFromString(string type)
-        {
-            switch (type.ToLower())
-            {
-                case "float": return typeof(float);
-                case "bool": return typeof(bool);
-                case "int": return typeof(int);
-                case "uint": return typeof(uint);
-                case "vec2": return typeof(Vector2);
-                case "vec3": return typeof(Vector3);
-                case "vec4": return typeof(Vector4);
-                case "mat3": return typeof(Matrix3);
-                case "mat4": return typeof(Matrix4);
-                case "sampler2d":
-                case "sampler2dshadow":
-                case "sampler1d":
-                case "sampler1dshadow":
-                case "sampler3d":
-                case "sampler2darray":
-                case "sampler2darrayshadow": return typeof(Texture);
-                default: throw new Exception(string.Format("Unsupported GLSL type {0}", type));
-            }
-        }
-        #endregion
-
         #region IDisposable
         public void Dispose()
         {
