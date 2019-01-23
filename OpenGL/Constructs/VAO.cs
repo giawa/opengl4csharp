@@ -489,7 +489,7 @@ namespace OpenGL
                 for (int i = 0; i < vbos.Length; i++)
                 {
                     if (vbos[i].BufferTarget == BufferTarget.ElementArrayBuffer && !DisposeElementArray) continue;
-                    Gl.DeleteBuffer(vbos[i].ID);
+                    vbos[i].Dispose();
                 }
             }
         }
