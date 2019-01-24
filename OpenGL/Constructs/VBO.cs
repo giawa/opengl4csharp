@@ -17,11 +17,54 @@ namespace OpenGL
         /// </summary>
         private static readonly Dictionary<Type, int> TypeComponentSize = new Dictionary<Type, int>()
         {
+            [typeof(sbyte)] = 1,
+            [typeof(byte)] = 1,
+            [typeof(short)] = 1,
+            [typeof(ushort)] = 1,
             [typeof(int)] = 1,
+            [typeof(uint)] = 1,
             [typeof(float)] = 1,
+            [typeof(double)] = 1,
             [typeof(Vector2)] = 2,
             [typeof(Vector3)] = 3,
             [typeof(Vector4)] = 4,
+            //[typeof(int2101010)] = 4,
+            //[typeof(uint2101010)] = 4,
+            //[typeof(uint10f11f11f)] = 3,
+        };
+
+        /// <summary>
+        /// A collection of conversions from numerical types to vertex attribute pointer types.
+        /// </summary>
+        private static readonly Dictionary<Type, VertexAttribPointerType> TypeAttribPointerType = new Dictionary<Type, VertexAttribPointerType>()
+        {
+            [typeof(sbyte)] = VertexAttribPointerType.Byte,
+            [typeof(byte)] = VertexAttribPointerType.UnsignedByte,
+            [typeof(short)] = VertexAttribPointerType.Short,
+            [typeof(ushort)] = VertexAttribPointerType.UnsignedShort,
+            [typeof(int)] = VertexAttribPointerType.Int,
+            [typeof(uint)] = VertexAttribPointerType.UnsignedInt,
+            [typeof(float)] = VertexAttribPointerType.Float,
+            [typeof(double)] = VertexAttribPointerType.Double,
+            [typeof(Vector2)] = VertexAttribPointerType.Float,
+            [typeof(Vector3)] = VertexAttribPointerType.Float,
+            [typeof(Vector4)] = VertexAttribPointerType.Float,
+            //[typeof(int2101010)] = VertexAttribPointerType.UnsignedInt2101010Reversed,
+            //[typeof(uint2101010)] = VertexAttribPointerType.UnsignedUInt2101010Reversed,
+            //[typeof(uint10f11f11f)] = VertexAttribPointerType.UnsignedUInt101111Reversed
+        };
+
+        /// <summary>
+        /// Contains all known integral types.
+        /// </summary>
+        private static readonly HashSet<Type> IntegralTypes = new HashSet<Type>()
+        {
+            typeof(sbyte),
+            typeof(byte),
+            typeof(short),
+            typeof(ushort),
+            typeof(int),
+            typeof(uint),
         };
         #endregion
 
@@ -70,7 +113,25 @@ namespace OpenGL
         /// Specifies the number of instances that will pass between updates of the generic attribute slot.
         /// Only used for instance drawing.
         /// </summary>
-        public uint Divisor { get; private set; }
+        public uint Divisor { get; set; } = 0;
+
+        /// <summary>
+        /// Specifies whether fixed-point data values should be normalized (true) or converted directly as fixed-point values (false) when they are accessed.
+        /// If normalized is set to true, it indicates that values stored in an integer format are to be mapped to the range [-1,1] (for signed values) 
+        /// or [0,1] (for unsigned values) when they are accessed and converted to floating point. 
+        /// Otherwise, values will be converted to floats directly without normalization.
+        /// </summary>
+        public bool Normalize { get; set; } = true;
+
+        /// <summary>
+        /// Specifies whether types, other than float, should be cast to float.
+        /// </summary>
+        public bool CastToFloat { get; set; } = true;
+
+        /// <summary>
+        /// Specifies whether the VBO contains an integral type.
+        /// </summary>
+        public bool IsIntegralType { get; }
         #endregion
 
         #region Constructor and Destructor
@@ -84,16 +145,16 @@ namespace OpenGL
         /// <param name="Target">Specifies the target buffer object.</param>
         /// <param name="Hint">Specifies the expected usage of the data store.</param>
         /// <param name="Divisor">Specifies the devisor when using instanced rendering</param>
-        public VBO(T[] Data, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw, uint Divisor = 0)
+        public VBO(T[] Data, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
         {
             Length = Math.Max(0, Math.Min(Length, Data.Length));
 
             ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint, Length);
 
             this.Size = GetTypeComponentSize();
-            this.PointerType = (Data is int[] ? VertexAttribPointerType.Int : VertexAttribPointerType.Float);
+            this.PointerType = GetAttribPointerType();
             this.Count = Length;
-            this.Divisor = Divisor;
+            this.IsIntegralType = IsTypeIntegral();
         }
 
         /// <summary>
@@ -107,16 +168,16 @@ namespace OpenGL
         /// <param name="Target">Specifies the target buffer object.</param>
         /// <param name="Hint">Specifies the expected usage of the data store.</param>
         /// <param name="Divisor">Specifies the devisor when using instanced rendering</param>
-        public VBO(T[] Data, int Position, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw, uint Divisor = 0)
+        public VBO(T[] Data, int Position, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
         {
             Length = Math.Max(0, Math.Min(Length, Data.Length));
 
             ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint, Position, Length);
 
             this.Size = GetTypeComponentSize();
-            this.PointerType = (Data is int[] ? VertexAttribPointerType.Int : VertexAttribPointerType.Float);
+            this.PointerType = GetAttribPointerType();
             this.Count = Length;
-            this.Divisor = Divisor;
+            this.IsIntegralType = IsTypeIntegral();
         }
 
         /// <summary>
@@ -126,14 +187,14 @@ namespace OpenGL
         /// <param name="Target">Specifies the target buffer object.</param>
         /// <param name="Hint">Specifies the expected usage of the data store.</param>
         /// <param name="Divisor">Specifies the devisor when using instanced rendering</param>
-        public VBO(T[] Data, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw, uint Divisor = 0)
+        public VBO(T[] Data, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
         {
             ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint);
 
             this.Size = GetTypeComponentSize();
-            this.PointerType = (Data is int[] ? VertexAttribPointerType.Int : VertexAttribPointerType.Float);
+            this.PointerType = GetAttribPointerType();
             this.Count = Data.Length;
-            this.Divisor = Divisor;
+            this.IsIntegralType = IsTypeIntegral();
         }
 
         /// <summary>
@@ -152,6 +213,16 @@ namespace OpenGL
         private int GetTypeComponentSize()
         {
             return TypeComponentSize[typeof(T)];
+        }
+
+        private VertexAttribPointerType GetAttribPointerType()
+        {
+            return TypeAttribPointerType[typeof(T)];
+        }
+
+        private bool IsTypeIntegral()
+        {
+            return IntegralTypes.Contains(typeof(T));
         }
 
         /// <summary>

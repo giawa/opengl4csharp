@@ -2682,7 +2682,8 @@ namespace OpenGL
         Double = ((int)0x140A),
         HalfFloat = ((int)0x140B),
         UnsignedUInt2101010Reversed = ((int)0x8368),
-        UnsignedInt2101010Reversed = ((int)0x8D9F)
+        UnsignedInt2101010Reversed = ((int)0x8D9F),
+        UnsignedUInt101111Reversed = ((int)0x8C3B)
     }
 #pragma warning restore
 }
