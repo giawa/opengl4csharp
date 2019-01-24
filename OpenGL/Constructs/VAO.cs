@@ -214,6 +214,9 @@ namespace OpenGL
             uint ID { get; }
             int Size { get; }
             uint Divisor { get; }
+            bool Normalize { get; }
+            bool CastToFloat { get; }
+            bool IsIntegralType { get; }
             uint vboID { get; }
         }
 
@@ -237,6 +240,12 @@ namespace OpenGL
             public int Size { get { return Vbo.Size; } }
 
             public uint Divisor { get { return Vbo.Divisor; } }
+
+            public bool Normalize { get { return Vbo.Normalize; } }
+
+            public bool CastToFloat { get { return Vbo.CastToFloat; } }
+
+            public bool IsIntegralType { get { return Vbo.IsIntegralType; } }
 
             public GenericVBO(VBO<T> vbo, string name)
             {
@@ -354,21 +363,6 @@ namespace OpenGL
         #endregion
 
         #region Draw Methods (OGL2 and OGL3)
-        private int SizeOfType(VertexAttribPointerType type)
-        {
-            switch (type)
-            {
-                case VertexAttribPointerType.Byte: 
-                case VertexAttribPointerType.UnsignedByte: return 1;
-                case VertexAttribPointerType.Short:
-                case VertexAttribPointerType.UnsignedShort: 
-                case VertexAttribPointerType.HalfFloat: return 2;
-                case VertexAttribPointerType.Int:
-                case VertexAttribPointerType.Float: return 4;
-                case VertexAttribPointerType.Double: return 8;
-            }
-            return 1;
-        }
 
         public void BindAttributes(ShaderProgram program)
         {
@@ -389,7 +383,23 @@ namespace OpenGL
 
                 Gl.EnableVertexAttribArray((uint)loc);
                 Gl.BindBuffer(vbos[i].BufferTarget, vbos[i].ID);
-                Gl.VertexAttribPointer((uint)loc, vbos[i].Size, vbos[i].PointerType, true, vbos[i].Size * SizeOfType(vbos[i].PointerType), IntPtr.Zero);
+
+                if (vbos[i].CastToFloat)
+                {
+                    Gl.VertexAttribPointer((uint)loc, vbos[i].Size, vbos[i].PointerType, vbos[i].Normalize, 0, IntPtr.Zero);
+                }
+                else if (vbos[i].IsIntegralType)
+                {
+                    Gl.VertexAttribIPointer((uint)loc, vbos[i].Size, vbos[i].PointerType, 0, IntPtr.Zero);
+                }
+                else if (vbos[i].PointerType == VertexAttribPointerType.Double)
+                {
+                    Gl.VertexAttribLPointer((uint)loc, vbos[i].Size, vbos[i].PointerType, 0, IntPtr.Zero);
+                }
+                else
+                {
+                    throw new Exception("VBO shouldn't be cast to float, isn't an integral type and is not a float. No vertex attribute support this combination.");
+                }
 
                 // 0 is the divisors default value.
                 // No need to set the divisor to its default value.
