@@ -16,6 +16,7 @@ namespace OpenGL
         /// <param name="vertexData">The vertex data to find the normals for.</param>
         /// <param name="elementData">The element array describing the order in which vertices are drawn.</param>
         /// <returns></returns>
+        [Obsolete("Use uint[] instead of int[].")]
         public static Vector3[] CalculateNormals(Vector3[] vertexData, int[] elementData)
         {
             Vector3 b1, b2, normal;
@@ -26,6 +27,38 @@ namespace OpenGL
                 int cornerA = elementData[i * 3];
                 int cornerB = elementData[i * 3 + 1];
                 int cornerC = elementData[i * 3 + 2];
+
+                b1 = vertexData[cornerB] - vertexData[cornerA];
+                b2 = vertexData[cornerC] - vertexData[cornerA];
+
+                normal = Vector3.Cross(b1, b2).Normalize();
+
+                normalData[cornerA] += normal;
+                normalData[cornerB] += normal;
+                normalData[cornerC] += normal;
+            }
+
+            for (int i = 0; i < normalData.Length; i++) normalData[i] = normalData[i].Normalize();
+
+            return normalData;
+        }
+
+        /// <summary>
+        /// Calculate the array of vertex normals based on vertex and face information (assuming triangle polygons).
+        /// </summary>
+        /// <param name="vertexData">The vertex data to find the normals for.</param>
+        /// <param name="elementData">The element array describing the order in which vertices are drawn.</param>
+        /// <returns></returns>
+        public static Vector3[] CalculateNormals(Vector3[] vertexData, uint[] elementData)
+        {
+            Vector3 b1, b2, normal;
+            Vector3[] normalData = new Vector3[vertexData.Length];
+
+            for (int i = 0; i < elementData.Length / 3; i++)
+            {
+                uint cornerA = elementData[i * 3];
+                uint cornerB = elementData[i * 3 + 1];
+                uint cornerC = elementData[i * 3 + 2];
 
                 b1 = vertexData[cornerB] - vertexData[cornerA];
                 b2 = vertexData[cornerC] - vertexData[cornerA];
@@ -55,9 +88,9 @@ namespace OpenGL
             Vector3[] vertices = new Vector3[] { new Vector3(location.X, location.Y, 0), new Vector3(location.X + size.X, location.Y, 0), 
                 new Vector3(location.X + size.X, location.Y + size.Y, 0), new Vector3(location.X, location.Y + size.Y, 0) };
             Vector2[] uvs = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(0, 1) };
-            int[] indices = new int[] { 0, 1, 2, 2, 3, 0 };
+            uint[] indices = new uint[] { 0, 1, 2, 2, 3, 0 };
 
-            return new VAO(program, new VBO<Vector3>(vertices), new VBO<Vector2>(uvs), new VBO<int>(indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticRead));
+            return new VAO(program, new VBO<Vector3>(vertices), new VBO<Vector2>(uvs), new VBO<uint>(indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticRead));
         }
 
         /// <summary>
@@ -75,9 +108,9 @@ namespace OpenGL
             Vector3[] vertices = new Vector3[] { new Vector3(location.X, location.Y, 0), new Vector3(location.X + size.X, location.Y, 0), 
                 new Vector3(location.X + size.X, location.Y + size.Y, 0), new Vector3(location.X, location.Y + size.Y, 0) };
             Vector2[] uvs = new Vector2[] { uvloc, new Vector2(uvloc.X + uvsize.X, uvloc.Y), new Vector2(uvloc.X + uvsize.X, uvloc.Y + uvsize.Y), new Vector2(uvloc.X, uvloc.Y + uvsize.Y) };
-            int[] indices = new int[] { 0, 1, 2, 2, 3, 0 };
+            uint[] indices = new uint[] { 0, 1, 2, 2, 3, 0 };
 
-            return new VAO(program, new VBO<Vector3>(vertices), new VBO<Vector2>(uvs), new VBO<int>(indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticRead));
+            return new VAO(program, new VBO<Vector3>(vertices), new VBO<Vector2>(uvs), new VBO<uint>(indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticRead));
         }
 
         /// <summary>
@@ -92,10 +125,10 @@ namespace OpenGL
         {
             Vector3[] vertex = new Vector3[] { new Vector3(location.X, location.Y, 0), new Vector3(location.X + size.X, location.Y, 0), 
                 new Vector3(location.X + size.X, location.Y + size.Y, 0), new Vector3(location.X, location.Y + size.Y, 0) };
-            int[] element = new int[] { 0, 1, 2, 2, 3, 0 };
+            uint[] element = new uint[] { 0, 1, 2, 2, 3, 0 };
             Vector3[] normal = CalculateNormals(vertex, element);
 
-            return new VAO(program, new VBO<Vector3>(vertex), new VBO<Vector3>(normal), new VBO<int>(element, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticRead));
+            return new VAO(program, new VBO<Vector3>(vertex), new VBO<Vector3>(normal), new VBO<uint>(element, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticRead));
         }
 
         /// <summary>
@@ -119,7 +152,7 @@ namespace OpenGL
                 new Vector3(min.X, min.Y, min.Z)
             };
 
-            int[] element = new int[] {
+            uint[] element = new uint[] {
                 0, 1, 2, 1, 3, 2,
                 1, 4, 3, 4, 5, 3,
                 4, 7, 5, 7, 6, 5,
@@ -128,7 +161,7 @@ namespace OpenGL
                 2, 3, 6, 3, 5, 6
             };
 
-            return new VAO(program, new VBO<Vector3>(vertex), new VBO<int>(element, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticRead));
+            return new VAO(program, new VBO<Vector3>(vertex), new VBO<uint>(element, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticRead));
         }
 
         /// <summary>
@@ -152,7 +185,7 @@ namespace OpenGL
                 new Vector3(min.X, min.Y, min.Z)
             };
 
-            int[] element = new int[] {
+            uint[] element = new uint[] {
                 0, 1, 2, 1, 3, 2,
                 1, 4, 3, 4, 5, 3,
                 4, 7, 5, 7, 6, 5,
@@ -163,7 +196,7 @@ namespace OpenGL
 
             Vector3[] normal = CalculateNormals(vertex, element);
 
-            return new VAO(program, new VBO<Vector3>(vertex), new VBO<Vector3>(normal), new VBO<int>(element, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticRead));
+            return new VAO(program, new VBO<Vector3>(vertex), new VBO<Vector3>(normal), new VBO<uint>(element, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticRead));
         }
     }
 }

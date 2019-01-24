@@ -674,6 +674,7 @@ namespace OpenGL
         private VBO<Vector2> uv;
 
         private VBO<int> element;
+        private VBO<uint> elementu;
 
         private bool disposeChildren = false;
         #endregion
@@ -736,26 +737,51 @@ namespace OpenGL
         #endregion
 
         #region Constructors and Destructor
+        [Obsolete("Use VBO<uint> instead of VBO<int> as the element array buffer.")]
         public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<int> element)
             : this(program, vertex, null, null, null, element)
         {
         }
 
+        public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<uint> element)
+            : this(program, vertex, null, null, null, element)
+        {
+        }
+
+        [Obsolete("Use VBO<uint> instead of VBO<int> as the element array buffer.")]
         public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<Vector2> uv, VBO<int> element)
             : this(program, vertex, null, null, uv, element)
         {
         }
 
+        public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<Vector2> uv, VBO<uint> element)
+            : this(program, vertex, null, null, uv, element)
+        {
+        }
+
+        [Obsolete("Use VBO<uint> instead of VBO<int> as the element array buffer.")]
         public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<Vector3> normal, VBO<int> element)
             : this(program, vertex, normal, null, null, element)
         {
         }
 
+        public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<Vector3> normal, VBO<uint> element)
+            : this(program, vertex, normal, null, null, element)
+        {
+        }
+
+        [Obsolete("Use VBO<uint> instead of VBO<int> as the element array buffer.")]
         public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<Vector3> normal, VBO<Vector2> uv, VBO<int> element)
             : this(program, vertex, normal, null, uv, element)
         {
         }
 
+        public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<Vector3> normal, VBO<Vector2> uv, VBO<uint> element)
+            : this(program, vertex, normal, null, uv, element)
+        {
+        }
+
+        [Obsolete("Use VBO<uint> instead of VBO<int> as the element array buffer.")]
         public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<Vector3> normal, VBO<Vector3> tangent, VBO<Vector2> uv, VBO<int> element)
         {
             Program = program;
@@ -767,6 +793,36 @@ namespace OpenGL
             this.tangent = tangent;
             this.uv = uv;
             this.element = element;
+
+            if (Gl.Version() >= 3)
+            {
+                ID = Gl.GenVertexArray();
+                if (ID != 0)
+                {
+                    Gl.BindVertexArray(ID);
+                    BindAttributes(Program);
+                }
+                Gl.BindVertexArray(0);
+
+                Draw = DrawOGL3;
+            }
+            else
+            {
+                Draw = DrawOGL2;
+            }
+        }
+
+        public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<Vector3> normal, VBO<Vector3> tangent, VBO<Vector2> uv, VBO<uint> element)
+        {
+            Program = program;
+            VertexCount = element.Count;
+            DrawMode = BeginMode.Triangles;
+
+            this.vertex = vertex;
+            this.normal = normal;
+            this.tangent = tangent;
+            this.uv = uv;
+            this.elementu = element;
 
             if (Gl.Version() >= 3)
             {
@@ -822,13 +878,14 @@ namespace OpenGL
         public void BindCachedAttributes(int vertexAttributeLocation, ShaderProgram program)
         {
             if (vertex == null || vertex.ID == 0) throw new Exception("Error binding attributes.  No vertices were supplied.");
-            if (element == null || element.ID == 0) throw new Exception("Error binding attributes.  No element array was supplied.");
+            if ((element == null || element.ID == 0) && (elementu == null || elementu.ID == 0)) throw new Exception("Error binding attributes.  No element array was supplied.");
 
             Gl.EnableVertexAttribArray((uint)vertexAttributeLocation);
             Gl.BindBuffer(vertex.BufferTarget, vertex.ID);
             Gl.VertexAttribPointer((uint)vertexAttributeLocation, vertex.Size, vertex.PointerType, true, 12, IntPtr.Zero);
 
-            Gl.BindBuffer(BufferTarget.ElementArrayBuffer, element.ID);
+            if (element != null) Gl.BindBuffer(BufferTarget.ElementArrayBuffer, element.ID);
+            else Gl.BindBuffer(BufferTarget.ElementArrayBuffer, elementu.ID);
         }
 
         /// <summary>
@@ -842,7 +899,7 @@ namespace OpenGL
         public void BindAttributes(ShaderProgram program, string positionName = "in_position", string normalName = "in_normal", string uvName = "in_uv", string tangentName = "in_tangent")
         {
             if (vertex == null || vertex.ID == 0) throw new Exception("Error binding attributes.  No vertices were supplied.");
-            if (element == null || element.ID == 0) throw new Exception("Error binding attributes.  No element array was supplied.");
+            if ((element == null || element.ID == 0) && (elementu == null || elementu.ID == 0)) throw new Exception("Error binding attributes.  No element array was supplied.");
 
             // Note:  Since the shader is already compiled, we cannot set the attribute locations.
             //  Instead we must query the shader for the locations that the linker chose and use them.
@@ -886,7 +943,8 @@ namespace OpenGL
                 }
             }
 
-            Gl.BindBuffer(BufferTarget.ElementArrayBuffer, element.ID);
+            if (element != null) Gl.BindBuffer(BufferTarget.ElementArrayBuffer, element.ID);
+            else Gl.BindBuffer(BufferTarget.ElementArrayBuffer, elementu.ID);
         }
 
         public delegate void DrawFunc();
@@ -958,12 +1016,14 @@ namespace OpenGL
                 if (tangent != null) tangent.Dispose();
                 if (uv != null) uv.Dispose();
                 if (element != null && DisposeElementArray) element.Dispose();
+                if (elementu != null && DisposeElementArray) elementu.Dispose();
 
                 vertex = null;
                 normal = null;
                 tangent = null;
                 uv = null;
                 element = null;
+                elementu = null;
             }
         }
         #endregion

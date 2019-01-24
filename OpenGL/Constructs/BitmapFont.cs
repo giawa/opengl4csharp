@@ -66,9 +66,9 @@ namespace OpenGL
         {
             Vector3[] vertices = new Vector3[Text.Length * 4];
             Vector2[] uvs = new Vector2[Text.Length * 4];
-            int[] indices = new int[Text.Length * 6];
+            uint[] indices = new uint[Text.Length * 6];
 
-            for (int i = 0; i < Text.Length; i++)
+            for (uint i = 0; i < Text.Length; i++)
             {
                 // Note: These are fixed width fonts so just use 2x2 quads (-1..1)
                 vertices[i * 4 + 0] = new Vector3(-1 + i * 2, 1, 0);
@@ -76,7 +76,7 @@ namespace OpenGL
                 vertices[i * 4 + 2] = new Vector3(1 + i * 2, 1, 0);
                 vertices[i * 4 + 3] = new Vector3(1 + i * 2, -1, 0);
 
-                UVPair ch = Character[Text[i] > 256 ? ' ' : Text[i]];
+                UVPair ch = Character[Text[(int)i] > 256 ? ' ' : Text[(int)i]];
                 uvs[i * 4 + 0] = new Vector2(ch.Topleft.X, ch.BottomRight.Y);
                 uvs[i * 4 + 1] = ch.Topleft;
                 uvs[i * 4 + 2] = ch.BottomRight;
@@ -93,7 +93,7 @@ namespace OpenGL
             // Create the vertex buffer objects and then create the array object
             VBO<Vector3> vertexArray = new VBO<Vector3>(vertices, BufferTarget.ArrayBuffer, BufferUsageHint.StaticRead);
             VBO<Vector2> uvArray = new VBO<Vector2>(uvs, BufferTarget.ArrayBuffer, BufferUsageHint.StaticRead);
-            VBO<int> elementArray = new VBO<int>(indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticRead);
+            VBO<uint> elementArray = new VBO<uint>(indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticRead);
 
             return new VAO(Program, vertexArray, uvArray, elementArray);
         }

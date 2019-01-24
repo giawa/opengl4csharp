@@ -29,10 +29,10 @@ namespace OpenGL
             Program = program;
             Texture = texture;
 
-            int[] elements = new int[locations.Length];
-            for (int i = 0; i < elements.Length; i++) elements[i] = i;
+            uint[] elements = new uint[locations.Length];
+            for (uint i = 0; i < elements.Length; i++) elements[i] = i;
 
-            billboard = new VAO(program, new VBO<Vector3>(locations), new VBO<Vector3>(colors), new VBO<int>(elements))
+            billboard = new VAO(program, new VBO<Vector3>(locations), new VBO<Vector3>(colors), new VBO<uint>(elements))
             {
                 DrawMode = BeginMode.Points,
                 DisposeChildren = true
