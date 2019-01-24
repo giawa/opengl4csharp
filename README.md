@@ -130,7 +130,7 @@ Gl.BindTexture(newTexture);
 
 ### Vertex Buffer Objects (VBOs) and Vertex Array Objects (VAOs)
 
-This is an example of creating a quad using a VBO for vertices (Vector3 data), a VBO for UV coordinates (Vector2 data) and a VBO of indices (int data).  This VBO can then be rendered in a similar fashion to the cube method above.
+This is an example of creating a quad using a VBO for vertices (Vector3 data), a VBO for UV coordinates (Vector2 data) and a VBO of indices (uint data).  This VBO can then be rendered in a similar fashion to the cube method above.
 
 ```csharp
 // create the vertex data
@@ -142,8 +142,8 @@ Vector2[] uvs = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector
 VBO<Vector2> uvVBO = new VBO<Vector2>(uvs);
 
 // create the index data (the order in which the vertices should be drawn in groups of 3 to form triangles)
-int[] indices = new int[] { 0, 1, 2, 2, 3, 0 };
-VBO<int> indexVBO = new VBO<int>(indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticRead);
+uint[] indices = new uint[] { 0, 1, 2, 2, 3, 0 };
+VBO<uint> indexVBO = new VBO<uint>(indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticRead);
 
 // create a vertex array object (VAO) from the vertex, UV and index data
 VAO quad = new VAO(program, vertexVBO, uvVBO, indexVBO);
