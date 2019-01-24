@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 #if USE_NUMERICS
 using System.Numerics;
@@ -9,6 +10,7 @@ namespace OpenGL
     public class VAO<T1> : GenericVAO
         where T1 : struct
     {
+        [Obsolete("Constructors that don't specify the element array type are deprecated. Please use a constructor that specifies the element array type.")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, string attribName, VBO<int> elementArray)
             : base(program)
         {
@@ -19,6 +21,7 @@ namespace OpenGL
             Init(vbos);
         }
 
+        [Obsolete("Constructors that don't specify the element array type are deprecated. Please use a constructor that specifies the element array type.")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, string[] attribNames, VBO<int> elementArray)
             : base(program)
         {
@@ -36,6 +39,29 @@ namespace OpenGL
         where T1 : struct
         where T2 : struct
     {
+        public VAO(ShaderProgram program, VBO<T1> vbo1, string attribName, VBO<T2> elementArray)
+    : base(program, false)
+        {
+            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[2];
+            vbos[0] = new GenericVBO<T1>(vbo1, attribName);
+            vbos[1] = new GenericVBO<T2>(elementArray, "");
+
+            Init(vbos);
+        }
+
+        public VAO(ShaderProgram program, VBO<T1> vbo1, string[] attribNames, VBO<T2> elementArray)
+    : base(program, false)
+        {
+            if (attribNames.Length != 1) throw new Exception(string.Format("Expected an array of 1 names, but instead got {0}.", attribNames.Length));
+
+            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[2];
+            vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
+            vbos[1] = new GenericVBO<T2>(elementArray, "");
+
+            Init(vbos);
+        }
+
+        [Obsolete("Constructors that don't specify the element array type are deprecated. Please use a constructor that specifies the element array type.")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, string[] attribNames, VBO<int> elementArray)
             : base(program)
         {
@@ -55,6 +81,20 @@ namespace OpenGL
         where T2 : struct
         where T3 : struct
     {
+        public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, string[] attribNames, VBO<T3> elementArray)
+    : base(program, false)
+        {
+            if (attribNames.Length != 2) throw new Exception(string.Format("Expected an array of 2 names, but instead got {0}.", attribNames.Length));
+
+            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[3];
+            vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
+            vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
+            vbos[2] = new GenericVBO<T3>(elementArray, "");
+
+            Init(vbos);
+        }
+
+        [Obsolete("Constructors that don't specify the element array type are deprecated. Please use a constructor that specifies the element array type.")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, string[] attribNames, VBO<int> elementArray)
             : base(program)
         {
@@ -76,6 +116,21 @@ namespace OpenGL
         where T3 : struct
         where T4 : struct
     {
+        public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, string[] attribNames, VBO<T4> elementArray)
+    : base(program, false)
+        {
+            if (attribNames.Length != 3) throw new Exception(string.Format("Expected an array of 3 names, but instead got {0}.", attribNames.Length));
+
+            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[4];
+            vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
+            vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
+            vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
+            vbos[3] = new GenericVBO<T4>(elementArray, "");
+
+            Init(vbos);
+        }
+
+        [Obsolete("Constructors that don't specify the element array type are deprecated. Please use a constructor that specifies the element array type.")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, VBO<T4> vbo4, string[] attribNames, VBO<int> elementArray)
             : base(program)
         {
@@ -99,6 +154,22 @@ namespace OpenGL
         where T4 : struct
         where T5 : struct
     {
+        public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, VBO<T4> vbo4, string[] attribNames, VBO<T5> elementArray)
+    : base(program, false)
+        {
+            if (attribNames.Length != 4) throw new Exception(string.Format("Expected an array of 4 names, but instead got {0}.", attribNames.Length));
+
+            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[5];
+            vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
+            vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
+            vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
+            vbos[3] = new GenericVBO<T4>(vbo4, attribNames[3]);
+            vbos[4] = new GenericVBO<T5>(elementArray, "");
+
+            Init(vbos);
+        }
+
+        [Obsolete("Constructors that don't specify the element array type are deprecated. Please use a constructor that specifies the element array type.")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, VBO<T4> vbo4, VBO<T5> vbo5, string[] attribNames, VBO<int> elementArray)
             : base(program)
         {
@@ -124,6 +195,23 @@ namespace OpenGL
         where T5 : struct
         where T6 : struct
     {
+        public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, VBO<T4> vbo4, VBO<T5> vbo5, string[] attribNames, VBO<T6> elementArray)
+    : base(program, false)
+        {
+            if (attribNames.Length != 5) throw new Exception(string.Format("Expected an array of 5 names, but instead got {0}.", attribNames.Length));
+
+            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[6];
+            vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
+            vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
+            vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
+            vbos[3] = new GenericVBO<T4>(vbo4, attribNames[3]);
+            vbos[4] = new GenericVBO<T5>(vbo5, attribNames[4]);
+            vbos[5] = new GenericVBO<T6>(elementArray, "");
+
+            Init(vbos);
+        }
+
+        [Obsolete("Constructors that don't specify the element array type are deprecated. Please use a constructor that specifies the element array type.")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, VBO<T4> vbo4, VBO<T5> vbo5, VBO<T6> vbo6, string[] attribNames, VBO<int> elementArray)
             : base(program)
         {
@@ -151,12 +239,30 @@ namespace OpenGL
         where T6 : struct
         where T7 : struct
     {
+        public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, VBO<T4> vbo4, VBO<T5> vbo5, VBO<T6> vbo6, string[] attribNames, VBO<T7> elementArray)
+    : base(program, false)
+        {
+            if (attribNames.Length != 6) throw new Exception(string.Format("Expected an array of 6 names, but instead got {0}.", attribNames.Length));
+
+            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[7];
+            vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
+            vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
+            vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
+            vbos[3] = new GenericVBO<T4>(vbo4, attribNames[3]);
+            vbos[4] = new GenericVBO<T5>(vbo5, attribNames[4]);
+            vbos[5] = new GenericVBO<T6>(vbo6, attribNames[5]);
+            vbos[6] = new GenericVBO<T7>(elementArray, "");
+
+            Init(vbos);
+        }
+
+        [Obsolete("Constructors that don't specify the element array type are deprecated. Please use a constructor that specifies the element array type.")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, VBO<T4> vbo4, VBO<T5> vbo5, VBO<T6> vbo6, VBO<T7> vbo7, string[] attribNames, VBO<int> elementArray)
             : base(program)
         {
             if (attribNames.Length != 7) throw new Exception(string.Format("Expected an array of 7 names, but instead got {0}.", attribNames.Length));
 
-            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[7];
+            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[8];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
             vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
@@ -180,12 +286,31 @@ namespace OpenGL
         where T7 : struct
         where T8 : struct
     {
+        public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, VBO<T4> vbo4, VBO<T5> vbo5, VBO<T6> vbo6, VBO<T7> vbo7, string[] attribNames, VBO<T8> elementArray)
+    : base(program, false)
+        {
+            if (attribNames.Length != 7) throw new Exception(string.Format("Expected an array of 7 names, but instead got {0}.", attribNames.Length));
+
+            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[8];
+            vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
+            vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
+            vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
+            vbos[3] = new GenericVBO<T4>(vbo4, attribNames[3]);
+            vbos[4] = new GenericVBO<T5>(vbo5, attribNames[4]);
+            vbos[5] = new GenericVBO<T6>(vbo6, attribNames[5]);
+            vbos[6] = new GenericVBO<T7>(vbo7, attribNames[6]);
+            vbos[7] = new GenericVBO<T8>(elementArray, "");
+
+            Init(vbos);
+        }
+
+        [Obsolete("Constructors that don't specify the element array type are deprecated. Please use a constructor that specifies the element array type.")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, VBO<T4> vbo4, VBO<T5> vbo5, VBO<T6> vbo6, VBO<T7> vbo7, VBO<T8> vbo8, string[] attribNames, VBO<int> elementArray)
             : base(program)
         {
             if (attribNames.Length != 8) throw new Exception(string.Format("Expected an array of 8 names, but instead got {0}.", attribNames.Length));
 
-            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[8];
+            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[9];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
             vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
@@ -202,6 +327,15 @@ namespace OpenGL
 
     public class GenericVAO : IDisposable
     {
+        #region Private Fields
+        private static readonly Dictionary<VertexAttribPointerType, DrawElementsType> ValidElementTypes = new Dictionary<VertexAttribPointerType, DrawElementsType>()
+        {
+            [VertexAttribPointerType.UnsignedByte] = DrawElementsType.UnsignedByte,
+            [VertexAttribPointerType.UnsignedShort] = DrawElementsType.UnsignedShort,
+            [VertexAttribPointerType.UnsignedInt] = DrawElementsType.UnsignedInt
+        };
+        #endregion
+
         #region Generic VBO
         public IGenericVBO[] vbos;
 
@@ -269,6 +403,13 @@ namespace OpenGL
             DrawMode = BeginMode.Triangles;
         }
 
+        public GenericVAO(ShaderProgram program, bool allowIntAsElementType)
+        {
+            Program = program;
+            DrawMode = BeginMode.Triangles;
+            this.allowIntAsElementType = allowIntAsElementType;
+        }
+
         public void Init(IGenericVBO[] vbos)
         {
             this.vbos = vbos;
@@ -301,6 +442,8 @@ namespace OpenGL
 
         #region Properties
         private bool disposeChildren = false;
+        private DrawElementsType elementType;
+        private bool allowIntAsElementType = true;
 
         /// <summary>
         /// The number of vertices that make up this VAO.
@@ -372,13 +515,30 @@ namespace OpenGL
 
         public void BindAttributes(ShaderProgram program)
         {
-            GenericVBO<int> elementArray = new GenericVBO<int>();
+            IGenericVBO elementArray = null;
 
             for (int i = 0; i < vbos.Length; i++)
             {
                 if (vbos[i].BufferTarget == BufferTarget.ElementArrayBuffer)
                 {
-                    elementArray = (GenericVBO<int>)vbos[i];
+                    elementArray = vbos[i];
+
+                    //To not break compatebility with previous versions of this call,
+                    //int is allowed as an element type even though the specs doesn't allow it.
+                    //All cases where int is used as the default element type has been marked obsolete
+                    //but until it's completely removed , this will serve to support that use case.
+                    if (allowIntAsElementType && vbos[i].PointerType == VertexAttribPointerType.Int)
+                    {
+                        elementType = DrawElementsType.UnsignedInt;
+                        continue;
+                    }
+
+                    //Check if the element array can be used as an indice buffer.
+                    if (!ValidElementTypes.ContainsKey(vbos[i].PointerType))
+                    {
+                        throw new Exception($"The element buffer must be an unsigned integral type. See {nameof(DrawElementsType)} enum for valid types.");
+                    }
+                    elementType = ValidElementTypes[vbos[i].PointerType];
                     continue;
                 }
 
@@ -399,7 +559,7 @@ namespace OpenGL
                 }
             }
 
-            if (elementArray.ID != 0)
+            if (elementArray != null)
             {
                 Gl.BindBuffer(BufferTarget.ElementArrayBuffer, elementArray.ID);
                 VertexCount = elementArray.Length;
@@ -419,7 +579,7 @@ namespace OpenGL
         {
             if (ID == 0 || VertexCount == 0) return;
             Gl.BindVertexArray(ID);
-            Gl.DrawElements(DrawMode, VertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero);
+            Gl.DrawElements(DrawMode, VertexCount, elementType, IntPtr.Zero);
             Gl.BindVertexArray(0);
         }
 
@@ -430,7 +590,7 @@ namespace OpenGL
         {
             if (VertexCount == 0) return;
             BindAttributes(Program);
-            Gl.DrawElements(DrawMode, VertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero);
+            Gl.DrawElements(DrawMode, VertexCount, elementType, IntPtr.Zero);
         }
 
         /// <summary>
@@ -440,7 +600,7 @@ namespace OpenGL
         {
             if (ID == 0 || VertexCount == 0 || count == 0) return;
             Gl.BindVertexArray(ID);
-            Gl.DrawElementsInstanced(DrawMode, VertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero, count);
+            Gl.DrawElementsInstanced(DrawMode, VertexCount, elementType, IntPtr.Zero, count);
             Gl.BindVertexArray(0);
         }
 
@@ -459,7 +619,7 @@ namespace OpenGL
         public void DrawProgram(ShaderProgram program)
         {
             BindAttributes(program);
-            Gl.DrawElements(DrawMode, VertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero);
+            Gl.DrawElements(DrawMode, VertexCount, elementType, IntPtr.Zero);
         }
         #endregion
 
