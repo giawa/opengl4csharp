@@ -16,7 +16,7 @@ namespace OpenGL
         {
             GenericVAO.IGenericVBO[] vbos = new IGenericVBO[2];
             vbos[0] = new GenericVBO<T1>(vbo1, attribName);
-            vbos[1] = new GenericVBO<int>(elementArray, "");
+            vbos[1] = new GenericVBO<int>(elementArray);
 
             Init(vbos);
         }
@@ -29,7 +29,7 @@ namespace OpenGL
 
             GenericVAO.IGenericVBO[] vbos = new IGenericVBO[2];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
-            vbos[1] = new GenericVBO<int>(elementArray, "");
+            vbos[1] = new GenericVBO<int>(elementArray);
 
             Init(vbos);
         }
@@ -44,7 +44,7 @@ namespace OpenGL
         {
             GenericVAO.IGenericVBO[] vbos = new IGenericVBO[2];
             vbos[0] = new GenericVBO<T1>(vbo1, attribName);
-            vbos[1] = new GenericVBO<T2>(elementArray, "");
+            vbos[1] = new GenericVBO<T2>(elementArray);
 
             Init(vbos);
         }
@@ -56,7 +56,7 @@ namespace OpenGL
 
             GenericVAO.IGenericVBO[] vbos = new IGenericVBO[2];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
-            vbos[1] = new GenericVBO<T2>(elementArray, "");
+            vbos[1] = new GenericVBO<T2>(elementArray);
 
             Init(vbos);
         }
@@ -70,7 +70,7 @@ namespace OpenGL
             GenericVAO.IGenericVBO[] vbos = new IGenericVBO[3];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
-            vbos[2] = new GenericVBO<int>(elementArray, "");
+            vbos[2] = new GenericVBO<int>(elementArray);
 
             Init(vbos);
         }
@@ -89,7 +89,7 @@ namespace OpenGL
             GenericVAO.IGenericVBO[] vbos = new IGenericVBO[3];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
-            vbos[2] = new GenericVBO<T3>(elementArray, "");
+            vbos[2] = new GenericVBO<T3>(elementArray);
 
             Init(vbos);
         }
@@ -104,7 +104,7 @@ namespace OpenGL
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
             vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
-            vbos[3] = new GenericVBO<int>(elementArray, "");
+            vbos[3] = new GenericVBO<int>(elementArray);
 
             Init(vbos);
         }
@@ -125,7 +125,7 @@ namespace OpenGL
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
             vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
-            vbos[3] = new GenericVBO<T4>(elementArray, "");
+            vbos[3] = new GenericVBO<T4>(elementArray);
 
             Init(vbos);
         }
@@ -141,7 +141,7 @@ namespace OpenGL
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
             vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
             vbos[3] = new GenericVBO<T4>(vbo4, attribNames[3]);
-            vbos[4] = new GenericVBO<int>(elementArray, "");
+            vbos[4] = new GenericVBO<int>(elementArray);
 
             Init(vbos);
         }
@@ -164,7 +164,7 @@ namespace OpenGL
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
             vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
             vbos[3] = new GenericVBO<T4>(vbo4, attribNames[3]);
-            vbos[4] = new GenericVBO<T5>(elementArray, "");
+            vbos[4] = new GenericVBO<T5>(elementArray);
 
             Init(vbos);
         }
@@ -181,7 +181,7 @@ namespace OpenGL
             vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
             vbos[3] = new GenericVBO<T4>(vbo4, attribNames[3]);
             vbos[4] = new GenericVBO<T5>(vbo5, attribNames[4]);
-            vbos[5] = new GenericVBO<int>(elementArray, "");
+            vbos[5] = new GenericVBO<int>(elementArray);
 
             Init(vbos);
         }
@@ -206,7 +206,7 @@ namespace OpenGL
             vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
             vbos[3] = new GenericVBO<T4>(vbo4, attribNames[3]);
             vbos[4] = new GenericVBO<T5>(vbo5, attribNames[4]);
-            vbos[5] = new GenericVBO<T6>(elementArray, "");
+            vbos[5] = new GenericVBO<T6>(elementArray);
 
             Init(vbos);
         }
@@ -224,7 +224,7 @@ namespace OpenGL
             vbos[3] = new GenericVBO<T4>(vbo4, attribNames[3]);
             vbos[4] = new GenericVBO<T5>(vbo5, attribNames[4]);
             vbos[5] = new GenericVBO<T6>(vbo6, attribNames[5]);
-            vbos[6] = new GenericVBO<int>(elementArray, "");
+            vbos[6] = new GenericVBO<int>(elementArray);
 
             Init(vbos);
         }
@@ -251,7 +251,7 @@ namespace OpenGL
             vbos[3] = new GenericVBO<T4>(vbo4, attribNames[3]);
             vbos[4] = new GenericVBO<T5>(vbo5, attribNames[4]);
             vbos[5] = new GenericVBO<T6>(vbo6, attribNames[5]);
-            vbos[6] = new GenericVBO<T7>(elementArray, "");
+            vbos[6] = new GenericVBO<T7>(elementArray);
 
             Init(vbos);
         }
@@ -270,7 +270,7 @@ namespace OpenGL
             vbos[4] = new GenericVBO<T5>(vbo5, attribNames[4]);
             vbos[5] = new GenericVBO<T6>(vbo6, attribNames[5]);
             vbos[6] = new GenericVBO<T7>(vbo7, attribNames[6]);
-            vbos[7] = new GenericVBO<int>(elementArray, "");
+            vbos[7] = new GenericVBO<int>(elementArray);
 
             Init(vbos);
         }
@@ -299,7 +299,7 @@ namespace OpenGL
             vbos[4] = new GenericVBO<T5>(vbo5, attribNames[4]);
             vbos[5] = new GenericVBO<T6>(vbo6, attribNames[5]);
             vbos[6] = new GenericVBO<T7>(vbo7, attribNames[6]);
-            vbos[7] = new GenericVBO<T8>(elementArray, "");
+            vbos[7] = new GenericVBO<T8>(elementArray);
 
             Init(vbos);
         }
@@ -319,13 +319,27 @@ namespace OpenGL
             vbos[5] = new GenericVBO<T6>(vbo6, attribNames[5]);
             vbos[6] = new GenericVBO<T7>(vbo7, attribNames[6]);
             vbos[7] = new GenericVBO<T8>(vbo8, attribNames[7]);
-            vbos[8] = new GenericVBO<int>(elementArray, "");
+            vbos[8] = new GenericVBO<int>(elementArray);
 
             Init(vbos);
         }
     }
 
-    public class GenericVAO : IDisposable
+    public interface IGenericVAO
+    {
+        int Offset { get; set; }
+        int VertexCount { get; set; }
+        bool DisposeChildren { get; set; }
+        bool DisposeElementArray { get; set; }
+        ShaderProgram Program { get; }
+        BeginMode DrawMode { get; set; }
+        uint ID { get; }
+        GenericVAO.DrawFunc Draw { get; }
+        GenericVAO.DrawInstancedFunc DrawInstanced { get; }
+        void DrawProgram(ShaderProgram program);
+    }
+
+    public class GenericVAO : IGenericVAO, IDisposable
     {
         #region Private Fields
         private static readonly Dictionary<VertexAttribPointerType, DrawElementsType> ValidElementTypes = new Dictionary<VertexAttribPointerType, DrawElementsType>()
@@ -380,6 +394,12 @@ namespace OpenGL
             public bool CastToFloat { get { return Vbo.CastToFloat; } }
 
             public bool IsIntegralType { get { return Vbo.IsIntegralType; } }
+
+            public GenericVBO(VBO<T> vbo)
+            {
+                this.Vbo = vbo;
+                this.name = string.Empty;
+            }
 
             public GenericVBO(VBO<T> vbo, string name)
             {
@@ -455,6 +475,11 @@ namespace OpenGL
         private bool allowIntAsElementType = true;
 
         /// <summary>
+        /// The offset into the element array buffer that this VAO begins.
+        /// </summary>
+        public int Offset { get; set; }
+
+        /// <summary>
         /// The number of vertices that make up this VAO.
         /// </summary>
         public int VertexCount { get; set; }
@@ -506,6 +531,20 @@ namespace OpenGL
         #endregion
 
         #region Draw Methods (OGL2 and OGL3)
+        private int GetElementSizeInBytes()
+        {
+            switch (elementType)
+            {
+                case DrawElementsType.UnsignedByte:
+                    return 1;
+                case DrawElementsType.UnsignedShort:
+                    return 2;
+                case DrawElementsType.UnsignedInt:
+                    return 4;
+                default:
+                    throw new Exception($"Unknown enum value. Expected an enum of type {nameof(DrawElementsType)}.");
+            }
+        }
 
         public void BindAttributes(ShaderProgram program)
         {
@@ -579,8 +618,8 @@ namespace OpenGL
         public delegate void DrawFunc();
         public delegate void DrawInstancedFunc(int count);
 
-        public DrawFunc Draw;
-        public DrawInstancedFunc DrawInstanced;
+        public DrawFunc Draw { get; private set; }
+        public DrawInstancedFunc DrawInstanced { get; private set; }
 
         /// <summary>
         /// OGL3 method uses a vertex array object for quickly binding the VBOs to their attributes.
@@ -589,7 +628,8 @@ namespace OpenGL
         {
             if (ID == 0 || VertexCount == 0) return;
             Gl.BindVertexArray(ID);
-            Gl.DrawElements(DrawMode, VertexCount, elementType, IntPtr.Zero);
+            IntPtr offset = (IntPtr)(Offset * GetElementSizeInBytes());
+            Gl.DrawElements(DrawMode, VertexCount, elementType, offset);
             Gl.BindVertexArray(0);
         }
 
@@ -600,7 +640,8 @@ namespace OpenGL
         {
             if (VertexCount == 0) return;
             BindAttributes(Program);
-            Gl.DrawElements(DrawMode, VertexCount, elementType, IntPtr.Zero);
+            IntPtr offset = (IntPtr)(Offset * GetElementSizeInBytes());
+            Gl.DrawElements(DrawMode, VertexCount, elementType, offset);
         }
 
         /// <summary>
@@ -629,7 +670,8 @@ namespace OpenGL
         public void DrawProgram(ShaderProgram program)
         {
             BindAttributes(program);
-            Gl.DrawElements(DrawMode, VertexCount, elementType, IntPtr.Zero);
+            IntPtr offset = (IntPtr)(Offset * GetElementSizeInBytes());
+            Gl.DrawElements(DrawMode, VertexCount, elementType, offset);
         }
         #endregion
 
@@ -666,74 +708,53 @@ namespace OpenGL
         #endregion
     }
 
-    public class VAO : IDisposable
+    public class VAO : IGenericVAO, IDisposable
     {
-        #region Variables
-        private VBO<Vector3> vertex, normal, tangent;
-
-        private VBO<Vector2> uv;
-
-        private VBO<int> element;
-        private VBO<uint> elementu;
-
-        private bool disposeChildren = false;
-        #endregion
-
         #region Properties
+        private readonly GenericVAO vao;
+
         /// <summary>
         /// The offset into the element array buffer that this VAO begins.
         /// </summary>
-        public int Offset { get; set; }
+        public int Offset { get => vao.Offset; set => vao.Offset = value; }
 
         /// <summary>
         /// The number of vertices that make up this VAO.
         /// </summary>
-        public int VertexCount { get; set; }
+        public int VertexCount { get => vao.VertexCount; set => vao.VertexCount = value; }
 
         /// <summary>
         /// Specifies if the VAO should dispose of the child VBOs when Dispose() is called.
         /// </summary>
-        public bool DisposeChildren
-        {
-            get { return disposeChildren; }
-            set
-            {
-                disposeChildren = value;
-                DisposeElementArray = value;
-            }
-        }
+        public bool DisposeChildren { get => vao.DisposeChildren; set => vao.DisposeChildren = value; }
 
         /// <summary>
         /// Specifies if the VAO should dispose of the element array when Dispose() is called.
         /// </summary>
-        public bool DisposeElementArray { get; set; }
+        public bool DisposeElementArray { get => vao.DisposeElementArray; set => vao.DisposeElementArray = value; }
 
         /// <summary>
         /// The ShaderProgram associated with this VAO.
         /// </summary>
-        public ShaderProgram Program { get; private set; }
+        public ShaderProgram Program => vao.Program;
 
         /// <summary>
         /// The drawing mode to use when drawing the arrays.
         /// </summary>
-        public BeginMode DrawMode { get; set; }
+        public BeginMode DrawMode { get => vao.DrawMode; set => vao.DrawMode = value; }
 
 #pragma warning disable IDE1006
         /// <summary>
         /// The ID of this Vertex Array Object for use in calls to OpenGL.
         /// </summary>
         [Obsolete("Use ID instead.")]
-        public uint vaoID
-        {
-            get { return ID; }
-            private set { ID = value; }
-        }
+        public uint vaoID { get => vao.ID; }
 #pragma warning restore
 
         /// <summary>
         /// The ID of this Vertex Array Object for use in calls to OpenGL.
         /// </summary>
-        public uint ID { get; private set; }
+        public uint ID => vao.ID;
         #endregion
 
         #region Constructors and Destructor
@@ -784,62 +805,60 @@ namespace OpenGL
         [Obsolete("Use VBO<uint> instead of VBO<int> as the element array buffer.")]
         public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<Vector3> normal, VBO<Vector3> tangent, VBO<Vector2> uv, VBO<int> element)
         {
-            Program = program;
-            VertexCount = element.Count;
-            DrawMode = BeginMode.Triangles;
+            List<GenericVAO.IGenericVBO> vbos = new List<GenericVAO.IGenericVBO>();
 
-            this.vertex = vertex;
-            this.normal = normal;
-            this.tangent = tangent;
-            this.uv = uv;
-            this.element = element;
-
-            if (Gl.Version() >= 3)
+            if (vertex != null)
             {
-                ID = Gl.GenVertexArray();
-                if (ID != 0)
-                {
-                    Gl.BindVertexArray(ID);
-                    BindAttributes(Program);
-                }
-                Gl.BindVertexArray(0);
-
-                Draw = DrawOGL3;
+                vbos.Add(new GenericVAO.GenericVBO<Vector3>(vertex, "in_position"));
             }
-            else
+            if (normal != null)
             {
-                Draw = DrawOGL2;
+                vbos.Add(new GenericVAO.GenericVBO<Vector3>(normal, "in_normal"));
             }
+            if (tangent != null)
+            {
+                vbos.Add(new GenericVAO.GenericVBO<Vector3>(tangent, "in_tangent"));
+            }
+            if (uv != null)
+            {
+                vbos.Add(new GenericVAO.GenericVBO<Vector2>(uv, "in_uv"));
+            }
+            vbos.Add(new GenericVAO.GenericVBO<int>(element, string.Empty));
+
+            vao = new GenericVAO(program, true);
+            vao.Init(vbos.ToArray());
         }
 
         public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<Vector3> normal, VBO<Vector3> tangent, VBO<Vector2> uv, VBO<uint> element)
         {
-            Program = program;
-            VertexCount = element.Count;
-            DrawMode = BeginMode.Triangles;
+            List<GenericVAO.IGenericVBO> vbos = new List<GenericVAO.IGenericVBO>();
 
-            this.vertex = vertex;
-            this.normal = normal;
-            this.tangent = tangent;
-            this.uv = uv;
-            this.elementu = element;
-
-            if (Gl.Version() >= 3)
+            if (vertex != null)
             {
-                ID = Gl.GenVertexArray();
-                if (ID != 0)
-                {
-                    Gl.BindVertexArray(ID);
-                    BindAttributes(Program);
-                }
-                Gl.BindVertexArray(0);
-
-                Draw = DrawOGL3;
+                vbos.Add(new GenericVAO.GenericVBO<Vector3>(vertex, "in_position"));
             }
-            else
+            if (normal != null)
             {
-                Draw = DrawOGL2;
+                vbos.Add(new GenericVAO.GenericVBO<Vector3>(normal, "in_normal"));
             }
+            if (tangent != null)
+            {
+                vbos.Add(new GenericVAO.GenericVBO<Vector3>(tangent, "in_tangent"));
+            }
+            if (uv != null)
+            {
+                vbos.Add(new GenericVAO.GenericVBO<Vector2>(uv, "in_uv"));
+            }
+            vbos.Add(new GenericVAO.GenericVBO<uint>(element, string.Empty));
+
+            vao = new GenericVAO(program, false);
+            vao.Init(vbos.ToArray());
+        }
+
+        public VAO(ShaderProgram program, GenericVAO.IGenericVBO[] vbos)
+        {
+            vao = new GenericVAO(program, false);
+            vao.Init(vbos);
         }
 
         ~VAO()
@@ -849,132 +868,8 @@ namespace OpenGL
         #endregion
 
         #region Draw Methods (OGL2 and OGL3)
-        public void BindCachedAttributes(ShaderProgram program, int vertexAttributeLocation, int normalAttributeLocation = -1, int uvAttributeLocation = -1, int tangentAttributeLocation = -1)
-        {
-            if (normalAttributeLocation != -1 && normal.ID != 0)
-            {
-                Gl.EnableVertexAttribArray((uint)normalAttributeLocation);
-                Gl.BindBuffer(normal.BufferTarget, normal.ID);
-                Gl.VertexAttribPointer((uint)normalAttributeLocation, normal.Size, normal.PointerType, true, 12, IntPtr.Zero);
-            }
-
-            if (uvAttributeLocation != -1 && uv.ID != 0)
-            {
-                Gl.EnableVertexAttribArray((uint)uvAttributeLocation);
-                Gl.BindBuffer(uv.BufferTarget, uv.ID);
-                Gl.VertexAttribPointer((uint)uvAttributeLocation, uv.Size, uv.PointerType, true, 8, IntPtr.Zero);
-            }
-
-            if (tangentAttributeLocation != -1 && tangent.ID != 0)
-            {
-                Gl.EnableVertexAttribArray((uint)tangentAttributeLocation);
-                Gl.BindBuffer(tangent.BufferTarget, tangent.ID);
-                Gl.VertexAttribPointer((uint)tangentAttributeLocation, tangent.Size, tangent.PointerType, true, 12, IntPtr.Zero);
-            }
-
-            BindCachedAttributes(vertexAttributeLocation, program);
-        }
-
-        public void BindCachedAttributes(int vertexAttributeLocation, ShaderProgram program)
-        {
-            if (vertex == null || vertex.ID == 0) throw new Exception("Error binding attributes.  No vertices were supplied.");
-            if ((element == null || element.ID == 0) && (elementu == null || elementu.ID == 0)) throw new Exception("Error binding attributes.  No element array was supplied.");
-
-            Gl.EnableVertexAttribArray((uint)vertexAttributeLocation);
-            Gl.BindBuffer(vertex.BufferTarget, vertex.ID);
-            Gl.VertexAttribPointer((uint)vertexAttributeLocation, vertex.Size, vertex.PointerType, true, 12, IntPtr.Zero);
-
-            if (element != null) Gl.BindBuffer(BufferTarget.ElementArrayBuffer, element.ID);
-            else Gl.BindBuffer(BufferTarget.ElementArrayBuffer, elementu.ID);
-        }
-
-        /// <summary>
-        /// Generic method for binding the VBOs to their respective attribute locations.
-        /// </summary>
-        /// <param name="program">The shader program to bind attributes to.</param>
-        /// <param name="positionName">The attribute name for the vertex positions.</param>
-        /// <param name="normalName">The attribute naem for the vertex normals.</param>
-        /// <param name="uvName">The attribute name for the vertex UV co-ordinates.</param>
-        /// <param name="tangentName">The attribute name for the vertex tangents.</param>
-        public void BindAttributes(ShaderProgram program, string positionName = "in_position", string normalName = "in_normal", string uvName = "in_uv", string tangentName = "in_tangent")
-        {
-            if (vertex == null || vertex.ID == 0) throw new Exception("Error binding attributes.  No vertices were supplied.");
-            if ((element == null || element.ID == 0) && (elementu == null || elementu.ID == 0)) throw new Exception("Error binding attributes.  No element array was supplied.");
-
-            // Note:  Since the shader is already compiled, we cannot set the attribute locations.
-            //  Instead we must query the shader for the locations that the linker chose and use them.
-            int loc = Gl.GetAttribLocation(program.ProgramID, positionName);
-            if (loc == -1) throw new Exception("Shader did not contain '" + positionName + "'.");
-
-            Gl.EnableVertexAttribArray((uint)loc);
-            Gl.BindBuffer(vertex.BufferTarget, vertex.ID);
-            Gl.VertexAttribPointer((uint)loc, vertex.Size, vertex.PointerType, true, 12, IntPtr.Zero);
-
-            if (normal != null && normal.ID != 0)
-            {
-                loc = Gl.GetAttribLocation(program.ProgramID, normalName);
-                if (loc != -1)
-                {
-                    Gl.EnableVertexAttribArray((uint)loc);
-                    Gl.BindBuffer(normal.BufferTarget, normal.ID);
-                    Gl.VertexAttribPointer((uint)loc, normal.Size, normal.PointerType, true, 12, IntPtr.Zero);
-                }
-            }
-
-            if (uv != null && uv.ID != 0)
-            {
-                loc = Gl.GetAttribLocation(program.ProgramID, uvName);
-                if (loc != -1)
-                {
-                    Gl.EnableVertexAttribArray((uint)loc);
-                    Gl.BindBuffer(uv.BufferTarget, uv.ID);
-                    Gl.VertexAttribPointer((uint)loc, uv.Size, uv.PointerType, true, 8, IntPtr.Zero);
-                }
-            }
-
-            if (tangent != null && tangent.ID != 0)
-            {
-                loc = Gl.GetAttribLocation(program.ProgramID, tangentName);
-                if (loc != -1)
-                {
-                    Gl.EnableVertexAttribArray((uint)loc);
-                    Gl.BindBuffer(tangent.BufferTarget, tangent.ID);
-                    Gl.VertexAttribPointer((uint)loc, tangent.Size, tangent.PointerType, true, 12, IntPtr.Zero);
-                }
-            }
-
-            if (element != null) Gl.BindBuffer(BufferTarget.ElementArrayBuffer, element.ID);
-            else Gl.BindBuffer(BufferTarget.ElementArrayBuffer, elementu.ID);
-        }
-
-        public delegate void DrawFunc();
-
-        public DrawFunc Draw;
-
-        /// <summary>
-        /// OGL3 method uses a vertex array object for quickly binding the VBOs to their attributes.
-        /// </summary>
-        private void DrawOGL3()
-        {
-            if (ID == 0) return;
-            Gl.BindVertexArray(ID);
-
-            IntPtr offset = (IntPtr)(Offset * 4);
-            Gl.DrawElements(DrawMode, VertexCount, DrawElementsType.UnsignedInt, offset);
-
-            Gl.BindVertexArray(0);
-        }
-
-        /// <summary>
-        /// OGL2 does not support VAOs, and instead must bind the VBOs to their attributes manually.
-        /// </summary>
-        private void DrawOGL2()
-        {
-            BindAttributes(Program);
-
-            IntPtr offset = (IntPtr)(Offset * 4);
-            Gl.DrawElements(DrawMode, VertexCount, DrawElementsType.UnsignedInt, offset);
-        }
+        public GenericVAO.DrawFunc Draw => vao.Draw;
+        public GenericVAO.DrawInstancedFunc DrawInstanced => vao.DrawInstanced;
 
         /// <summary>
         /// Performs the draw routine with a custom shader program.
@@ -982,9 +877,7 @@ namespace OpenGL
         /// <param name="program"></param>
         public void DrawProgram(ShaderProgram program)
         {
-            BindAttributes(program);
-            if (Offset == 0) Gl.DrawElements(DrawMode, VertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero);
-            else Gl.DrawElementsBaseVertex(DrawMode, VertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero, Offset);
+            vao.DrawProgram(program);
         }
         #endregion
 
@@ -994,37 +887,12 @@ namespace OpenGL
         /// </summary>
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            vao.Dispose();
         }
 
         protected virtual void Dispose(bool disposing)
         {
-            // first try to dispose of the vertex array
-            if (ID != 0)
-            {
-                Gl.DeleteVertexArray(ID);
-
-                ID = 0;
-            }
-
-            // children must be disposed of separately since OpenGL 2.1 will not have a vertex array
-            if (DisposeChildren)
-            {
-                if (vertex != null) vertex.Dispose();
-                if (normal != null) normal.Dispose();
-                if (tangent != null) tangent.Dispose();
-                if (uv != null) uv.Dispose();
-                if (element != null && DisposeElementArray) element.Dispose();
-                if (elementu != null && DisposeElementArray) elementu.Dispose();
-
-                vertex = null;
-                normal = null;
-                tangent = null;
-                uv = null;
-                element = null;
-                elementu = null;
-            }
+            Dispose();
         }
         #endregion
     }
