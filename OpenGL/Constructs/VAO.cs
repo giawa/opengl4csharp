@@ -513,16 +513,16 @@ namespace OpenGL
                     if (allowIntAsElementType && vbos[i].PointerType == VertexAttribPointerType.Int)
                     {
                         elementType = DrawElementsType.UnsignedInt;
-                        continue;
                     }
-
-                    //Check if the element array can be used as an indice buffer.
-                    if (!ValidElementTypes.ContainsKey(vbos[i].PointerType))
+                    else
                     {
-                        throw new Exception($"The element buffer must be an unsigned integral type. See {nameof(DrawElementsType)} enum for valid types.");
+                        // Check if the element array can be used as an indice buffer.
+                        if (!ValidElementTypes.ContainsKey(vbos[i].PointerType))
+                        {
+                            throw new Exception($"The element buffer must be an unsigned integral type. See {nameof(DrawElementsType)} enum for valid types.");
+                        }
+                        elementType = ValidElementTypes[vbos[i].PointerType];
                     }
-                    elementType = ValidElementTypes[vbos[i].PointerType];
-                    continue;
                 }
 
                 // According to OGL spec then, if there is no location for an attribute, -1 is returned.
