@@ -14,9 +14,9 @@ namespace OpenGL
         public VAO(ShaderProgram program, VBO<T1> vbo1, string attribName, VBO<int> elementArray)
             : base(program)
         {
-            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[2];
+            IGenericVBO[] vbos = new IGenericVBO[2];
             vbos[0] = new GenericVBO<T1>(vbo1, attribName);
-            vbos[1] = new GenericVBO<int>(elementArray, "");
+            vbos[1] = new GenericVBO<int>(elementArray);
 
             Init(vbos);
         }
@@ -27,9 +27,9 @@ namespace OpenGL
         {
             if (attribNames.Length != 1) throw new Exception(string.Format("Expected an array of 1 name, but instead got {0}.", attribNames.Length));
 
-            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[2];
+            IGenericVBO[] vbos = new IGenericVBO[2];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
-            vbos[1] = new GenericVBO<int>(elementArray, "");
+            vbos[1] = new GenericVBO<int>(elementArray);
 
             Init(vbos);
         }
@@ -42,9 +42,9 @@ namespace OpenGL
         public VAO(ShaderProgram program, VBO<T1> vbo1, string attribName, VBO<T2> elementArray)
     : base(program, false)
         {
-            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[2];
+            IGenericVBO[] vbos = new IGenericVBO[2];
             vbos[0] = new GenericVBO<T1>(vbo1, attribName);
-            vbos[1] = new GenericVBO<T2>(elementArray, "");
+            vbos[1] = new GenericVBO<T2>(elementArray);
 
             Init(vbos);
         }
@@ -54,9 +54,9 @@ namespace OpenGL
         {
             if (attribNames.Length != 1) throw new Exception(string.Format("Expected an array of 1 names, but instead got {0}.", attribNames.Length));
 
-            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[2];
+            IGenericVBO[] vbos = new IGenericVBO[2];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
-            vbos[1] = new GenericVBO<T2>(elementArray, "");
+            vbos[1] = new GenericVBO<T2>(elementArray);
 
             Init(vbos);
         }
@@ -67,10 +67,10 @@ namespace OpenGL
         {
             if (attribNames.Length != 2) throw new Exception(string.Format("Expected an array of 2 names, but instead got {0}.", attribNames.Length));
 
-            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[3];
+            IGenericVBO[] vbos = new IGenericVBO[3];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
-            vbos[2] = new GenericVBO<int>(elementArray, "");
+            vbos[2] = new GenericVBO<int>(elementArray);
 
             Init(vbos);
         }
@@ -86,10 +86,10 @@ namespace OpenGL
         {
             if (attribNames.Length != 2) throw new Exception(string.Format("Expected an array of 2 names, but instead got {0}.", attribNames.Length));
 
-            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[3];
+            IGenericVBO[] vbos = new IGenericVBO[3];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
-            vbos[2] = new GenericVBO<T3>(elementArray, "");
+            vbos[2] = new GenericVBO<T3>(elementArray);
 
             Init(vbos);
         }
@@ -100,11 +100,11 @@ namespace OpenGL
         {
             if (attribNames.Length != 3) throw new Exception(string.Format("Expected an array of 3 names, but instead got {0}.", attribNames.Length));
 
-            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[4];
+            IGenericVBO[] vbos = new IGenericVBO[4];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
             vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
-            vbos[3] = new GenericVBO<int>(elementArray, "");
+            vbos[3] = new GenericVBO<int>(elementArray);
 
             Init(vbos);
         }
@@ -121,11 +121,11 @@ namespace OpenGL
         {
             if (attribNames.Length != 3) throw new Exception(string.Format("Expected an array of 3 names, but instead got {0}.", attribNames.Length));
 
-            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[4];
+            IGenericVBO[] vbos = new IGenericVBO[4];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
             vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
-            vbos[3] = new GenericVBO<T4>(elementArray, "");
+            vbos[3] = new GenericVBO<T4>(elementArray);
 
             Init(vbos);
         }
@@ -136,12 +136,12 @@ namespace OpenGL
         {
             if (attribNames.Length != 4) throw new Exception(string.Format("Expected an array of 4 names, but instead got {0}.", attribNames.Length));
 
-            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[5];
+            IGenericVBO[] vbos = new IGenericVBO[5];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
             vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
             vbos[3] = new GenericVBO<T4>(vbo4, attribNames[3]);
-            vbos[4] = new GenericVBO<int>(elementArray, "");
+            vbos[4] = new GenericVBO<int>(elementArray);
 
             Init(vbos);
         }
@@ -159,12 +159,12 @@ namespace OpenGL
         {
             if (attribNames.Length != 4) throw new Exception(string.Format("Expected an array of 4 names, but instead got {0}.", attribNames.Length));
 
-            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[5];
+            IGenericVBO[] vbos = new IGenericVBO[5];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
             vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
             vbos[3] = new GenericVBO<T4>(vbo4, attribNames[3]);
-            vbos[4] = new GenericVBO<T5>(elementArray, "");
+            vbos[4] = new GenericVBO<T5>(elementArray);
 
             Init(vbos);
         }
@@ -175,13 +175,13 @@ namespace OpenGL
         {
             if (attribNames.Length != 5) throw new Exception(string.Format("Expected an array of 5 names, but instead got {0}.", attribNames.Length));
 
-            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[6];
+            IGenericVBO[] vbos = new IGenericVBO[6];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
             vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
             vbos[3] = new GenericVBO<T4>(vbo4, attribNames[3]);
             vbos[4] = new GenericVBO<T5>(vbo5, attribNames[4]);
-            vbos[5] = new GenericVBO<int>(elementArray, "");
+            vbos[5] = new GenericVBO<int>(elementArray);
 
             Init(vbos);
         }
@@ -200,13 +200,13 @@ namespace OpenGL
         {
             if (attribNames.Length != 5) throw new Exception(string.Format("Expected an array of 5 names, but instead got {0}.", attribNames.Length));
 
-            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[6];
+            IGenericVBO[] vbos = new IGenericVBO[6];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
             vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
             vbos[3] = new GenericVBO<T4>(vbo4, attribNames[3]);
             vbos[4] = new GenericVBO<T5>(vbo5, attribNames[4]);
-            vbos[5] = new GenericVBO<T6>(elementArray, "");
+            vbos[5] = new GenericVBO<T6>(elementArray);
 
             Init(vbos);
         }
@@ -217,14 +217,14 @@ namespace OpenGL
         {
             if (attribNames.Length != 6) throw new Exception(string.Format("Expected an array of 6 names, but instead got {0}.", attribNames.Length));
 
-            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[7];
+            IGenericVBO[] vbos = new IGenericVBO[7];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
             vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
             vbos[3] = new GenericVBO<T4>(vbo4, attribNames[3]);
             vbos[4] = new GenericVBO<T5>(vbo5, attribNames[4]);
             vbos[5] = new GenericVBO<T6>(vbo6, attribNames[5]);
-            vbos[6] = new GenericVBO<int>(elementArray, "");
+            vbos[6] = new GenericVBO<int>(elementArray);
 
             Init(vbos);
         }
@@ -244,14 +244,14 @@ namespace OpenGL
         {
             if (attribNames.Length != 6) throw new Exception(string.Format("Expected an array of 6 names, but instead got {0}.", attribNames.Length));
 
-            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[7];
+            IGenericVBO[] vbos = new IGenericVBO[7];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
             vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
             vbos[3] = new GenericVBO<T4>(vbo4, attribNames[3]);
             vbos[4] = new GenericVBO<T5>(vbo5, attribNames[4]);
             vbos[5] = new GenericVBO<T6>(vbo6, attribNames[5]);
-            vbos[6] = new GenericVBO<T7>(elementArray, "");
+            vbos[6] = new GenericVBO<T7>(elementArray);
 
             Init(vbos);
         }
@@ -262,7 +262,7 @@ namespace OpenGL
         {
             if (attribNames.Length != 7) throw new Exception(string.Format("Expected an array of 7 names, but instead got {0}.", attribNames.Length));
 
-            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[8];
+            IGenericVBO[] vbos = new IGenericVBO[8];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
             vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
@@ -270,7 +270,7 @@ namespace OpenGL
             vbos[4] = new GenericVBO<T5>(vbo5, attribNames[4]);
             vbos[5] = new GenericVBO<T6>(vbo6, attribNames[5]);
             vbos[6] = new GenericVBO<T7>(vbo7, attribNames[6]);
-            vbos[7] = new GenericVBO<int>(elementArray, "");
+            vbos[7] = new GenericVBO<int>(elementArray);
 
             Init(vbos);
         }
@@ -291,7 +291,7 @@ namespace OpenGL
         {
             if (attribNames.Length != 7) throw new Exception(string.Format("Expected an array of 7 names, but instead got {0}.", attribNames.Length));
 
-            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[8];
+            IGenericVBO[] vbos = new IGenericVBO[8];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
             vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
@@ -299,7 +299,7 @@ namespace OpenGL
             vbos[4] = new GenericVBO<T5>(vbo5, attribNames[4]);
             vbos[5] = new GenericVBO<T6>(vbo6, attribNames[5]);
             vbos[6] = new GenericVBO<T7>(vbo7, attribNames[6]);
-            vbos[7] = new GenericVBO<T8>(elementArray, "");
+            vbos[7] = new GenericVBO<T8>(elementArray);
 
             Init(vbos);
         }
@@ -310,7 +310,7 @@ namespace OpenGL
         {
             if (attribNames.Length != 8) throw new Exception(string.Format("Expected an array of 8 names, but instead got {0}.", attribNames.Length));
 
-            GenericVAO.IGenericVBO[] vbos = new IGenericVBO[9];
+            IGenericVBO[] vbos = new IGenericVBO[9];
             vbos[0] = new GenericVBO<T1>(vbo1, attribNames[0]);
             vbos[1] = new GenericVBO<T2>(vbo2, attribNames[1]);
             vbos[2] = new GenericVBO<T3>(vbo3, attribNames[2]);
@@ -319,7 +319,7 @@ namespace OpenGL
             vbos[5] = new GenericVBO<T6>(vbo6, attribNames[5]);
             vbos[6] = new GenericVBO<T7>(vbo7, attribNames[6]);
             vbos[7] = new GenericVBO<T8>(vbo8, attribNames[7]);
-            vbos[8] = new GenericVBO<int>(elementArray, "");
+            vbos[8] = new GenericVBO<int>(elementArray);
 
             Init(vbos);
         }
@@ -339,51 +339,40 @@ namespace OpenGL
         #region Generic VBO
         public IGenericVBO[] vbos;
 
-        public interface IGenericVBO : IDisposable
-        {
-            string Name { get; }
-            VertexAttribPointerType PointerType { get; }
-            int Length { get; }
-            BufferTarget BufferTarget { get; }
-            uint ID { get; }
-            int Size { get; }
-            uint Divisor { get; }
-            bool Normalize { get; }
-            bool CastToFloat { get; }
-            bool IsIntegralType { get; }
-            uint vboID { get; }
-        }
-
         public struct GenericVBO<T> : IGenericVBO
             where T : struct
         {
-            private VBO<T> Vbo;
-            private string name;
+            private readonly VBO<T> vbo;
+            private readonly string name;
 
-            public uint ID { get { return Vbo.ID; } }
-            public uint vboID { get { return Vbo.ID; } }
+            public uint ID { get { return vbo.ID; } }
+            public uint vboID { get { return vbo.ID; } }
 
             public string Name { get { return name; } }
 
-            public VertexAttribPointerType PointerType { get { return Vbo.PointerType; } }
+            public VertexAttribPointerType PointerType { get { return vbo.PointerType; } }
 
-            public int Length { get { return Vbo.Count; } }
+            public int Length { get { return vbo.Count; } }
 
-            public BufferTarget BufferTarget { get { return Vbo.BufferTarget; } }
+            public BufferTarget BufferTarget { get { return vbo.BufferTarget; } }
 
-            public int Size { get { return Vbo.Size; } }
+            public int Size { get { return vbo.Size; } }
 
-            public uint Divisor { get { return Vbo.Divisor; } }
+            public uint Divisor { get { return vbo.Divisor; } }
 
-            public bool Normalize { get { return Vbo.Normalize; } }
+            public bool Normalize { get { return vbo.Normalize; } }
 
-            public bool CastToFloat { get { return Vbo.CastToFloat; } }
+            public bool CastToFloat { get { return vbo.CastToFloat; } }
 
-            public bool IsIntegralType { get { return Vbo.IsIntegralType; } }
+            public bool IsIntegralType { get { return vbo.IsIntegralType; } }
+
+            public GenericVBO(VBO<T> vbo) : this(vbo, string.Empty)
+            {
+            }
 
             public GenericVBO(VBO<T> vbo, string name)
             {
-                this.Vbo = vbo;
+                this.vbo = vbo;
                 this.name = name;
             }
 
@@ -399,7 +388,7 @@ namespace OpenGL
             {
                 if (disposing)
                 {
-                    Vbo.Dispose();
+                    vbo.Dispose();
                 }
             }
         }
