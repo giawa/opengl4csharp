@@ -42,6 +42,7 @@
     <Compile Include="Constructs\Billboard.cs" />
     <Compile Include="Constructs\BitmapFont.cs" />
     <Compile Include="Constructs\FBO.cs" />
+    <Compile Include="Constructs\IGenericVBO.cs" />
     <Compile Include="Constructs\Shader.cs" />
     <Compile Include="Constructs\Geometry.cs" />
     <Compile Include="Constructs\VAO.cs" />
