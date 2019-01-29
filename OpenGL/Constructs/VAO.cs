@@ -325,7 +325,7 @@ namespace OpenGL
         }
     }
 
-    public class GenericVAO : IGenericVAO, IDisposable
+    public class GenericVAO : IDisposable
     {
         #region Private Fields
         private static readonly Dictionary<VertexAttribPointerType, DrawElementsType> ValidElementTypes = new Dictionary<VertexAttribPointerType, DrawElementsType>()
@@ -442,11 +442,21 @@ namespace OpenGL
         private bool disposeChildren = false;
         private DrawElementsType elementType;
         private bool allowIntAsElementType = true;
+        private int offset = 0;
+        private IntPtr offsetInBytes = IntPtr.Zero;
 
         /// <summary>
         /// The offset into the element array buffer that this VAO begins.
         /// </summary>
-        public int Offset { get; set; }
+        public int Offset
+        {
+            get { return offset; }
+            set
+            {
+                offset = value;
+                offsetInBytes = (IntPtr)(offset * GetElementSizeInBytes());
+            }
+        }
 
         /// <summary>
         /// The number of vertices that make up this VAO.
@@ -587,8 +597,8 @@ namespace OpenGL
         public delegate void DrawFunc();
         public delegate void DrawInstancedFunc(int count);
 
-        public DrawFunc Draw { get; private set; }
-        public DrawInstancedFunc DrawInstanced { get; private set; }
+        public DrawFunc Draw;
+        public DrawInstancedFunc DrawInstanced;
 
         /// <summary>
         /// OGL3 method uses a vertex array object for quickly binding the VBOs to their attributes.
@@ -597,8 +607,7 @@ namespace OpenGL
         {
             if (ID == 0 || VertexCount == 0) return;
             Gl.BindVertexArray(ID);
-            IntPtr offset = (IntPtr)(Offset * GetElementSizeInBytes());
-            Gl.DrawElements(DrawMode, VertexCount, elementType, offset);
+            Gl.DrawElements(DrawMode, VertexCount, elementType, offsetInBytes);
             Gl.BindVertexArray(0);
         }
 
@@ -609,8 +618,7 @@ namespace OpenGL
         {
             if (VertexCount == 0) return;
             BindAttributes(Program);
-            IntPtr offset = (IntPtr)(Offset * GetElementSizeInBytes());
-            Gl.DrawElements(DrawMode, VertexCount, elementType, offset);
+            Gl.DrawElements(DrawMode, VertexCount, elementType, offsetInBytes);
         }
 
         /// <summary>
@@ -639,8 +647,7 @@ namespace OpenGL
         public void DrawProgram(ShaderProgram program)
         {
             BindAttributes(program);
-            IntPtr offset = (IntPtr)(Offset * GetElementSizeInBytes());
-            Gl.DrawElements(DrawMode, VertexCount, elementType, offset);
+            Gl.DrawElements(DrawMode, VertexCount, elementType, offsetInBytes);
         }
         #endregion
 
