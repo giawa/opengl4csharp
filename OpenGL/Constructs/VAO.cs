@@ -552,6 +552,7 @@ namespace OpenGL
                         }
                         elementType = ValidElementTypes[vbos[i].PointerType];
                     }
+                    continue;
                 }
 
                 // According to OGL spec then, if there is no location for an attribute, -1 is returned.
