@@ -10,7 +10,7 @@ namespace OpenGL
     public class VAO<T1> : GenericVAO
         where T1 : struct
     {
-        [Obsolete("Constructors that don't specify the element array type are deprecated. Please use a constructor that specifies the element array type.")]
+        [Obsolete("This VAO constructor is deprecated in favour of using VAO(ShaderProgram program, IGenericVBO[] vbos).")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, string attribName, VBO<int> elementArray)
             : base(program)
         {
@@ -21,7 +21,7 @@ namespace OpenGL
             Init(vbos);
         }
 
-        [Obsolete("Constructors that don't specify the element array type are deprecated. Please use a constructor that specifies the element array type.")]
+        [Obsolete("This VAO constructor is deprecated in favour of using VAO(ShaderProgram program, IGenericVBO[] vbos).")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, string[] attribNames, VBO<int> elementArray)
             : base(program)
         {
@@ -39,6 +39,7 @@ namespace OpenGL
         where T1 : struct
         where T2 : struct
     {
+        [Obsolete("This VAO constructor is deprecated in favour of using VAO(ShaderProgram program, IGenericVBO[] vbos).")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, string attribName, VBO<T2> elementArray)
     : base(program, false)
         {
@@ -49,6 +50,7 @@ namespace OpenGL
             Init(vbos);
         }
 
+        [Obsolete("This VAO constructor is deprecated in favour of using VAO(ShaderProgram program, IGenericVBO[] vbos).")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, string[] attribNames, VBO<T2> elementArray)
     : base(program, false)
         {
@@ -61,7 +63,7 @@ namespace OpenGL
             Init(vbos);
         }
 
-        [Obsolete("Constructors that don't specify the element array type are deprecated. Please use a constructor that specifies the element array type.")]
+        [Obsolete("This VAO constructor is deprecated in favour of using VAO(ShaderProgram program, IGenericVBO[] vbos).")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, string[] attribNames, VBO<int> elementArray)
             : base(program)
         {
@@ -81,6 +83,7 @@ namespace OpenGL
         where T2 : struct
         where T3 : struct
     {
+        [Obsolete("This VAO constructor is deprecated in favour of using VAO(ShaderProgram program, IGenericVBO[] vbos).")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, string[] attribNames, VBO<T3> elementArray)
     : base(program, false)
         {
@@ -94,7 +97,7 @@ namespace OpenGL
             Init(vbos);
         }
 
-        [Obsolete("Constructors that don't specify the element array type are deprecated. Please use a constructor that specifies the element array type.")]
+        [Obsolete("This VAO constructor is deprecated in favour of using VAO(ShaderProgram program, IGenericVBO[] vbos).")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, string[] attribNames, VBO<int> elementArray)
             : base(program)
         {
@@ -116,6 +119,7 @@ namespace OpenGL
         where T3 : struct
         where T4 : struct
     {
+        [Obsolete("This VAO constructor is deprecated in favour of using VAO(ShaderProgram program, IGenericVBO[] vbos).")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, string[] attribNames, VBO<T4> elementArray)
     : base(program, false)
         {
@@ -130,7 +134,7 @@ namespace OpenGL
             Init(vbos);
         }
 
-        [Obsolete("Constructors that don't specify the element array type are deprecated. Please use a constructor that specifies the element array type.")]
+        [Obsolete("This VAO constructor is deprecated in favour of using VAO(ShaderProgram program, IGenericVBO[] vbos).")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, VBO<T4> vbo4, string[] attribNames, VBO<int> elementArray)
             : base(program)
         {
@@ -154,6 +158,7 @@ namespace OpenGL
         where T4 : struct
         where T5 : struct
     {
+        [Obsolete("This VAO constructor is deprecated in favour of using VAO(ShaderProgram program, IGenericVBO[] vbos).")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, VBO<T4> vbo4, string[] attribNames, VBO<T5> elementArray)
     : base(program, false)
         {
@@ -169,7 +174,7 @@ namespace OpenGL
             Init(vbos);
         }
 
-        [Obsolete("Constructors that don't specify the element array type are deprecated. Please use a constructor that specifies the element array type.")]
+        [Obsolete("This VAO constructor is deprecated in favour of using VAO(ShaderProgram program, IGenericVBO[] vbos).")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, VBO<T4> vbo4, VBO<T5> vbo5, string[] attribNames, VBO<int> elementArray)
             : base(program)
         {
@@ -195,6 +200,7 @@ namespace OpenGL
         where T5 : struct
         where T6 : struct
     {
+        [Obsolete("This VAO constructor is deprecated in favour of using VAO(ShaderProgram program, IGenericVBO[] vbos).")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, VBO<T4> vbo4, VBO<T5> vbo5, string[] attribNames, VBO<T6> elementArray)
     : base(program, false)
         {
@@ -211,7 +217,7 @@ namespace OpenGL
             Init(vbos);
         }
 
-        [Obsolete("Constructors that don't specify the element array type are deprecated. Please use a constructor that specifies the element array type.")]
+        [Obsolete("This VAO constructor is deprecated in favour of using VAO(ShaderProgram program, IGenericVBO[] vbos).")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, VBO<T4> vbo4, VBO<T5> vbo5, VBO<T6> vbo6, string[] attribNames, VBO<int> elementArray)
             : base(program)
         {
@@ -239,6 +245,7 @@ namespace OpenGL
         where T6 : struct
         where T7 : struct
     {
+        [Obsolete("This VAO constructor is deprecated in favour of using VAO(ShaderProgram program, IGenericVBO[] vbos).")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, VBO<T4> vbo4, VBO<T5> vbo5, VBO<T6> vbo6, string[] attribNames, VBO<T7> elementArray)
     : base(program, false)
         {
@@ -256,7 +263,7 @@ namespace OpenGL
             Init(vbos);
         }
 
-        [Obsolete("Constructors that don't specify the element array type are deprecated. Please use a constructor that specifies the element array type.")]
+        [Obsolete("This VAO constructor is deprecated in favour of using VAO(ShaderProgram program, IGenericVBO[] vbos).")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, VBO<T4> vbo4, VBO<T5> vbo5, VBO<T6> vbo6, VBO<T7> vbo7, string[] attribNames, VBO<int> elementArray)
             : base(program)
         {
@@ -286,6 +293,7 @@ namespace OpenGL
         where T7 : struct
         where T8 : struct
     {
+        [Obsolete("This VAO constructor is deprecated in favour of using VAO(ShaderProgram program, IGenericVBO[] vbos).")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, VBO<T4> vbo4, VBO<T5> vbo5, VBO<T6> vbo6, VBO<T7> vbo7, string[] attribNames, VBO<T8> elementArray)
     : base(program, false)
         {
@@ -304,7 +312,7 @@ namespace OpenGL
             Init(vbos);
         }
 
-        [Obsolete("Constructors that don't specify the element array type are deprecated. Please use a constructor that specifies the element array type.")]
+        [Obsolete("This VAO constructor is deprecated in favour of using VAO(ShaderProgram program, IGenericVBO[] vbos).")]
         public VAO(ShaderProgram program, VBO<T1> vbo1, VBO<T2> vbo2, VBO<T3> vbo3, VBO<T4> vbo4, VBO<T5> vbo5, VBO<T6> vbo6, VBO<T7> vbo7, VBO<T8> vbo8, string[] attribNames, VBO<int> elementArray)
             : base(program)
         {
@@ -685,76 +693,8 @@ namespace OpenGL
         #endregion
     }
 
-    public class VAO : IDisposable
+    public class VAO : GenericVAO, IDisposable
     {
-        #region Variables
-        private VBO<Vector3> vertex, normal, tangent;
-
-        private VBO<Vector2> uv;
-
-        private VBO<int> element;
-        private VBO<uint> elementu;
-
-        private bool disposeChildren = false;
-        #endregion
-
-        #region Properties
-        /// <summary>
-        /// The offset into the element array buffer that this VAO begins.
-        /// </summary>
-        public int Offset { get; set; }
-
-        /// <summary>
-        /// The number of vertices that make up this VAO.
-        /// </summary>
-        public int VertexCount { get; set; }
-
-        /// <summary>
-        /// Specifies if the VAO should dispose of the child VBOs when Dispose() is called.
-        /// </summary>
-        public bool DisposeChildren
-        {
-            get { return disposeChildren; }
-            set
-            {
-                disposeChildren = value;
-                DisposeElementArray = value;
-            }
-        }
-
-        /// <summary>
-        /// Specifies if the VAO should dispose of the element array when Dispose() is called.
-        /// </summary>
-        public bool DisposeElementArray { get; set; }
-
-        /// <summary>
-        /// The ShaderProgram associated with this VAO.
-        /// </summary>
-        public ShaderProgram Program { get; private set; }
-
-        /// <summary>
-        /// The drawing mode to use when drawing the arrays.
-        /// </summary>
-        public BeginMode DrawMode { get; set; }
-
-#pragma warning disable IDE1006
-        /// <summary>
-        /// The ID of this Vertex Array Object for use in calls to OpenGL.
-        /// </summary>
-        [Obsolete("Use ID instead.")]
-        public uint vaoID
-        {
-            get { return ID; }
-            private set { ID = value; }
-        }
-#pragma warning restore
-
-        /// <summary>
-        /// The ID of this Vertex Array Object for use in calls to OpenGL.
-        /// </summary>
-        public uint ID { get; private set; }
-        #endregion
-
         #region Constructors and Destructor
         [Obsolete("Use VBO<uint> instead of VBO<int> as the element array buffer.")]
         public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<int> element)
@@ -802,248 +742,52 @@ namespace OpenGL
 
         [Obsolete("Use VBO<uint> instead of VBO<int> as the element array buffer.")]
         public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<Vector3> normal, VBO<Vector3> tangent, VBO<Vector2> uv, VBO<int> element)
+            : base(program, true)
         {
-            Program = program;
-            VertexCount = element.Count;
-            DrawMode = BeginMode.Triangles;
-
-            this.vertex = vertex;
-            this.normal = normal;
-            this.tangent = tangent;
-            this.uv = uv;
-            this.element = element;
-
-            if (Gl.Version() >= 3)
-            {
-                ID = Gl.GenVertexArray();
-                if (ID != 0)
-                {
-                    Gl.BindVertexArray(ID);
-                    BindAttributes(Program);
-                }
-                Gl.BindVertexArray(0);
-
-                Draw = DrawOGL3;
-            }
-            else
-            {
-                Draw = DrawOGL2;
-            }
+            InitDefaultVAO(vertex, normal, tangent, uv, element);
         }
 
         public VAO(ShaderProgram program, VBO<Vector3> vertex, VBO<Vector3> normal, VBO<Vector3> tangent, VBO<Vector2> uv, VBO<uint> element)
+            : base(program, false)
         {
-            Program = program;
-            VertexCount = element.Count;
-            DrawMode = BeginMode.Triangles;
+            InitDefaultVAO(vertex, normal, tangent, uv, element);
+        }
 
-            this.vertex = vertex;
-            this.normal = normal;
-            this.tangent = tangent;
-            this.uv = uv;
-            this.elementu = element;
+        public VAO(ShaderProgram program, IGenericVBO[] vbos)
+            : base(program, false)
+        {
+            Init(vbos);
+        }
 
-            if (Gl.Version() >= 3)
+        private void InitDefaultVAO<T>(VBO<Vector3> vertex, VBO<Vector3> normal, VBO<Vector3> tangent, VBO<Vector2> uv, VBO<T> element)
+            where T : struct
+        {
+            List<IGenericVBO> vbos = new List<IGenericVBO>();
+
+            if (vertex != null)
             {
-                ID = Gl.GenVertexArray();
-                if (ID != 0)
-                {
-                    Gl.BindVertexArray(ID);
-                    BindAttributes(Program);
-                }
-                Gl.BindVertexArray(0);
-
-                Draw = DrawOGL3;
+                vbos.Add(new GenericVBO<Vector3>(vertex, "in_position"));
             }
-            else
+            if (normal != null)
             {
-                Draw = DrawOGL2;
+                vbos.Add(new GenericVBO<Vector3>(normal, "in_normal"));
             }
+            if (tangent != null)
+            {
+                vbos.Add(new GenericVBO<Vector3>(tangent, "in_tangent"));
+            }
+            if (uv != null)
+            {
+                vbos.Add(new GenericVBO<Vector2>(uv, "in_uv"));
+            }
+            vbos.Add(new GenericVBO<T>(element));
+
+            Init(vbos.ToArray());
         }
 
         ~VAO()
         {
             Dispose(false);
-        }
-        #endregion
-
-        #region Draw Methods (OGL2 and OGL3)
-        public void BindCachedAttributes(ShaderProgram program, int vertexAttributeLocation, int normalAttributeLocation = -1, int uvAttributeLocation = -1, int tangentAttributeLocation = -1)
-        {
-            if (normalAttributeLocation != -1 && normal.ID != 0)
-            {
-                Gl.EnableVertexAttribArray((uint)normalAttributeLocation);
-                Gl.BindBuffer(normal.BufferTarget, normal.ID);
-                Gl.VertexAttribPointer((uint)normalAttributeLocation, normal.Size, normal.PointerType, true, 12, IntPtr.Zero);
-            }
-
-            if (uvAttributeLocation != -1 && uv.ID != 0)
-            {
-                Gl.EnableVertexAttribArray((uint)uvAttributeLocation);
-                Gl.BindBuffer(uv.BufferTarget, uv.ID);
-                Gl.VertexAttribPointer((uint)uvAttributeLocation, uv.Size, uv.PointerType, true, 8, IntPtr.Zero);
-            }
-
-            if (tangentAttributeLocation != -1 && tangent.ID != 0)
-            {
-                Gl.EnableVertexAttribArray((uint)tangentAttributeLocation);
-                Gl.BindBuffer(tangent.BufferTarget, tangent.ID);
-                Gl.VertexAttribPointer((uint)tangentAttributeLocation, tangent.Size, tangent.PointerType, true, 12, IntPtr.Zero);
-            }
-
-            BindCachedAttributes(vertexAttributeLocation, program);
-        }
-
-        public void BindCachedAttributes(int vertexAttributeLocation, ShaderProgram program)
-        {
-            if (vertex == null || vertex.ID == 0) throw new Exception("Error binding attributes.  No vertices were supplied.");
-            if ((element == null || element.ID == 0) && (elementu == null || elementu.ID == 0)) throw new Exception("Error binding attributes.  No element array was supplied.");
-
-            Gl.EnableVertexAttribArray((uint)vertexAttributeLocation);
-            Gl.BindBuffer(vertex.BufferTarget, vertex.ID);
-            Gl.VertexAttribPointer((uint)vertexAttributeLocation, vertex.Size, vertex.PointerType, true, 12, IntPtr.Zero);
-
-            if (element != null) Gl.BindBuffer(BufferTarget.ElementArrayBuffer, element.ID);
-            else Gl.BindBuffer(BufferTarget.ElementArrayBuffer, elementu.ID);
-        }
-
-        /// <summary>
-        /// Generic method for binding the VBOs to their respective attribute locations.
-        /// </summary>
-        /// <param name="program">The shader program to bind attributes to.</param>
-        /// <param name="positionName">The attribute name for the vertex positions.</param>
-        /// <param name="normalName">The attribute naem for the vertex normals.</param>
-        /// <param name="uvName">The attribute name for the vertex UV co-ordinates.</param>
-        /// <param name="tangentName">The attribute name for the vertex tangents.</param>
-        public void BindAttributes(ShaderProgram program, string positionName = "in_position", string normalName = "in_normal", string uvName = "in_uv", string tangentName = "in_tangent")
-        {
-            if (vertex == null || vertex.ID == 0) throw new Exception("Error binding attributes.  No vertices were supplied.");
-            if ((element == null || element.ID == 0) && (elementu == null || elementu.ID == 0)) throw new Exception("Error binding attributes.  No element array was supplied.");
-
-            // Note:  Since the shader is already compiled, we cannot set the attribute locations.
-            //  Instead we must query the shader for the locations that the linker chose and use them.
-            int loc = Gl.GetAttribLocation(program.ProgramID, positionName);
-            if (loc == -1) throw new Exception("Shader did not contain '" + positionName + "'.");
-
-            Gl.EnableVertexAttribArray((uint)loc);
-            Gl.BindBuffer(vertex.BufferTarget, vertex.ID);
-            Gl.VertexAttribPointer((uint)loc, vertex.Size, vertex.PointerType, true, 12, IntPtr.Zero);
-
-            if (normal != null && normal.ID != 0)
-            {
-                loc = Gl.GetAttribLocation(program.ProgramID, normalName);
-                if (loc != -1)
-                {
-                    Gl.EnableVertexAttribArray((uint)loc);
-                    Gl.BindBuffer(normal.BufferTarget, normal.ID);
-                    Gl.VertexAttribPointer((uint)loc, normal.Size, normal.PointerType, true, 12, IntPtr.Zero);
-                }
-            }
-
-            if (uv != null && uv.ID != 0)
-            {
-                loc = Gl.GetAttribLocation(program.ProgramID, uvName);
-                if (loc != -1)
-                {
-                    Gl.EnableVertexAttribArray((uint)loc);
-                    Gl.BindBuffer(uv.BufferTarget, uv.ID);
-                    Gl.VertexAttribPointer((uint)loc, uv.Size, uv.PointerType, true, 8, IntPtr.Zero);
-                }
-            }
-
-            if (tangent != null && tangent.ID != 0)
-            {
-                loc = Gl.GetAttribLocation(program.ProgramID, tangentName);
-                if (loc != -1)
-                {
-                    Gl.EnableVertexAttribArray((uint)loc);
-                    Gl.BindBuffer(tangent.BufferTarget, tangent.ID);
-                    Gl.VertexAttribPointer((uint)loc, tangent.Size, tangent.PointerType, true, 12, IntPtr.Zero);
-                }
-            }
-
-            if (element != null) Gl.BindBuffer(BufferTarget.ElementArrayBuffer, element.ID);
-            else Gl.BindBuffer(BufferTarget.ElementArrayBuffer, elementu.ID);
-        }
-
-        public delegate void DrawFunc();
-
-        public DrawFunc Draw;
-
-        /// <summary>
-        /// OGL3 method uses a vertex array object for quickly binding the VBOs to their attributes.
-        /// </summary>
-        private void DrawOGL3()
-        {
-            if (ID == 0) return;
-            Gl.BindVertexArray(ID);
-
-            IntPtr offset = (IntPtr)(Offset * 4);
-            Gl.DrawElements(DrawMode, VertexCount, DrawElementsType.UnsignedInt, offset);
-
-            Gl.BindVertexArray(0);
-        }
-
-        /// <summary>
-        /// OGL2 does not support VAOs, and instead must bind the VBOs to their attributes manually.
-        /// </summary>
-        private void DrawOGL2()
-        {
-            BindAttributes(Program);
-
-            IntPtr offset = (IntPtr)(Offset * 4);
-            Gl.DrawElements(DrawMode, VertexCount, DrawElementsType.UnsignedInt, offset);
-        }
-
-        /// <summary>
-        /// Performs the draw routine with a custom shader program.
-        /// </summary>
-        /// <param name="program"></param>
-        public void DrawProgram(ShaderProgram program)
-        {
-            BindAttributes(program);
-            if (Offset == 0) Gl.DrawElements(DrawMode, VertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero);
-            else Gl.DrawElementsBaseVertex(DrawMode, VertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero, Offset);
-        }
-        #endregion
-
-        #region IDisposable
-        /// <summary>
-        /// Deletes the vertex array from the GPU and will also dispose of any child VBOs if (DisposeChildren == true).
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            // first try to dispose of the vertex array
-            if (ID != 0)
-            {
-                Gl.DeleteVertexArray(ID);
-
-                ID = 0;
-            }
-
-            // children must be disposed of separately since OpenGL 2.1 will not have a vertex array
-            if (DisposeChildren)
-            {
-                if (vertex != null) vertex.Dispose();
-                if (normal != null) normal.Dispose();
-                if (tangent != null) tangent.Dispose();
-                if (uv != null) uv.Dispose();
-                if (element != null && DisposeElementArray) element.Dispose();
-                if (elementu != null && DisposeElementArray) elementu.Dispose();
-
-                vertex = null;
-                normal = null;
-                tangent = null;
-                uv = null;
-                element = null;
-                elementu = null;
-            }
         }
         #endregion
     }
