@@ -25,44 +25,49 @@ namespace OpenGL
         /// Any files that Bitmap.FromFile can open are supported.
         /// This method also supports dds textures (as long as the file extension is .dds).
         /// </summary>
-        /// <param name="Filename">The path to the texture to load.</param>
-        public Texture(string Filename)
+        /// <param name="filename">The path to the texture to load.</param>
+        public Texture(string filename)
         {
-            if (!File.Exists(Filename))
+            if (!File.Exists(filename))
             {
-                throw new FileNotFoundException(string.Format("The file {0} does not exist.", Filename));
+                throw new FileNotFoundException(string.Format("The file {0} does not exist.", filename));
             }
 
-            this.Filename = Filename;
-            switch (new FileInfo(Filename).Extension.ToLower())
+            Filename = filename;
+            switch (new FileInfo(filename).Extension.ToLower())
             {
-                case ".dds": LoadDDS(Filename);
+                case ".dds": LoadDDS(filename);
                     break;
-                default: LoadBitmap(Filename);
+                default: LoadBitmap(filename);
                     break;
             }
 
             Gl.BindTexture(TextureTarget, 0);
         }
 
-        public Texture(IntPtr data, int width, int height)
-        {
-            this.Filename = "Unknown";
-            this.Size = new Size(width, height);
+        public Texture(IntPtr pixelData, int width, int height)
+            : this(pixelData, width, height, PixelFormat.Bgra, PixelInternalFormat.Rgba8) { }
 
+        public Texture(IntPtr pixelData, int width, int height, PixelFormat format, PixelInternalFormat internalFormat)
+        {
+            Filename = "Raw Data";
+            Size = new Size(width, height);
+
+            // set the texture target and then generate the texture ID
             TextureTarget = TextureTarget.Texture2D;
             TextureID = Gl.GenTexture();
 
             Gl.PixelStorei(PixelStoreParameter.UnpackAlignment, 1); // set pixel alignment
             Gl.BindTexture(TextureTarget, TextureID);     // bind the texture to memory in OpenGL
 
-            Gl.TexImage2D(TextureTarget, 0, PixelInternalFormat.Rgba8, width, height, 0, PixelFormat.Bgra, PixelType.UnsignedByte, data);
+            //Gl.TexParameteri(TextureTarget, TextureParameterName.GenerateMipmap, 0);
+            Gl.TexImage2D(TextureTarget, 0, internalFormat, width, height, 0, format, PixelType.UnsignedByte, pixelData);
             Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMagFilter, TextureParameter.Nearest);
             Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMinFilter, TextureParameter.Nearest);
 
             Gl.BindTexture(TextureTarget, 0);
         }
-        
+
         ~Texture()
         {
             Dispose(false);
