@@ -543,9 +543,9 @@ namespace OpenGL
                 {
                     elementArray = vbos[i];
 
-                    //To not break compatebility with previous versions of this call,
-                    //int is allowed as an element type even though the specs doesn't allow it.
-                    //All cases where int is used as the default element type has been marked obsolete
+                    // To not break compatibility with previous versions of this call,
+                    // int is allowed as an element type even though the specs don't allow it.
+                    // All cases where int is used as the default element type have been marked obsolete
                     //but until it's completely removed , this will serve to support that use case.
                     if (allowIntAsElementType && vbos[i].PointerType == VertexAttribPointerType.Int)
                     {
