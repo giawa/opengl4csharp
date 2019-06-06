@@ -46,7 +46,7 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Create a texture from a supplie bitmap.
+        /// Create a texture from a supplied bitmap.
         /// </summary>
         /// <param name="BitmapImage">The already decoded bitmap image.</param>
         /// <param name="FlipY">True if the bitmap should be flipped.</param>
@@ -54,6 +54,23 @@ namespace OpenGL
         {
             Filename = BitmapImage.GetHashCode().ToString();
             LoadBitmap(BitmapImage, FlipY);
+            Gl.BindTexture(TextureTarget, 0);
+        }
+
+        public Texture(IntPtr pixelData, int width, int height, PixelFormat format, PixelInternalFormat internalFormat)
+        {
+            // set the texture target and then generate the texture ID
+            TextureTarget = TextureTarget.Texture2D;
+            TextureID = Gl.GenTexture();
+
+            Gl.PixelStorei(PixelStoreParameter.UnpackAlignment, 1); // set pixel alignment
+            Gl.BindTexture(TextureTarget, TextureID);     // bind the texture to memory in OpenGL
+
+            //Gl.TexParameteri(TextureTarget, TextureParameterName.GenerateMipmap, 0);
+            Gl.TexImage2D(TextureTarget, 0, internalFormat, width, height, 0, format, PixelType.UnsignedByte, pixelData);
+            Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMagFilter, TextureParameter.Nearest);
+            Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMinFilter, TextureParameter.Nearest);
+
             Gl.BindTexture(TextureTarget, 0);
         }
         
