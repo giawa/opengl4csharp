@@ -450,7 +450,7 @@ namespace OpenGL
         private bool disposeChildren = false;
         protected DrawElementsType elementType;
         private bool allowIntAsElementType = true;
-        private int offset = 0;
+        protected int offset = 0;
         protected IntPtr offsetInBytes = IntPtr.Zero;
 
         /// <summary>
