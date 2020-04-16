@@ -40,10 +40,8 @@ namespace OpenGL.Platform
 
         #region Create SDL Window and OpenGL Context
         private static IntPtr window, glContext;
-        public static IntPtr windowID
-        { get { return window; } }
-        public static IntPtr glContextID
-        { get { return glContext; } }
+        public static IntPtr WindowID { get { return window; } }
+        public static IntPtr GLContextID { get { return glContext; } }
 
         public enum ErrorCode
         {
