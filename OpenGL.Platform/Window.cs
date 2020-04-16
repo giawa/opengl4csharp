@@ -39,7 +39,7 @@ namespace OpenGL.Platform
         #endregion
 
         #region Create SDL Window and OpenGL Context
-        private static IntPtr window, glContext;
+        public static IntPtr window, glContext;
 
         public enum ErrorCode
         {
