@@ -449,9 +449,11 @@ namespace OpenGL
         #region Properties
         private bool disposeChildren = false;
         private DrawElementsType elementType;
+        public DrawElementsType ElementType { get { return elementType; } }
         private bool allowIntAsElementType = true;
         private int offset = 0;
         private IntPtr offsetInBytes = IntPtr.Zero;
+        public IntPtr OffsetInBytes { get { return offsetInBytes; } }
 
         /// <summary>
         /// The offset into the element array buffer that this VAO begins.
