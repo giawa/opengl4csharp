@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 #if USE_NUMERICS
@@ -714,6 +715,9 @@ namespace OpenGL
             Gl.BindBuffer(buffer.BufferTarget, buffer.ID);
         }
 
+        // Every shader program has a dictionary with the attribute names and attribute IDs.
+        private static Dictionary<uint, Dictionary<string, uint>> shaderProgramAttributeNamesCache = new Dictionary<uint, Dictionary<string, uint>>();
+
         /// <summary>
         /// Binds a VBO to a shader attribute.
         /// </summary>
@@ -723,7 +727,20 @@ namespace OpenGL
         public static void BindBufferToShaderAttribute<T>(VBO<T> buffer, ShaderProgram program, string attributeName)
             where T : struct
         {
-            uint location = (uint)Gl.GetAttribLocation(program.ProgramID, attributeName);
+            // Create and get a dictionary for the current shader program.
+            if(!shaderProgramAttributeNamesCache.ContainsKey(program.ProgramID))
+            {
+                shaderProgramAttributeNamesCache[program.ProgramID] = new Dictionary<string, uint>();
+            }
+            Dictionary<string, uint> attributeNamesCache = shaderProgramAttributeNamesCache[program.ProgramID];
+
+            // Cache the attribute location with the attribute name.
+            if(!attributeNamesCache.ContainsKey(attributeName))
+            {
+                attributeNamesCache[attributeName] = (uint)Gl.GetAttribLocation(program.ProgramID, attributeName);
+            }
+
+            uint location = attributeNamesCache[attributeName];
 
             Gl.EnableVertexAttribArray(location);
             Gl.BindBuffer(buffer);
