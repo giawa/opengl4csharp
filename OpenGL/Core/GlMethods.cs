@@ -736,12 +736,12 @@ namespace OpenGL
             }
 
             // Cache the attribute location with the attribute name.
-            if(!attributeNamesCache.ContainsKey(attributeName))
+            uint location;
+            if(!attributeNamesCache.TryGetValue(attributeName, out location))
             {
-                attributeNamesCache[attributeName] = (uint)Gl.GetAttribLocation(program.ProgramID, attributeName);
+                location = (uint)Gl.GetAttribLocation(program.ProgramID, attributeName);
+                attributeNamesCache[attributeName] = location;
             }
-
-            uint location = attributeNamesCache[attributeName];
 
             Gl.EnableVertexAttribArray(location);
             Gl.BindBuffer(buffer);
