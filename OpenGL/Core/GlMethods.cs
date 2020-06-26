@@ -716,7 +716,7 @@ namespace OpenGL
         }
 
         // Every shader program has a dictionary with the attribute names and attribute IDs.
-        private static Dictionary<uint, Dictionary<string, uint>> shaderProgramAttributeNamesCache = new Dictionary<uint, Dictionary<string, uint>>();
+        internal static Dictionary<uint, Dictionary<string, uint>> shaderProgramAttributeNamesCache = new Dictionary<uint, Dictionary<string, uint>>();
 
         /// <summary>
         /// Binds a VBO to a shader attribute.

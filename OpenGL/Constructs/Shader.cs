@@ -562,6 +562,8 @@ namespace OpenGL
                 Gl.DetachShader(ProgramID, VertexShader.ShaderID);
                 Gl.DetachShader(ProgramID, FragmentShader.ShaderID);
                 Gl.DeleteProgram(ProgramID);
+                // Remove attribute names cache
+                Gl.shaderProgramAttributeNamesCache.Remove(ProgramID);
 
                 if (DisposeChildren)
                 {
