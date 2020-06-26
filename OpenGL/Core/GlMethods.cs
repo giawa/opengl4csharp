@@ -728,11 +728,12 @@ namespace OpenGL
             where T : struct
         {
             // Create and get a dictionary for the current shader program.
-            if(!shaderProgramAttributeNamesCache.ContainsKey(program.ProgramID))
+            Dictionary<string, uint> attributeNamesCache;
+            if(!shaderProgramAttributeNamesCache.TryGetValue(program.ProgramID, out attributeNamesCache))
             {
-                shaderProgramAttributeNamesCache[program.ProgramID] = new Dictionary<string, uint>();
+                attributeNamesCache = new Dictionary<string, uint>();
+                shaderProgramAttributeNamesCache[program.ProgramID] = attributeNamesCache;
             }
-            Dictionary<string, uint> attributeNamesCache = shaderProgramAttributeNamesCache[program.ProgramID];
 
             // Cache the attribute location with the attribute name.
             if(!attributeNamesCache.ContainsKey(attributeName))
