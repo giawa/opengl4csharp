@@ -715,9 +715,6 @@ namespace OpenGL
             Gl.BindBuffer(buffer.BufferTarget, buffer.ID);
         }
 
-        // Every shader program has a dictionary with the attribute names and attribute IDs.
-        internal static Dictionary<uint, Dictionary<string, uint>> shaderProgramAttributeNamesCache = new Dictionary<uint, Dictionary<string, uint>>();
-
         /// <summary>
         /// Binds a VBO to a shader attribute.
         /// </summary>
@@ -727,21 +724,10 @@ namespace OpenGL
         public static void BindBufferToShaderAttribute<T>(VBO<T> buffer, ShaderProgram program, string attributeName)
             where T : struct
         {
-            // Create and get a dictionary for the current shader program.
-            Dictionary<string, uint> attributeNamesCache;
-            if(!shaderProgramAttributeNamesCache.TryGetValue(program.ProgramID, out attributeNamesCache))
-            {
-                attributeNamesCache = new Dictionary<string, uint>();
-                shaderProgramAttributeNamesCache[program.ProgramID] = attributeNamesCache;
-            }
-
-            // Cache the attribute location with the attribute name.
-            uint location;
-            if(!attributeNamesCache.TryGetValue(attributeName, out location))
-            {
-                location = (uint)Gl.GetAttribLocation(program.ProgramID, attributeName);
-                attributeNamesCache[attributeName] = location;
-            }
+            var cachedAttribute = program[attributeName];
+            if(cachedAttribute == null)
+                throw new ArgumentException($"{attributeName} did not exist in the shader.", nameof(attributeName));
+            uint location = (uint)cachedAttribute.Location;
 
             Gl.EnableVertexAttribArray(location);
             Gl.BindBuffer(buffer);
