@@ -430,13 +430,13 @@ namespace OpenGL
                 }
                 Gl.BindVertexArray(0);
 
-                Draw = DrawOGL3;
-                DrawInstanced = DrawInstancedOGL3;
+                draw = DrawOGL3;
+                drawInstanced = DrawInstancedOGL3;
             }
             else
             {
-                Draw = DrawOGL2;
-                DrawInstanced = DrawInstancedOGL2;
+                draw = DrawOGL2;
+                drawInstanced = DrawInstancedOGL2;
             }
         }
 
@@ -608,8 +608,8 @@ namespace OpenGL
         public delegate void DrawFunc();
         public delegate void DrawInstancedFunc(int count);
 
-        public DrawFunc Draw;
-        public DrawInstancedFunc DrawInstanced;
+        private DrawFunc draw;
+        private DrawInstancedFunc drawInstanced;
 
         /// <summary>
         /// OGL3 method uses a vertex array object for quickly binding the VBOs to their attributes.
@@ -662,11 +662,20 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Performs the draw routine with the default shader program.
+        /// Performs the draw routine.
         /// </summary>
-        public void DrawProgram()
+        public void Draw()
         {
-            DrawProgram(Program);
+            draw();
+        }
+
+        /// <summary>
+        /// Performs the instanced draw routine.
+        /// </summary>
+        /// <param name="count"></param>
+        public void DrawInstanced(int count)
+        {
+            drawInstanced(count);
         }
         #endregion
 
