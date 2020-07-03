@@ -217,7 +217,7 @@ namespace OpenGL.Platform
         public static void AddKey(char key, bool shift, bool ctrl, bool alt)
         {
             char mkey = (char)(key & 0x3f);             // snap the key under 64 so we don't accidentally trigger an alt/ctrl event
-                        if (key > 63)                               // if >63 then it is a letter, apply ctrl+alt+shift
+            if (key > 63)                               // if >63 then it is a letter, apply ctrl+alt+shift
             {
                 mkey = (char)((mkey & 0x1f) |           // first keep only the information relevant to the character
                     ((shift ? 0x00 : 0x20) |            // apply uppercase modifier
@@ -279,7 +279,7 @@ namespace OpenGL.Platform
         /// Removes a key if a keyup event has been fired.  Stops repeatable events.
         /// </summary>
         /// <param name="key">The key is no longer being pressed.</param>
-public static void RemoveKey(char key)
+        public static void RemoveKey(char key)
         {
             // call a keyup if a key event is registered
             if (KeyBindings[key] != null && KeyBindings[key].Call != null) KeyBindings[key].Call(key, false);
