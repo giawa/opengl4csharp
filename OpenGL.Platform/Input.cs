@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SDL2;
+using System;
 using System.Collections.Generic;
 
 namespace OpenGL.Platform
@@ -102,15 +103,32 @@ namespace OpenGL.Platform
             keys = new List<char>();
             subqueue = new Stack<Event[]>();
             subqueue.Push(new Event[256]);
+
+            // since SDL Keycodes can be 40 or 1073741903
+            // map every SDL Keycode to a char starting from 0, incremented by 1
+            // for converting to char and easy array indexing
+            sdlKeyMap = new Dictionary<SDL.SDL_Keycode, char>();
+            char i = (char)0;
+            foreach(SDL.SDL_Keycode keyCode in Enum.GetValues(typeof(SDL.SDL_Keycode)))
+            {
+                sdlKeyMap[keyCode] = i++;
+            }
+
+            keysRaw = new List<char>();
+            subqueueRaw = new Stack<Event[]>();
+            subqueueRaw.Push(new Event[sdlKeyMap.Count]);
         }
         #endregion
 
         #region Variables
         private static List<char> keys;                                // a list of keys that are down
+        private static List<char> keysRaw;                             // a list of raw keys that are down
         private static Stack<Event[]> subqueue;                        // a stack of events, the topmost being the current key bindings
+        private static Stack<Event[]> subqueueRaw;                     // a stack of events, the topmost being the current raw key bindings
         private static Click mousePosition, prevMousePosition;         // the current and previous mouse position and button
         private static Event mouseLeft, mouseRight, mouseMiddle;       // the events to be called on a mouse click
         private static Event mouseMove;                                // the event to call on a mouse move event
+        private static Dictionary<SDL.SDL_Keycode, char> sdlKeyMap;    // SDL Keyscodes mapped to a char
 
         public static bool RightMouse { get; set; }
         public static bool LeftMouse { get; set; }
@@ -123,6 +141,14 @@ namespace OpenGL.Platform
         public static Event[] KeyBindings
         {
             get { lock (subqueue) return subqueue.Peek(); }
+        }
+
+        /// <summary>
+        /// The active key raw bindings (on the topmost of the keybinding stack).
+        /// </summary>
+        public static Event[] KeyBindingsRaw
+        {
+            get { lock(subqueueRaw) return subqueueRaw.Peek(); }
         }
 
         /// <summary>
@@ -191,7 +217,7 @@ namespace OpenGL.Platform
         public static void AddKey(char key, bool shift, bool ctrl, bool alt)
         {
             char mkey = (char)(key & 0x3f);             // snap the key under 64 so we don't accidentally trigger an alt/ctrl event
-            if (key > 63)                               // if >63 then it is a letter, apply ctrl+alt+shift
+                        if (key > 63)                               // if >63 then it is a letter, apply ctrl+alt+shift
             {
                 mkey = (char)((mkey & 0x1f) |           // first keep only the information relevant to the character
                     ((shift ? 0x00 : 0x20) |            // apply uppercase modifier
@@ -234,10 +260,26 @@ namespace OpenGL.Platform
         }
 
         /// <summary>
+        /// Adds a raw key that has been pressed to the list of keys that are currently held down.
+        /// </summary>
+        /// <param name="key">The key that was pressed.</param>
+        public static void AddKeyRaw(SDL.SDL_Keycode key)
+        {
+            char keyRaw = sdlKeyMap[key];
+            if(KeyBindingsRaw[keyRaw] != null && KeyBindingsRaw[keyRaw].Call != null)    // keybindings performs a lock of subqueue, ensuring thread safety
+            {
+                KeyBindingsRaw[keyRaw].Call(keyRaw, true);     // event is called immediately
+            }
+            lock(keysRaw)
+                if(!keysRaw.Contains(keyRaw))
+                    keysRaw.Add(keyRaw);
+        }
+
+        /// <summary>
         /// Removes a key if a keyup event has been fired.  Stops repeatable events.
         /// </summary>
         /// <param name="key">The key is no longer being pressed.</param>
-        public static void RemoveKey(char key)
+public static void RemoveKey(char key)
         {
             // call a keyup if a key event is registered
             if (KeyBindings[key] != null && KeyBindings[key].Call != null) KeyBindings[key].Call(key, false);
@@ -265,6 +307,19 @@ namespace OpenGL.Platform
         }
 
         /// <summary>
+        /// Removes a raw key if a keyup event has been fired.  Stops repeatable events.
+        /// </summary>
+        /// <param name="key">The key is no longer being pressed.</param>
+        public static void RemoveKeyRaw(SDL.SDL_Keycode key)
+        {
+            char keyRaw = sdlKeyMap[key];
+            // call a keyup if a key event is registered
+            if(KeyBindingsRaw[keyRaw] != null && KeyBindingsRaw[keyRaw].Call != null)
+                KeyBindingsRaw[keyRaw].Call(keyRaw, false);
+            keysRaw.Remove(keyRaw);
+        }
+
+        /// <summary>
         /// Push a new key binding set onto the stack.
         /// </summary>
         public static void PushKeyBindings()
@@ -272,6 +327,17 @@ namespace OpenGL.Platform
             lock (subqueue)
             {
                 subqueue.Push(new Event[256]);
+            }
+        }
+
+        /// <summary>
+        /// Push a new raw key binding set onto the stack.
+        /// </summary>
+        public static void PushKeyBindingsRaw()
+        {
+            lock(subqueueRaw)
+            {
+                subqueueRaw.Push(new Event[256]);
             }
         }
 
@@ -288,11 +354,34 @@ namespace OpenGL.Platform
         }
 
         /// <summary>
+        /// Pop a raw key binding set off the stack (restoring the buried key bindings).
+        /// </summary>
+        public static void PopKeyBindingsRaw()
+        {
+            lock(subqueueRaw)
+            {
+                if(subqueueRaw.Count > 1)
+                    subqueueRaw.Pop();
+                else
+                    throw new InvalidOperationException();
+            }
+        }
+
+        /// <summary>
         /// Subscribe an event to a keystroke (specified by the char occupying that key).
         /// </summary>
         public static void Subscribe(char Key, Event Event)
         {
             KeyBindings[Key] = Event;
+        }
+
+        /// <summary>
+        /// Subscribe an event to an sdl keycode (specified by the char occupying that key).
+        /// </summary>
+        public static void SubscribeRaw(SDL.SDL_Keycode Key, Event Event)
+        {
+            char keyRaw = sdlKeyMap[Key];
+            KeyBindingsRaw[keyRaw] = Event;
         }
 
         /// <summary>
@@ -304,12 +393,30 @@ namespace OpenGL.Platform
         }
 
         /// <summary>
+        /// Subscribe an action to an sdl keycode (specified by the char occupying that key).
+        /// </summary>
+        public static void SubscribeRaw(SDL.SDL_Keycode Key, Action Event)
+        {
+            char normalizedKey = sdlKeyMap[Key];
+            KeyBindingsRaw[normalizedKey] = new Event(Event);
+        }
+
+        /// <summary>
         /// Subscribes one event to all keys on the keyboard (except special keys such as escape).
         /// </summary>
         public static void SubscribeAll(Event Event)
         {
             for (int i = 32; i < 127; i++)
                 Subscribe((char)i, Event);
+        }
+
+        /// <summary>
+        /// Subscribes one event to all keys on the keyboard (including special keys such as escape and modifier keys).
+        /// </summary>
+        public static void SubscribeAllRaw(Event Event)
+        {
+            foreach(SDL.SDL_Keycode key in sdlKeyMap.Keys)
+                SubscribeRaw(key, Event);
         }
 
         /// <summary>
@@ -337,7 +444,7 @@ namespace OpenGL.Platform
         }
 
         /// <summary>
-        /// Updates all of the key events that are repeatable.
+        /// Updates all of the key events and raw key events that are repeatable.
         /// </summary>
         /// <param name="Time">The time since the last UpdateKeys call.</param>
         public static void Update()
@@ -348,6 +455,13 @@ namespace OpenGL.Platform
                 for (int i = 0; i < keys.Count; i++)
                     if (KeyBindings[keys[i]] != null && KeyBindings[keys[i]].Repeat != null)
                         KeyBindings[keys[i]].Repeat(Time.DeltaTime);
+            }
+
+            lock(keysRaw)
+            {
+                for(int i = 0; i < keysRaw.Count; i++)
+                    if(KeyBindingsRaw[keysRaw[i]] != null && KeyBindingsRaw[keysRaw[i]].Repeat != null)
+                        KeyBindingsRaw[keysRaw[i]].Repeat(Time.DeltaTime);
             }
         }
         #endregion
