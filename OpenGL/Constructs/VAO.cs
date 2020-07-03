@@ -660,14 +660,6 @@ namespace OpenGL
             BindAttributes(program);
             Gl.DrawElements(DrawMode, VertexCount, elementType, offsetInBytes);
         }
-
-        /// <summary>
-        /// Performs the draw routine with the default shader program.
-        /// </summary>
-        public void DrawProgram()
-        {
-            DrawProgram(Program);
-        }
         #endregion
 
         #region IDisposable
