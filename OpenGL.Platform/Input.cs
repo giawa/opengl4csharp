@@ -107,9 +107,9 @@ namespace OpenGL.Platform
             // since SDL Keycodes can be 40 or 1073741903
             // map every SDL Keycode to a char starting from 0, incremented by 1
             // for converting to char and easy array indexing
-            sdlKeyMap = new Dictionary<SDL.SDL_Keycode, char>();
+            sdlKeyMap = new Dictionary<SDL.SDL_Scancode, char>();
             char i = (char)0;
-            foreach(SDL.SDL_Keycode keyCode in Enum.GetValues(typeof(SDL.SDL_Keycode)))
+            foreach(SDL.SDL_Scancode keyCode in Enum.GetValues(typeof(SDL.SDL_Scancode)))
             {
                 sdlKeyMap[keyCode] = i++;
             }
@@ -128,7 +128,7 @@ namespace OpenGL.Platform
         private static Click mousePosition, prevMousePosition;         // the current and previous mouse position and button
         private static Event mouseLeft, mouseRight, mouseMiddle;       // the events to be called on a mouse click
         private static Event mouseMove;                                // the event to call on a mouse move event
-        private static Dictionary<SDL.SDL_Keycode, char> sdlKeyMap;    // SDL Keyscodes mapped to a char
+        private static Dictionary<SDL.SDL_Scancode, char> sdlKeyMap;    // SDL Keyscodes mapped to a char
 
         public static bool RightMouse { get; set; }
         public static bool LeftMouse { get; set; }
@@ -263,7 +263,7 @@ namespace OpenGL.Platform
         /// Adds a raw key that has been pressed to the list of keys that are currently held down.
         /// </summary>
         /// <param name="key">The key that was pressed.</param>
-        public static void AddKeyRaw(SDL.SDL_Keycode key)
+        public static void AddKeyRaw(SDL.SDL_Scancode key)
         {
             char keyRaw = sdlKeyMap[key];
             if(KeyBindingsRaw[keyRaw] != null && KeyBindingsRaw[keyRaw].Call != null)    // keybindings performs a lock of subqueue, ensuring thread safety
@@ -310,7 +310,7 @@ namespace OpenGL.Platform
         /// Removes a raw key if a keyup event has been fired.  Stops repeatable events.
         /// </summary>
         /// <param name="key">The key is no longer being pressed.</param>
-        public static void RemoveKeyRaw(SDL.SDL_Keycode key)
+        public static void RemoveKeyRaw(SDL.SDL_Scancode key)
         {
             char keyRaw = sdlKeyMap[key];
             // call a keyup if a key event is registered
@@ -378,7 +378,7 @@ namespace OpenGL.Platform
         /// <summary>
         /// Subscribe an event to an sdl keycode (specified by the char occupying that key).
         /// </summary>
-        public static void SubscribeRaw(SDL.SDL_Keycode Key, Event Event)
+        public static void SubscribeRaw(SDL.SDL_Scancode Key, Event Event)
         {
             char keyRaw = sdlKeyMap[Key];
             KeyBindingsRaw[keyRaw] = Event;
@@ -395,7 +395,7 @@ namespace OpenGL.Platform
         /// <summary>
         /// Subscribe an action to an sdl keycode (specified by the char occupying that key).
         /// </summary>
-        public static void SubscribeRaw(SDL.SDL_Keycode Key, Action Event)
+        public static void SubscribeRaw(SDL.SDL_Scancode Key, Action Event)
         {
             char normalizedKey = sdlKeyMap[Key];
             KeyBindingsRaw[normalizedKey] = new Event(Event);
@@ -415,7 +415,7 @@ namespace OpenGL.Platform
         /// </summary>
         public static void SubscribeAllRaw(Event Event)
         {
-            foreach(SDL.SDL_Keycode key in sdlKeyMap.Keys)
+            foreach(SDL.SDL_Scancode key in sdlKeyMap.Keys)
                 SubscribeRaw(key, Event);
         }
 
