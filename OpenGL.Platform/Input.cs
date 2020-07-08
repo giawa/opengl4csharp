@@ -252,10 +252,8 @@ namespace OpenGL.Platform
                     case '/': mkey = '?'; break;
                 }
             }
-            if (KeyBindings[mkey] != null && KeyBindings[mkey].Call != null)    // keybindings performs a lock of subqueue, ensuring thread safety
-            {
-                KeyBindings[mkey].Call(mkey, true);     // event is called immediately
-            }
+            Event keyBinding = KeyBindings[mkey];
+            keyBinding?.Call?.Invoke(mkey, true);
             lock (keys) if (!keys.Contains(mkey)) keys.Add(mkey);
         }
 
@@ -266,10 +264,8 @@ namespace OpenGL.Platform
         public static void AddKeyRaw(SDL.SDL_Scancode key)
         {
             char keyRaw = sdlKeyMap[key];
-            if(KeyBindingsRaw[keyRaw] != null && KeyBindingsRaw[keyRaw].Call != null)    // keybindings performs a lock of subqueue, ensuring thread safety
-            {
-                KeyBindingsRaw[keyRaw].Call(keyRaw, true);     // event is called immediately
-            }
+            Event keyBinding = KeyBindingsRaw[keyRaw];
+            keyBinding?.Call?.Invoke(keyRaw, true);
             lock(keysRaw)
                 if(!keysRaw.Contains(keyRaw))
                     keysRaw.Add(keyRaw);
@@ -452,16 +448,22 @@ namespace OpenGL.Platform
             // Update all of the event which are repeatable
             lock (keys)
             {
+                Event[] bindings= KeyBindings;
                 for (int i = 0; i < keys.Count; i++)
-                    if (KeyBindings[keys[i]] != null && KeyBindings[keys[i]].Repeat != null)
-                        KeyBindings[keys[i]].Repeat(Time.DeltaTime);
+                {
+                    Event binding = bindings[keys[i]];
+                    binding?.Repeat?.Invoke(Time.DeltaTime);
+                }
             }
 
             lock(keysRaw)
             {
+                Event[] bindings = KeyBindingsRaw;
                 for(int i = 0; i < keysRaw.Count; i++)
-                    if(KeyBindingsRaw[keysRaw[i]] != null && KeyBindingsRaw[keysRaw[i]].Repeat != null)
-                        KeyBindingsRaw[keysRaw[i]].Repeat(Time.DeltaTime);
+                {
+                    Event binding = bindings[keysRaw[i]];
+                    binding?.Repeat?.Invoke(Time.DeltaTime);
+                }
             }
         }
         #endregion
