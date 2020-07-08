@@ -131,7 +131,6 @@ namespace OpenGL.Platform
         private static Click mousePosition, prevMousePosition;                  // the current and previous mouse position and button
         private static Event mouseLeft, mouseRight, mouseMiddle;                // the events to be called on a mouse click
         private static Event mouseMove;                                         // the event to call on a mouse move event
-        private static Dictionary<SDL.SDL_Scancode, char> sdlKeyMap;            // SDL Keyscodes mapped to a char
 
         public static bool RightMouse { get; set; }
         public static bool LeftMouse { get; set; }
@@ -411,7 +410,7 @@ namespace OpenGL.Platform
         /// </summary>
         public static void SubscribeAllRaw(Event Event)
         {
-            foreach(SDL.SDL_Scancode key in sdlKeyMap.Keys)
+            foreach(SDL.SDL_Scancode key in Enum.GetValues(typeof(SDL.SDL_Scancode)))
                 SubscribeRaw(key, Event);
         }
 
