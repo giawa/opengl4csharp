@@ -117,31 +117,21 @@ namespace OpenGL.Platform
             subqueue = new Stack<Event[]>();
             subqueue.Push(new Event[256]);
 
-            // since SDL Keycodes can be 40 or 1073741903
-            // map every SDL Keycode to a char starting from 0, incremented by 1
-            // for converting to char and easy array indexing
-            sdlKeyMap = new Dictionary<SDL.SDL_Scancode, char>();
-            char i = (char)0;
-            foreach(SDL.SDL_Scancode keyCode in Enum.GetValues(typeof(SDL.SDL_Scancode)))
-            {
-                sdlKeyMap[keyCode] = i++;
-            }
-
-            keysRaw = new List<char>();
-            subqueueRaw = new Stack<Event[]>();
-            subqueueRaw.Push(new Event[sdlKeyMap.Count]);
+            keysRaw = new List<SDL.SDL_Scancode>();
+            subqueueRaw = new Stack<Dictionary<SDL.SDL_Scancode, Event>>();
+            subqueueRaw.Push(new Dictionary<SDL.SDL_Scancode, Event>());
         }
         #endregion
 
         #region Variables
-        private static List<char> keys;                                // a list of keys that are down
-        private static List<char> keysRaw;                             // a list of raw keys that are down
-        private static Stack<Event[]> subqueue;                        // a stack of events, the topmost being the current key bindings
-        private static Stack<Event[]> subqueueRaw;                     // a stack of events, the topmost being the current raw key bindings
-        private static Click mousePosition, prevMousePosition;         // the current and previous mouse position and button
-        private static Event mouseLeft, mouseRight, mouseMiddle;       // the events to be called on a mouse click
-        private static Event mouseMove;                                // the event to call on a mouse move event
-        private static Dictionary<SDL.SDL_Scancode, char> sdlKeyMap;    // SDL Keyscodes mapped to a char
+        private static List<char> keys;                                         // a list of keys that are down
+        private static List<SDL.SDL_Scancode> keysRaw;                          // a list of raw keys that are down
+        private static Stack<Event[]> subqueue;                                 // a stack of events, the topmost being the current key bindings
+        private static Stack<Dictionary<SDL.SDL_Scancode, Event>> subqueueRaw;  // a stack of events, the topmost being the current raw key bindings
+        private static Click mousePosition, prevMousePosition;                  // the current and previous mouse position and button
+        private static Event mouseLeft, mouseRight, mouseMiddle;                // the events to be called on a mouse click
+        private static Event mouseMove;                                         // the event to call on a mouse move event
+        private static Dictionary<SDL.SDL_Scancode, char> sdlKeyMap;            // SDL Keyscodes mapped to a char
 
         public static bool RightMouse { get; set; }
         public static bool LeftMouse { get; set; }
@@ -159,7 +149,7 @@ namespace OpenGL.Platform
         /// <summary>
         /// The active key raw bindings (on the topmost of the keybinding stack).
         /// </summary>
-        public static Event[] KeyBindingsRaw
+        public static Dictionary<SDL.SDL_Scancode, Event> KeyBindingsRaw
         {
             get { lock(subqueueRaw) return subqueueRaw.Peek(); }
         }
@@ -276,12 +266,11 @@ namespace OpenGL.Platform
         /// <param name="key">The key that was pressed.</param>
         public static void AddKeyRaw(SDL.SDL_Scancode key)
         {
-            char keyRaw = sdlKeyMap[key];
-            Event keyBinding = KeyBindingsRaw[keyRaw];
+            Event keyBinding = KeyBindingsRaw[key];
             keyBinding?.CallRaw?.Invoke(key, true);
             lock(keysRaw)
-                if(!keysRaw.Contains(keyRaw))
-                    keysRaw.Add(keyRaw);
+                if(!keysRaw.Contains(key))
+                    keysRaw.Add(key);
         }
 
         /// <summary>
@@ -321,11 +310,10 @@ namespace OpenGL.Platform
         /// <param name="key">The key is no longer being pressed.</param>
         public static void RemoveKeyRaw(SDL.SDL_Scancode key)
         {
-            char keyRaw = sdlKeyMap[key];
             // call a keyup if a key event is registered
-            if(KeyBindingsRaw[keyRaw] != null && KeyBindingsRaw[keyRaw].Call != null)
-                KeyBindingsRaw[keyRaw].CallRaw(key, false);
-            keysRaw.Remove(keyRaw);
+            if(KeyBindingsRaw[key] != null && KeyBindingsRaw[key].Call != null)
+                KeyBindingsRaw[key].CallRaw(key, false);
+            keysRaw.Remove(key);
         }
 
         /// <summary>
@@ -346,7 +334,7 @@ namespace OpenGL.Platform
         {
             lock(subqueueRaw)
             {
-                subqueueRaw.Push(new Event[256]);
+                subqueueRaw.Push(new Dictionary<SDL.SDL_Scancode, Event>());
             }
         }
 
@@ -389,8 +377,7 @@ namespace OpenGL.Platform
         /// </summary>
         public static void SubscribeRaw(SDL.SDL_Scancode Key, Event Event)
         {
-            char keyRaw = sdlKeyMap[Key];
-            KeyBindingsRaw[keyRaw] = Event;
+            KeyBindingsRaw[Key] = Event;
         }
 
         /// <summary>
@@ -406,8 +393,7 @@ namespace OpenGL.Platform
         /// </summary>
         public static void SubscribeRaw(SDL.SDL_Scancode Key, Action Event)
         {
-            char normalizedKey = sdlKeyMap[Key];
-            KeyBindingsRaw[normalizedKey] = new Event(Event);
+            KeyBindingsRaw[Key] = new Event(Event);
         }
 
         /// <summary>
@@ -471,7 +457,7 @@ namespace OpenGL.Platform
 
             lock(keysRaw)
             {
-                Event[] bindings = KeyBindingsRaw;
+                Dictionary<SDL.SDL_Scancode, Event> bindings = KeyBindingsRaw;
                 for(int i = 0; i < keysRaw.Count; i++)
                 {
                     Event binding = bindings[keysRaw[i]];
