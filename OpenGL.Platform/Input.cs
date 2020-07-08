@@ -280,7 +280,8 @@ namespace OpenGL.Platform
         public static void RemoveKey(char key)
         {
             // call a keyup if a key event is registered
-            if (KeyBindings[key] != null && KeyBindings[key].Call != null) KeyBindings[key].Call(key, false);
+            Event keyBinding = KeyBindings[key];
+            keyBinding?.Call?.Invoke(key, false);
 
             // For clarity, I've unwrapped the loop that was originally here, since this is important
             // Sometimes the user will release ctrl/shift/alt while still holding the key down
@@ -311,8 +312,8 @@ namespace OpenGL.Platform
         public static void RemoveKeyRaw(SDL.SDL_Scancode key)
         {
             // call a keyup if a key event is registered
-            if(KeyBindingsRaw[key] != null && KeyBindingsRaw[key].Call != null)
-                KeyBindingsRaw[key].CallRaw(key, false);
+            Event keyBinding = KeyBindingsRaw[key];
+            keyBinding?.CallRaw?.Invoke(key, false);
             keysRaw.Remove(key);
         }
 
