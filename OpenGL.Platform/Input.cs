@@ -15,6 +15,9 @@ namespace OpenGL.Platform
         /// <summary>The keyboard event delegate.</summary>
         public delegate void KeyEvent(char c, bool state);
 
+        /// <summary>The raw keyboard event delegate.</summary>
+        public delegate void KeyRawEvent(SDL.SDL_Scancode key, bool state);
+
         /// <summary>A simple keyboard event delegate that only receives a state.</summary>
         public delegate void StateKeyEvent(bool state);
 
@@ -35,6 +38,9 @@ namespace OpenGL.Platform
 
         /// <summary>A keyEvent delegate which can be called by a keyDown or keyUp event.</summary>
         public KeyEvent Call { get; private set; }
+
+        /// <summary>A raw keyEvent delegate which can be called by a keyDown or keyUp event.</summary>
+        public KeyRawEvent CallRaw { get; private set; }
 
         /// <summary>A mouseEvent delegate which can be called by a mouseDown event.</summary>
         public MouseEvent Click { get; private set; }
@@ -71,6 +77,13 @@ namespace OpenGL.Platform
             this.Call = Event;
         }
 
+        /// <summary>Standard constructor for a raw keyboard event.</summary>
+        /// <param name="Event">The Event to call on a keyDown event.</param>
+        public Event(KeyRawEvent Event)
+        {
+            this.CallRaw = Event;
+        }
+
         /// <summary>Standard constructor for a mouse event.</summary>
         /// <param name="Event">The Event to call on a mouseClick event.</param>
         public Event(MouseEvent Event)
@@ -85,7 +98,7 @@ namespace OpenGL.Platform
             this.Move = Event;
         }
 
-        /// <summary>Standard constructor for a mouse mouse event.</summary>
+        /// <summary>Standard constructor for a keyboard repeat event.</summary>
         /// <param name="Event">The Event to call every frame update.</param>
         public Event(RepeatEvent Event)
         {
@@ -265,7 +278,7 @@ namespace OpenGL.Platform
         {
             char keyRaw = sdlKeyMap[key];
             Event keyBinding = KeyBindingsRaw[keyRaw];
-            keyBinding?.Call?.Invoke(keyRaw, true);
+            keyBinding?.CallRaw?.Invoke(key, true);
             lock(keysRaw)
                 if(!keysRaw.Contains(keyRaw))
                     keysRaw.Add(keyRaw);
@@ -311,7 +324,7 @@ namespace OpenGL.Platform
             char keyRaw = sdlKeyMap[key];
             // call a keyup if a key event is registered
             if(KeyBindingsRaw[keyRaw] != null && KeyBindingsRaw[keyRaw].Call != null)
-                KeyBindingsRaw[keyRaw].Call(keyRaw, false);
+                KeyBindingsRaw[keyRaw].CallRaw(key, false);
             keysRaw.Remove(keyRaw);
         }
 
