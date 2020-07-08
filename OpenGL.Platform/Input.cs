@@ -1,5 +1,6 @@
 ﻿using SDL2;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace OpenGL.Platform
@@ -114,23 +115,23 @@ namespace OpenGL.Platform
         static Input()
         {
             keys = new List<char>();
-            subqueue = new Stack<Event[]>();
-            subqueue.Push(new Event[256]);
+            subqueue = new Stack<ConcurrentDictionary<char, Event>>();
+            subqueue.Push(new ConcurrentDictionary<char, Event>());
 
             keysRaw = new List<SDL.SDL_Scancode>();
-            subqueueRaw = new Stack<Dictionary<SDL.SDL_Scancode, Event>>();
-            subqueueRaw.Push(new Dictionary<SDL.SDL_Scancode, Event>());
+            subqueueRaw = new Stack<ConcurrentDictionary<SDL.SDL_Scancode, Event>>();
+            subqueueRaw.Push(new ConcurrentDictionary<SDL.SDL_Scancode, Event>());
         }
         #endregion
 
         #region Variables
-        private static List<char> keys;                                         // a list of keys that are down
-        private static List<SDL.SDL_Scancode> keysRaw;                          // a list of raw keys that are down
-        private static Stack<Event[]> subqueue;                                 // a stack of events, the topmost being the current key bindings
-        private static Stack<Dictionary<SDL.SDL_Scancode, Event>> subqueueRaw;  // a stack of events, the topmost being the current raw key bindings
-        private static Click mousePosition, prevMousePosition;                  // the current and previous mouse position and button
-        private static Event mouseLeft, mouseRight, mouseMiddle;                // the events to be called on a mouse click
-        private static Event mouseMove;                                         // the event to call on a mouse move event
+        private static List<char> keys;                                                     // a list of keys that are down
+        private static List<SDL.SDL_Scancode> keysRaw;                                      // a list of raw keys that are down
+        private static Stack<ConcurrentDictionary<char, Event>> subqueue;                                             // a stack of events, the topmost being the current key bindings
+        private static Stack<ConcurrentDictionary<SDL.SDL_Scancode, Event>> subqueueRaw;    // a stack of events, the topmost being the current raw key bindings
+        private static Click mousePosition, prevMousePosition;                              // the current and previous mouse position and button
+        private static Event mouseLeft, mouseRight, mouseMiddle;                            // the events to be called on a mouse click
+        private static Event mouseMove;                                                     // the event to call on a mouse move event
 
         public static bool RightMouse { get; set; }
         public static bool LeftMouse { get; set; }
@@ -140,7 +141,7 @@ namespace OpenGL.Platform
         /// <summary>
         /// The active key bindings (on the topmost of the keybinding stack).
         /// </summary>
-        public static Event[] KeyBindings
+        public static ConcurrentDictionary<char, Event> KeyBindings
         {
             get { lock (subqueue) return subqueue.Peek(); }
         }
@@ -148,7 +149,7 @@ namespace OpenGL.Platform
         /// <summary>
         /// The active key raw bindings (on the topmost of the keybinding stack).
         /// </summary>
-        public static Dictionary<SDL.SDL_Scancode, Event> KeyBindingsRaw
+        public static ConcurrentDictionary<SDL.SDL_Scancode, Event> KeyBindingsRaw
         {
             get { lock(subqueueRaw) return subqueueRaw.Peek(); }
         }
@@ -323,7 +324,7 @@ namespace OpenGL.Platform
         {
             lock (subqueue)
             {
-                subqueue.Push(new Event[256]);
+                subqueue.Push(new ConcurrentDictionary<char, Event>());
             }
         }
 
@@ -334,7 +335,7 @@ namespace OpenGL.Platform
         {
             lock(subqueueRaw)
             {
-                subqueueRaw.Push(new Dictionary<SDL.SDL_Scancode, Event>());
+                subqueueRaw.Push(new ConcurrentDictionary<SDL.SDL_Scancode, Event>());
             }
         }
 
@@ -447,7 +448,7 @@ namespace OpenGL.Platform
             // Update all of the event which are repeatable
             lock (keys)
             {
-                Event[] bindings= KeyBindings;
+                var bindings = KeyBindings;
                 for (int i = 0; i < keys.Count; i++)
                 {
                     Event binding = bindings[keys[i]];
@@ -457,7 +458,7 @@ namespace OpenGL.Platform
 
             lock(keysRaw)
             {
-                Dictionary<SDL.SDL_Scancode, Event> bindings = KeyBindingsRaw;
+                var bindings = KeyBindingsRaw;
                 for(int i = 0; i < keysRaw.Count; i++)
                 {
                     Event binding = bindings[keysRaw[i]];
