@@ -724,9 +724,7 @@ namespace OpenGL
             where T : struct
         {
             var cachedAttribute = program[attributeName];
-            if(cachedAttribute == null)
-                throw new ArgumentException($"{attributeName} did not exist in the shader.", nameof(attributeName));
-            uint location = (uint)cachedAttribute.Location;
+            uint location = (uint)(cachedAttribute?.Location ?? Gl.GetAttribLocation(program.ProgramID, attributeName));
 
             Gl.EnableVertexAttribArray(location);
             Gl.BindBuffer(buffer);
