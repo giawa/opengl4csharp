@@ -723,7 +723,8 @@ namespace OpenGL
         public static void BindBufferToShaderAttribute<T>(VBO<T> buffer, ShaderProgram program, string attributeName)
             where T : struct
         {
-            uint location = (uint)Gl.GetAttribLocation(program.ProgramID, attributeName);
+            var cachedAttribute = program[attributeName];
+            uint location = (uint)(cachedAttribute?.Location ?? Gl.GetAttribLocation(program.ProgramID, attributeName));
 
             Gl.EnableVertexAttribArray(location);
             Gl.BindBuffer(buffer);
