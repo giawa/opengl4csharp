@@ -5,9 +5,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 #if USE_NUMERICS
 using System.Numerics;
-#else
-using OpenGL;
 #endif
+using OpenGL;
 
 namespace OpenGLUnitTests
 {
@@ -22,6 +21,32 @@ namespace OpenGLUnitTests
             Assert.AreEqual(Vector3.UnitY, new Vector3(0, 1, 0));
             Assert.AreEqual(Vector3.UnitZ, new Vector3(0, 0, 1));
             Assert.AreEqual(Vector3.Zero, new Vector3(0, 0, 0));
+        }
+
+        [TestMethod]
+        public void Vector3TakeMin()
+        {
+            for (int i = 0; i < 1_000_000; i++)
+            {
+                Vector3 v1 = new Vector3(GetRandomFloat(), GetRandomFloat(), GetRandomFloat());
+                Vector3 v2 = new Vector3(GetRandomFloat(), GetRandomFloat(), GetRandomFloat());
+                Vector3 a = v1;
+                a.TakeMin(v2);
+                Assert.AreEqual(a, new Vector3(Math.Min(v1.X, v2.X), Math.Min(v1.Y, v2.Y), Math.Min(v1.Z, v2.Z)));
+            }
+        }
+
+        [TestMethod]
+        public void Vector3TakeMax()
+        {
+            for (int i = 0; i < 1_000_000; i++)
+            {
+                Vector3 v1 = new Vector3(GetRandomFloat(), GetRandomFloat(), GetRandomFloat());
+                Vector3 v2 = new Vector3(GetRandomFloat(), GetRandomFloat(), GetRandomFloat());
+                Vector3 a = v1;
+                a.TakeMax(v2);
+                Assert.AreEqual(a, new Vector3(Math.Max(v1.X, v2.X), Math.Max(v1.Y, v2.Y), Math.Max(v1.Z, v2.Z)));
+            }
         }
 
         [TestMethod]
