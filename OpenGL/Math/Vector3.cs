@@ -648,7 +648,7 @@ namespace OpenGL
         /// </summary>
         /// <param name="tv">The Vector3 to perform the TakeMin on.</param>
         /// <param name="v">Vector to check against.</param>
-        public static void TakeMin(this Vector3 tv, Vector3 v)
+        public static void TakeMin(this ref Vector3 tv, Vector3 v)
         {
             if (v.X < tv.X) tv.X = v.X;
             if (v.Y < tv.Y) tv.Y = v.Y;
@@ -660,7 +660,7 @@ namespace OpenGL
         /// </summary>
         /// <param name="tv">The Vector3 to perform the TakeMax on.</param>
         /// <param name="v">Vector to check against.</param>
-        public static void TakeMax(this Vector3 tv, Vector3 v)
+        public static void TakeMax(this ref Vector3 tv, Vector3 v)
         {
             if (v.X > tv.X) tv.X = v.X;
             if (v.Y > tv.Y) tv.Y = v.Y;
