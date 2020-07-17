@@ -381,6 +381,19 @@ namespace OpenGL
         }
 
         /// <summary>
+        /// Creates and initializes an empty buffer object's data store.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="target">Specifies the target buffer object.</param>
+        /// <param name="size">Specifies the size in bytes of the buffer object's new data store.</param>
+        /// <param name="usage">Specifies expected usage pattern of the data store.</param>
+        public static void BufferData<T>(BufferTarget target, Int32 size, BufferUsageHint usage)
+            where T : struct
+        {
+            Delegates.glBufferData(target, new IntPtr(size), IntPtr.Zero, usage);
+        }
+
+        /// <summary>
         /// Creates and initializes a buffer object's data store.
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -481,6 +494,32 @@ namespace OpenGL
 
             Gl.BindBuffer(target, vboHandle);
             Gl.BufferData<T>(target, offset, size, data, hint);
+            Gl.BindBuffer(target, 0);
+            return vboHandle;
+        }
+
+        /// <summary>
+        /// Creates a standard VBO of type T with a specified length.
+        /// </summary>
+        /// <typeparam name="T">The type of the data being stored in the VBO (make sure it's byte aligned).</typeparam>
+        /// <param name="target">The VBO BufferTarget (usually ArrayBuffer or ElementArrayBuffer).</param>
+        /// <param name="hint">The buffer usage hint (usually StaticDraw).</param>
+        /// <param name="length">The length of the VBO.</param>
+        /// <returns>The buffer ID of the VBO on success, 0 on failure.</returns>
+        public static uint CreateVBO<T>(BufferTarget target, BufferUsageHint hint, int length)
+            where T : struct
+        {
+            uint vboHandle = Gl.GenBuffer();
+            if (vboHandle == 0) return 0;
+
+            int size = length * Marshal.SizeOf<T>();
+
+#if MEMORY_LOGGER
+            MemoryLogger.AllocateVBO(vboHandle, size);
+#endif
+
+            Gl.BindBuffer(target, vboHandle);
+            Gl.BufferData<T>(target, size, hint);
             Gl.BindBuffer(target, 0);
             return vboHandle;
         }
