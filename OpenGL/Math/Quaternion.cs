@@ -1,8 +1,8 @@
-﻿using System;
-using System.Runtime.InteropServices;
-
-#if USE_NUMERICS
+﻿#if USE_NUMERICS
 using System.Numerics;
+#else
+using System;
+using System.Runtime.InteropServices;
 #endif
 
 namespace OpenGL

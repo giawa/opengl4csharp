@@ -1,8 +1,8 @@
-﻿using System;
-using System.Runtime.InteropServices;
-
-#if USE_NUMERICS
+﻿#if USE_NUMERICS
 using System.Numerics;
+#else
+using System;
+using System.Runtime.InteropServices;
 #endif
 
 namespace OpenGL
@@ -404,9 +404,9 @@ namespace OpenGL
         /// <returns>A truncated Vector3</returns>
         public Vector3 Truncate()
         {
-            float _x = (Math.Abs(X) - 0.0001 < 0) ? 0 : X;
-            float _y = (Math.Abs(Y) - 0.0001 < 0) ? 0 : Y;
-            float _z = (Math.Abs(Z) - 0.0001 < 0) ? 0 : Z;
+            float _x = (Math.Abs(X) - 0.0001f < 0) ? 0 : X;
+            float _y = (Math.Abs(Y) - 0.0001f < 0) ? 0 : Y;
+            float _z = (Math.Abs(Z) - 0.0001f < 0) ? 0 : Z;
             return new Vector3(_x, _y, _z);
         }
 
@@ -761,7 +761,7 @@ namespace OpenGL
         /// </summary>
         /// <param name="tv">The Vector3 to perform the TakeMin on.</param>
         /// <param name="v">Vector to check against.</param>
-        public static void TakeMin(this Vector3 tv, Vector3 v)
+        public static void TakeMin(this ref Vector3 tv, Vector3 v)
         {
             if (v.X < tv.X) tv.X = v.X;
             if (v.Y < tv.Y) tv.Y = v.Y;
@@ -773,7 +773,7 @@ namespace OpenGL
         /// </summary>
         /// <param name="tv">The Vector3 to perform the TakeMax on.</param>
         /// <param name="v">Vector to check against.</param>
-        public static void TakeMax(this Vector3 tv, Vector3 v)
+        public static void TakeMax(this ref Vector3 tv, Vector3 v)
         {
             if (v.X > tv.X) tv.X = v.X;
             if (v.Y > tv.Y) tv.Y = v.Y;

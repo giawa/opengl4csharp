@@ -207,6 +207,22 @@ namespace OpenGL
         }
 
         /// <summary>
+        /// Creates a buffer object of type T with a specified length.
+        /// </summary>
+        /// <param name="Length">The length of the vertex buffer.</param>
+        /// <param name="Target">Specifies the target buffer object.</param>
+        /// <param name="Hint">Specifies the expected usage of the data store.</param>
+        public VBO(int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
+        {
+            ID = Gl.CreateVBO<T>(BufferTarget = Target, Hint, Length);
+
+            this.Size = GetTypeComponentSize();
+            this.PointerType = GetAttribPointerType();
+            this.Count = Length;
+            this.IsIntegralType = IsTypeIntegral();
+        }
+
+        /// <summary>
         /// Get the component size of T.
         /// </summary>
         /// <returns>The component size of T.</returns>

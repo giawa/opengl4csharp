@@ -1,8 +1,8 @@
-﻿using System;
-using System.Runtime.InteropServices;
-
-#if USE_NUMERICS
+﻿#if USE_NUMERICS
 using System.Numerics;
+#else
+using System;
+using System.Runtime.InteropServices;
 #endif
 
 namespace OpenGL
@@ -407,10 +407,10 @@ namespace OpenGL
         /// <returns>A truncated Vector4</returns>
         public Vector4 Truncate()
         {
-            float _x = (Math.Abs(X) - 0.0001 < 0) ? 0 : X;
-            float _y = (Math.Abs(Y) - 0.0001 < 0) ? 0 : Y;
-            float _z = (Math.Abs(Z) - 0.0001 < 0) ? 0 : Z;
-            float _w = (Math.Abs(W) - 0.0001 < 0) ? 0 : W;
+            float _x = (Math.Abs(X) - 0.0001f < 0) ? 0 : X;
+            float _y = (Math.Abs(Y) - 0.0001f < 0) ? 0 : Y;
+            float _z = (Math.Abs(Z) - 0.0001f < 0) ? 0 : Z;
+            float _w = (Math.Abs(W) - 0.0001f < 0) ? 0 : W;
             return new Vector4(_x, _y, _z, _w);
         }
 

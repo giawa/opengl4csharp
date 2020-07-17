@@ -1,5 +1,9 @@
-﻿using System;
+﻿#if USE_NUMERICS
+using System.Numerics;
+#else
+using System;
 using System.Runtime.InteropServices;
+#endif
 
 namespace OpenGL
 {
@@ -313,8 +317,8 @@ namespace OpenGL
         /// <returns>A truncated Vector2</returns>
         public Vector2 Truncate()
         {
-            float _x = (Math.Abs(X) - 0.0001 < 0) ? 0 : X;
-            float _y = (Math.Abs(Y) - 0.0001 < 0) ? 0 : Y;
+            float _x = (Math.Abs(X) - 0.0001f < 0) ? 0 : X;
+            float _y = (Math.Abs(Y) - 0.0001f < 0) ? 0 : Y;
             return new Vector2(_x, _y);
         }
 

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OpenGL
+﻿namespace OpenGL
 {
     public struct Point
     {

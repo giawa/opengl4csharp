@@ -1,6 +1,4 @@
-﻿using System;
-
-#if USE_NUMERICS
+﻿#if USE_NUMERICS
 using System.Numerics;
 #endif
 
