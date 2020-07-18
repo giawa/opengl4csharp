@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenGL.Constructs;
+using System;
 using System.Collections.Generic;
 
 #if USE_NUMERICS
@@ -432,11 +433,21 @@ namespace OpenGL
 
                 Draw = DrawOGL3;
                 DrawInstanced = DrawInstancedOGL3;
+
+                if (Gl.Version() >= 4 && Gl.VersionMinor() >= 3)
+                {
+                    MultiDrawElementsIndirect = MultiDrawElementsIndirectOGL43;
+                }
+                else
+                {
+                    MultiDrawElementsIndirect = MultiDrawElementsIndirectOGLTooOld;
+                }
             }
             else
             {
                 Draw = DrawOGL2;
                 DrawInstanced = DrawInstancedOGL2;
+                MultiDrawElementsIndirect = MultiDrawElementsIndirectOGLTooOld;
             }
         }
 
@@ -564,6 +575,10 @@ namespace OpenGL
                     }
                     continue;
                 }
+                else if (vbos[i].BufferTarget == BufferTarget.DrawIndirectBuffer)
+                {
+                    continue;
+                }
 
                 // According to OGL spec then, if there is no location for an attribute, -1 is returned.
                 // The same error representation is used here.
@@ -607,9 +622,11 @@ namespace OpenGL
 
         public delegate void DrawFunc();
         public delegate void DrawInstancedFunc(int count);
+        public delegate void MultiDrawElementsIndirectFunc(VBO<DrawElementsIndirectCommand> cmdVBO, int cmdCount);
 
         public DrawFunc Draw;
         public DrawInstancedFunc DrawInstanced;
+        public MultiDrawElementsIndirectFunc MultiDrawElementsIndirect;
 
         /// <summary>
         /// OGL3 method uses a vertex array object for quickly binding the VBOs to their attributes.
@@ -649,6 +666,26 @@ namespace OpenGL
         private void DrawInstancedOGL2(int count)
         {
             throw new Exception("The Function glDrawElementsInstanced was first added in OpenGL 3.1 which is not supported on this system.");
+        }
+
+        /// <summary>
+        /// OGL4 method uses a vertex array object for quickly binding the VBOs to their attributes.
+        /// </summary>
+        private void MultiDrawElementsIndirectOGL43(VBO<DrawElementsIndirectCommand> cmdVBO, int cmdCount)
+        {
+            if (ID == 0) return;
+            Gl.BindVertexArray(ID);
+            Gl.BindBuffer(cmdVBO);
+            Gl.MultiDrawElementsIndirect(DrawMode, elementType, IntPtr.Zero, cmdCount, 0);
+            Gl.BindVertexArray(0);
+        }
+
+        /// <summary>
+        /// OGL version does not support Gl.MultiDrawElementsIndirect.
+        /// </summary>
+        private void MultiDrawElementsIndirectOGLTooOld(VBO<DrawElementsIndirectCommand> cmdVBO, int cmdCount)
+        {
+            throw new Exception("The Function glMultiDrawElementsIndirect was first added in OpenGL 4.3 which is not supported on this system.");
         }
 
         /// <summary>
