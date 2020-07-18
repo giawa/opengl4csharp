@@ -144,7 +144,6 @@ namespace OpenGL
         /// <param name="Length">The length of the valid data in the data array.</param>
         /// <param name="Target">Specifies the target buffer object.</param>
         /// <param name="Hint">Specifies the expected usage of the data store.</param>
-        /// <param name="Divisor">Specifies the devisor when using instanced rendering</param>
         public VBO(T[] Data, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
         {
             Length = Math.Max(0, Math.Min(Length, Data.Length));
@@ -167,7 +166,6 @@ namespace OpenGL
         /// <param name="Length">The length of the valid data in the data array.</param>
         /// <param name="Target">Specifies the target buffer object.</param>
         /// <param name="Hint">Specifies the expected usage of the data store.</param>
-        /// <param name="Divisor">Specifies the devisor when using instanced rendering</param>
         public VBO(T[] Data, int Position, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
         {
             Length = Math.Max(0, Math.Min(Length, Data.Length));
@@ -186,7 +184,6 @@ namespace OpenGL
         /// <param name="Data">Specifies a pointer to data that will be copied into the data store for initialization.</param>
         /// <param name="Target">Specifies the target buffer object.</param>
         /// <param name="Hint">Specifies the expected usage of the data store.</param>
-        /// <param name="Divisor">Specifies the devisor when using instanced rendering</param>
         public VBO(T[] Data, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
         {
             ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint);

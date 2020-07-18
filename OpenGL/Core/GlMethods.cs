@@ -278,7 +278,7 @@ namespace OpenGL
         /// Shortcut for deleting a framebuffer without created an array to pass to the gl function.
         /// Calls Gl.DeleteFramebuffers(1, id).
         /// </summary>
-        /// <param name="vao">The ID of the vertex array to delete.</param>
+        /// <param name="framebuffer">The ID of the vertex array to delete.</param>
         public static void DeleteFramebuffer(uint framebuffer)
         {
             uint1[0] = framebuffer;
