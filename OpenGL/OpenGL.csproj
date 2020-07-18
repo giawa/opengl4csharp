@@ -8,10 +8,11 @@
     <Description>.NET Standard Bindings to OpenGL 4.5</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>Initial release</PackageReleaseNotes>
-    <Copyright>Copyright 2017 (c) Giawa. All rights reserved.</Copyright>
+    <Copyright>Copyright 2020 (c) Giawa. All rights reserved.</Copyright>
     <PackageTags>opengl</PackageTags>
     <PackageLicenseUrl>https://github.com/giawa/opengl4csharp/blob/master/LICENSE.md</PackageLicenseUrl>
     <PackageProjectUrl>https://www.github.com/giawa/opengl4csharp</PackageProjectUrl>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,7 +35,9 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\netstandard1.4\OpenGL.xml</DocumentationFile>
-    <DefineConstants>RELEASE;NETSTANDARD1_4;USE_NUMERICS</DefineConstants>
+    <DefineConstants>RELEASE;USE_NUMERICS</DefineConstants>
+    <NoWarn>1701;1702;1591</NoWarn>
+    <WarningLevel>1</WarningLevel>
   </PropertyGroup>
 
 </Project>
