@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 #if USE_NUMERICS
 using System.Numerics;
 #endif
@@ -20,28 +21,8 @@ namespace OpenGL
         [Obsolete("Use uint[] instead of int[].")]
         public static Vector3[] CalculateNormals(Vector3[] vertexData, int[] elementData)
         {
-            Vector3 b1, b2, normal;
-            Vector3[] normalData = new Vector3[vertexData.Length];
-
-            for (int i = 0; i < elementData.Length / 3; i++)
-            {
-                int cornerA = elementData[i * 3];
-                int cornerB = elementData[i * 3 + 1];
-                int cornerC = elementData[i * 3 + 2];
-
-                b1 = vertexData[cornerB] - vertexData[cornerA];
-                b2 = vertexData[cornerC] - vertexData[cornerA];
-
-                normal = Vector3.Cross(b1, b2).Normalize();
-
-                normalData[cornerA] += normal;
-                normalData[cornerB] += normal;
-                normalData[cornerC] += normal;
-            }
-
-            for (int i = 0; i < normalData.Length; i++) normalData[i] = normalData[i].Normalize();
-
-            return normalData;
+            Span<uint> uintElementData = MemoryMarshal.Cast<int, uint>(elementData);
+            return CalculateNormals(vertexData.AsSpan(), uintElementData);
         }
 
         /// <summary>
@@ -52,28 +33,62 @@ namespace OpenGL
         /// <returns></returns>
         public static Vector3[] CalculateNormals(Vector3[] vertexData, uint[] elementData)
         {
-            Vector3 b1, b2, normal;
+            return CalculateNormals(vertexData.AsSpan(), elementData.AsSpan());
+        }
+
+        /// <summary>
+        /// Calculate the array of vertex normals based on vertex and face information (assuming triangle polygons).
+        /// </summary>
+        /// <param name="vertexData">The vertex data to find the normals for.</param>
+        /// <param name="elementData">The element array describing the order in which vertices are drawn.</param>
+        /// <returns></returns>
+        public static Vector3[] CalculateNormals(Span<Vector3> vertexData, Span<uint> elementData)
+        {
             Vector3[] normalData = new Vector3[vertexData.Length];
+            CalculateNormals(vertexData, elementData, normalData);
+            return normalData;
+        }
 
-            for (int i = 0; i < elementData.Length / 3; i++)
+        /// <summary>
+        /// Calculate the array of vertex normals based on vertex and face information (assuming triangle polygons)
+        /// and put the normals into the provided array.
+        /// </summary>
+        /// <param name="vertexData">The vertex data to find the normals for.</param>
+        /// <param name="elementData">The element array describing the order in which vertices are drawn.</param>
+        /// <param name="normalData">The array the normals will be put into. Has to be the same length as the vertex array</param>
+        /// <returns></returns>
+        public static void CalculateNormals(Span<Vector3> vertexData, Span<uint> elementData, Span<Vector3> normalData)
+        {
+            if ((elementData.Length % 3) != 0)
             {
-                uint cornerA = elementData[i * 3];
-                uint cornerB = elementData[i * 3 + 1];
-                uint cornerC = elementData[i * 3 + 2];
+                throw new ArgumentOutOfRangeException($"Expected {nameof(elementData)} to be a multiple of 3 as each triangle consists of 3 points.");
+            }
+            if (vertexData.Length != normalData.Length)
+            {
+                throw new ArgumentOutOfRangeException($"Expected {nameof(vertexData)} and {nameof(normalData)} to have the same length.");
+            }
 
-                b1 = vertexData[cornerB] - vertexData[cornerA];
-                b2 = vertexData[cornerC] - vertexData[cornerA];
+            for (int i = 0; i < elementData.Length; i += 3)
+            {
+                int cornerAIndex = (int)elementData[i + 0];
+                int cornerBIndex = (int)elementData[i + 1];
+                int cornerCIndex = (int)elementData[i + 2];
 
-                normal = Vector3.Cross(b1, b2).Normalize();
+                Vector3 cornerA = vertexData[cornerAIndex];
+                Vector3 cornerB = vertexData[cornerBIndex];
+                Vector3 cornerC = vertexData[cornerCIndex];
 
-                normalData[cornerA] += normal;
-                normalData[cornerB] += normal;
-                normalData[cornerC] += normal;
+                Vector3 ab = cornerB - cornerA;
+                Vector3 ac = cornerC - cornerA;
+
+                Vector3 normal = Vector3.Cross(ab, ac).Normalize();
+
+                normalData[cornerAIndex] += normal;
+                normalData[cornerBIndex] += normal;
+                normalData[cornerCIndex] += normal;
             }
 
             for (int i = 0; i < normalData.Length; i++) normalData[i] = normalData[i].Normalize();
-
-            return normalData;
         }
 
         /// <summary>
