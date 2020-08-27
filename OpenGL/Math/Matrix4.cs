@@ -259,6 +259,49 @@ namespace OpenGL
         }
 
         /// <summary>
+        /// Creates a rotation matrix which contains information on how to rotate to stare at a vector point.
+        /// <param name="Start">The starting point to rotate from</param>
+        /// <param name="Finish">The ending point to rotate towards</param>
+        /// </summary>
+        /// <returns></returns>
+        public static Matrix4 CreateStare(Vector3 Start, Vector3 Finish)
+        {
+            Vector3 delta = Finish - Start;
+            Vector3 direction = Vector3.Normalize(delta);
+            Vector3 up = Vector3.UnitY.Normalize();
+            Vector3 right = Vector3.Cross(up, direction).Normalize();
+            up = Vector3.Cross(direction, right).Normalize();
+
+            return new Matrix4(
+                new Vector4(right.X, right.Y, right.Z, 0.0f),
+                new Vector4(up.X, up.Y, up.Z, 0.0f),
+                new Vector4(direction.X, direction.Y, direction.Z, 0.0f),
+                new Vector4(Start.X, Start.Y, Start.Z, 1.0f));
+        }
+
+        /// <summary>
+        /// Creates a rotation matrix which contains information on how to rotate to stare at a vector point.
+        /// <param name="Start">The starting point to rotate from</param>
+        /// <param name="Finish">The ending point to rotate towards</param>
+        /// <param name="Up">The direction of up</param>
+        /// </summary>
+        /// <returns></returns>
+        public static Matrix4 CreateStare(Vector3 Start, Vector3 Finish, Vector3 Up)
+        {
+            Vector3 delta = Finish - Start;
+            Vector3 direction = Vector3.Normalize(delta);
+            Vector3 up = Up.Normalize();
+            Vector3 right = Vector3.Cross(up, direction).Normalize();
+            up = Vector3.Cross(direction, right).Normalize();
+
+            return new Matrix4(
+                new Vector4(right.X, right.Y, right.Z, 0.0f),
+                new Vector4(up.X, up.Y, up.Z, 0.0f),
+                new Vector4(direction.X, direction.Y, direction.Z, 0.0f),
+                new Vector4(Start.X, Start.Y, Start.Z, 1.0f));
+        }
+
+        /// <summary>
         /// Build a rotation matrix from the specified axis/angle rotation.
         /// </summary>
         /// <param name="axis">The axis to rotate about.</param>
