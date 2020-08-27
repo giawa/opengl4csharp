@@ -235,6 +235,27 @@ namespace OpenGL
         #endregion
     }
 
+    public class Atlas : Texture
+    {
+        public int NumberOfRows = 1;
+
+        public Atlas(IntPtr pixelData, int width, int height, int nor) : base(pixelData, width, height)
+        {
+            NumberOfRows = nor;
+        }
+
+        public float XOffset(int index, int offset = 0)
+        {
+            int column = index % NumberOfRows;
+            return ((float)column / NumberOfRows) + offset;
+        }
+        public float YOffset(int index, int offset = 0)
+        {
+            int row = index / NumberOfRows;
+            return ((float)row / NumberOfRows) + offset;
+        }
+    }
+
     internal class DDS
     {
         #region DirectDraw Surface
