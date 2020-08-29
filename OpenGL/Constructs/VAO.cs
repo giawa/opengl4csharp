@@ -434,7 +434,7 @@ namespace OpenGL
                 Draw = DrawOGL3;
                 DrawInstanced = DrawInstancedOGL3;
 
-                if (Gl.Version() >= 4 && Gl.VersionMinor() >= 3)
+                if (Gl.Version() > 4 || (Gl.Version() == 4 && Gl.VersionMinor() >= 3))
                 {
                     MultiDrawElementsIndirect = MultiDrawElementsIndirectOGL43;
                 }
