@@ -61,11 +61,11 @@ namespace OpenGL
         {
             if ((elementData.Length % 3) != 0)
             {
-                throw new ArgumentOutOfRangeException($"Expected {nameof(elementData)} to be a multiple of 3 as each triangle consists of 3 points.");
+                throw new ArgumentException($"Expected {nameof(elementData)} to be a multiple of 3 as each triangle consists of 3 points.", nameof(elementData));
             }
             if (vertexData.Length != normalData.Length)
             {
-                throw new ArgumentOutOfRangeException($"Expected {nameof(vertexData)} and {nameof(normalData)} to have the same length.");
+                throw new ArgumentException($"Expected {nameof(vertexData)} and {nameof(normalData)} to have the same length.", nameof(vertexData));
             }
 
             for (int i = 0; i < elementData.Length; i += 3)
