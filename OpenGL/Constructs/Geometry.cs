@@ -17,7 +17,7 @@ namespace OpenGL
         /// </summary>
         /// <param name="vertexData">The vertex data to find the normals for.</param>
         /// <param name="elementData">The element array describing the order in which vertices are drawn.</param>
-        /// <returns></returns>
+        /// <returns>An array with the vertex normals.</returns>
         [Obsolete("Use uint[] instead of int[].")]
         public static Vector3[] CalculateNormals(Vector3[] vertexData, int[] elementData)
         {
@@ -30,7 +30,7 @@ namespace OpenGL
         /// </summary>
         /// <param name="vertexData">The vertex data to find the normals for.</param>
         /// <param name="elementData">The element array describing the order in which vertices are drawn.</param>
-        /// <returns></returns>
+        /// <returns>An array with the vertex normals.</returns>
         public static Vector3[] CalculateNormals(Vector3[] vertexData, uint[] elementData)
         {
             return CalculateNormals(vertexData.AsSpan(), elementData.AsSpan());
@@ -41,7 +41,7 @@ namespace OpenGL
         /// </summary>
         /// <param name="vertexData">The vertex data to find the normals for.</param>
         /// <param name="elementData">The element array describing the order in which vertices are drawn.</param>
-        /// <returns></returns>
+        /// <returns>An array with the vertex normals.</returns>
         public static Vector3[] CalculateNormals(ReadOnlySpan<Vector3> vertexData, ReadOnlySpan<uint> elementData)
         {
             Vector3[] normalData = new Vector3[vertexData.Length];
@@ -56,7 +56,6 @@ namespace OpenGL
         /// <param name="vertexData">The vertex data to find the normals for.</param>
         /// <param name="elementData">The element array describing the order in which vertices are drawn.</param>
         /// <param name="normalData">The array the normals will be put into. Has to be the same length as the vertex array</param>
-        /// <returns></returns>
         public static void CalculateNormals(ReadOnlySpan<Vector3> vertexData, ReadOnlySpan<uint> elementData, Span<Vector3> normalData)
         {
             if ((elementData.Length % 3) != 0)

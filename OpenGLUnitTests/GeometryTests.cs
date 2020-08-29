@@ -85,14 +85,14 @@ namespace OpenGLUnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void CalculateNormalWrongSizeNormalArray()
         {
             Geometry.CalculateNormals(new Vector3[3], new uint[3], new Vector3[2]);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void CalculateNormalWrongSizeElementArray()
         {
             Geometry.CalculateNormals(new Vector3[3], new uint[4]);
