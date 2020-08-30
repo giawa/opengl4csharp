@@ -38,10 +38,12 @@
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\System.Numerics.Vectors.4.3.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Numerics.Vectors" Version="4.4.0"></PackageReference>
+    <PackageReference Include="System.Buffers" Version="4.5.1"></PackageReference>
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.3"></PackageReference>
+    <PackageReference Include="System.Memory" Version="4.5.4"></PackageReference>
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
@@ -49,6 +51,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GeometryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Matrix4Tests.cs" />
     <Compile Include="Matrix2Tests.cs" />
