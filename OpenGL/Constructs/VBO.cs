@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using OpenGL.Constructs;
 
 #if USE_NUMERICS
 using System.Numerics;
@@ -28,6 +29,7 @@ namespace OpenGL
             [typeof(Vector2)] = 2,
             [typeof(Vector3)] = 3,
             [typeof(Vector4)] = 4,
+            [typeof(DrawElementsIndirectCommand)] = 1,
             //[typeof(int2101010)] = 4,
             //[typeof(uint2101010)] = 4,
             //[typeof(uint10f11f11f)] = 3,
@@ -49,6 +51,7 @@ namespace OpenGL
             [typeof(Vector2)] = VertexAttribPointerType.Float,
             [typeof(Vector3)] = VertexAttribPointerType.Float,
             [typeof(Vector4)] = VertexAttribPointerType.Float,
+            [typeof(DrawElementsIndirectCommand)] = VertexAttribPointerType.Byte
             //[typeof(int2101010)] = VertexAttribPointerType.UnsignedInt2101010Reversed,
             //[typeof(uint2101010)] = VertexAttribPointerType.UnsignedUInt2101010Reversed,
             //[typeof(uint10f11f11f)] = VertexAttribPointerType.UnsignedUInt101111Reversed
@@ -276,7 +279,8 @@ namespace OpenGL
         public void BufferSubData(T[] data, int size, int offset)
         {
             if (BufferTarget != BufferTarget.ArrayBuffer && BufferTarget != BufferTarget.ElementArrayBuffer &&
-                BufferTarget != BufferTarget.PixelPackBuffer && BufferTarget != BufferTarget.PixelUnpackBuffer)
+                BufferTarget != BufferTarget.PixelPackBuffer && BufferTarget != BufferTarget.PixelUnpackBuffer &&
+                BufferTarget != BufferTarget.DrawIndirectBuffer)
                 throw new InvalidOperationException(string.Format("BufferSubData cannot be called with a BufferTarget of type {0}", BufferTarget.ToString()));
 
             GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);

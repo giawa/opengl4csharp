@@ -107,6 +107,7 @@ namespace OpenGL
 
         #region Private Fields
         private static int version = 0;
+        private static int versionMinor = 0;
         private static uint currentProgram = 0;
         #endregion
 
@@ -691,9 +692,9 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Gets the current OpenGL version (returns a cached result on subsequent calls).
+        /// Gets the current major OpenGL version (returns a cached result on subsequent calls).
         /// </summary>
-        /// <returns>The current OpenGL version, or 0 on an error.</returns>
+        /// <returns>The current major OpenGL version, or 0 on an error.</returns>
         public static int Version()
         {
             if (version != 0) return version; // cache the version information
@@ -709,6 +710,28 @@ namespace OpenGL
             {
                 //Console.WriteLine("Error while retrieving the OpenGL version.");
                 return 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the current minor OpenGL version (returns a cached result on subsequent calls).
+        /// </summary>
+        /// <returns>The current minor OpenGL version, or -1 on an error.</returns>
+        public static int VersionMinor()
+        {
+            if (versionMinor != 0) return versionMinor; // cache the version information
+
+            try
+            {
+                string versionString = Gl.GetString(StringName.Version);
+
+                versionMinor = int.Parse(versionString.Split('.')[1]);
+                return Gl.versionMinor;
+            }
+            catch (Exception)
+            {
+                //Console.WriteLine("Error while retrieving the OpenGL version.");
+                return -1;
             }
         }
 
