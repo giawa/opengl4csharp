@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
 
 #if USE_NUMERICS
 using System.Numerics;
@@ -66,6 +68,11 @@ namespace OpenGL
             typeof(int),
             typeof(uint),
         };
+
+        /// <summary>
+        /// The values of the VBO, saved for ToArray()
+        /// </summary>
+        private T[] Values;
         #endregion
 
         #region Properties
@@ -146,6 +153,7 @@ namespace OpenGL
         /// <param name="Hint">Specifies the expected usage of the data store.</param>
         public VBO(T[] Data, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
         {
+            Values = Data;
             Length = Math.Max(0, Math.Min(Length, Data.Length));
 
             ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint, Length);
@@ -168,6 +176,7 @@ namespace OpenGL
         /// <param name="Hint">Specifies the expected usage of the data store.</param>
         public VBO(T[] Data, int Position, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
         {
+            Values = Data;
             Length = Math.Max(0, Math.Min(Length, Data.Length));
 
             ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint, Position, Length);
@@ -186,6 +195,7 @@ namespace OpenGL
         /// <param name="Hint">Specifies the expected usage of the data store.</param>
         public VBO(T[] Data, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
         {
+            Values = Data;
             ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint);
 
             this.Size = GetTypeComponentSize();
@@ -201,6 +211,7 @@ namespace OpenGL
         public VBO(T[] Data)
             : this(Data, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw)
         {
+            Values = Data;
         }
 
         /// <summary>
@@ -310,6 +321,44 @@ namespace OpenGL
                 Gl.DeleteBuffer(ID);
                 ID = 0;
             }
+        }
+        #endregion
+
+        #region Methods
+        /// <summary>
+        /// Returns the value of VBO<T> in an array
+        /// </summary>
+        /// <returns></returns>
+        public T[] ToArray()
+        {
+            return Values;
+        }
+
+        /// <summary>
+        /// Returns the value of VBO<T> in an ArrayList
+        /// </summary>
+        /// <returns></returns>
+        public ArrayList ToArrayList()
+        {
+            return new ArrayList(Values.ToList());
+        }
+
+        /// <summary>
+        /// Returns the value of VBO<T> in a list collection
+        /// </summary>
+        /// <returns></returns>
+        public List<T> ToList()
+        {
+            return Values.ToList();
+        }
+
+        /// <summary>
+        /// Returns the value of VBO<T> in a HashSet
+        /// </summary>
+        /// <returns></returns>
+        public HashSet<T> ToHashSet()
+        {
+            return new HashSet<T>(Values.ToList());
         }
         #endregion
     }
