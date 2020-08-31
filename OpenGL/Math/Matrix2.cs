@@ -89,14 +89,16 @@ namespace OpenGL
         public float this[int column, int row]
         {
             get
-            {
+            {               
                 if (row == 0)
                 {
-                    return row1[column];
+                    if (column == 0) return row1.X;
+                    if (column == 1) return row1.Y;
                 }
                 if (row == 1)
                 {
-                    return row2[column];
+                    if (column == 0) return row2.X;
+                    if (column == 1) return row2.Y;
                 }
                 if (column > 1 || column < 0 || row > 1 || row < 0)
                     throw new ArgumentOutOfRangeException("column or row is out of the matrix bounds.");
@@ -109,11 +111,13 @@ namespace OpenGL
 
                 if (row == 0)
                 {
-                    row1[column] = value;
+                    if (column == 0) row1.X = value;
+                    if (column == 1) row1.Y = value;
                 }
                 if (row == 1)
                 {
-                    row2[column] = value;
+                    if (column == 0) row2.X = value;
+                    if (column == 1) row2.Y = value;
                 }
             }
         }

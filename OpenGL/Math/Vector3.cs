@@ -190,7 +190,7 @@ namespace OpenGL
 
         public float this[int a]
         {
-            get 
+            get
             {
                 if (a > 2 || a < 0) throw new ArgumentOutOfRangeException();
                 return (a == 0) ? X : (a == 1) ? Y : Z; 

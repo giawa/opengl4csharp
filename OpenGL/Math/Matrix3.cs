@@ -104,15 +104,15 @@ namespace OpenGL
             {
                 if (row == 0)
                 {
-                    return row1[column];
+                    return row1.Get(column);
                 }
                 if (row == 1)
                 {
-                    return row2[column];
+                    return row2.Get(column);
                 }
                 if (row == 2)
                 {
-                    return row3[column];
+                    return row3.Get(column);
                 }
                 if (column > 2 || column < 0 || row > 2 || row < 0) 
                     throw new ArgumentOutOfRangeException("column or row is out of the matrix bounds.");
@@ -125,15 +125,21 @@ namespace OpenGL
 
                 if (row == 0)
                 {
-                    row1[column] = value;
+                    if (column == 0) row1.X = value;
+                    if (column == 1) row1.Y = value;
+                    if (column == 2) row1.Z = value;
                 }
                 if (row == 1)
                 {
-                    row2[column] = value;
+                    if (column == 0) row2.X = value;
+                    if (column == 1) row2.Y = value;
+                    if (column == 2) row2.Z = value;
                 }
                 if (row == 2)
                 {
-                    row3[column] = value;
+                    if (column == 0) row3.X = value;
+                    if (column == 1) row3.Y = value;
+                    if (column == 2) row3.Z = value;
                 }
             }
         }
