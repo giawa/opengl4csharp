@@ -104,51 +104,36 @@ namespace OpenGL
             {
                 if (row == 0)
                 {
-                    if (column == 0) return row1.X;
-                    if (column == 1) return row1.Y;
-                    if (column == 2) return row1.Z;
+                    return row1[column];
                 }
                 if (row == 1)
                 {
-                    if (column == 0) return row2.X;
-                    if (column == 1) return row2.Y;
-                    if (column == 2) return row2.Z;
+                    return row2[column];
                 }
                 if (row == 2)
                 {
-                    if (column == 0) return row3.X;
-                    if (column == 1) return row3.Y;
-                    if (column == 2) return row3.Z;
+                    return row3[column];
                 }
                 if (column > 2 || column < 0 || row > 2 || row < 0) 
                     throw new ArgumentOutOfRangeException("column or row is out of the matrix bounds.");
-                else return -1;
+                return -1;
             }
             set
             {
-                bool set = false;
+                if (column > 2 || column < 0 || row > 2 || row < 0)
+                    throw new ArgumentOutOfRangeException("column or row is out of the matrix bounds.");
+
                 if (row == 0)
                 {
-                    if (column == 0) row1.X = value; set = true;
-                    if (column == 1) row1.Y = value; set = true;
-                    if (column == 2) row1.Z = value; set = true;
+                    row1[column] = value;
                 }
                 if (row == 1)
                 {
-                    if (column == 0) row2.X = value; set = true;
-                    if (column == 1) row2.Y = value; set = true;
-                    if (column == 2) row2.Z = value; set = true;
+                    row2[column] = value;
                 }
                 if (row == 2)
                 {
-                    if (column == 0) row3.X = value; set = true;
-                    if (column == 1) row3.Y = value; set = true;
-                    if (column == 2) row3.Z = value; set = true;
-                }
-                if (!set)
-                {
-                    if (column > 2 || column < 0 || row > 2 || row < 0)
-                        throw new ArgumentOutOfRangeException("column or row is out of the matrix bounds.");
+                    row3[column] = value;
                 }
             }
         }

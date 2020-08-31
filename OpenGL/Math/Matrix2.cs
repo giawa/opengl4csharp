@@ -92,35 +92,28 @@ namespace OpenGL
             {
                 if (row == 0)
                 {
-                    if (column == 0) return row1.X;
-                    if (column == 1) return row1.Y;
+                    return row1[column];
                 }
                 if (row == 1)
                 {
-                    if (column == 0) return row2.X;
-                    if (column == 1) return row2.Y;
+                    return row2[column];
                 }
                 if (column > 1 || column < 0 || row > 1 || row < 0)
                     throw new ArgumentOutOfRangeException("column or row is out of the matrix bounds.");
-                else return -1;
+                return -1; //Needed so that get does not have an error
             }
             set
             {
-                bool set = false;
+                if (column > 1 || column < 0 || row > 1 || row < 0)
+                    throw new ArgumentOutOfRangeException("column or row is out of the matrix bounds.");
+
                 if (row == 0)
                 {
-                    if (column == 0) row1.X = value; set = true;
-                    if (column == 1) row1.Y = value; set = true;
+                    row1[column] = value;
                 }
                 if (row == 1)
                 {
-                    if (column == 0) row2.X = value; set = true;
-                    if (column == 1) row2.Y = value; set = true;
-                }
-                if (!set)
-                {
-                    if (column > 1 || column < 0 || row > 1 || row < 0)
-                        throw new ArgumentOutOfRangeException("column or row is out of the matrix bounds.");
+                    row2[column] = value;
                 }
             }
         }

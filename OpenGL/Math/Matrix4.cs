@@ -114,31 +114,19 @@ namespace OpenGL
             {
                 if (row == 0)
                 {
-                    if (column == 0) return row1.X;
-                    if (column == 1) return row1.Y;
-                    if (column == 2) return row1.Z;
-                    if (column == 3) return row1.W;
+                    return row1[column];
                 }
                 if (row == 1)
                 {
-                    if (column == 0) return row2.X;
-                    if (column == 1) return row2.Y;
-                    if (column == 2) return row2.Z;
-                    if (column == 3) return row2.W;
+                    return row2[column];
                 }
                 if (row == 2)
                 {
-                    if (column == 0) return row3.X;
-                    if (column == 1) return row3.Y;
-                    if (column == 2) return row3.Z;
-                    if (column == 3) return row3.W;
+                    return row3[column];
                 }
                 if (row == 3)
                 {
-                    if (column == 0) return row4.X;
-                    if (column == 1) return row4.Y;
-                    if (column == 2) return row4.Z;
-                    if (column == 3) return row4.W;
+                    return row4[column];
                 }
                 if (column > 3 || column < 0 || row > 3 || row < 0)
                     throw new ArgumentOutOfRangeException("column or row is out of the matrix bounds.");
@@ -150,31 +138,19 @@ namespace OpenGL
 
                 if (row == 0)
                 {
-                    if (column == 0) row1.X = value;
-                    if (column == 1) row1.Y = value;
-                    if (column == 2) row1.Z = value;
-                    if (column == 3) row1.W = value;
+                    row1[column] = value;
                 }
                 if (row == 1)
                 {
-                    if (column == 0) row2.X = value; set = true;
-                    if (column == 1) row2.Y = value; set = true;
-                    if (column == 2) row2.Z = value; set = true;
-                    if (column == 3) row2.W = value; set = true;
+                    row2[column] = value;
                 }
                 if (row == 2)
                 {
-                    if (column == 0) row3.X = value; set = true;
-                    if (column == 1) row3.Y = value; set = true;
-                    if (column == 2) row3.Z = value; set = true;
-                    if (column == 3) row3.W = value; set = true;
+                    row3[column] = value;
                 }
                 if (row == 3)
                 {
-                    if (column == 0) row4.X = value; set = true;
-                    if (column == 1) row4.Y = value; set = true;
-                    if (column == 2) row4.Z = value; set = true;
-                    if (column == 3) row4.W = value; set = true;
+                    row4[column] = value;
                 }
                 if (!set)
                 {
