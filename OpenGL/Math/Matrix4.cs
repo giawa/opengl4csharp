@@ -108,6 +108,82 @@ namespace OpenGL
             }
         }
 
+        public float this[int column, int row]
+        {
+            get
+            {
+                if (row == 0)
+                {
+                    if (column == 0) return row1.X;
+                    if (column == 1) return row1.Y;
+                    if (column == 2) return row1.Z;
+                    if (column == 3) return row1.W;
+                }
+                if (row == 1)
+                {
+                    if (column == 0) return row2.X;
+                    if (column == 1) return row2.Y;
+                    if (column == 2) return row2.Z;
+                    if (column == 3) return row2.W;
+                }
+                if (row == 2)
+                {
+                    if (column == 0) return row3.X;
+                    if (column == 1) return row3.Y;
+                    if (column == 2) return row3.Z;
+                    if (column == 3) return row3.W;
+                }
+                if (row == 3)
+                {
+                    if (column == 0) return row4.X;
+                    if (column == 1) return row4.Y;
+                    if (column == 2) return row4.Z;
+                    if (column == 3) return row4.W;
+                }
+                if (column > 3 || column < 0 || row > 3 || row < 0)
+                    throw new ArgumentOutOfRangeException("column or row is out of the matrix bounds.");
+                else return -1;
+            }
+            set
+            {
+                bool set = false;
+
+                if (row == 0)
+                {
+                    if (column == 0) row1.X = value;
+                    if (column == 1) row1.Y = value;
+                    if (column == 2) row1.Z = value;
+                    if (column == 3) row1.W = value;
+                }
+                if (row == 1)
+                {
+                    if (column == 0) row2.X = value; set = true;
+                    if (column == 1) row2.Y = value; set = true;
+                    if (column == 2) row2.Z = value; set = true;
+                    if (column == 3) row2.W = value; set = true;
+                }
+                if (row == 2)
+                {
+                    if (column == 0) row3.X = value; set = true;
+                    if (column == 1) row3.Y = value; set = true;
+                    if (column == 2) row3.Z = value; set = true;
+                    if (column == 3) row3.W = value; set = true;
+                }
+                if (row == 3)
+                {
+                    if (column == 0) row4.X = value; set = true;
+                    if (column == 1) row4.Y = value; set = true;
+                    if (column == 2) row4.Z = value; set = true;
+                    if (column == 3) row4.W = value; set = true;
+                }
+                if (!set)
+                {
+                    if (column > 3 || column < 0 || row > 3 || row < 0)
+                        throw new ArgumentOutOfRangeException("column or row is out of the matrix bounds.");
+                }
+            }
+        }
+
         public static bool operator ==(Matrix4 m1, Matrix4 m2)
         {
             return (m1[0] == m2[0] && m1[1] == m2[1] && m1[2] == m2[2] && m1[3] == m2[3]);
