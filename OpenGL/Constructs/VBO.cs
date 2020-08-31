@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
 
 #if USE_NUMERICS
 using System.Numerics;
@@ -15,7 +17,7 @@ namespace OpenGL
         /// <summary>
         /// A collection of types and their respective number of components per generic vertex attribute.
         /// </summary>
-        private static readonly Dictionary<Type, int> TypeComponentSize = new Dictionary<Type, int>()
+        internal static readonly Dictionary<Type, int> TypeComponentSize = new Dictionary<Type, int>()
         {
             [typeof(sbyte)] = 1,
             [typeof(byte)] = 1,
@@ -36,7 +38,7 @@ namespace OpenGL
         /// <summary>
         /// A collection of conversions from numerical types to vertex attribute pointer types.
         /// </summary>
-        private static readonly Dictionary<Type, VertexAttribPointerType> TypeAttribPointerType = new Dictionary<Type, VertexAttribPointerType>()
+        internal static readonly Dictionary<Type, VertexAttribPointerType> TypeAttribPointerType = new Dictionary<Type, VertexAttribPointerType>()
         {
             [typeof(sbyte)] = VertexAttribPointerType.Byte,
             [typeof(byte)] = VertexAttribPointerType.UnsignedByte,
@@ -57,7 +59,7 @@ namespace OpenGL
         /// <summary>
         /// Contains all known integral types.
         /// </summary>
-        private static readonly HashSet<Type> IntegralTypes = new HashSet<Type>()
+        internal static readonly HashSet<Type> IntegralTypes = new HashSet<Type>()
         {
             typeof(sbyte),
             typeof(byte),
@@ -77,7 +79,7 @@ namespace OpenGL
         public uint vboID
         {
             get { return ID; }
-            private set
+            internal set
             {
                 ID = value;
             }
@@ -87,27 +89,27 @@ namespace OpenGL
         /// <summary>
         /// The ID of the vertex buffer object.
         /// </summary>
-        public uint ID { get; private set; }
+        public uint ID { get; internal set; }
 
         /// <summary>
         /// The type of the buffer.
         /// </summary>
-        public BufferTarget BufferTarget { get; private set; }
+        public BufferTarget BufferTarget { get; internal set; }
 
         /// <summary>
         /// The size (in floats) of the type of data in the buffer.  Size * 4 to get bytes.
         /// </summary>
-        public int Size { get; private set; }
+        public int Size { get; internal set; }
 
         /// <summary>
         /// The type of data that is stored in the buffer (either int or float).
         /// </summary>
-        public VertexAttribPointerType PointerType { get; private set; }
+        public VertexAttribPointerType PointerType { get; internal set; }
         
         /// <summary>
         /// The length of data that is stored in the buffer.
         /// </summary>
-        public int Count { get; private set; }
+        public int Count { get; internal set; }
 
         /// <summary>
         /// Specifies the number of instances that will pass between updates of the generic attribute slot.
@@ -131,10 +133,15 @@ namespace OpenGL
         /// <summary>
         /// Specifies whether the VBO contains an integral type.
         /// </summary>
-        public bool IsIntegralType { get; }
+        public bool IsIntegralType { get; internal set; }
         #endregion
 
         #region Constructor and Destructor
+        /// <summary>
+        /// Empty constructor for DuplicatingVBO<T>
+        /// </summary>
+        public VBO() { }
+
         /// <summary>
         /// Creates a buffer object of type T with a specified length.
         /// This allows the array T[] to be larger than the actual size necessary to buffer.
@@ -223,17 +230,17 @@ namespace OpenGL
         /// Get the component size of T.
         /// </summary>
         /// <returns>The component size of T.</returns>
-        private int GetTypeComponentSize()
+        internal int GetTypeComponentSize()
         {
             return TypeComponentSize[typeof(T)];
         }
 
-        private VertexAttribPointerType GetAttribPointerType()
+        internal VertexAttribPointerType GetAttribPointerType()
         {
             return TypeAttribPointerType[typeof(T)];
         }
 
-        private bool IsTypeIntegral()
+        internal bool IsTypeIntegral()
         {
             return IntegralTypes.Contains(typeof(T));
         }
@@ -312,5 +319,127 @@ namespace OpenGL
             }
         }
         #endregion
+    }
+    public class DuplicatingVBO<T> : VBO<T>
+        where T : struct
+    {
+        private T[] values;
+
+        #region Constructors
+        /// <summary>
+        /// Creates a buffer object of type T with a specified length.
+        /// This allows the array T[] to be larger than the actual size necessary to buffer.
+        /// Useful for reusing resources and avoiding unnecessary GC action.
+        /// </summary>
+        /// <param name="Data">An array of data of type T (which must be a struct) that will be buffered to the GPU.</param>
+        /// <param name="Length">The length of the valid data in the data array.</param>
+        /// <param name="Target">Specifies the target buffer object.</param>
+        /// <param name="Hint">Specifies the expected usage of the data store.</param>
+        public DuplicatingVBO(T[] Data, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
+        {
+            values = Data;
+            Length = Math.Max(0, Math.Min(Length, Data.Length));
+
+            ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint, Length);
+
+            this.Size = GetTypeComponentSize();
+            this.PointerType = GetAttribPointerType();
+            this.Count = Length;
+            this.IsIntegralType = IsTypeIntegral();
+        }
+
+        /// <summary>
+        /// Creates a buffer object of type T with a specified length.
+        /// This allows the array T[] to be larger than the actual size necessary to buffer.
+        /// Useful for reusing resources and avoiding unnecessary GC action.
+        /// </summary>
+        /// <param name="Data">An array of data of type T (which must be a struct) that will be buffered to the GPU.</param>
+        /// <param name="Position">An offset into the Data array from which to begin buffering.</param>
+        /// <param name="Length">The length of the valid data in the data array.</param>
+        /// <param name="Target">Specifies the target buffer object.</param>
+        /// <param name="Hint">Specifies the expected usage of the data store.</param>
+        public DuplicatingVBO(T[] Data, int Position, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
+        {
+            values = Data;
+            Length = Math.Max(0, Math.Min(Length, Data.Length));
+
+            ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint, Position, Length);
+
+            this.Size = GetTypeComponentSize();
+            this.PointerType = GetAttribPointerType();
+            this.Count = Length;
+            this.IsIntegralType = IsTypeIntegral();
+        }
+
+        /// <summary>
+        /// Creates a buffer object of type T.
+        /// </summary>
+        /// <param name="Data">Specifies a pointer to data that will be copied into the data store for initialization.</param>
+        /// <param name="Target">Specifies the target buffer object.</param>
+        /// <param name="Hint">Specifies the expected usage of the data store.</param>
+        public DuplicatingVBO(T[] Data, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw)
+        {
+            values = Data;
+            ID = Gl.CreateVBO<T>(BufferTarget = Target, Data, Hint);
+
+            this.Size = GetTypeComponentSize();
+            this.PointerType = GetAttribPointerType();
+            this.Count = Data.Length;
+            this.IsIntegralType = IsTypeIntegral();
+        }
+
+        /// <summary>
+        /// Creates a static-read array buffer of type T.
+        /// </summary>
+        /// <param name="Data">Specifies a pointer to data that will be copied into the data store for initialization.</param>
+        public DuplicatingVBO(T[] Data)
+            : this(Data, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw)
+        {
+            values = Data;
+        }
+        ~DuplicatingVBO()
+        {
+            Dispose(false);
+        }
+        #endregion
+
+        #region Methods
+        /// <summary>
+        /// Returns the value of VBO<T> in an array
+        /// </summary>
+        /// <returns></returns>
+        public T[] ToArray()
+        {
+            return values;
+        }
+
+        /// <summary>
+        /// Returns the value of VBO<T> in an ArrayList
+        /// </summary>
+        /// <returns></returns>
+        public ArrayList ToArrayList()
+        {
+            return new ArrayList(values.ToList());
+        }
+
+        /// <summary>
+        /// Returns the value of VBO<T> in a list collection
+        /// </summary>
+        /// <returns></returns>
+        public List<T> ToList()
+        {
+            return values.ToList();
+        }
+
+        /// <summary>
+        /// Returns the value of VBO<T> in a HashSet
+        /// </summary>
+        /// <returns></returns>
+        public HashSet<T> ToHashSet()
+        {
+            return new HashSet<T>(values.ToList());
+        }
+        #endregion
+
     }
 }
