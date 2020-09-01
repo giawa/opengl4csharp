@@ -189,6 +189,99 @@ namespace OpenGLUnitTests
         }
 
         [TestMethod]
+        public void MatrixEqualityOpMatrix()
+        {
+            Vector4 v1 = new Vector4(0, 1, 2, 3);
+            Vector4 v2 = new Vector4(4, 5, 6, 7);
+            Vector4 v3 = new Vector4(8, 9, 10, 11);
+            Vector4 v4 = new Vector4(12, 13, 14, 15);
+
+            Assert.IsTrue(new Matrix4(v1, v2, v3, v4) == new Matrix4(v1, v2, v3, v4));
+            Assert.IsFalse(new Matrix4(v1, v2, v4, v3) == new Matrix4(v1, v2, v3, v4));
+            Assert.IsFalse(new Matrix4(v1, v3, v2, v4) == new Matrix4(v1, v2, v3, v4));
+            Assert.IsFalse(new Matrix4(v1, v3, v4, v2) == new Matrix4(v1, v2, v3, v4));
+            Assert.IsFalse(new Matrix4(v1, v4, v2, v3) == new Matrix4(v1, v2, v3, v4));
+            Assert.IsFalse(new Matrix4(v1, v4, v3, v2) == new Matrix4(v1, v2, v3, v4));
+
+            Assert.IsFalse(new Matrix4(v2, v1, v3, v4) == new Matrix4(v1, v2, v3, v4));
+            Assert.IsFalse(new Matrix4(v2, v1, v4, v3) == new Matrix4(v1, v2, v3, v4));
+            Assert.IsFalse(new Matrix4(v2, v3, v1, v4) == new Matrix4(v1, v2, v3, v4));
+            Assert.IsFalse(new Matrix4(v2, v3, v4, v1) == new Matrix4(v1, v2, v3, v4));
+            Assert.IsFalse(new Matrix4(v2, v4, v1, v3) == new Matrix4(v1, v2, v3, v4));
+            Assert.IsFalse(new Matrix4(v2, v4, v3, v1) == new Matrix4(v1, v2, v3, v4));
+        }
+
+        [TestMethod]
+        public void MatrixInEqualityOpMatrix()
+        {
+            Vector4 v1 = new Vector4(0, 1, 2, 3);
+            Vector4 v2 = new Vector4(4, 5, 6, 7);
+            Vector4 v3 = new Vector4(8, 9, 10, 11);
+            Vector4 v4 = new Vector4(12, 13, 14, 15);
+
+            Assert.IsFalse(new Matrix4(v1, v2, v3, v4) != new Matrix4(v1, v2, v3, v4));
+            Assert.IsTrue(new Matrix4(v1, v2, v4, v3) != new Matrix4(v1, v2, v3, v4));
+            Assert.IsTrue(new Matrix4(v1, v3, v2, v4) != new Matrix4(v1, v2, v3, v4));
+            Assert.IsTrue(new Matrix4(v1, v3, v4, v2) != new Matrix4(v1, v2, v3, v4));
+            Assert.IsTrue(new Matrix4(v1, v4, v2, v3) != new Matrix4(v1, v2, v3, v4));
+            Assert.IsTrue(new Matrix4(v1, v4, v3, v2) != new Matrix4(v1, v2, v3, v4));
+
+            Assert.IsTrue(new Matrix4(v2, v1, v3, v4) != new Matrix4(v1, v2, v3, v4));
+            Assert.IsTrue(new Matrix4(v2, v1, v4, v3) != new Matrix4(v1, v2, v3, v4));
+            Assert.IsTrue(new Matrix4(v2, v3, v1, v4) != new Matrix4(v1, v2, v3, v4));
+            Assert.IsTrue(new Matrix4(v2, v3, v4, v1) != new Matrix4(v1, v2, v3, v4));
+            Assert.IsTrue(new Matrix4(v2, v4, v1, v3) != new Matrix4(v1, v2, v3, v4));
+            Assert.IsTrue(new Matrix4(v2, v4, v3, v1) != new Matrix4(v1, v2, v3, v4));
+        }
+
+        [TestMethod]
+        public void MatrixEqualsMatrix()
+        {
+            Vector4 v1 = new Vector4(0, 1, 2, 3);
+            Vector4 v2 = new Vector4(4, 5, 6, 7);
+            Vector4 v3 = new Vector4(8, 9, 10, 11);
+            Vector4 v4 = new Vector4(12, 13, 14, 15);
+
+            Assert.IsTrue(new Matrix4(v1, v2, v3, v4).Equals(new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v1, v2, v4, v3).Equals(new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v1, v3, v2, v4).Equals(new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v1, v3, v4, v2).Equals(new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v1, v4, v2, v3).Equals(new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v1, v4, v3, v2).Equals(new Matrix4(v1, v2, v3, v4)));
+
+            Assert.IsFalse(new Matrix4(v2, v1, v3, v4).Equals(new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v2, v1, v4, v3).Equals(new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v2, v3, v1, v4).Equals(new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v2, v3, v4, v1).Equals(new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v2, v4, v1, v3).Equals(new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v2, v4, v3, v1).Equals(new Matrix4(v1, v2, v3, v4)));
+        }
+
+        [TestMethod]
+        public void MatrixEqualsObject()
+        {
+            Vector4 v1 = new Vector4(0, 1, 2, 3);
+            Vector4 v2 = new Vector4(4, 5, 6, 7);
+            Vector4 v3 = new Vector4(8, 9, 10, 11);
+            Vector4 v4 = new Vector4(12, 13, 14, 15);
+
+            Assert.IsTrue(new Matrix4(v1, v2, v3, v4).Equals((object)new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v1, v2, v4, v3).Equals((object)new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v1, v3, v2, v4).Equals((object)new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v1, v3, v4, v2).Equals((object)new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v1, v4, v2, v3).Equals((object)new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v1, v4, v3, v2).Equals((object)new Matrix4(v1, v2, v3, v4)));
+
+            Assert.IsFalse(new Matrix4(v2, v1, v3, v4).Equals((object)new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v2, v1, v4, v3).Equals((object)new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v2, v3, v1, v4).Equals((object)new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v2, v3, v4, v1).Equals((object)new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v2, v4, v1, v3).Equals((object)new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v2, v4, v3, v1).Equals((object)new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v2, v4, v3, v1).Equals(new object()));
+        }
+
+        [TestMethod]
         public void MatrixToFloat()
         {
             float[] array = new float[] { 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10 };
