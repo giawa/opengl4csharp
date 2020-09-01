@@ -94,14 +94,14 @@ namespace OpenGL
             }
         }
 
-        public static bool operator ==(Matrix4 m1, Matrix4 m2)
+        public static bool operator ==(in Matrix4 m1, in Matrix4 m2)
         {
-            return (m1[0] == m2[0] && m1[1] == m2[1] && m1[2] == m2[2] && m1[3] == m2[3]);
+            return (m1.row1 == m2.row1 && m1.row2 == m2.row2 && m1.row3 == m2.row3 && m1.row4 == m2.row4);
         }
 
-        public static bool operator !=(Matrix4 m1, Matrix4 m2)
+        public static bool operator !=(in Matrix4 m1, in Matrix4 m2)
         {
-            return (m1[0] != m2[0] || m1[1] != m2[1] || m1[2] != m2[2] || m1[3] != m2[3]);
+            return !(m1 == m2);
         }
 
         public override bool Equals(object obj)
