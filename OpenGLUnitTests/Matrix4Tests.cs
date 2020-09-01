@@ -104,6 +104,74 @@ namespace OpenGLUnitTests
         }
 
         [TestMethod]
+        public void MatrixMultiplyByVector3()
+        {
+            Vector4 v4 = new Vector4(0, 1, 2, 3);
+            Vector4 v3 = new Vector4(4, 5, 6, 7);
+            Vector4 v2 = new Vector4(8, 9, 10, 11);
+            Vector4 v1 = new Vector4(12, 13, 14, 15);
+
+            Matrix4 matrix = new Matrix4(v1, v2, v3, v4);
+            Vector3 vector = new Vector3(3, 7, -1);
+            Vector3 mult = matrix * vector;
+
+            Vector4 vector4 = new Vector4(vector, 0);
+            Assert.AreEqual(mult.X, Vector4.Dot(matrix[0], vector4));
+            Assert.AreEqual(mult.Y, Vector4.Dot(matrix[1], vector4));
+            Assert.AreEqual(mult.Z, Vector4.Dot(matrix[2], vector4));
+        }
+
+        [TestMethod]
+        public void MatrixMultiplyByVector4()
+        {
+            Vector4 v4 = new Vector4(0, 1, 2, 3);
+            Vector4 v3 = new Vector4(4, 5, 6, 7);
+            Vector4 v2 = new Vector4(8, 9, 10, 11);
+            Vector4 v1 = new Vector4(12, 13, 14, 15);
+
+            Matrix4 matrix = new Matrix4(v1, v2, v3, v4);
+            Vector4 vector = new Vector4(3, 7, -1, 4);
+            Vector4 mult = matrix * vector;
+
+            Assert.AreEqual(mult.X, Vector4.Dot(matrix[0], vector));
+            Assert.AreEqual(mult.Y, Vector4.Dot(matrix[1], vector));
+            Assert.AreEqual(mult.Z, Vector4.Dot(matrix[2], vector));
+            Assert.AreEqual(mult.W, Vector4.Dot(matrix[3], vector));
+        }
+
+        [TestMethod]
+        public void Vector4MultiplyByMatrix()
+        {
+            Vector4 v1 = new Vector4(0, 1, 2, 3);
+            Vector4 v2 = new Vector4(4, 5, 6, 7);
+            Vector4 v3 = new Vector4(8, 9, 10, 11);
+            Vector4 v4 = new Vector4(12, 13, 14, 15);
+
+            Matrix4 matrix = new Matrix4(v1, v2, v3, v4);
+            Vector4 vector = new Vector4(5, 6, 7, 8);
+
+            Vector4 actual = vector * matrix;
+            Vector4 expected = new Vector4(176, 202, 228, 254);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Vector3MultiplyByMatrix()
+        {
+            Vector4 v1 = new Vector4(0, 1, 2, 3);
+            Vector4 v2 = new Vector4(4, 5, 6, 7);
+            Vector4 v3 = new Vector4(8, 9, 10, 11);
+            Vector4 v4 = new Vector4(12, 13, 14, 15);
+
+            Matrix4 matrix = new Matrix4(v1, v2, v3, v4);
+            Vector3 vector = new Vector3(5, 6, 7);
+
+            Vector3 actual = vector * matrix;
+            Vector3 expected = new Vector3(80, 98, 116);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
         public void MatrixDivideByFloat()
         {
             Vector4 v4 = new Vector4(0, 1, 2, 3);
@@ -142,6 +210,26 @@ namespace OpenGLUnitTests
             // make sure the diff between the identity matrix and the float[] is less than e-8
             for (int i = 0; i < identity.Length; i++)
                 Assert.IsTrue(identity[i] - Matrix4.Identity[i / 4].Get(i % 4) < 10e-8);
+        }
+
+        [TestMethod]
+        public void MatrixTranspose()
+        {
+            Vector4 v1 = new Vector4( 0,  1,  2,  3);
+            Vector4 v2 = new Vector4( 4,  5,  6,  7);
+            Vector4 v3 = new Vector4( 8,  9, 10, 11);
+            Vector4 v4 = new Vector4(12, 13, 14, 15);
+
+            Vector4 v1t = new Vector4(0, 4,  8, 12);
+            Vector4 v2t = new Vector4(1, 5,  9, 13);
+            Vector4 v3t = new Vector4(2, 6, 10, 14);
+            Vector4 v4t = new Vector4(3, 7, 11, 15);
+
+            Matrix4 matrix = new Matrix4(v1, v2, v3, v4);
+            Matrix4 expected = new Matrix4(v1t, v2t, v3t, v4t);
+            Matrix4 actual = matrix.Transpose();
+
+            Assert.AreEqual(expected, actual);
         }
     }
 }
