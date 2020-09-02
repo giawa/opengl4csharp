@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
 using System.Collections.ObjectModel;
 
 #if USE_NUMERICS
@@ -90,27 +88,27 @@ namespace OpenGL
         /// <summary>
         /// The ID of the vertex buffer object.
         /// </summary>
-        public uint ID { get; private set; }
+        public uint ID { get; set; }
 
         /// <summary>
         /// The type of the buffer.
         /// </summary>
-        public BufferTarget BufferTarget { get; private set; }
+        public BufferTarget BufferTarget { get; set; }
 
         /// <summary>
         /// The size (in floats) of the type of data in the buffer.  Size * 4 to get bytes.
         /// </summary>
-        public int Size { get; private set; }
+        public int Size { get; set; }
 
         /// <summary>
         /// The type of data that is stored in the buffer (either int or float).
         /// </summary>
-        public VertexAttribPointerType PointerType { get; private set; }
+        public VertexAttribPointerType PointerType { get; set; }
         
         /// <summary>
         /// The length of data that is stored in the buffer.
         /// </summary>
-        public int Count { get; private set; }
+        public int Count { get; set; }
 
         /// <summary>
         /// Specifies the number of instances that will pass between updates of the generic attribute slot.
@@ -134,7 +132,7 @@ namespace OpenGL
         /// <summary>
         /// Specifies whether the VBO contains an integral type.
         /// </summary>
-        public bool IsIntegralType { get; private set; }
+        public bool IsIntegralType { get; set; }
         #endregion
 
         #region Constructor and Destructor
@@ -276,7 +274,7 @@ namespace OpenGL
         /// <param name="data">The new data that will be copied to the data store.</param>
         /// <param name="size">The size in bytes of the data store region being replaced.</param>
         /// <param name="offset">The offset in bytes into the buffer object's data store where data replacement will begin.</param>
-        public void BufferSubData(T[] data, int size, int offset)
+        public virtual void BufferSubData(T[] data, int size, int offset)
         {
             if (BufferTarget != BufferTarget.ArrayBuffer && BufferTarget != BufferTarget.ElementArrayBuffer &&
                 BufferTarget != BufferTarget.PixelPackBuffer && BufferTarget != BufferTarget.PixelUnpackBuffer)
@@ -368,6 +366,18 @@ namespace OpenGL
         public DuplicatingVBO(T[] Data, int Position, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw) : base(Data, Position, Length, Target, Hint)
         {
             values = Data;
+        }
+
+        /// <summary>
+        /// Updates a subset of the buffer object's data store.
+        /// </summary>
+        /// <param name="data">The new data that will be copied to the data store.</param>
+        /// <param name="size">The size in bytes of the data store region being replaced.</param>
+        /// <param name="offset">The offset in bytes into the buffer object's data store where data replacement will begin.</param>
+        public override void BufferSubData(T[] data, int size, int offset)
+        {
+            Array.Copy(data, 0, values, offset / Marshal.SizeOf<T>(), size / Marshal.SizeOf<T>());
+            base.BufferSubData(data, size, offset);
         }
 
         #region Methods
