@@ -89,20 +89,22 @@ namespace OpenGL
         public float this[int column, int row]
         {
             get
-            {               
+            {                    
                 if (row == 0)
                 {
                     if (column == 0) return row1.X;
                     if (column == 1) return row1.Y;
                 }
-                if (row == 1)
+                else if (row == 1)
                 {
                     if (column == 0) return row2.X;
                     if (column == 1) return row2.Y;
                 }
-                if (column > 1 || column < 0 || row > 1 || row < 0)
-                    throw new ArgumentOutOfRangeException("column or row is out of the matrix bounds.");
-                return -1; //Needed so that get does not have an error
+                else
+                {
+                    throw new ArgumentOutOfRangeException("column or row is out of the matrix bounds.");                    
+                }
+                return -1; //for some reason, it needs this, or get will bomb.
             }
             set
             {

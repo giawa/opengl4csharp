@@ -106,17 +106,18 @@ namespace OpenGL
                 {
                     return row1.Get(column);
                 }
-                if (row == 1)
+                else if (row == 1)
                 {
                     return row2.Get(column);
                 }
-                if (row == 2)
+                else if (row == 2)
                 {
                     return row3.Get(column);
                 }
-                if (column > 2 || column < 0 || row > 2 || row < 0) 
+                else
+                {
                     throw new ArgumentOutOfRangeException("column or row is out of the matrix bounds.");
-                return -1;
+                }
             }
             set
             {
