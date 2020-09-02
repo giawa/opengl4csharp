@@ -18,7 +18,7 @@ namespace OpenGL
         /// <summary>
         /// A collection of types and their respective number of components per generic vertex attribute.
         /// </summary>
-        internal static readonly Dictionary<Type, int> TypeComponentSize = new Dictionary<Type, int>()
+        private static readonly Dictionary<Type, int> TypeComponentSize = new Dictionary<Type, int>()
         {
             [typeof(sbyte)] = 1,
             [typeof(byte)] = 1,
@@ -39,7 +39,7 @@ namespace OpenGL
         /// <summary>
         /// A collection of conversions from numerical types to vertex attribute pointer types.
         /// </summary>
-        internal static readonly Dictionary<Type, VertexAttribPointerType> TypeAttribPointerType = new Dictionary<Type, VertexAttribPointerType>()
+        private static readonly Dictionary<Type, VertexAttribPointerType> TypeAttribPointerType = new Dictionary<Type, VertexAttribPointerType>()
         {
             [typeof(sbyte)] = VertexAttribPointerType.Byte,
             [typeof(byte)] = VertexAttribPointerType.UnsignedByte,
@@ -60,7 +60,7 @@ namespace OpenGL
         /// <summary>
         /// Contains all known integral types.
         /// </summary>
-        internal static readonly HashSet<Type> IntegralTypes = new HashSet<Type>()
+        private static readonly HashSet<Type> IntegralTypes = new HashSet<Type>()
         {
             typeof(sbyte),
             typeof(byte),
@@ -80,7 +80,7 @@ namespace OpenGL
         public uint vboID
         {
             get { return ID; }
-            internal set
+            private set
             {
                 ID = value;
             }
@@ -90,27 +90,27 @@ namespace OpenGL
         /// <summary>
         /// The ID of the vertex buffer object.
         /// </summary>
-        public uint ID { get; internal set; }
+        public uint ID { get; private set; }
 
         /// <summary>
         /// The type of the buffer.
         /// </summary>
-        public BufferTarget BufferTarget { get; internal set; }
+        public BufferTarget BufferTarget { get; private set; }
 
         /// <summary>
         /// The size (in floats) of the type of data in the buffer.  Size * 4 to get bytes.
         /// </summary>
-        public int Size { get; internal set; }
+        public int Size { get; private set; }
 
         /// <summary>
         /// The type of data that is stored in the buffer (either int or float).
         /// </summary>
-        public VertexAttribPointerType PointerType { get; internal set; }
+        public VertexAttribPointerType PointerType { get; private set; }
         
         /// <summary>
         /// The length of data that is stored in the buffer.
         /// </summary>
-        public int Count { get; internal set; }
+        public int Count { get; private set; }
 
         /// <summary>
         /// Specifies the number of instances that will pass between updates of the generic attribute slot.
@@ -134,7 +134,7 @@ namespace OpenGL
         /// <summary>
         /// Specifies whether the VBO contains an integral type.
         /// </summary>
-        public bool IsIntegralType { get; internal set; }
+        public bool IsIntegralType { get; private set; }
         #endregion
 
         #region Constructor and Destructor
@@ -226,17 +226,17 @@ namespace OpenGL
         /// Get the component size of T.
         /// </summary>
         /// <returns>The component size of T.</returns>
-        internal int GetTypeComponentSize()
+        private int GetTypeComponentSize()
         {
             return TypeComponentSize[typeof(T)];
         }
 
-        internal VertexAttribPointerType GetAttribPointerType()
+        private VertexAttribPointerType GetAttribPointerType()
         {
             return TypeAttribPointerType[typeof(T)];
         }
 
-        internal bool IsTypeIntegral()
+        private bool IsTypeIntegral()
         {
             return IntegralTypes.Contains(typeof(T));
         }
