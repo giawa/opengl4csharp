@@ -75,12 +75,14 @@ namespace OpenGL
         /// <returns>True if an intersection exists.</returns>
         public bool Intersects(AxisAlignedBoundingBox box)
         {
+            Vector3 boxCenter = box.Center;
+            Vector3 boxSize = box.Size;
             for (int i = 0; i < 6; i++)
             {
                 Plane p = planes[i];
 
-                float d = box.Center.Dot(p.Normal);
-                float r = box.Size.X * Math.Abs(p.Normal.X) + box.Size.Y * Math.Abs(p.Normal.Y) + box.Size.Z * Math.Abs(p.Normal.Z);
+                float d = boxCenter.Dot(p.Normal);
+                float r = boxSize.Dot(Vector3.Abs(p.Normal));
                 float dpr = d + r;
                 //float dmr = d - r;
 

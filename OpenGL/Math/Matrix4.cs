@@ -32,24 +32,12 @@ namespace OpenGL
 
         public static Matrix4 operator *(Matrix4 m, Matrix4 m2)
         {
-            Matrix4 r = new Matrix4(
-            new Vector4(m[0].X * m2[0].X + m[0].Y * m2[1].X + m[0].Z * m2[2].X + m[0].W * m2[3].X,
-                m[0].X * m2[0].Y + m[0].Y * m2[1].Y + m[0].Z * m2[2].Y + m[0].W * m2[3].Y,
-                m[0].X * m2[0].Z + m[0].Y * m2[1].Z + m[0].Z * m2[2].Z + m[0].W * m2[3].Z,
-                m[0].X * m2[0].W + m[0].Y * m2[1].W + m[0].Z * m2[2].W + m[0].W * m2[3].W),
-            new Vector4(m[1].X * m2[0].X + m[1].Y * m2[1].X + m[1].Z * m2[2].X + m[1].W * m2[3].X,
-                m[1].X * m2[0].Y + m[1].Y * m2[1].Y + m[1].Z * m2[2].Y + m[1].W * m2[3].Y,
-                m[1].X * m2[0].Z + m[1].Y * m2[1].Z + m[1].Z * m2[2].Z + m[1].W * m2[3].Z,
-                m[1].X * m2[0].W + m[1].Y * m2[1].W + m[1].Z * m2[2].W + m[1].W * m2[3].W),
-            new Vector4(m[2].X * m2[0].X + m[2].Y * m2[1].X + m[2].Z * m2[2].X + m[2].W * m2[3].X,
-                m[2].X * m2[0].Y + m[2].Y * m2[1].Y + m[2].Z * m2[2].Y + m[2].W * m2[3].Y,
-                m[2].X * m2[0].Z + m[2].Y * m2[1].Z + m[2].Z * m2[2].Z + m[2].W * m2[3].Z,
-                m[2].X * m2[0].W + m[2].Y * m2[1].W + m[2].Z * m2[2].W + m[2].W * m2[3].W),
-            new Vector4(m[3].X * m2[0].X + m[3].Y * m2[1].X + m[3].Z * m2[2].X + m[3].W * m2[3].X,
-                m[3].X * m2[0].Y + m[3].Y * m2[1].Y + m[3].Z * m2[2].Y + m[3].W * m2[3].Y,
-                m[3].X * m2[0].Z + m[3].Y * m2[1].Z + m[3].Z * m2[2].Z + m[3].W * m2[3].Z,
-                m[3].X * m2[0].W + m[3].Y * m2[1].W + m[3].Z * m2[2].W + m[3].W * m2[3].W));
-            return r;
+            Matrix4 m2t = m2.Transpose();
+            return new Matrix4(
+                m2t * m.row1,
+                m2t * m.row2,
+                m2t * m.row3,
+                m2t * m.row4);
         }
 
         public static Matrix4 operator *(Matrix4 m1, float d)
@@ -64,32 +52,30 @@ namespace OpenGL
 
         public static Vector3 operator *(Matrix4 m1, Vector3 v)
         {
-            return new Vector3(m1[0].X * v.X + m1[0].Y * v.Y + m1[0].Z * v.Z,
-                m1[1].X * v.X + m1[1].Y * v.Y + m1[1].Z * v.Z,
-                m1[2].X * v.X + m1[2].Y * v.Y + m1[2].Z * v.Z);
+            Vector4 v4 = new Vector4(v, 0.0f);
+            return new Vector3(Vector4.Dot(m1.row1, v4), Vector4.Dot(m1.row2, v4), Vector4.Dot(m1.row3, v4));
         }
 
         public static Vector3 operator *(Vector3 v, Matrix4 m1)
         {
-            return new Vector3(v.X * m1[0].X + v.Y * m1[1].X + v.Z * m1[2].X,
+            return new Vector3(
+                v.X * m1[0].X + v.Y * m1[1].X + v.Z * m1[2].X,
                 v.X * m1[0].Y + v.Y * m1[1].Y + v.Z * m1[2].Y,
                 v.X * m1[0].Z + v.Y * m1[1].Z + v.Z * m1[2].Z);
         }
 
         public static Vector4 operator *(Matrix4 m1, Vector4 v)
         {
-            return new Vector4(m1[0].X * v.X + m1[0].Y * v.Y + m1[0].Z * v.Z + m1[0].W * v.W,
-                m1[1].X * v.X + m1[1].Y * v.Y + m1[1].Z * v.Z + m1[1].W * v.W,
-                m1[2].X * v.X + m1[2].Y * v.Y + m1[2].Z * v.Z + m1[2].W * v.W,
-                m1[3].X * v.X + m1[3].Y * v.Y + m1[3].Z * v.Z + m1[3].W * v.W);
+            return new Vector4(
+                Vector4.Dot(m1.row1, v),
+                Vector4.Dot(m1.row2, v),
+                Vector4.Dot(m1.row3, v),
+                Vector4.Dot(m1.row4, v));
         }
 
         public static Vector4 operator *(Vector4 v, Matrix4 m1)
         {
-            return new Vector4(v.X * m1[0].X + v.Y * m1[1].X + v.Z * m1[2].X + v.W * m1[3].X,
-                v.X * m1[0].Y + v.Y * m1[1].Y + v.Z * m1[2].Y + v.W * m1[3].Y,
-                v.X * m1[0].Z + v.Y * m1[1].Z + v.Z * m1[2].Z + v.W * m1[3].Z,
-                v.X * m1[0].W + v.Y * m1[1].W + v.Z * m1[2].W + v.W * m1[3].W);
+            return m1.Transpose() * v;
         }
 
         public Vector4 this[int a]
@@ -108,14 +94,14 @@ namespace OpenGL
             }
         }
 
-        public static bool operator ==(Matrix4 m1, Matrix4 m2)
+        public static bool operator ==(in Matrix4 m1, in Matrix4 m2)
         {
-            return (m1[0] == m2[0] && m1[1] == m2[1] && m1[2] == m2[2] && m1[3] == m2[3]);
+            return (m1.row1 == m2.row1 && m1.row2 == m2.row2 && m1.row3 == m2.row3 && m1.row4 == m2.row4);
         }
 
-        public static bool operator !=(Matrix4 m1, Matrix4 m2)
+        public static bool operator !=(in Matrix4 m1, in Matrix4 m2)
         {
-            return (m1[0] != m2[0] || m1[1] != m2[1] || m1[2] != m2[2] || m1[3] != m2[3]);
+            return !(m1 == m2);
         }
 
         public override bool Equals(object obj)
@@ -414,10 +400,11 @@ namespace OpenGL
         /// <returns>A Matrix4 object that contains the transposed matrix.</returns>
         public Matrix4 Transpose()
         {
-            return new Matrix4(new Vector4(this[0].X, this[1].X, this[2].X, this[3].X),
-                new Vector4(this[0].Y, this[1].Y, this[2].Y, this[3].Y),
-                new Vector4(this[0].Z, this[1].Z, this[2].Z, this[3].Z),
-                new Vector4(this[0].W, this[1].W, this[2].W, this[3].W));
+            return new Matrix4(
+                new Vector4(row1.X, row2.X, row3.X, row4.X),
+                new Vector4(row1.Y, row2.Y, row3.Y, row4.Y),
+                new Vector4(row1.Z, row2.Z, row3.Z, row4.Z),
+                new Vector4(row1.W, row2.W, row3.W, row4.W));
         }
 
         /// <summary>
@@ -476,8 +463,12 @@ namespace OpenGL
         /// <returns>Floating array that represents that Matrix4.</returns>
         public float[] ToFloat()
         {
-            return new float[] { this[0].X, this[0].Y, this[0].Z, this[0].W, this[1].X, this[1].Y, this[1].Z, this[1].W,
-                this[2].X, this[2].Y, this[2].Z, this[2].W, this[3].X, this[3].Y, this[3].Z, this[3].W };
+            float[] elements = new float[16];
+            row1.CopyTo(elements, 0);
+            row2.CopyTo(elements, 4);
+            row3.CopyTo(elements, 8);
+            row4.CopyTo(elements, 12);
+            return elements;
         }
 
         /// <summary>

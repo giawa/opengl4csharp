@@ -48,7 +48,7 @@ namespace OpenGL
         /// </summary>
         public Vector3 Center
         {
-            get { return new Vector3((max.X + min.X) * 0.5f, (max.Y + min.Y) * 0.5f, (max.Z + min.Z) * 0.5f); }
+            get { return (max + min) * 0.5f; }
         }
 
         /// <summary>
