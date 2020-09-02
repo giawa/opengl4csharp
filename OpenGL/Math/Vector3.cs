@@ -1,7 +1,7 @@
-﻿#if USE_NUMERICS
+﻿using System;
+#if USE_NUMERICS
 using System.Numerics;
 #else
-using System;
 using System.Runtime.InteropServices;
 #endif
 
@@ -235,16 +235,6 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Performs the Vector3 scalar dot product.
-        /// </summary>
-        /// <param name="v">Second dot product term</param>
-        /// <returns>Vector3.Dot(this, v)</returns>
-        public float Dot(Vector3 v)
-        {
-            return Vector3.Dot(this, v);
-        }
-
-        /// <summary>
         /// A System.Numerics compatible version of SquaredLength.
         /// </summary>
         /// <returns>Returns the squared length of the Vector3 structure.</returns>
@@ -275,16 +265,6 @@ namespace OpenGL
         }
 
         /// <summary>
-        /// Normalizes the Vector3 structure to have a peak value of one.
-        /// </summary>
-        /// <returns>if (Length = 0) return Zero; else return Vector3(x,y,z)/Length</returns>
-        public Vector3 Normalize()
-        {
-            if (Length() == 0) return Zero;
-            else return new Vector3(X, Y, Z) / Length();
-        }
-
-        /// <summary>
         /// Checks to see if any value (x, y, z) are within 0.0001 of 0.
         /// If so this method truncates that value to zero.
         /// </summary>
@@ -295,28 +275,6 @@ namespace OpenGL
             float _y = (Math.Abs(Y) - 0.0001f < 0) ? 0 : Y;
             float _z = (Math.Abs(Z) - 0.0001f < 0) ? 0 : Z;
             return new Vector3(_x, _y, _z);
-        }
-
-        /// <summary>
-        /// Store the minimum values of x, y, and z between the two vectors.
-        /// </summary>
-        /// <param name="v">Vector to check against</param>
-        public void TakeMin(Vector3 v)
-        {
-            if (v.X < X) X = v.X;
-            if (v.Y < Y) Y = v.Y;
-            if (v.Z < Z) Z = v.Z;
-        }
-
-        /// <summary>
-        /// Store the maximum values of x, y, and z between the two vectors.
-        /// </summary>
-        /// <param name="v">Vector to check against</param>
-        public void TakeMax(Vector3 v)
-        {
-            if (v.X > X) X = v.X;
-            if (v.Y > Y) Y = v.Y;
-            if (v.Z > Z) Z = v.Z;
         }
 
         /// <summary>
@@ -624,20 +582,22 @@ namespace OpenGL
         {
             return q * v;
         }
-        
+
         /// <summary>
-        /// Provide an accessor for each of the elements of the Vector structure.
+        /// Copies the elements of the vector to a specified array.
         /// </summary>
-        /// <param name="v">The Vector3 to access.</param>
-        /// <param name="index">The element to access (0 = X, 1 = Y, 2 = Z).</param>
-        /// <returns>The element of the Vector3 as indexed by i.</returns>
-        public float Get(int index)
+        /// <param name="array">The destination array.</param>
+        /// <param name="offset">The index at which to copy the first element of the vector.</param>
+        public void CopyTo(float[] array, int offset)
         {
-            return (index == 0 ? X : (index == 1 ? Y : Z));
+            array[offset + 0] = X;
+            array[offset + 1] = Y;
+            array[offset + 2] = Z;
         }
         #endregion
     }
-#else
+#endif
+
     /// <summary>
     /// Extension methods for the Vector3 structure.
     /// </summary>
@@ -697,8 +657,9 @@ namespace OpenGL
         /// <returns>The element of the Vector3 as indexed by i.</returns>
         public static float Get(this Vector3 v, int index)
         {
+            if (index < 0 || index > 2)
+                throw new ArgumentOutOfRangeException("index");
             return (index == 0 ? v.X : (index == 1 ? v.Y : v.Z));
         }
     }
-#endif
 }

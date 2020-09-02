@@ -1,7 +1,7 @@
-﻿#if USE_NUMERICS
+﻿using System;
+#if USE_NUMERICS
 using System.Numerics;
 #else
-using System;
 using System.Runtime.InteropServices;
 #endif
 
@@ -13,7 +13,7 @@ namespace OpenGL
     {
         public float X, Y, Z, W;
 
-    #region Static Constructors
+        #region Static Constructors
         public static Vector4 Zero
         {
             get { return new Vector4(0.0f, 0.0f, 0.0f, 0.0f); }
@@ -45,7 +45,7 @@ namespace OpenGL
         }
         #endregion
 
-    #region Operators
+        #region Operators
         public static Vector4 operator +(Vector4 v1, Vector4 v2)
         {
             return new Vector4(v1.X + v2.X, v1.Y + v2.Y, v1.Z + v2.Z, v1.W + v2.W);
@@ -122,7 +122,7 @@ namespace OpenGL
         }
         #endregion
 
-    #region Constructors
+        #region Constructors
         /// <summary>Creates a Vector4 structure whose elements have the specified values.</summary>
         /// <param name="x">The value to assign to the X field.</param>
         /// <param name="y">The value to assign to the Y field.</param>
@@ -130,9 +130,9 @@ namespace OpenGL
         /// <param name="w">The value to assign to the W field.</param>
         public Vector4(float x, float y, float z, float w)
         {
-            X = x; 
-            Y = y; 
-            Z = z; 
+            X = x;
+            Y = y;
+            Z = z;
             W = w;
         }
 
@@ -141,9 +141,9 @@ namespace OpenGL
         /// <param name="w">The value to assign to the W field.</param>
         public Vector4(Vector3 v, float w)
         {
-            X = v.X; 
-            Y = v.Y; 
-            Z = v.Z; 
+            X = v.X;
+            Y = v.Y;
+            Z = v.Z;
             W = w;
         }
 
@@ -167,7 +167,7 @@ namespace OpenGL
         }
         #endregion
 
-    #region Overrides
+        #region Overrides
         public override bool Equals(object obj)
         {
             if (!(obj is Vector4)) return false;
@@ -208,21 +208,9 @@ namespace OpenGL
 
             return new Vector4(float.Parse(split[0]), float.Parse(split[1]), float.Parse(split[2]), float.Parse(split[3]));
         }
-
-        public float Get(int index)
-        {
-            switch (index)
-            {
-                case 0: return X;
-                case 1: return Y;
-                case 2: return Z;
-                case 3: return W;
-                default: return 0;  // error case
-            }
-        }
         #endregion
 
-    #region Properties
+        #region Properties
         /// <summary>
         /// Get the length of the Vector4 structure.
         /// </summary>
@@ -240,7 +228,7 @@ namespace OpenGL
         }
         #endregion
 
-    #region Methods
+        #region Methods
         /// <summary>
         /// Vector4 scalar dot product.
         /// </summary>
@@ -342,9 +330,23 @@ namespace OpenGL
             v1 = v2;
             v2 = t;
         }
+
+        /// <summary>
+        /// Copies the elements of the vector to a specified array.
+        /// </summary>
+        /// <param name="array">The destination array.</param>
+        /// <param name="offset">The index at which to copy the first element of the vector.</param>
+        public void CopyTo(float[] array, int offset)
+        {
+            array[offset + 0] = X;
+            array[offset + 1] = Y;
+            array[offset + 2] = Z;
+            array[offset + 3] = W;
+        }
         #endregion
     }
-#else
+#endif
+
     /// <summary>
     /// Extension methods for the Vector4 structure.
     /// </summary>
@@ -364,9 +366,8 @@ namespace OpenGL
                 case 1: return v.Y;
                 case 2: return v.Z;
                 case 3: return v.W;
-                default: return 0;  // error case
+                default: throw new ArgumentOutOfRangeException("index");
             }
         }
     }
-#endif
 }

@@ -318,6 +318,17 @@ namespace OpenGL
             v1 = v2;
             v2 = t;
         }
+
+        /// <summary>
+        /// Copies the elements of the vector to a specified array.
+        /// </summary>
+        /// <param name="array">The destination array.</param>
+        /// <param name="offset">The index at which to copy the first element of the vector.</param>
+        public void CopyTo(float[] array, int offset)
+        {
+            array[offset + 0] = X;
+            array[offset + 1] = Y;
+        }
         #endregion
     }
 #endif
