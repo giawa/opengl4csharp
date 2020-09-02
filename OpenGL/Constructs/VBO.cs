@@ -321,18 +321,50 @@ namespace OpenGL
     {
         private T[] values;
 
+        /// <summary>
+        /// Creates a static-read array buffer of type T.
+        /// </summary>
+        /// <param name="Data">Specifies a pointer to data that will be copied into the data store for initialization.</param>
         public DuplicatingVBO(T[] Data) : base(Data)
         {
             values = Data;
         }
+
+        /// <summary>
+        /// Creates a buffer object of type T.
+        /// </summary>
+        /// <param name="Data">Specifies a pointer to data that will be copied into the data store for initialization.</param>
+        /// <param name="Target">Specifies the target buffer object.</param>
+        /// <param name="Hint">Specifies the expected usage of the data store.</param>
         public DuplicatingVBO(T[] Data, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw) : base(Data, Target, Hint)
         {
             values = Data;
         }
+
+        /// <summary>
+        /// Creates a buffer object of type T with a specified length.
+        /// This allows the array T[] to be larger than the actual size necessary to buffer.
+        /// Useful for reusing resources and avoiding unnecessary GC action.
+        /// </summary>
+        /// <param name="Data">An array of data of type T (which must be a struct) that will be buffered to the GPU.</param>
+        /// <param name="Length">The length of the valid data in the data array.</param>
+        /// <param name="Target">Specifies the target buffer object.</param>
+        /// <param name="Hint">Specifies the expected usage of the data store.</param>
         public DuplicatingVBO(T[] Data, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw) : base(Data, Length, Target, Hint)
         {
             values = Data;
         }
+
+        /// <summary>
+        /// Creates a buffer object of type T with a specified length.
+        /// This allows the array T[] to be larger than the actual size necessary to buffer.
+        /// Useful for reusing resources and avoiding unnecessary GC action.
+        /// </summary>
+        /// <param name="Data">An array of data of type T (which must be a struct) that will be buffered to the GPU.</param>
+        /// <param name="Position">An offset into the Data array from which to begin buffering.</param>
+        /// <param name="Length">The length of the valid data in the data array.</param>
+        /// <param name="Target">Specifies the target buffer object.</param>
+        /// <param name="Hint">Specifies the expected usage of the data store.</param>
         public DuplicatingVBO(T[] Data, int Position, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw) : base(Data, Position, Length, Target, Hint)
         {
             values = Data;
@@ -345,7 +377,7 @@ namespace OpenGL
         /// <returns></returns>
         public ReadOnlyCollection<T> GetValues()
         {
-            return new ReadOnlyCollection<T>(values.ToArray());
+            return new ReadOnlyCollection<T>(values);
         }
         #endregion
     }
