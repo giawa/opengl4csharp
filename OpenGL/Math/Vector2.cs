@@ -1,7 +1,7 @@
-﻿#if USE_NUMERICS
+﻿using System;
+#if USE_NUMERICS
 using System.Numerics;
 #else
-using System;
 using System.Runtime.InteropServices;
 #endif
 
@@ -320,6 +320,24 @@ namespace OpenGL
         }
         #endregion
     }
-#else
 #endif
+
+    /// <summary>
+    /// Extension methods for the Vector4 structure.
+    /// </summary>
+    public static class Vector2Extensions
+    {
+        /// <summary>
+        /// Provide an accessor for each of the elements of the Vector structure.
+        /// </summary>
+        /// <param name="v">The Vector2 to access.</param>
+        /// <param name="index">The element to access (0 = X, 1 = Y).</param>
+        /// <returns>The element of the Vector2 as indexed by i.</returns>
+        public static float Get(this Vector2 tv, int index)
+        {
+            if (index != 0 && index != 1)
+                throw new ArgumentOutOfRangeException("index");
+            return (index == 0 ? tv.X : tv.Y);
+        }
+    }
 }
