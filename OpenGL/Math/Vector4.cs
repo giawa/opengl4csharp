@@ -342,39 +342,6 @@ namespace OpenGL
             v1 = v2;
             v2 = t;
         }
-
-        public float this[int a]
-        {
-            get
-            {
-                if (a > 3 || a < 0) throw new ArgumentOutOfRangeException();
-                if (a == 0)
-                {
-                    return X;
-                }
-                if (a == 1)
-                {
-                    return Y;
-                }
-                if (a == 2)
-                {
-                    return Z;
-                }
-                if (a == 3)
-                {
-                    return W;
-                }
-                return -1;
-            }
-            set
-            {
-                if (a == 0) X = value;
-                else if (a == 1) Y = value;
-                else if (a == 2) Z = value;
-                else if (a == 3) W = value;
-                else throw new ArgumentOutOfRangeException();
-            }
-        }
         #endregion
     }
 #else

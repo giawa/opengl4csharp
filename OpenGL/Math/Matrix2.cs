@@ -86,44 +86,6 @@ namespace OpenGL
             }
         }
 
-        public float this[int column, int row]
-        {
-            get
-            {                    
-                if (row == 0)
-                {
-                    if (column == 0) return row1.X;
-                    if (column == 1) return row1.Y;
-                }
-                else if (row == 1)
-                {
-                    if (column == 0) return row2.X;
-                    if (column == 1) return row2.Y;
-                }
-                else
-                {
-                    throw new ArgumentOutOfRangeException("column or row is out of the matrix bounds.");                    
-                }
-                return -1; //for some reason, it needs this, or get will bomb.
-            }
-            set
-            {
-                if (column > 1 || column < 0 || row > 1 || row < 0)
-                    throw new ArgumentOutOfRangeException("column or row is out of the matrix bounds.");
-
-                if (row == 0)
-                {
-                    if (column == 0) row1.X = value;
-                    if (column == 1) row1.Y = value;
-                }
-                if (row == 1)
-                {
-                    if (column == 0) row2.X = value;
-                    if (column == 1) row2.Y = value;
-                }
-            }
-        }
-
         public static bool operator ==(Matrix2 m1, Matrix2 m2)
         {
             return (m1[0] == m2[0] && m1[1] == m2[1]);
