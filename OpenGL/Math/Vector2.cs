@@ -1,7 +1,7 @@
-﻿#if USE_NUMERICS
+﻿using System;
+#if USE_NUMERICS
 using System.Numerics;
 #else
-using System;
 using System.Runtime.InteropServices;
 #endif
 
@@ -318,8 +318,37 @@ namespace OpenGL
             v1 = v2;
             v2 = t;
         }
+
+        /// <summary>
+        /// Copies the elements of the vector to a specified array.
+        /// </summary>
+        /// <param name="array">The destination array.</param>
+        /// <param name="offset">The index at which to copy the first element of the vector.</param>
+        public void CopyTo(float[] array, int offset)
+        {
+            array[offset + 0] = X;
+            array[offset + 1] = Y;
+        }
         #endregion
     }
-#else
 #endif
+
+    /// <summary>
+    /// Extension methods for the Vector4 structure.
+    /// </summary>
+    public static class Vector2Extensions
+    {
+        /// <summary>
+        /// Provide an accessor for each of the elements of the Vector structure.
+        /// </summary>
+        /// <param name="v">The Vector2 to access.</param>
+        /// <param name="index">The element to access (0 = X, 1 = Y).</param>
+        /// <returns>The element of the Vector2 as indexed by index.</returns>
+        public static float Get(this Vector2 tv, int index)
+        {
+            if (index != 0 && index != 1)
+                throw new ArgumentOutOfRangeException(nameof(index));
+            return (index == 0 ? tv.X : tv.Y);
+        }
+    }
 }
