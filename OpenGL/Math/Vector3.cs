@@ -658,7 +658,7 @@ namespace OpenGL
         public static float Get(this Vector3 v, int index)
         {
             if (index < 0 || index > 2)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             return (index == 0 ? v.X : (index == 1 ? v.Y : v.Z));
         }
     }

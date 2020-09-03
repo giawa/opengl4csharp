@@ -366,7 +366,7 @@ namespace OpenGL
                 case 1: return v.Y;
                 case 2: return v.Z;
                 case 3: return v.W;
-                default: throw new ArgumentOutOfRangeException("index");
+                default: throw new ArgumentOutOfRangeException(nameof(index));
             }
         }
     }

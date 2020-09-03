@@ -343,11 +343,11 @@ namespace OpenGL
         /// </summary>
         /// <param name="v">The Vector2 to access.</param>
         /// <param name="index">The element to access (0 = X, 1 = Y).</param>
-        /// <returns>The element of the Vector2 as indexed by i.</returns>
+        /// <returns>The element of the Vector2 as indexed by index.</returns>
         public static float Get(this Vector2 tv, int index)
         {
             if (index != 0 && index != 1)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             return (index == 0 ? tv.X : tv.Y);
         }
     }
