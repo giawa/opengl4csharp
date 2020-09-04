@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace OpenGL.Constructs
+namespace OpenGL
 {
     [StructLayout(LayoutKind.Sequential)]
     public readonly struct DrawElementsIndirectCommand
