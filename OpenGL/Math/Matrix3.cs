@@ -110,34 +110,39 @@ namespace OpenGL
                 {
                     return row2.Get(column);
                 }
-                else
+                else if (row == 2)
                 {
                     return row3.Get(column);
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException(nameof(row));
                 }
             }
             set
             {
-                if (column > 2 || column < 0 || row > 2 || row < 0)
-                    throw new ArgumentOutOfRangeException("column or row is out of the matrix bounds.");
-
                 if (row == 0)
                 {
                     if (column == 0) row1.X = value;
-                    if (column == 1) row1.Y = value;
-                    if (column == 2) row1.Z = value;
+                    else if (column == 1) row1.Y = value;
+                    else if (column == 2) row1.Z = value;
+                    else throw new ArgumentOutOfRangeException(nameof(column));
                 }
-                if (row == 1)
+                else if (row == 1)
                 {
                     if (column == 0) row2.X = value;
-                    if (column == 1) row2.Y = value;
-                    if (column == 2) row2.Z = value;
+                    else if (column == 1) row2.Y = value;
+                    else if (column == 2) row2.Z = value;
+                    else throw new ArgumentOutOfRangeException(nameof(column));
                 }
-                if (row == 2)
+                else if (row == 2)
                 {
                     if (column == 0) row3.X = value;
-                    if (column == 1) row3.Y = value;
-                    if (column == 2) row3.Z = value;
+                    else if (column == 1) row3.Y = value;
+                    else if (column == 2) row3.Z = value;
+                    else throw new ArgumentOutOfRangeException(nameof(column));
                 }
+                else throw new ArgumentOutOfRangeException(nameof(row));
             }
         }
 

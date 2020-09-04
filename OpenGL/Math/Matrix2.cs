@@ -94,26 +94,30 @@ namespace OpenGL
                 {
                     return row1.Get(column);
                 }
-                else
+                else if(row == 1)
                 {
                     return row2.Get(column);
-                }               
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException(nameof(row));
+                }
             }
             set
             {
-                if (column > 1 || column < 0 || row > 1 || row < 0)
-                    throw new ArgumentOutOfRangeException("column or row is out of the matrix bounds.");
-
                 if (row == 0)
                 {
                     if (column == 0) row1.X = value;
-                    if (column == 1) row1.Y = value;
+                    else if (column == 1) row1.Y = value;
+                    else throw new ArgumentOutOfRangeException(nameof(column));
                 }
-                if (row == 1)
+                else if (row == 1)
                 {
                     if (column == 0) row2.X = value;
-                    if (column == 1) row2.Y = value;
+                    else if (column == 1) row2.Y = value;
+                    else throw new ArgumentOutOfRangeException(nameof(column));
                 }
+                else throw new ArgumentOutOfRangeException(nameof(row));
             }
         }
 
