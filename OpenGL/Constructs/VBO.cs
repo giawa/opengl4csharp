@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using OpenGL.Constructs;
 
 #if USE_NUMERICS
 using System.Numerics;
