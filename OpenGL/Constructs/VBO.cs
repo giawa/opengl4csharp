@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using OpenGL.Constructs;
 
 #if USE_NUMERICS
@@ -106,7 +107,7 @@ namespace OpenGL
         /// The type of data that is stored in the buffer (either int or float).
         /// </summary>
         public VertexAttribPointerType PointerType { get; private set; }
-        
+
         /// <summary>
         /// The length of data that is stored in the buffer.
         /// </summary>
@@ -276,7 +277,7 @@ namespace OpenGL
         /// <param name="data">The new data that will be copied to the data store.</param>
         /// <param name="size">The size in bytes of the data store region being replaced.</param>
         /// <param name="offset">The offset in bytes into the buffer object's data store where data replacement will begin.</param>
-        public void BufferSubData(T[] data, int size, int offset)
+        public virtual void BufferSubData(T[] data, int size, int offset)
         {
             if (BufferTarget != BufferTarget.ArrayBuffer && BufferTarget != BufferTarget.ElementArrayBuffer &&
                 BufferTarget != BufferTarget.PixelPackBuffer && BufferTarget != BufferTarget.PixelUnpackBuffer &&
@@ -314,6 +315,83 @@ namespace OpenGL
                 Gl.DeleteBuffer(ID);
                 ID = 0;
             }
+        }
+        #endregion
+    }
+    public class DuplicatingVBO<T> : VBO<T>
+        where T : struct
+    {
+        private T[] values;
+
+        /// <summary>
+        /// Creates a static-read array buffer of type T.
+        /// </summary>
+        /// <param name="Data">Specifies a pointer to data that will be copied into the data store for initialization.</param>
+        public DuplicatingVBO(T[] Data) : base(Data)
+        {
+            values = Data;
+        }
+
+        /// <summary>
+        /// Creates a buffer object of type T.
+        /// </summary>
+        /// <param name="Data">Specifies a pointer to data that will be copied into the data store for initialization.</param>
+        /// <param name="Target">Specifies the target buffer object.</param>
+        /// <param name="Hint">Specifies the expected usage of the data store.</param>
+        public DuplicatingVBO(T[] Data, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw) : base(Data, Target, Hint)
+        {
+            values = Data;
+        }
+
+        /// <summary>
+        /// Creates a buffer object of type T with a specified length.
+        /// This allows the array T[] to be larger than the actual size necessary to buffer.
+        /// Useful for reusing resources and avoiding unnecessary GC action.
+        /// </summary>
+        /// <param name="Data">An array of data of type T (which must be a struct) that will be buffered to the GPU.</param>
+        /// <param name="Length">The length of the valid data in the data array.</param>
+        /// <param name="Target">Specifies the target buffer object.</param>
+        /// <param name="Hint">Specifies the expected usage of the data store.</param>
+        public DuplicatingVBO(T[] Data, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw) : base(Data, Length, Target, Hint)
+        {
+            values = Data;
+        }
+
+        /// <summary>
+        /// Creates a buffer object of type T with a specified length.
+        /// This allows the array T[] to be larger than the actual size necessary to buffer.
+        /// Useful for reusing resources and avoiding unnecessary GC action.
+        /// </summary>
+        /// <param name="Data">An array of data of type T (which must be a struct) that will be buffered to the GPU.</param>
+        /// <param name="Position">An offset into the Data array from which to begin buffering.</param>
+        /// <param name="Length">The length of the valid data in the data array.</param>
+        /// <param name="Target">Specifies the target buffer object.</param>
+        /// <param name="Hint">Specifies the expected usage of the data store.</param>
+        public DuplicatingVBO(T[] Data, int Position, int Length, BufferTarget Target = BufferTarget.ArrayBuffer, BufferUsageHint Hint = BufferUsageHint.StaticDraw) : base(Data, Position, Length, Target, Hint)
+        {
+            values = Data;
+        }
+
+        /// <summary>
+        /// Updates a subset of the buffer object's data store.
+        /// </summary>
+        /// <param name="data">The new data that will be copied to the data store.</param>
+        /// <param name="size">The size in bytes of the data store region being replaced.</param>
+        /// <param name="offset">The offset in bytes into the buffer object's data store where data replacement will begin.</param>
+        public override void BufferSubData(T[] data, int size, int offset)
+        {
+            Array.Copy(data, 0, values, offset / Marshal.SizeOf<T>(), size / Marshal.SizeOf<T>());
+            base.BufferSubData(data, size, offset);
+        }
+
+        #region Methods
+        /// <summary>
+        /// Returns the value of VBO<T> in an array
+        /// </summary>
+        /// <returns></returns>
+        public ReadOnlyCollection<T> GetValues()
+        {
+            return new ReadOnlyCollection<T>(values);
         }
         #endregion
     }
