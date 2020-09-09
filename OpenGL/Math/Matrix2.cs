@@ -86,6 +86,41 @@ namespace OpenGL
             }
         }
 
+        public float this[int column, int row]
+        {
+            get
+            {
+                if (row == 0)
+                {
+                    return row1.Get(column);
+                }
+                else if(row == 1)
+                {
+                    return row2.Get(column);
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException(nameof(row));
+                }
+            }
+            set
+            {
+                if (row == 0)
+                {
+                    if (column == 0) row1.X = value;
+                    else if (column == 1) row1.Y = value;
+                    else throw new ArgumentOutOfRangeException(nameof(column));
+                }
+                else if (row == 1)
+                {
+                    if (column == 0) row2.X = value;
+                    else if (column == 1) row2.Y = value;
+                    else throw new ArgumentOutOfRangeException(nameof(column));
+                }
+                else throw new ArgumentOutOfRangeException(nameof(row));
+            }
+        }
+
         public static bool operator ==(Matrix2 m1, Matrix2 m2)
         {
             return (m1[0] == m2[0] && m1[1] == m2[1]);

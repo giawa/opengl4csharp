@@ -94,6 +94,70 @@ namespace OpenGL
             }
         }
 
+        public float this[int column, int row]
+        {
+            get
+            {
+                if (row == 0)
+                {
+                    return row1.Get(column);
+                }
+                else if (row == 1)
+                {
+                    return row2.Get(column);
+                }
+                else if (row == 2)
+                {
+                    return row3.Get(column);
+                }
+                else if (row == 3)
+                {
+                    return row4.Get(column);
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException(nameof(row));
+                }
+            }
+            set
+            {
+                //Checking each column is needed, so as not to use Vector4[int], as it is not supported by System.Numerics
+                if (row == 0)
+                {
+                    if (column == 0) row1.X = value;
+                    else if (column == 1) row1.Y = value;
+                    else if (column == 2) row1.Z = value;
+                    else if (column == 3) row1.W = value;
+                    else throw new ArgumentOutOfRangeException(nameof(column));
+                }
+                else if (row == 1)
+                {
+                    if (column == 0) row2.X = value;
+                    else if (column == 1) row2.Y = value;
+                    else if (column == 2) row2.Z = value;
+                    else if (column == 3) row2.W = value;
+                    else throw new ArgumentOutOfRangeException(nameof(column));
+                }
+                else if (row == 2)
+                {
+                    if (column == 0) row3.X = value;
+                    else if (column == 1) row3.Y = value;
+                    else if (column == 2) row3.Z = value;
+                    else if (column == 3) row3.W = value;
+                    else throw new ArgumentOutOfRangeException(nameof(column));
+                }
+                else if (row == 3)
+                {
+                    if (column == 0) row4.X = value;
+                    else if (column == 1) row4.Y = value;
+                    else if (column == 2) row4.Z = value;
+                    else if (column == 3) row4.W = value;
+                    else throw new ArgumentOutOfRangeException(nameof(column));
+                }
+                else throw new ArgumentOutOfRangeException(nameof(row));
+            }
+        }
+
         public static bool operator ==(in Matrix4 m1, in Matrix4 m2)
         {
             return (m1.row1 == m2.row1 && m1.row2 == m2.row2 && m1.row3 == m2.row3 && m1.row4 == m2.row4);
