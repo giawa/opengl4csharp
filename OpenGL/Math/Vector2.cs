@@ -250,7 +250,7 @@ namespace OpenGL
         /// <returns>Vector2.Dot(this, v)</returns>
         public float Dot(Vector2 v)
         {
-            return this.Dot(v);
+            return Vector2.Dot(this, v);
         }
 
         /// <summary>
