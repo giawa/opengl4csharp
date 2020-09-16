@@ -235,6 +235,16 @@ namespace OpenGL
         }
 
         /// <summary>
+        /// Performs the Vector3 scalar dot product.
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        public float Dot(Vector3 v) 
+        { 
+            return Vector3.Dot(this, v); 
+        }
+
+        /// <summary>
         /// A System.Numerics compatible version of SquaredLength.
         /// </summary>
         /// <returns>Returns the squared length of the Vector3 structure.</returns>
