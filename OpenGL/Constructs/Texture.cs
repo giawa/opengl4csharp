@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
-
-using ImageSharp;
-using ImageSharp.Processing;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace OpenGL
 {
@@ -98,32 +97,34 @@ namespace OpenGL
 
         private void LoadBitmap(string filename, bool flipy = true)
         {
-            Image image = new Image(filename);
-            Size = new Size(image.Width, image.Height);
-
-            if (flipy)
+            using (Bitmap image = (Bitmap)Image.FromFile(filename))
             {
-                image = (Image)image.Flip(FlipType.Vertical);
-            }
+                Size = new Size(image.Width, image.Height);
 
-            using (var imageData = image.Lock())
-            {
+                if (flipy)
+                {
+                    image.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                }
+
+                // must be Format32bppArgb file format, so convert it if it isn't in that format
+                BitmapData imageData = image.LockBits(new Rectangle(0, 0, image.Width, image.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
                 TextureTarget = TextureTarget.Texture2D;
                 TextureID = Gl.GenTexture();
 
                 Gl.PixelStorei(PixelStoreParameter.UnpackAlignment, 1); // set pixel alignment
                 Gl.BindTexture(TextureTarget, TextureID);     // bind the texture to memory in OpenGL
 
-                Gl.TexImage2D(TextureTarget, 0, PixelInternalFormat.Rgba8, image.Width, image.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, imageData.DataPointer);
+                Gl.TexImage2D(TextureTarget, 0, PixelInternalFormat.Rgba8, image.Width, image.Height, 0, PixelFormat.Bgra, PixelType.UnsignedByte, imageData.Scan0);
                 Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMagFilter, TextureParameter.Nearest);
                 Gl.TexParameteri(TextureTarget, TextureParameterName.TextureMinFilter, TextureParameter.Nearest);
-            }
-
-            image.Dispose();
 
 #if MEMORY_LOGGER
-            MemoryLogger.AllocateTexture(TextureID, Size);
+                MemoryLogger.AllocateTexture(TextureID, Size);
 #endif
+
+                image.UnlockBits(imageData);
+            }
         }
 
         /// <summary>
