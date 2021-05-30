@@ -36,9 +36,11 @@ namespace OpenGL
             Filename = filename;
             switch (new FileInfo(filename).Extension.ToLower())
             {
-                case ".dds": LoadDDS(filename);
+                case ".dds":
+                    LoadDDS(filename);
                     break;
-                default: LoadBitmap(filename);
+                default:
+                    LoadBitmap(filename);
                     break;
             }
 
@@ -168,7 +170,7 @@ namespace OpenGL
                         if (imageData.PixelFormat.ABitMask == 0xf000 && imageData.PixelFormat.RBitMask == 0x0f00 &&
                             imageData.PixelFormat.GBitMask == 0x00f0 && imageData.PixelFormat.BBitMask == 0x000f &&
                             imageData.PixelFormat.RGBBitCount == 16) format = PixelInternalFormat.Rgba;
-                        else if (imageData.PixelFormat.ABitMask == unchecked((int) 0xff000000) && imageData.PixelFormat.RBitMask == 0x00ff0000 &&
+                        else if (imageData.PixelFormat.ABitMask == unchecked((int)0xff000000) && imageData.PixelFormat.RBitMask == 0x00ff0000 &&
                             imageData.PixelFormat.GBitMask == 0x0000ff00 && imageData.PixelFormat.BBitMask == 0x000000ff &&
                             imageData.PixelFormat.RGBBitCount == 32) format = PixelInternalFormat.Rgba;
                         else throw new Exception(string.Format("File compression \"{0}\" is not supported.", imageData.PixelFormat.FourCC));
@@ -239,7 +241,7 @@ namespace OpenGL
     {
         #region DirectDraw Surface
         /// <summary>The DirectDraw Surface pixel format.</summary>
-        [StructLayout(LayoutKind.Sequential, Pack=1)]
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct DDS_PIXEL_FORMAT
         {
             /// <summary>Size of the DDS_PIXEL_FORMAT structure.</summary>
@@ -265,7 +267,7 @@ namespace OpenGL
         }
 
         /// <summary>The DirectDraw Surface descriptor.</summary>
-        [StructLayout(LayoutKind.Sequential, Pack=1)]
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct DDSURFACEDESC2
         {
             /// <summary>The size of the DDSURFACEDESC2 structure.</summary>
