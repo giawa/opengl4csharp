@@ -115,6 +115,7 @@ namespace OpenGL
         /// <summary>
         /// Gets the program ID of the currently active shader program.
         /// </summary>
+        [Obsolete("CurrentProgram is deprecated as unreliable, as it will not return the correct value in the presence of multiple OpenGL contexts.")]
         public static uint CurrentProgram
         {
             get { return currentProgram; }

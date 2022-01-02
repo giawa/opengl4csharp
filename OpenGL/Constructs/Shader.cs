@@ -529,7 +529,7 @@ namespace OpenGL
         #region Methods
         public void Use()
         {
-            if (Gl.CurrentProgram != ProgramID) Gl.UseProgram(this.ProgramID);
+            Gl.UseProgram(this.ProgramID);
         }
 
         public int GetUniformLocation(string Name)
@@ -556,9 +556,6 @@ namespace OpenGL
         {
             if (ProgramID != 0)
             {
-                // Make sure this program isn't being used
-                if (Gl.CurrentProgram == ProgramID) Gl.UseProgram(0);
-
                 Gl.DetachShader(ProgramID, VertexShader.ShaderID);
                 Gl.DetachShader(ProgramID, FragmentShader.ShaderID);
                 Gl.DeleteProgram(ProgramID);
