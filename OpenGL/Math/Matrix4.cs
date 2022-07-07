@@ -32,12 +32,12 @@ namespace OpenGL
 
         public static Matrix4 operator *(Matrix4 m, Matrix4 m2)
         {
-            Matrix4 m2t = m2.Transpose();
+            Matrix4 mt = m.Transpose();
             return new Matrix4(
-                m2t * m.row1,
-                m2t * m.row2,
-                m2t * m.row3,
-                m2t * m.row4);
+                mt * m2.row1,
+                mt * m2.row2,
+                mt * m2.row3,
+                mt * m2.row4);
         }
 
         public static Matrix4 operator *(Matrix4 m1, float d)
