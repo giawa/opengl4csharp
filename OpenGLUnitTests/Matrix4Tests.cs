@@ -1,8 +1,10 @@
-﻿using System;
-using System.Numerics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+#if USE_NUMERICS
+using System.Numerics;
+#else
 using OpenGL;
+#endif
 
 namespace OpenGLUnitTests
 {
@@ -23,7 +25,7 @@ namespace OpenGLUnitTests
         [TestMethod]
         public void MatrixCreateFromArray()
         {
-            Matrix4 matrix = new Matrix4(new double[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 });
+            Matrix4 matrix = new Matrix4(new double[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
 
             Assert.AreEqual(matrix[0], new Vector4(0, 1, 2, 3));
             Assert.AreEqual(matrix[1], new Vector4(4, 5, 6, 7));
@@ -50,8 +52,8 @@ namespace OpenGLUnitTests
         [TestMethod]
         public void MatrixAdd()
         {
-            Matrix4 m1 = new Matrix4(new double[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 });
-            Matrix4 m2 = new Matrix4(new double[] { 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10 });
+            Matrix4 m1 = new Matrix4(new double[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
+            Matrix4 m2 = new Matrix4(new double[] {10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10});
             Matrix4 sum = m1 + m2;
 
             Assert.AreEqual(sum[0], m1[0] + m2[0]);
@@ -63,8 +65,8 @@ namespace OpenGLUnitTests
         [TestMethod]
         public void MatrixSubtract()
         {
-            Matrix4 m1 = new Matrix4(new double[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 });
-            Matrix4 m2 = new Matrix4(new double[] { 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10 });
+            Matrix4 m1 = new Matrix4(new double[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
+            Matrix4 m2 = new Matrix4(new double[] {10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10});
             Matrix4 difference = m1 - m2;
 
             Assert.AreEqual(difference[0], m1[0] - m2[0]);
@@ -76,14 +78,28 @@ namespace OpenGLUnitTests
         [TestMethod]
         public void MatrixMultiply()
         {
-            Matrix4 m1 = new Matrix4(new double[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 });
-            Matrix4 m2 = new Matrix4(new double[] { 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10 });
-            Matrix4 mult = m1 * m2;
+            Matrix4 m1 = new Matrix4(new double[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
+            Matrix4 m2 = new Matrix4(new double[] {10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10});
+            Matrix4 mult = m2 * m1;
 
-            Assert.AreEqual(mult[0], new Vector4(220, 230, 190, 100));
-            Assert.AreEqual(mult[1], new Vector4(740, 710, 630, 500));
-            Assert.AreEqual(mult[2], new Vector4(1260, 1190, 1070, 900));
-            Assert.AreEqual(mult[3], new Vector4(1780, 1670, 1510, 1300));
+            Assert.AreEqual(new Vector4(220, 230, 190, 100), mult[0]);
+            Assert.AreEqual(new Vector4(740, 710, 630, 500), mult[1]);
+            Assert.AreEqual(new Vector4(1260, 1190, 1070, 900), mult[2]);
+            Assert.AreEqual(new Vector4(1780, 1670, 1510, 1300), mult[3]);
+        }
+        
+        [TestMethod]
+        public void MatrixMultiplyMultipleMatrix()
+        {
+            Matrix4 m1 = new Matrix4(new double[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
+            Matrix4 m2 = new Matrix4(new double[] {10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10});
+            Matrix4 m3 = new Matrix4(new double[] {100, 200, 300, 400, 500, 100, 200, 300, 400, 500, 100, 200, 300, 400, 500, 100});
+            Matrix4 mult = m3 * m2 * m1;
+
+            Assert.AreEqual(new Vector4(243000, 202000, 181000, 205000), mult[0]);
+            Assert.AreEqual(new Vector4(831000, 734000, 677000, 685000), mult[1]);
+            Assert.AreEqual(new Vector4(1419000, 1266000, 1173000, 1165000), mult[2]);
+            Assert.AreEqual(new Vector4(2007000, 1798000, 1669000, 1645000), mult[3]);
         }
 
         [TestMethod]
@@ -265,26 +281,26 @@ namespace OpenGLUnitTests
             Vector4 v3 = new Vector4(8, 9, 10, 11);
             Vector4 v4 = new Vector4(12, 13, 14, 15);
 
-            Assert.IsTrue(new Matrix4(v1, v2, v3, v4).Equals((object)new Matrix4(v1, v2, v3, v4)));
-            Assert.IsFalse(new Matrix4(v1, v2, v4, v3).Equals((object)new Matrix4(v1, v2, v3, v4)));
-            Assert.IsFalse(new Matrix4(v1, v3, v2, v4).Equals((object)new Matrix4(v1, v2, v3, v4)));
-            Assert.IsFalse(new Matrix4(v1, v3, v4, v2).Equals((object)new Matrix4(v1, v2, v3, v4)));
-            Assert.IsFalse(new Matrix4(v1, v4, v2, v3).Equals((object)new Matrix4(v1, v2, v3, v4)));
-            Assert.IsFalse(new Matrix4(v1, v4, v3, v2).Equals((object)new Matrix4(v1, v2, v3, v4)));
+            Assert.IsTrue(new Matrix4(v1, v2, v3, v4).Equals((object) new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v1, v2, v4, v3).Equals((object) new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v1, v3, v2, v4).Equals((object) new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v1, v3, v4, v2).Equals((object) new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v1, v4, v2, v3).Equals((object) new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v1, v4, v3, v2).Equals((object) new Matrix4(v1, v2, v3, v4)));
 
-            Assert.IsFalse(new Matrix4(v2, v1, v3, v4).Equals((object)new Matrix4(v1, v2, v3, v4)));
-            Assert.IsFalse(new Matrix4(v2, v1, v4, v3).Equals((object)new Matrix4(v1, v2, v3, v4)));
-            Assert.IsFalse(new Matrix4(v2, v3, v1, v4).Equals((object)new Matrix4(v1, v2, v3, v4)));
-            Assert.IsFalse(new Matrix4(v2, v3, v4, v1).Equals((object)new Matrix4(v1, v2, v3, v4)));
-            Assert.IsFalse(new Matrix4(v2, v4, v1, v3).Equals((object)new Matrix4(v1, v2, v3, v4)));
-            Assert.IsFalse(new Matrix4(v2, v4, v3, v1).Equals((object)new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v2, v1, v3, v4).Equals((object) new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v2, v1, v4, v3).Equals((object) new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v2, v3, v1, v4).Equals((object) new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v2, v3, v4, v1).Equals((object) new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v2, v4, v1, v3).Equals((object) new Matrix4(v1, v2, v3, v4)));
+            Assert.IsFalse(new Matrix4(v2, v4, v3, v1).Equals((object) new Matrix4(v1, v2, v3, v4)));
             Assert.IsFalse(new Matrix4(v2, v4, v3, v1).Equals(new object()));
         }
 
         [TestMethod]
         public void MatrixToFloat()
         {
-            float[] array = new float[] { 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10 };
+            float[] array = new float[] {10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10};
             Matrix4 matrix = new Matrix4(array);
             float[] comparison = matrix.ToFloat();
 
@@ -296,7 +312,7 @@ namespace OpenGLUnitTests
         [TestMethod]
         public void MatrixInverse()
         {
-            Matrix4 matrix = new Matrix4(new double[] { 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10 });
+            Matrix4 matrix = new Matrix4(new double[] {10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10});
             Matrix4 inverse = matrix.Inverse();
             float[] identity = (matrix * inverse).ToFloat();
 
@@ -308,13 +324,13 @@ namespace OpenGLUnitTests
         [TestMethod]
         public void MatrixTranspose()
         {
-            Vector4 v1 = new Vector4( 0,  1,  2,  3);
-            Vector4 v2 = new Vector4( 4,  5,  6,  7);
-            Vector4 v3 = new Vector4( 8,  9, 10, 11);
+            Vector4 v1 = new Vector4(0, 1, 2, 3);
+            Vector4 v2 = new Vector4(4, 5, 6, 7);
+            Vector4 v3 = new Vector4(8, 9, 10, 11);
             Vector4 v4 = new Vector4(12, 13, 14, 15);
 
-            Vector4 v1t = new Vector4(0, 4,  8, 12);
-            Vector4 v2t = new Vector4(1, 5,  9, 13);
+            Vector4 v1t = new Vector4(0, 4, 8, 12);
+            Vector4 v2t = new Vector4(1, 5, 9, 13);
             Vector4 v3t = new Vector4(2, 6, 10, 14);
             Vector4 v4t = new Vector4(3, 7, 11, 15);
 
