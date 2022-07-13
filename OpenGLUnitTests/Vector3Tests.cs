@@ -31,9 +31,7 @@ namespace OpenGLUnitTests
                 Vector3 v1 = new Vector3(GetRandomFloat(), GetRandomFloat(), GetRandomFloat());
                 Vector3 v2 = new Vector3(GetRandomFloat(), GetRandomFloat(), GetRandomFloat());
                 Vector3 a = v1;
-
                 a.TakeMin(v2);
-
                 Assert.AreEqual(a, new Vector3(Math.Min(v1.X, v2.X), Math.Min(v1.Y, v2.Y), Math.Min(v1.Z, v2.Z)));
             }
         }
@@ -72,10 +70,8 @@ namespace OpenGLUnitTests
 
                 Assert.AreEqual(Vector3.Abs(v1), new Vector3(Math.Abs(v1.X), Math.Abs(v1.Y), Math.Abs(v1.Z)));
                 Assert.AreEqual(Vector3.Add(v1, v2), new Vector3(v1.X + v2.X, v1.Y + v2.Y, v1.Z + v2.Z));
-                Assert.AreEqual(Vector3.Clamp(v1, v2, v3),
-                    new Vector3(Clamp(v1.X, v2.X, v3.X), Clamp(v1.Y, v2.Y, v3.Y), Clamp(v1.Z, v2.Z, v3.Z)));
-                Assert.AreEqual(Vector3.Cross(v1, v2),
-                    new Vector3(v1.Y * v2.Z - v1.Z * v2.Y, v1.Z * v2.X - v1.X * v2.Z, v1.X * v2.Y - v1.Y * v2.X));
+                Assert.AreEqual(Vector3.Clamp(v1, v2, v3), new Vector3(Clamp(v1.X, v2.X, v3.X), Clamp(v1.Y, v2.Y, v3.Y), Clamp(v1.Z, v2.Z, v3.Z)));
+                Assert.AreEqual(Vector3.Cross(v1, v2), new Vector3(v1.Y * v2.Z - v1.Z * v2.Y, v1.Z * v2.X - v1.X * v2.Z, v1.X * v2.Y - v1.Y * v2.X));
 #if USE_NUMERICS
                 Assert.IsTrue(CloseEnough(Vector3.Distance(v1, v2), (v1 - v2).Length()));
 #else
@@ -86,10 +82,8 @@ namespace OpenGLUnitTests
                 Assert.AreEqual(Vector3.Divide(v1, v2), new Vector3(v1.X / v2.X, v1.Y / v2.Y, v1.Z / v2.Z));
                 Assert.IsTrue(CloseEnough(Vector3.Dot(v1, v2), v1.X * v2.X + v1.Y * v2.Y + v1.Z * v2.Z));
                 Assert.IsTrue(CloseEnough(Vector3.Lerp(v1, v2, f1), v1 + (v2 - v1) * f1, 1e-02f));
-                Assert.AreEqual(Vector3.Max(v1, v2),
-                    new Vector3(Math.Max(v1.X, v2.X), Math.Max(v1.Y, v2.Y), Math.Max(v1.Z, v2.Z)));
-                Assert.AreEqual(Vector3.Min(v1, v2),
-                    new Vector3(Math.Min(v1.X, v2.X), Math.Min(v1.Y, v2.Y), Math.Min(v1.Z, v2.Z)));
+                Assert.AreEqual(Vector3.Max(v1, v2), new Vector3(Math.Max(v1.X, v2.X), Math.Max(v1.Y, v2.Y), Math.Max(v1.Z, v2.Z)));
+                Assert.AreEqual(Vector3.Min(v1, v2), new Vector3(Math.Min(v1.X, v2.X), Math.Min(v1.Y, v2.Y), Math.Min(v1.Z, v2.Z)));
                 Assert.AreEqual(Vector3.Multiply(v1, f1), new Vector3(v1.X * f1, v1.Y * f1, v1.Z * f1));
                 Assert.AreEqual(Vector3.Multiply(f1, v1), new Vector3(v1.X * f1, v1.Y * f1, v1.Z * f1));
                 Assert.AreEqual(Vector3.Multiply(v1, v2), new Vector3(v1.X * v2.X, v1.Y * v2.Y, v1.Z * v2.Z));
@@ -100,8 +94,7 @@ namespace OpenGLUnitTests
                 Assert.AreEqual(Vector3.Normalize(v1), v1 / v1.Length());
 #endif
                 Assert.IsTrue(CloseEnough(Vector3.Reflect(v1, v2), v1 - Vector3.Dot(v1, v2) * v2 * 2f));
-                Assert.IsTrue(CloseEnough(Vector3.SquareRoot(v1),
-                    new Vector3((float) Math.Sqrt(v1.X), (float) Math.Sqrt(v1.Y), (float) Math.Sqrt(v1.Z))));
+                Assert.IsTrue(CloseEnough(Vector3.SquareRoot(v1), new Vector3((float)Math.Sqrt(v1.X), (float)Math.Sqrt(v1.Y), (float)Math.Sqrt(v1.Z))));
                 Assert.AreEqual(Vector3.Subtract(v1, v2), new Vector3(v1.X - v2.X, v1.Y - v2.Y, v1.Z - v2.Z));
                 Assert.IsTrue(CloseEnough(Vector3.Transform(v1, q), Transform(v1, q), 1e-01f));
             }
@@ -111,7 +104,7 @@ namespace OpenGLUnitTests
 
         private float GetRandomFloat()
         {
-            return (float) (10000 * (generator.NextDouble() - 0.5));
+            return (float)(10000 * (generator.NextDouble() - 0.5));
         }
 
         private float Clamp(float value, float min, float max)
@@ -129,11 +122,10 @@ namespace OpenGLUnitTests
 
         private bool CloseEnough(Vector3 v1, Vector3 v2, float rtol = 1e-05f)
         {
-            bool close = CloseEnough(v1.X, v2.X, rtol) && CloseEnough(v1.Y, v2.Y, rtol) &&
-                         CloseEnough(v1.Z, v2.Z, rtol);
+            bool close = CloseEnough(v1.X, v2.X, rtol) && CloseEnough(v1.Y, v2.Y, rtol) && CloseEnough(v1.Z, v2.Z, rtol);
 
             if (close) return true;
-            else
+            else 
                 return false;
         }
 
