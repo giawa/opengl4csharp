@@ -46,10 +46,7 @@ namespace OpenGLUnitTests
                 Vector3 v1 = new Vector3(GetRandomFloat(), GetRandomFloat(), GetRandomFloat());
                 Vector3 v2 = new Vector3(GetRandomFloat(), GetRandomFloat(), GetRandomFloat());
                 Vector3 a = v1;
-
-               a.TakeMax(v2);
-
-
+                a.TakeMax(v2);
                 Assert.AreEqual(a, new Vector3(Math.Max(v1.X, v2.X), Math.Max(v1.Y, v2.Y), Math.Max(v1.Z, v2.Z)));
             }
         }
