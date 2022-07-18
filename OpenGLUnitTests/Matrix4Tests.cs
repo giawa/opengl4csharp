@@ -82,12 +82,12 @@ namespace OpenGLUnitTests
             Matrix4 m2 = new Matrix4(new double[] { 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10, 20, 30, 40, 50, 10 });
             Matrix4 mult = m1 * m2;
 
-            Assert.AreEqual(new Vector4(220, 230, 190, 100),mult[0]);
-            Assert.AreEqual(new Vector4(740, 710, 630, 500),mult[1]);
-            Assert.AreEqual(new Vector4(1260, 1190, 1070, 900),mult[2]);
-            Assert.AreEqual(new Vector4(1780, 1670, 1510, 1300),mult[3]);
+            Assert.AreEqual(new Vector4(220, 230, 190, 100), mult[0]);
+            Assert.AreEqual(new Vector4(740, 710, 630, 500), mult[1]);
+            Assert.AreEqual(new Vector4(1260, 1190, 1070, 900), mult[2]);
+            Assert.AreEqual(new Vector4(1780, 1670, 1510, 1300), mult[3]);
         }
-        
+
         [TestMethod]
         public void MatrixMultiplyMultipleMatrix()
         {
@@ -324,13 +324,13 @@ namespace OpenGLUnitTests
         [TestMethod]
         public void MatrixTranspose()
         {
-            Vector4 v1 = new Vector4( 0,  1,  2,  3);
-            Vector4 v2 = new Vector4( 4,  5,  6,  7);
-            Vector4 v3 = new Vector4( 8,  9, 10, 11);
+            Vector4 v1 = new Vector4(0, 1, 2, 3);
+            Vector4 v2 = new Vector4(4, 5, 6, 7);
+            Vector4 v3 = new Vector4(8, 9, 10, 11);
             Vector4 v4 = new Vector4(12, 13, 14, 15);
 
-            Vector4 v1t = new Vector4(0, 4,  8, 12);
-            Vector4 v2t = new Vector4(1, 5,  9, 13);
+            Vector4 v1t = new Vector4(0, 4, 8, 12);
+            Vector4 v2t = new Vector4(1, 5, 9, 13);
             Vector4 v3t = new Vector4(2, 6, 10, 14);
             Vector4 v4t = new Vector4(3, 7, 11, 15);
 

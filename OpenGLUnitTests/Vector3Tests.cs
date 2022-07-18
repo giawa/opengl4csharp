@@ -3,9 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 #if USE_NUMERICS
 using System.Numerics;
-#else
-using OpenGL;
 #endif
+using OpenGL;
 
 namespace OpenGLUnitTests
 {
@@ -51,6 +50,7 @@ namespace OpenGLUnitTests
             }
         }
 #endif
+
         [TestMethod]
         public void Vector3StaticMethods()
         {
