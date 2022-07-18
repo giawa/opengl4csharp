@@ -2,9 +2,8 @@
 
 #if USE_NUMERICS
 using System.Numerics;
-#else
-using OpenGL;
 #endif
+using OpenGL;
 
 namespace OpenGLUnitTests
 {

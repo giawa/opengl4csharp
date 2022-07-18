@@ -3,8 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 #if USE_NUMERICS
 using System.Numerics;
-#endif
+#else
 using OpenGL;
+#endif
 
 namespace OpenGLUnitTests
 {
