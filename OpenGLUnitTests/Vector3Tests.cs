@@ -1,12 +1,11 @@
-﻿#define USE_NUMERICS
-
-using System;
+﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 #if USE_NUMERICS
 using System.Numerics;
-#endif
+#else
 using OpenGL;
+#endif
 
 namespace OpenGLUnitTests
 {
@@ -23,6 +22,7 @@ namespace OpenGLUnitTests
             Assert.AreEqual(Vector3.Zero, new Vector3(0, 0, 0));
         }
 
+#if !USE_NUMERICS
         [TestMethod]
         public void Vector3TakeMin()
         {
@@ -35,7 +35,9 @@ namespace OpenGLUnitTests
                 Assert.AreEqual(a, new Vector3(Math.Min(v1.X, v2.X), Math.Min(v1.Y, v2.Y), Math.Min(v1.Z, v2.Z)));
             }
         }
-
+#endif
+       
+#if !USE_NUMERICS
         [TestMethod]
         public void Vector3TakeMax()
         {
@@ -48,6 +50,7 @@ namespace OpenGLUnitTests
                 Assert.AreEqual(a, new Vector3(Math.Max(v1.X, v2.X), Math.Max(v1.Y, v2.Y), Math.Max(v1.Z, v2.Z)));
             }
         }
+#endif
 
         [TestMethod]
         public void Vector3StaticMethods()
@@ -70,7 +73,7 @@ namespace OpenGLUnitTests
 #if USE_NUMERICS
                 Assert.IsTrue(CloseEnough(Vector3.Distance(v1, v2), (v1 - v2).Length()));
 #else
-                Assert.IsTrue(CloseEnough(Vector3.Distance(v1, v2), (v1 - v2).Length));
+                Assert.IsTrue(CloseEnough(Vector3.Distance(v1, v2), (v1 - v2).Length()));
 #endif
                 Assert.IsTrue(CloseEnough(Vector3.DistanceSquared(v1, v2), (v1 - v2).LengthSquared()));
                 Assert.AreEqual(Vector3.Divide(v1, f1), new Vector3(v1.X / f1, v1.Y / f1, v1.Z / f1));
@@ -86,7 +89,7 @@ namespace OpenGLUnitTests
 #if USE_NUMERICS
                 Assert.AreEqual(Vector3.Normalize(v1), v1 / v1.Length());
 #else
-                Assert.AreEqual(Vector3.Normalize(v1), v1 / v1.Length);
+                Assert.AreEqual(Vector3.Normalize(v1), v1 / v1.Length());
 #endif
                 Assert.IsTrue(CloseEnough(Vector3.Reflect(v1, v2), v1 - Vector3.Dot(v1, v2) * v2 * 2f));
                 Assert.IsTrue(CloseEnough(Vector3.SquareRoot(v1), new Vector3((float)Math.Sqrt(v1.X), (float)Math.Sqrt(v1.Y), (float)Math.Sqrt(v1.Z))));

@@ -1,7 +1,9 @@
 ﻿using System;
-using System.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+#if USE_NUMERICS
+using System.Numerics;
+#endif
 using OpenGL;
 
 namespace OpenGLUnitTests
